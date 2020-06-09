@@ -1,0 +1,5 @@
+CREATE TABLE position(
+	pos_id BIGSERIAL NOT NULL PRIMARY KEY,
+	title VARCHAR(256) NOT NULL,
+	salary INT
+);
