@@ -5,6 +5,6 @@ CREATE TABLE staff(
 	passport INT NOT NULL,
 	position INT NOT NULL,
 	edu_level edu_level_type NOT NULL,
-	fire_date DATE NOT NULL,
+	fire_date DATE,
 	employ_date DATE NOT NULL
 );
