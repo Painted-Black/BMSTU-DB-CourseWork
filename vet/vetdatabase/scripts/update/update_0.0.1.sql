@@ -29,7 +29,7 @@ ALTER TABLE schedule ADD CONSTRAINT empl_schdl_fk
     ON DELETE CASCADE;
 
 ALTER TABLE vaccinations ADD CONSTRAINT vacc_schdl_fk 
-    FOREIGN KEY (vat) REFERENCES staff(staff_id) 
+    FOREIGN KEY (vet) REFERENCES staff(staff_id) 
     ON DELETE CASCADE;
 
 ALTER TABLE vaccinations ADD CONSTRAINT vacc_anmr_fk 

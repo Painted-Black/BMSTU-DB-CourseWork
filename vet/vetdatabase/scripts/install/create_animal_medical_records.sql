@@ -12,5 +12,6 @@ CREATE TABLE animals_medical_records(
     registr_data DATE NOT NULL,
     las_visit DATE NOT NULL,
     chip_id INT NOT NULL,
-    contract INT NOT NULL
+    contract INT NOT NULL,
+    rel_path_to_photo VARCHAR(255) NOT NULL
 );

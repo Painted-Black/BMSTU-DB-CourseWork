@@ -7,5 +7,5 @@ CREATE TABLE vaccinations(
     vac_date DATE NOT NULL,
     next_vac DATE NOT NULL,
     animal INT NOT NULL,
-    vat INT NOT NULL
+    vet INT NOT NULL
 );
