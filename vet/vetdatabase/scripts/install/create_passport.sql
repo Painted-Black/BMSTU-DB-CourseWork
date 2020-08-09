@@ -1,7 +1,7 @@
 CREATE TYPE sex_type AS ENUM ('m', 'f', 'other');
 
 CREATE TABLE passports(
-	pass_id BIGSERIAL NOT NULL PRIMARY KEY,
+	pass_id SERIAL NOT NULL PRIMARY KEY,
 	surname VARCHAR(64) NOT NULL,
 	name VARCHAR(64) NOT NULL,
 	patronymic VARCHAR(64) NOT NULL,

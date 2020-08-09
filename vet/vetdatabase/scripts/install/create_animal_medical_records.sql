@@ -1,5 +1,5 @@
 CREATE TABLE animals_medical_records(
-    anim_id BIGSERIAL NOT NULL PRIMARY KEY,
+    anim_id SERIAL NOT NULL PRIMARY KEY,
     name VARCHAR(64) NOT NULL,
     breed TEXT NOT NULL,
     species TEXT NOT NULL,
