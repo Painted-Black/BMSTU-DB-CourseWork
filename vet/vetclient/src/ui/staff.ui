@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>animal_widget</class>
- <widget class="QWidget" name="animal_widget">
+ <class>staff_widget</class>
+ <widget class="QWidget" name="staff_widget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,7 +17,7 @@
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Пасспорт животного</string>
+      <string>Персонал</string>
      </property>
     </widget>
    </item>

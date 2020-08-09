@@ -16,11 +16,16 @@ SOURCES += \
 FORMS += \
     ui/add_contract.ui \
     ui/address.ui \
+    ui/admin.ui \
     ui/animal.ui \
     ui/auth_dialog.ui \
     ui/chip.ui \
     ui/contacts.ui \
-    ui/passport.ui
+    ui/passport.ui \
+    ui/shedule.ui \
+    ui/staff.ui \
+    ui/vaccination.ui \
+    ui/visit.ui
 
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
