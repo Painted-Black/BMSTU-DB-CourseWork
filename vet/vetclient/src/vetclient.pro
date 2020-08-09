@@ -11,7 +11,21 @@ CONFIG += c++11
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
-    main.cpp
+	main.cpp \
+	types/passport.cpp \
+	types/position.cpp \
+	types/staff.cpp \
+	types/user_data.cpp \
+	utlis/utils.cpp
+
+HEADERS += \
+	core/ISerializable.h \
+	types/QJsonHeaders.h \
+	types/passport.h \
+	types/position.h \
+	types/staff.h \
+	types/user_data.h \
+	utlis/utils.h
 
 FORMS += \
     ui/add_contract.ui \
