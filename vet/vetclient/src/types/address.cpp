@@ -2,11 +2,12 @@
 #include <QDebug>
 
 #include "address.h"
+#include "json_fields.h"
 
 bool Address::deserialize(const QJsonObject &obj) noexcept
 {
     bool cast = true;
-    id = obj.value("addr_id").toVariant().toULongLong(&cast);
+    id = obj.value(AddressJson::field_addr_id).toVariant().toULongLong(&cast);
     if (cast == false)
     {
         qCritical() << Q_FUNC_INFO << "Invalid cast 'addr_id' field";

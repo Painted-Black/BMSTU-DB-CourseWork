@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include <QString>
 #include "QJsonHeaders.h"
 #include "core/ISerializable.h"
+#include "types/staff.h"
 
 class AccessLevel : public ISerializable<QJsonValue>
 {
@@ -24,12 +24,7 @@ private:
 	AccessLevelEnum current;
 };
 
-class Staff
-{
-
-};
-
-class AccessData : public ISerializable<QByteArray>
+class AccessData final : public ISerializable<QByteArray>
 {
 public:
 	virtual bool deserialize(const QByteArray &) noexcept override;
@@ -40,4 +35,5 @@ private:
 	QString login;
 	QByteArray password;
 	AccessLevel level;
+    Staff owner;
 };
