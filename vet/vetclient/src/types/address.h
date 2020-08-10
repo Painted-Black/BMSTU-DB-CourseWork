@@ -1,5 +1,4 @@
-#ifndef ADDRESS_H
-#define ADDRESS_H
+#pragma once
 
 #include <QString>
 #include "QJsonHeaders.h"
@@ -33,5 +32,3 @@ private:
     QString house;
     QString flat;
 };
-
-#endif // ADDRESS_H

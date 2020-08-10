@@ -1,5 +1,4 @@
-#ifndef CLIENT_H
-#define CLIENT_H
+#pragma once
 
 #include <QString>
 #include "QJsonHeaders.h"
@@ -18,5 +17,3 @@ private:
     Passport passport;
     Address address;
 };
-
-#endif // CLIENT_H
