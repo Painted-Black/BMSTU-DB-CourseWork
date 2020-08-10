@@ -12,6 +12,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
 	main.cpp \
+	types/address.cpp \
+	types/client.cpp \
+	types/microchip.cpp \
 	types/passport.cpp \
 	types/position.cpp \
 	types/staff.cpp \
@@ -21,6 +24,9 @@ SOURCES += \
 HEADERS += \
 	core/ISerializable.h \
 	types/QJsonHeaders.h \
+	types/address.h \
+	types/client.h \
+	types/microchip.h \
 	types/passport.h \
 	types/position.h \
 	types/staff.h \
