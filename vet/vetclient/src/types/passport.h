@@ -1,10 +1,11 @@
 #pragma once
 
 #include <QDate>
+#include "QJsonHeaders.h"
 
 #include "core/ISerializable.h"
 
-class Gender : public ISerializable
+class Gender : public ISerializable<QJsonValue>
 {
 public:
 	enum class GenderEnum
@@ -14,8 +15,8 @@ public:
 		Other
 	};
 public:
-	bool deserialize(const QByteArray &) noexcept override;
-	QByteArray serialize() const override;
+	bool deserialize(const QJsonValue&) noexcept override;
+	QJsonValue serialize() const override;
 
 	GenderEnum getGenderType() const;
 	void setGenderType(GenderEnum value);
@@ -24,11 +25,11 @@ private:
 	GenderEnum current;
 };
 
-class Passport : public ISerializable
+class Passport : public ISerializable<QJsonObject>
 {
 public:
-	bool deserialize(const QByteArray &) noexcept override;
-	QByteArray serialize() const override;
+	bool deserialize(const QJsonObject&) noexcept override;
+	QJsonObject serialize() const override;
 	uint64_t getId() const;
 
 	QString getSurname() const;

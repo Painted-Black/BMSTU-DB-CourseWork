@@ -1,4 +1,3 @@
-#include "QJsonHeaders.h"
 #include <QVariant>
 #include <QDebug>
 
@@ -12,10 +11,9 @@ Position::Position()
 
 }
 
-bool Position::deserialize(const QByteArray & data) noexcept
+bool Position::deserialize(const QJsonObject &obj) noexcept
 {
 	bool cast = true;
-	const QJsonObject& obj = QJsonDocument::fromJson(data).object();
 	id = obj.value("pos_id").toVariant().toULongLong(&cast);
 	if (cast == false)
 	{
@@ -34,13 +32,13 @@ bool Position::deserialize(const QByteArray & data) noexcept
 	return true;
 }
 
-QByteArray Position::serialize() const
+QJsonObject Position::serialize() const
 {
 	QJsonObject root_obj;
 	root_obj.insert("pos_id", QJsonValue::fromVariant(QVariant::fromValue(id)));
 	root_obj.insert("title", QJsonValue(title));
 	root_obj.insert("salary", QJsonValue::fromVariant(QVariant::fromValue(salary)));
-	return QJsonDocument(root_obj).toJson();
+	return root_obj;
 }
 
 QString Position::getTitle() const

@@ -1,15 +1,16 @@
 #pragma once
 
 #include <QString>
+#include "QJsonHeaders.h"
 
 #include "core/ISerializable.h"
 
-class Position final : public ISerializable
+class Position final : public ISerializable<QJsonObject>
 {
 public:
 	Position();
-	bool deserialize(const QByteArray &) noexcept override;
-	QByteArray serialize() const override;
+	bool deserialize(const QJsonObject&) noexcept override;
+	QJsonObject serialize() const override;
 
 	uint64_t getId() const;
 	QString getTitle() const;

@@ -1,11 +1,11 @@
-#include "QJsonHeaders.h"
 #include <QVariant>
 #include <QDebug>
 
 #include "staff.h"
 
-bool EducationLevel::deserialize(const QByteArray & data) noexcept
+bool EducationLevel::deserialize(const QJsonValue & json) noexcept
 {
+	QString data = json.toString();
 	bool is_ok = false;
 	if (data == "resident")
 	{
@@ -36,21 +36,29 @@ bool EducationLevel::deserialize(const QByteArray & data) noexcept
 	return is_ok;
 }
 
-QByteArray EducationLevel::serialize() const
+QJsonValue EducationLevel::serialize() const
 {
+	QJsonValue value;
 	switch (current)
 	{
 		case EducationLevelEnum::Resident:
-			return "resident";
+			value = "resident";
+			break;
 		case EducationLevelEnum::Middle:
-			return "middle";
+			value = "middle";
+			break;
 		case EducationLevelEnum::Postgraduate:
-			return "postgraduate";
+			value = "postgraduate";
+			break;
 		case EducationLevelEnum::Specialist:
-			return "specialist";
+			value = "specialist";
+			break;
 		case EducationLevelEnum::Bachelor:
-			return "bachelor";
+			value = "bachelor";
+			break;
 	}
+
+	return std::move(value);
 }
 
 EducationLevel::EducationLevelEnum EducationLevel::getEducationLevel() const
@@ -63,32 +71,31 @@ void EducationLevel::setEducationLevel(const EducationLevelEnum &value)
 	current = value;
 }
 
-bool Staff::deserialize(const QByteArray & json) noexcept
+bool Staff::deserialize(const QJsonObject & json) noexcept
 {
 	bool cast = true;
-	QJsonObject root_obj = QJsonDocument::fromJson(json).object();
-	id = root_obj.value("staff_id").toVariant().toULongLong(&cast);
+	id = json.value("staff_id").toVariant().toULongLong(&cast);
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast 'staff_id' field";
 		return false;
 	}
 
-	cast = passport.deserialize(root_obj.value("passport").toVariant().toByteArray());
+	cast = passport.deserialize(json.value("passport").toObject());
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "invalid cast 'passport' field";
 		return false;
 	}
 
-	cast = position.deserialize(root_obj.value("position").toVariant().toByteArray());
+	cast = position.deserialize(json.value("position").toObject());
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "invalid cast 'position' field";
 		return false;
 	}
 
-	cast = edu_level.deserialize(root_obj.value("edu_level").toVariant().toByteArray());
+	cast = edu_level.deserialize(json.value("edu_level"));
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "invalid cast 'edu_level' field";
@@ -96,9 +103,9 @@ bool Staff::deserialize(const QByteArray & json) noexcept
 	}
 
 	/* May be invalid */
-	fire_date = QDate::fromString(root_obj.value("fire_date").toString(), Qt::ISODate);
+	fire_date = QDate::fromString(json.value("fire_date").toString(), Qt::ISODate);
 
-	employ_date = QDate::fromString(root_obj.value("employ_date").toString(), Qt::ISODate);
+	employ_date = QDate::fromString(json.value("employ_date").toString(), Qt::ISODate);
 	if (employ_date.isValid() == false)
 	{
 		qCritical() << Q_FUNC_INFO << "invalid cast 'employ_date' field";
@@ -108,10 +115,10 @@ bool Staff::deserialize(const QByteArray & json) noexcept
 	return true;
 }
 
-QByteArray Staff::serialize() const
+QJsonObject Staff::serialize() const
 {
-	QJsonObject passport_json = QJsonDocument::fromJson(passport.serialize()).object();
-	QJsonObject position_json = QJsonDocument::fromJson(position.serialize()).object();
+	QJsonObject passport_json = passport.serialize();
+	QJsonObject position_json = position.serialize();
 
 	QJsonObject root_obj;
 	root_obj.insert("staff_id", QJsonValue::fromVariant(QVariant::fromValue(id)));
@@ -120,7 +127,7 @@ QByteArray Staff::serialize() const
 	root_obj.insert("edu_level", QVariant(edu_level.serialize()).toJsonValue());
 	root_obj.insert("fire_date", QJsonValue(fire_date.toString(Qt::ISODate)));
 	root_obj.insert("employ_date", QJsonValue(employ_date.toString(Qt::ISODate)));
-	return  QJsonDocument(root_obj).toJson();
+	return root_obj;
 }
 
 uint64_t Staff::getId() const

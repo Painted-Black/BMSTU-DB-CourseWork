@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QFile>
 
+#include "utlis/utils.h"
 #include "types/staff.h"
 
 int main(int argc, char *argv[])
@@ -44,7 +45,7 @@ int main(int argc, char *argv[])
 	}
 
 	QTextStream stream(&f);
-	stream << staff.serialize();
+	stream << toJson(staff.serialize());
 	f.close();
 
 	return a.exec();

@@ -1,9 +1,9 @@
-#include "QJsonHeaders.h"
-
+#include <QVariant>
 #include "user_data.h"
 
-bool AccessLevel::deserialize(const QByteArray & value) noexcept
+bool AccessLevel::deserialize(const QJsonValue & v) noexcept
 {
+	QString value = v.toString();
 	bool is_ok = false;
 	if (value == "vet")
 	{
@@ -29,19 +29,26 @@ bool AccessLevel::deserialize(const QByteArray & value) noexcept
 	return is_ok;
 }
 
-QByteArray AccessLevel::serialize() const
+QJsonValue AccessLevel::serialize() const
 {
+	QJsonValue value;
 	switch (current)
 	{
 		case AccessLevelEnum::Vet:
-			return "vet";
+			value = QJsonValue("vet");
+			break;
 		case AccessLevelEnum::Main:
-			return "main";
+			value = QJsonValue("main");
+			break;
 		case AccessLevelEnum::Admin:
-			return "admin";
+			value = QJsonValue("admin");
+			break;
 		case AccessLevelEnum::Registry:
-			return "registry";
+			value = QJsonValue("registry");
+			break;
 	}
+
+	return value;
 }
 
 bool AccessData::deserialize(const QByteArray & data) noexcept

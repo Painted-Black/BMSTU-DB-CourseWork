@@ -3,9 +3,10 @@
 #pragma once
 
 #include <QString>
+#include "QJsonHeaders.h"
 #include "core/ISerializable.h"
 
-class AccessLevel : public ISerializable
+class AccessLevel : public ISerializable<QJsonValue>
 {
 public:
 	enum class AccessLevelEnum
@@ -16,8 +17,8 @@ public:
 		Vet
 	};
 
-	virtual bool deserialize(const QByteArray &value) noexcept override;
-	virtual QByteArray serialize() const override;
+	virtual bool deserialize(const QJsonValue &value) noexcept override;
+	virtual QJsonValue serialize() const override;
 
 private:
 	AccessLevelEnum current;
@@ -28,7 +29,7 @@ class Staff
 
 };
 
-class AccessData : public ISerializable
+class AccessData : public ISerializable<QByteArray>
 {
 public:
 	virtual bool deserialize(const QByteArray &) noexcept override;

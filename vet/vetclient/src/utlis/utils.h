@@ -1,14 +1,6 @@
 #pragma once
 
-namespace Vet
-{
+#include <QByteArray>
+#include <QJsonObject>
 
-namespace Utils
-{
-
-//	template <typename T, typename Parser>
-
-
-}
-
-}
+QByteArray toJson(const QJsonObject&);

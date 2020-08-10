@@ -1,13 +1,11 @@
-#include "QJsonHeaders.h"
 #include <QVariant>
 #include <QDebug>
 
 #include "passport.h"
 
-bool Passport::deserialize(const QByteArray & data) noexcept
+bool Passport::deserialize(const QJsonObject &obj) noexcept
 {
 	bool cast = true;
-	QJsonObject obj = QJsonDocument::fromJson(data).object();
 	id = obj.value("pass_id").toVariant().toULongLong(&cast);
 	if (cast == false)
 	{
@@ -18,7 +16,7 @@ bool Passport::deserialize(const QByteArray & data) noexcept
 	surname = obj.value("surname").toString();
 	name = obj.value("name").toString();
 	patronymic = obj.value("patronymic").toString();
-	if (gender.deserialize(obj.value("sex").toVariant().toByteArray()) == false)
+	if (gender.deserialize(obj.value("sex")) == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast 'gender' field";
 		return false;
@@ -44,7 +42,7 @@ bool Passport::deserialize(const QByteArray & data) noexcept
 	return true;
 }
 
-QByteArray Passport::serialize() const
+QJsonObject Passport::serialize() const
 {
 	QJsonObject root_obj;
 	root_obj.insert("pass_id", QJsonValue::fromVariant(QVariant::fromValue(id)));
@@ -58,7 +56,7 @@ QByteArray Passport::serialize() const
 	root_obj.insert("nationality", QJsonValue(nationality));
 	root_obj.insert("num", QJsonValue(QString(passport_num.data(),
 											  static_cast<int>(passport_num.size()))));
-	return QJsonDocument(root_obj).toJson();
+	return std::move(root_obj);
 }
 
 uint64_t Passport::getId() const
@@ -146,8 +144,9 @@ void Passport::setGender(const Gender &value)
 	gender = value;
 }
 
-bool Gender::deserialize(const QByteArray & v) noexcept
+bool Gender::deserialize(const QJsonValue& json) noexcept
 {
+	QString v = json.toString();
 	bool is_ok = false;
 
 	if (v == "m")
@@ -169,18 +168,22 @@ bool Gender::deserialize(const QByteArray & v) noexcept
 	return is_ok;
 }
 
-QByteArray Gender::serialize() const
+QJsonValue Gender::serialize() const
 {
+	QJsonValue value;
 	switch (current)
 	{
 		case GenderEnum::Male:
-			return "m";
+			value = "m";
+			break;
 		case GenderEnum::Female:
-			return "f";
+			value = "f";
+			break;
 		case GenderEnum::Other:
-			return "other";
+			value = "other";
+			break;
 	}
-	return QByteArray();
+	return value;
 }
 
 Gender::GenderEnum Gender::getGenderType() const

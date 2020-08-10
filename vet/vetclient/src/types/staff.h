@@ -1,10 +1,11 @@
 #pragma once
 
+#include "QJsonHeaders.h"
 #include "core/ISerializable.h"
 #include "passport.h"
 #include "position.h"
 
-class EducationLevel : public ISerializable
+class EducationLevel : public ISerializable<QJsonValue>
 {
 public:
 	enum class EducationLevelEnum
@@ -16,8 +17,8 @@ public:
 		Bachelor
 	};
 public:
-	bool deserialize(const QByteArray &) noexcept override;
-	QByteArray serialize() const override;
+	bool deserialize(const QJsonValue&) noexcept override;
+	QJsonValue serialize() const override;
 
 	EducationLevelEnum getEducationLevel() const;
 	void setEducationLevel(const EducationLevelEnum &value);
@@ -26,11 +27,11 @@ private:
 	EducationLevelEnum current;
 };
 
-class Staff : public ISerializable
+class Staff : public ISerializable<QJsonObject>
 {
 public:
-	bool deserialize(const QByteArray &) noexcept override;
-	QByteArray serialize() const override;
+	bool deserialize(const QJsonObject&) noexcept override;
+	QJsonObject serialize() const override;
 
 	uint64_t getId() const;
 	Passport getPassport() const;

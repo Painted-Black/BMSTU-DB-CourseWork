@@ -1,11 +1,11 @@
 #pragma once
 
-#include <memory>
 #include <QByteArray>
 
+template <typename T>
 struct ISerializable
 {
 	virtual ~ISerializable() noexcept = default;
-	virtual QByteArray serialize() const = 0;
-	virtual bool deserialize(const QByteArray&) noexcept = 0;
+	virtual T serialize() const = 0;
+	virtual bool deserialize(const T&) noexcept = 0;
 };
