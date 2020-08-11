@@ -14,6 +14,7 @@ SOURCES += \
 	main.cpp \
 	types/address.cpp \
 	types/client.cpp \
+	types/contract.cpp \
 	types/microchip.cpp \
 	types/passport.cpp \
 	types/position.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
 	types/QJsonHeaders.h \
 	types/address.h \
 	types/client.h \
+	types/contract.h \
 	types/json_fields.h \
 	types/microchip.h \
 	types/passport.h \

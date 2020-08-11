@@ -58,7 +58,7 @@ QJsonValue EducationLevel::serialize() const
 			break;
 	}
 
-	return std::move(value);
+    return value;
 }
 
 EducationLevel::EducationLevelEnum EducationLevel::getEducationLevel() const

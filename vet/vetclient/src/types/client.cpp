@@ -53,3 +53,58 @@ QJsonObject Client::serialize() const
     root.insert("contacts", contacts_json);
     return root;
 }
+
+uint64_t Client::getId() const
+{
+    return id;
+}
+
+Passport Client::getPassport() const
+{
+    return passport;
+}
+
+void Client::setPassport(const Passport &value)
+{
+    passport = value;
+}
+
+Address Client::getAddress() const
+{
+    return address;
+}
+
+void Client::setAddress(const Address &value)
+{
+    address = value;
+}
+
+QStringList Client::getPhones() const
+{
+    return phones;
+}
+
+void Client::setPhones(const QStringList &value)
+{
+    phones = value;
+}
+
+QStringList Client::getEmails() const
+{
+    return emails;
+}
+
+void Client::setEmails(const QStringList &value)
+{
+    emails = value;
+}
+
+QList<QUrl> Client::getSocial() const
+{
+    return social;
+}
+
+void Client::setSocial(const QList<QUrl> &value)
+{
+    social = value;
+}
