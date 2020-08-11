@@ -11,7 +11,7 @@ CREATE TABLE visits(
     cur_state INT NOT NULL,
     diagnosis TEXT NOT NULL,
     recommendations TEXT NOT NULL,
-    next_visit DATE NOT NULL,
+    next_visit DATE,
     prescribings JSON NOT NULL,
     initial BOOLEAN NOT NULL,
     note TEXT NOT NULL

@@ -21,9 +21,12 @@ SOURCES += \
 	types/microchip.cpp \
 	types/passport.cpp \
 	types/position.cpp \
+	types/prescribings.cpp \
 	types/shedule.cpp \
 	types/staff.cpp \
 	types/user_data.cpp \
+	types/vaccination.cpp \
+	types/visit.cpp \
 	utlis/utils.cpp
 
 HEADERS += \
@@ -39,9 +42,12 @@ HEADERS += \
 	types/microchip.h \
 	types/passport.h \
 	types/position.h \
+	types/prescribings.h \
 	types/shedule.h \
 	types/staff.h \
 	types/user_data.h \
+	types/vaccination.h \
+	types/visit.h \
 	utlis/utils.h
 
 FORMS += \

@@ -16,6 +16,7 @@ bool Passport::deserialize(const QJsonObject &obj) noexcept
     surname = obj.value("surname").toString();
     name = obj.value("name").toString();
     patronymic = obj.value("patronymic").toString();
+
     if (gender.deserialize(obj.value("sex")) == false)
     {
         qCritical() << Q_FUNC_INFO << "Invalid cast 'gender' field";

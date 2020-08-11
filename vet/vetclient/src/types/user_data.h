@@ -1,7 +1,5 @@
 #pragma once
 
-#pragma once
-
 #include "QJsonHeaders.h"
 #include "core/ISerializable.h"
 #include "types/staff.h"
