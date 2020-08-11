@@ -18,6 +18,7 @@ SOURCES += \
 	types/microchip.cpp \
 	types/passport.cpp \
 	types/position.cpp \
+	types/shedule.cpp \
 	types/staff.cpp \
 	types/user_data.cpp \
 	utlis/utils.cpp
@@ -32,6 +33,7 @@ HEADERS += \
 	types/microchip.h \
 	types/passport.h \
 	types/position.h \
+	types/shedule.h \
 	types/staff.h \
 	types/user_data.h \
 	utlis/utils.h

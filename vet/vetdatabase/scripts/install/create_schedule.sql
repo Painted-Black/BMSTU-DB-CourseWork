@@ -1,4 +1,4 @@
-CREATE TYPE day_of_week_type AS ENUM('Sun', 'Mod', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
+CREATE TYPE day_of_week_type AS ENUM('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
 
 CREATE TABLE schedule(
     shed_id SERIAL NOT NULL PRIMARY KEY,
