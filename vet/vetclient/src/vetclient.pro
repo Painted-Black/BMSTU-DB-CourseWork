@@ -13,9 +13,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
 	main.cpp \
 	types/address.cpp \
+	types/animal_medical_record.cpp \
 	types/animalstate.cpp \
 	types/client.cpp \
 	types/contract.cpp \
+	types/gender.cpp \
 	types/microchip.cpp \
 	types/passport.cpp \
 	types/position.cpp \
@@ -28,9 +30,11 @@ HEADERS += \
 	core/ISerializable.h \
 	types/QJsonHeaders.h \
 	types/address.h \
+	types/animal_medical_record.h \
 	types/animalstate.h \
 	types/client.h \
 	types/contract.h \
+	types/gender.h \
 	types/json_fields.h \
 	types/microchip.h \
 	types/passport.h \
