@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QList>
+#include <QMap>
 
 #include "QJsonHeaders.h"
 #include "core/ISerializable.h"
@@ -54,14 +54,14 @@ private:
     QString notes;
 };
 
-class Prescribings : public ISerializable<QJsonObject>
+class Prescribings : public ISerializable<QJsonArray>
 {
 public:
-    bool deserialize(const QJsonObject &) noexcept override;
-    QJsonObject serialize() const override;
+    bool deserialize(const QJsonArray &json) noexcept override;
+    QJsonArray serialize() const override;
+    bool append(const Medicine &med);
+    bool remove(const QString &med_name);
 private:
-    QList<Medicine> prescribings;
-#pragma message "TODO"
-
+    QMap<QString, Medicine> prescribings;
 };
 

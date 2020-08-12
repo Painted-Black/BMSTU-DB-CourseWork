@@ -1,3 +1,4 @@
+#include <QMapIterator>
 #include <QVariant>
 #include <QDebug>
 
@@ -150,4 +151,50 @@ QString Medicine::getNotes() const
 void Medicine::setNotes(const QString &value)
 {
     notes = value;
+}
+
+bool Prescribings::deserialize(const QJsonArray &json) noexcept
+{
+    bool is_ok = false;
+    for (const QJsonValue& cur : json)
+    {
+        Medicine cur_med;
+        cur_med.deserialize(cur.toObject());
+        is_ok &= append(cur_med);
+        if (is_ok == false)
+            break;
+    }
+    return is_ok;
+}
+
+QJsonArray Prescribings::serialize() const
+{
+    QJsonArray root_obj;
+    for (const auto& prescribing : prescribings)
+    {
+        root_obj.push_back(prescribing.serialize());
+    }
+    return root_obj;
+}
+
+bool Prescribings::append(const Medicine &med)
+{
+    bool is_ok = false;
+    if (prescribings.contains(med.getName()) == false)
+    {
+        prescribings.insert(med.getName(), med);
+        is_ok = true;
+    }
+    return is_ok;
+}
+
+bool Prescribings::remove(const QString &med_name)
+{
+    bool is_ok = false;
+    if (prescribings.contains(med_name) == false)
+    {
+        prescribings.remove(med_name);
+        is_ok = true;
+    }
+    return is_ok;
 }
