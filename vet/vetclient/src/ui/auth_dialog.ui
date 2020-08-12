@@ -957,13 +957,6 @@
      <property name="autoFillBackground">
       <bool>false</bool>
      </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton
-{
-      border-width: 1px;
-      border-radius: 0px;
-}</string>
-     </property>
      <property name="text">
       <string>Login</string>
      </property>
