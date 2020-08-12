@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>674</width>
-    <height>253</height>
+    <height>228</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>40</height>
+          <height>30</height>
          </size>
         </property>
         <property name="font">
@@ -58,7 +58,7 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>40</height>
+          <height>30</height>
          </size>
         </property>
         <property name="font">
@@ -81,6 +81,12 @@
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="location_label">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <weight>50</weight>
@@ -94,6 +100,12 @@
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="date_label">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <weight>50</weight>
@@ -106,7 +118,7 @@
        </widget>
       </item>
       <item row="0" column="0" colspan="2">
-       <widget class="QFrame" name="frame">
+       <widget class="QFrame" name="chip_num_frame">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -115,11 +127,11 @@
         </property>
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="1" column="0">
-          <widget class="QLineEdit" name="num_lineEdit_2">
+          <widget class="QLineEdit" name="num_lineEdit">
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>40</height>
+             <height>30</height>
             </size>
            </property>
            <property name="font">
@@ -142,6 +154,12 @@
          </item>
          <item row="0" column="0">
           <widget class="QLabel" name="num_label">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <weight>50</weight>
@@ -155,6 +173,12 @@
          </item>
          <item row="0" column="2">
           <widget class="QLabel" name="country_label">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <weight>50</weight>
@@ -171,7 +195,7 @@
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>40</height>
+             <height>30</height>
             </size>
            </property>
            <property name="font">
@@ -211,7 +235,7 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>num_lineEdit_2</tabstop>
+  <tabstop>num_lineEdit</tabstop>
   <tabstop>country_lineEdit</tabstop>
   <tabstop>impl_dateEdit</tabstop>
   <tabstop>location_lineEdit</tabstop>

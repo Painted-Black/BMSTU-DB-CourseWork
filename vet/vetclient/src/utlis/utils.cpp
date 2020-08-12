@@ -5,3 +5,4 @@ QByteArray toJson(const QJsonObject & obj)
 {
 	return QJsonDocument(obj).toJson();
 }
+

@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ui/icons/user_green_80.png</file>
+        <file>ui/icons/pigeon.png</file>
+        <file>ui/icons/password_green_80.png</file>
+        <file>ui/icons/logo_green_80.png</file>
+        <file>ui/icons/edit_80.png</file>
+        <file>ui/icons/add_user_80.png</file>
+        <file>ui/icons/add_40.png</file>
+    </qresource>
+</RCC>

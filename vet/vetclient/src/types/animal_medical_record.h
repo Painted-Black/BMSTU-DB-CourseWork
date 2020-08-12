@@ -46,7 +46,9 @@ public:
     void setContract(const Contract &value);
     void setRel_path_to_photo(const QString &value);
 
+
 private:
+    QMap<QString, QJsonValue> values;
     uint64_t anim_id;
     QString name;
     QString breed;

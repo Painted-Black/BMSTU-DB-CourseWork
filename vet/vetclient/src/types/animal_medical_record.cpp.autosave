@@ -42,7 +42,10 @@ bool AnimalMedicalRecord::deserialize(const QJsonObject &json) noexcept
     }
 
 
-    castrated = json.value(AnimalMedicalRecordJson::field_anim_castrated).toVariant().toBool();
+    if (json.contains(AnimalMedicalRecordJson::field_anim_castrated))
+    {
+        castrated = json.value(AnimalMedicalRecordJson::field_anim_castrated).toVariant().toBool();
+    }
 
     birth = QDate::fromString(json.value(AnimalMedicalRecordJson::field_anim_birth).toString(), Qt::ISODate);
     if (birth.isValid() == false)

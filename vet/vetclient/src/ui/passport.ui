@@ -50,6 +50,12 @@
       </property>
       <item row="1" column="0">
        <widget class="QLabel" name="surname_label">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <pointsize>16</pointsize>
@@ -64,6 +70,12 @@
       </item>
       <item row="0" column="0">
        <widget class="QLabel" name="name_label">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <pointsize>16</pointsize>
@@ -192,6 +204,12 @@
       </item>
       <item row="5" column="0">
        <widget class="QLabel" name="issue_label">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <weight>50</weight>
@@ -205,6 +223,12 @@
       </item>
       <item row="3" column="0">
        <widget class="QLabel" name="sex_label">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <weight>50</weight>
@@ -218,6 +242,12 @@
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="patr_label">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <pointsize>16</pointsize>
@@ -275,6 +305,12 @@
       </item>
       <item row="4" column="0">
        <widget class="QLabel" name="birth_label">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <weight>50</weight>
@@ -337,6 +373,12 @@
       </item>
       <item row="8" column="0">
        <widget class="QLabel" name="nationality_label">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <weight>50</weight>
@@ -350,6 +392,12 @@
       </item>
       <item row="7" column="0">
        <widget class="QLabel" name="num_label">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <weight>50</weight>

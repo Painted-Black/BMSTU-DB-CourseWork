@@ -11,6 +11,9 @@ CONFIG += c++11
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
+	core/animal_edit_widget.cpp \
+	core/animal_list_item_widget.cpp \
+	core/mainwindow.cpp \
 	main.cpp \
 	types/address.cpp \
 	types/animal_medical_record.cpp \
@@ -31,6 +34,9 @@ SOURCES += \
 
 HEADERS += \
 	core/ISerializable.h \
+	core/animal_edit_widget.h \
+	core/animal_list_item_widget.h \
+	core/mainwindow.h \
 	types/QJsonHeaders.h \
 	types/address.h \
 	types/animal_medical_record.h \
@@ -55,9 +61,11 @@ FORMS += \
     ui/address.ui \
     ui/admin.ui \
     ui/animal.ui \
+    ui/animal_list_item_widget.ui \
     ui/auth_dialog.ui \
     ui/chip.ui \
     ui/contacts.ui \
+    ui/mainwindow.ui \
     ui/passport.ui \
     ui/shedule.ui \
     ui/staff.ui \
@@ -67,3 +75,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    res.qrc

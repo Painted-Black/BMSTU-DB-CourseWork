@@ -4,3 +4,4 @@
 #include <QJsonObject>
 
 QByteArray toJson(const QJsonObject&);
+
