@@ -8,7 +8,6 @@
 class Position final : public ISerializable<QJsonObject>
 {
 public:
-	Position();
 	bool deserialize(const QJsonObject&) noexcept override;
 	QJsonObject serialize() const override;
 

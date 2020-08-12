@@ -2,36 +2,37 @@
 #include <QDebug>
 
 #include "microchip.h"
+#include "json_fields.h"
 
 bool Microchip::deserialize(const QJsonObject &json) noexcept
 {
     bool cast = true;
-    id = json.value("chip_id").toVariant().toULongLong(&cast);
+    id = json.value(MicrochipJson::field_chip_id).toVariant().toULongLong(&cast);
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'chip_id' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << MicrochipJson::field_chip_id << "' field";
         return false;
     }
-    chip_num = json.value("chip_num").toString();
-    impl_date = QDate::fromString(json.value("impl_date").toString(), Qt::ISODate);
+    chip_num = json.value(MicrochipJson::field_chip_chip_num).toString();
+    impl_date = QDate::fromString(json.value(MicrochipJson::field_chip_impl_date).toString(), Qt::ISODate);
     if (impl_date.isValid() == false)
     {
-        qCritical() << Q_FUNC_INFO << "invalid cast 'impl_date' field";
+        qCritical() << Q_FUNC_INFO << "invalid cast '" << MicrochipJson::field_chip_impl_date << "' field";
         return false;
     }
-    country = json.value("country").toString();
-    location = json.value("location").toString();
+    country = json.value(MicrochipJson::field_chip_country).toString();
+    location = json.value(MicrochipJson::field_chip_location).toString();
     return true;
 }
 
 QJsonObject Microchip::serialize() const
 {
     QJsonObject root_obj;
-    root_obj.insert("chip_id", QJsonValue::fromVariant(QVariant::fromValue(id)));
-    root_obj.insert("chip_num", QJsonValue(chip_num));
-    root_obj.insert("impl_date", QJsonValue(impl_date.toString(Qt::ISODate)));
-    root_obj.insert("country", QJsonValue(country));
-    root_obj.insert("location", QJsonValue(location));
+    root_obj.insert(MicrochipJson::field_chip_id, QJsonValue::fromVariant(QVariant::fromValue(id)));
+    root_obj.insert(MicrochipJson::field_chip_chip_num, QJsonValue(chip_num));
+    root_obj.insert(MicrochipJson::field_chip_impl_date, QJsonValue(impl_date.toString(Qt::ISODate)));
+    root_obj.insert(MicrochipJson::field_chip_country, QJsonValue(country));
+    root_obj.insert(MicrochipJson::field_chip_location, QJsonValue(location));
     return root_obj;
 }
 

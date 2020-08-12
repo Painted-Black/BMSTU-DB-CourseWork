@@ -1,29 +1,29 @@
-#include <QMapIterator>
 #include <QVariant>
 #include <QDebug>
 
 #include "prescribings.h"
+#include "json_fields.h"
 
 bool InjectionType::deserialize(const QJsonValue &json) noexcept
 {
     QString v = json.toString();
     bool is_ok = false;
-    if (v == "i/m")
+    if (v == InjectionTypes::injection_intramuscular)
     {
         current = InjectionTypeEnum::Intramuscular;
         is_ok = true;
     }
-    else if (v == "i/v")
+    else if (v == InjectionTypes::injection_intravenous)
     {
         current = InjectionTypeEnum::Intravenous;
         is_ok = true;
     }
-    else if (v == "s/c")
+    else if (v == InjectionTypes::injection_subcutaneous)
     {
         current = InjectionTypeEnum::Subcutaneous;
         is_ok = true;
     }
-    else if (v == "ingest")
+    else if (v == InjectionTypes::injection_ingest)
     {
         current = InjectionTypeEnum::Ingest;
         is_ok = true;
@@ -37,16 +37,16 @@ QJsonValue InjectionType::serialize() const
     switch (current)
     {
         case InjectionTypeEnum::Intravenous:
-            value = "i/v";
+            value = InjectionTypes::injection_intravenous;
             break;
         case InjectionTypeEnum::Intramuscular:
-            value = "i/m";
+            value = InjectionTypes::injection_intramuscular;
             break;
         case InjectionTypeEnum::Subcutaneous:
-            value = "s/c";
+            value =InjectionTypes::injection_subcutaneous;
             break;
         case InjectionTypeEnum::Ingest:
-            value = "ingest";
+            value = InjectionTypes::injection_ingest;
             break;
     }
     return value;
@@ -65,31 +65,31 @@ void InjectionType::setInjectionType(const InjectionTypeEnum &value)
 bool Medicine::deserialize(const QJsonObject &json) noexcept
 {
     bool cast = true;
-    name = json.value("name").toString();
-    dosage = json.value("dosage").toString();
+    name = json.value(PrescribingsJson::field_prescr_name).toString();
+    dosage = json.value(PrescribingsJson::field_prescr_dosage).toString();
 
-    cast = type.deserialize(json.value("type"));
+    cast = type.deserialize(json.value(PrescribingsJson::field_prescr_type));
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "invalid cast 'type' field";
+        qCritical() << Q_FUNC_INFO << "invalid cast '" << PrescribingsJson::field_prescr_type << "' field";
         return false;
     }
 
-    frequency_of_medication = json.value("frequency_of_medication").toString();
-    term_of_taking = json.value("term_of_taking").toString();
-    notes = json.value("notes").toString();
+    frequency_of_medication = json.value(PrescribingsJson::field_prescr_frequency_of_medication).toString();
+    term_of_taking = json.value(PrescribingsJson::field_prescr_term_of_taking).toString();
+    notes = json.value(PrescribingsJson::field_prescr_notes).toString();
     return cast;
 }
 
 QJsonObject Medicine::serialize() const
 {
     QJsonObject root_obj;
-    root_obj.insert("name", QJsonValue(name));
-    root_obj.insert("dosage", QJsonValue(dosage));
-    root_obj.insert("type", QVariant(type.serialize()).toJsonValue());
-    root_obj.insert("frequency_of_medication", QJsonValue(frequency_of_medication));
-    root_obj.insert("term_of_taking", QJsonValue(term_of_taking));
-    root_obj.insert("notes", QJsonValue(notes));
+    root_obj.insert(PrescribingsJson::field_prescr_name, QJsonValue(name));
+    root_obj.insert(PrescribingsJson::field_prescr_dosage, QJsonValue(dosage));
+    root_obj.insert(PrescribingsJson::field_prescr_type, QVariant(type.serialize()).toJsonValue());
+    root_obj.insert(PrescribingsJson::field_prescr_frequency_of_medication, QJsonValue(frequency_of_medication));
+    root_obj.insert(PrescribingsJson::field_prescr_term_of_taking, QJsonValue(term_of_taking));
+    root_obj.insert(PrescribingsJson::field_prescr_name, QJsonValue(notes));
     return root_obj;
 }
 

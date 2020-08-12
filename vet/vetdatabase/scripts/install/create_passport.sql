@@ -9,5 +9,5 @@ CREATE TABLE passports(
 	birth DATE NOT NULL,
 	num VARCHAR(10) NOT NULL,
 	issue_date DATE NOT NULL,
-	notionality VARCHAR(128)
+	nationality VARCHAR(128)
 );

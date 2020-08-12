@@ -2,44 +2,45 @@
 #include <QDebug>
 
 #include "contract.h"
+#include "json_fields.h"
 
 bool Contract::deserialize(const QJsonObject &json) noexcept
 {
     bool cast = true;
-    contr_id = json.value("contr_id").toVariant().toULongLong(&cast);
+    contr_id = json.value(ContractJson::field_contr_id).toVariant().toULongLong(&cast);
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'contr_id' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << ContractJson::field_contr_id << "' field";
         return false;
     }
 
-    code = json.value("code").toString();
+    code = json.value(ContractJson::field_contr_code).toString();
 
-    conclusion_date = QDate::fromString(json.value("conclusion_date").toString(), Qt::ISODate);
+    conclusion_date = QDate::fromString(json.value(ContractJson::field_contr_conclusion_date).toString(), Qt::ISODate);
     if (conclusion_date.isValid() == false)
     {
-        qCritical() << Q_FUNC_INFO << "invalid cast 'conclusion_date' field";
+        qCritical() << Q_FUNC_INFO << "invalid cast '" << ContractJson::field_contr_conclusion_date << "' field";
         return false;
     }
 
-    last_update_date = QDate::fromString(json.value("last_update_date").toString(), Qt::ISODate);
+    last_update_date = QDate::fromString(json.value(ContractJson::field_contr_last_update_date).toString(), Qt::ISODate);
     if (last_update_date.isValid() == false)
     {
-        qCritical() << Q_FUNC_INFO << "invalid cast 'last_update_date' field";
+        qCritical() << Q_FUNC_INFO << "invalid cast '" << ContractJson::field_contr_last_update_date << "' field";
         return false;
     }
 
-    valid_until = QDate::fromString(json.value("valid_until").toString(), Qt::ISODate);
+    valid_until = QDate::fromString(json.value(ContractJson::field_contr_valid_until).toString(), Qt::ISODate);
     if (valid_until.isValid() == false)
     {
-        qCritical() << Q_FUNC_INFO << "invalid cast 'valid_until' field";
+        qCritical() << Q_FUNC_INFO << "invalid cast '" << ContractJson::field_contr_valid_until << "' field";
         return false;
     }
 
-    cast = client.deserialize(json.value("owner").toObject());
+    cast = client.deserialize(json.value(ContractJson::field_contr_owner).toObject());
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "invalid cast 'owner' field";
+        qCritical() << Q_FUNC_INFO << "invalid cast '" << ContractJson::field_contr_owner << "' field";
         return false;
     }
     return true;
@@ -50,12 +51,12 @@ QJsonObject Contract::serialize() const
     QJsonObject root_obj;
     QJsonObject owner_json = client.serialize();
 
-    root_obj.insert("contr_id", QJsonValue::fromVariant(QVariant::fromValue(contr_id)));
-    root_obj.insert("conclusion_date", QJsonValue(conclusion_date.toString(Qt::ISODate)));
-    root_obj.insert("last_update_date", QJsonValue(last_update_date.toString(Qt::ISODate)));
-    root_obj.insert("valid_until", QJsonValue(valid_until.toString(Qt::ISODate)));
-    root_obj.insert("owner", owner_json);
-    root_obj.insert("code", QJsonValue(code));
+    root_obj.insert(ContractJson::field_contr_id, QJsonValue::fromVariant(QVariant::fromValue(contr_id)));
+    root_obj.insert(ContractJson::field_contr_conclusion_date, QJsonValue(conclusion_date.toString(Qt::ISODate)));
+    root_obj.insert(ContractJson::field_contr_last_update_date, QJsonValue(last_update_date.toString(Qt::ISODate)));
+    root_obj.insert(ContractJson::field_contr_valid_until, QJsonValue(valid_until.toString(Qt::ISODate)));
+    root_obj.insert(ContractJson::field_contr_owner, owner_json);
+    root_obj.insert(ContractJson::field_contr_code, QJsonValue(code));
     return root_obj;
 }
 

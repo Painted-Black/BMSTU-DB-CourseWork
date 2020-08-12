@@ -1,4 +1,5 @@
 #include "gender.h"
+#include "json_fields.h"
 
 
 bool Gender::deserialize(const QJsonValue& json) noexcept
@@ -6,17 +7,17 @@ bool Gender::deserialize(const QJsonValue& json) noexcept
     QString v = json.toString();
     bool is_ok = false;
 
-    if (v == "m")
+    if (v == GenderType::gender_male)
     {
         current = GenderEnum::Male;
         is_ok = true;
     }
-    else if (v == "f")
+    else if (v == GenderType::gender_female)
     {
         current = GenderEnum::Female;
         is_ok = true;
     }
-    else if (v == "other")
+    else if (v == GenderType::gender_other)
     {
         current = GenderEnum::Other;
         is_ok = true;
@@ -31,13 +32,13 @@ QJsonValue Gender::serialize() const
     switch (current)
     {
         case GenderEnum::Male:
-            value = "m";
+            value = GenderType::gender_male;
             break;
         case GenderEnum::Female:
-            value = "f";
+            value = GenderType::gender_female;
             break;
         case GenderEnum::Other:
-            value = "other";
+            value = GenderType::gender_other;
             break;
     }
     return value;

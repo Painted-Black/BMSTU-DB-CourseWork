@@ -2,58 +2,59 @@
 #include <QDebug>
 
 #include "animalstate.h"
+#include "json_fields.h"
 
 bool AnimalState::deserialize(const QJsonObject &json) noexcept
 {
     bool cast = true;
-    state_id = json.value("state_id").toVariant().toULongLong(&cast);
+    state_id = json.value(AnimalStateJson::field_state_id).toVariant().toULongLong(&cast);
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'state_id' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalStateJson::field_state_id << "' field";
         return false;
     }
 
-    cast = general.deserialize(json.value("general").toObject());
+    cast = general.deserialize(json.value(AnimalStateJson::field_state_general).toObject());
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "invalid cast 'general' field";
+        qCritical() << Q_FUNC_INFO << "invalid cast '" << AnimalStateJson::field_state_general << "' field";
         return false;
     }
 
-    pulse = json.value("pulse").toVariant().toULongLong(&cast);
+    pulse = json.value(AnimalStateJson::field_state_pulse).toVariant().toULongLong(&cast);
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'pulse' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalStateJson::field_state_pulse << "' field";
         return false;
     }
 
-    weight = json.value("weight").toVariant().toFloat(&cast);
+    weight = json.value(AnimalStateJson::field_state_weight).toVariant().toFloat(&cast);
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'weight' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalStateJson::field_state_weight << "' field";
         return false;
     }
 
-    AP = json.value("ap").toString();
+    AP = json.value(AnimalStateJson::field_state_ap).toString();
 
-    temperature = json.value("temperature").toVariant().toFloat(&cast);
+    temperature = json.value(AnimalStateJson::field_state_temperature).toVariant().toFloat(&cast);
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'temperature' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalStateJson::field_state_temperature << "' field";
         return false;
     }
 
-    cfr = json.value("cfr").toVariant().toULongLong(&cast);
+    cfr = json.value(AnimalStateJson::field_state_cfr).toVariant().toULongLong(&cast);
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'cfr' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalStateJson::field_state_cfr << "' field";
         return false;
     }
 
-    resp_rate = json.value("resp_rate").toVariant().toULongLong(&cast);
+    resp_rate = json.value(AnimalStateJson::field_state_resp_rate).toVariant().toULongLong(&cast);
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'resp_rate' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalStateJson::field_state_resp_rate << "' field";
         return false;
     }
     return true;
@@ -62,14 +63,14 @@ bool AnimalState::deserialize(const QJsonObject &json) noexcept
 QJsonObject AnimalState::serialize() const
 {
     QJsonObject root_obj;
-    root_obj.insert("staff_id", QJsonValue::fromVariant(QVariant::fromValue(state_id)));
-    root_obj.insert("general", QVariant(general.serialize()).toJsonValue());
-    root_obj.insert("pulse", QJsonValue::fromVariant(QVariant::fromValue(pulse)));
-    root_obj.insert("weight", QJsonValue::fromVariant(QVariant::fromValue(weight)));
-    root_obj.insert("ap", QJsonValue::fromVariant(QVariant::fromValue(AP)));
-    root_obj.insert("temperature", QJsonValue::fromVariant(QVariant::fromValue(temperature)));
-    root_obj.insert("cfr", QJsonValue::fromVariant(QVariant::fromValue(cfr)));
-    root_obj.insert("resp_rate", QJsonValue::fromVariant(QVariant::fromValue(resp_rate)));
+    root_obj.insert(AnimalStateJson::field_state_id, QJsonValue::fromVariant(QVariant::fromValue(state_id)));
+    root_obj.insert(AnimalStateJson::field_state_general, QVariant(general.serialize()).toJsonValue());
+    root_obj.insert(AnimalStateJson::field_state_pulse, QJsonValue::fromVariant(QVariant::fromValue(pulse)));
+    root_obj.insert(AnimalStateJson::field_state_weight, QJsonValue::fromVariant(QVariant::fromValue(weight)));
+    root_obj.insert(AnimalStateJson::field_state_ap, QJsonValue::fromVariant(QVariant::fromValue(AP)));
+    root_obj.insert(AnimalStateJson::field_state_temperature, QJsonValue::fromVariant(QVariant::fromValue(temperature)));
+    root_obj.insert(AnimalStateJson::field_state_cfr, QJsonValue::fromVariant(QVariant::fromValue(cfr)));
+    root_obj.insert(AnimalStateJson::field_state_resp_rate, QJsonValue::fromVariant(QVariant::fromValue(resp_rate)));
     return root_obj;
 }
 
@@ -152,17 +153,17 @@ bool GeneralState::deserialize(const QJsonValue &json) noexcept
 {
     bool is_ok = false;
     QString v = json.toString();
-    if (v == "middle")
+    if (v == GeneralStateType::general_state_middle)
     {
         current = GeneralStateEnum::Middle;
         is_ok = true;
     }
-    else if (v == "good")
+    else if (v == GeneralStateType::general_state_good)
     {
         current = GeneralStateEnum::Good;
         is_ok = true;
     }
-    else if (v == "bad")
+    else if (v == GeneralStateType::general_state_bad)
     {
         current = GeneralStateEnum::Bad;
         is_ok = true;
@@ -176,13 +177,13 @@ QJsonValue GeneralState::serialize() const
     switch (current)
     {
         case GeneralStateEnum::Middle:
-            value = "middle";
+            value = GeneralStateType::general_state_middle;
             break;
         case GeneralStateEnum::Good:
-            value = "good";
+            value = GeneralStateType::general_state_good;
             break;
         case GeneralStateEnum::Bad:
-            value = "bad";
+            value = GeneralStateType::general_state_bad;
             break;
     }
     return value;

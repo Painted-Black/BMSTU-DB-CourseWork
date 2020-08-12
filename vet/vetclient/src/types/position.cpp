@@ -2,30 +2,23 @@
 #include <QDebug>
 
 #include "position.h"
-
-
-
-Position::Position()
-	: id(10)
-{
-
-}
+#include "json_fields.h"
 
 bool Position::deserialize(const QJsonObject &obj) noexcept
 {
 	bool cast = true;
-	id = obj.value("pos_id").toVariant().toULongLong(&cast);
+    id = obj.value(PositionJson::field_pos_id).toVariant().toULongLong(&cast);
 	if (cast == false)
 	{
-		qCritical() << Q_FUNC_INFO << "Invalid cast 'pos_id' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << PositionJson::field_pos_id << "' field";
 		return false;
 	}
 
-	title = obj.value("title").toString();
-	salary = obj.value("salary").toVariant().toUInt(&cast);
+    title = obj.value(PositionJson::field_pos_title).toString();
+    salary = obj.value(PositionJson::field_pos_salary).toVariant().toUInt(&cast);
 	if (cast == false)
 	{
-		qCritical() << Q_FUNC_INFO << "Invalid cast 'salary' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << PositionJson::field_pos_salary << "' field";
 		return false;
 	}
 
@@ -35,9 +28,9 @@ bool Position::deserialize(const QJsonObject &obj) noexcept
 QJsonObject Position::serialize() const
 {
 	QJsonObject root_obj;
-	root_obj.insert("pos_id", QJsonValue::fromVariant(QVariant::fromValue(id)));
-	root_obj.insert("title", QJsonValue(title));
-	root_obj.insert("salary", QJsonValue::fromVariant(QVariant::fromValue(salary)));
+    root_obj.insert(PositionJson::field_pos_id, QJsonValue::fromVariant(QVariant::fromValue(id)));
+    root_obj.insert(PositionJson::field_pos_title, QJsonValue(title));
+    root_obj.insert(PositionJson::field_pos_salary, QJsonValue::fromVariant(QVariant::fromValue(salary)));
 	return root_obj;
 }
 

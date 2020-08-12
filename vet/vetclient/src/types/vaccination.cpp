@@ -2,46 +2,47 @@
 #include <QDebug>
 
 #include "vaccination.h"
+#include "json_fields.h"
 
 bool Vaccination::deserialize(const QJsonObject &json) noexcept
 {
     bool cast = true;
-    vac_id = json.value("vac_id").toVariant().toULongLong(&cast);
+    vac_id = json.value(VaccinationJson::field_vac_id).toVariant().toULongLong(&cast);
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'staff_id' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << VaccinationJson::field_vac_id << "' field";
         return false;
     }
 
-    if (against.deserialize(json.value("against")) == false)
+    if (against.deserialize(json.value(VaccinationJson::field_vac_against)) == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'against' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << VaccinationJson::field_vac_against << "' field";
         return false;
     }
 
-    reg_num = json.value("reg_num").toString();
+    reg_num = json.value(VaccinationJson::field_vac_reg_num).toString();
 
-    vac_date = QDate::fromString(json.value("vac_date").toString(), Qt::ISODate);
+    vac_date = QDate::fromString(json.value(VaccinationJson::field_vac_vac_date).toString(), Qt::ISODate);
     if (vac_date.isValid() == false)
     {
-        qCritical() << Q_FUNC_INFO << "invalid cast 'vac_date' field";
+        qCritical() << Q_FUNC_INFO << "invalid cast '" << VaccinationJson::field_vac_vac_date << "' field";
         return false;
     }
 
     // may be invalid
-    next_vac = QDate::fromString(json.value("next_vac").toString(), Qt::ISODate);
+    next_vac = QDate::fromString(json.value(VaccinationJson::field_vac_next_vac).toString(), Qt::ISODate);
 
-    cast = animal.deserialize(json.value("animal").toObject());
+    cast = animal.deserialize(json.value(VaccinationJson::field_vac_animal).toObject());
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "invalid cast 'animal' field";
+        qCritical() << Q_FUNC_INFO << "invalid cast '" << VaccinationJson::field_vac_animal << "' field";
         return false;
     }
 
-    cast = vet.deserialize(json.value("vet").toObject());
+    cast = vet.deserialize(json.value(VaccinationJson::field_vac_vet).toObject());
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "invalid cast 'vet' field";
+        qCritical() << Q_FUNC_INFO << "invalid cast '" << VaccinationJson::field_vac_vet << "' field";
         return false;
     }
 
@@ -51,13 +52,13 @@ bool Vaccination::deserialize(const QJsonObject &json) noexcept
 QJsonObject Vaccination::serialize() const
 {
     QJsonObject root_obj;
-    root_obj.insert("vac_id", QJsonValue::fromVariant(QVariant::fromValue(vac_id)));
-    root_obj.insert("against", QVariant(against.serialize()).toJsonValue());
-    root_obj.insert("reg_num", QJsonValue(reg_num));
-    root_obj.insert("vac_date", QJsonValue(vac_date.toString(Qt::ISODate)));
-    root_obj.insert("next_vac", QJsonValue(next_vac.toString(Qt::ISODate)));
-    root_obj.insert("animal", animal.serialize());
-    root_obj.insert("vet", vet.serialize());
+    root_obj.insert(VaccinationJson::field_vac_id, QJsonValue::fromVariant(QVariant::fromValue(vac_id)));
+    root_obj.insert(VaccinationJson::field_vac_against, QVariant(against.serialize()).toJsonValue());
+    root_obj.insert(VaccinationJson::field_vac_reg_num, QJsonValue(reg_num));
+    root_obj.insert(VaccinationJson::field_vac_vac_date, QJsonValue(vac_date.toString(Qt::ISODate)));
+    root_obj.insert(VaccinationJson::field_vac_next_vac, QJsonValue(next_vac.toString(Qt::ISODate)));
+    root_obj.insert(VaccinationJson::field_vac_animal, animal.serialize());
+    root_obj.insert(VaccinationJson::field_vac_vet, vet.serialize());
     return root_obj;
 }
 
@@ -130,12 +131,12 @@ bool VaccinationAgainst::deserialize(const QJsonValue &json) noexcept
 {
     QString v = json.toString();
     bool is_ok = false;
-    if (v == "rab")
+    if (v == VaccinationAgainstType::vacc_against_rab)
     {
         current = VaccinationAgainstEnum::Rab;
         is_ok = true;
     }
-    else if (v == "inf")
+    else if (v == VaccinationAgainstType::vacc_against_inf)
     {
         current = VaccinationAgainstEnum::Inf;
         is_ok = true;
@@ -149,10 +150,10 @@ QJsonValue VaccinationAgainst::serialize() const
     switch (current)
     {
         case VaccinationAgainstEnum::Rab:
-            value = "rab";
+            value = VaccinationAgainstType::vacc_against_rab;
             break;
         case VaccinationAgainstEnum::Inf:
-            value = "inf";
+            value = VaccinationAgainstType::vacc_against_inf;
             break;
     }
     return value;

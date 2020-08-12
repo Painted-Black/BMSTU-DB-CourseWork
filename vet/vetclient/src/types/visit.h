@@ -8,6 +8,7 @@
 #include "staff.h"
 #include "animal_medical_record.h"
 #include "animalstate.h"
+#include "prescribings.h"
 
 class OwnerDynamic : public ISerializable<QJsonValue>
 {
@@ -32,8 +33,37 @@ private:
 class Visit : public ISerializable<QJsonObject>
 {
 public:
-    bool deserialize(const QJsonObject &) noexcept override;
+    bool deserialize(const QJsonObject &json) noexcept override;
     QJsonObject serialize() const override;
+
+    uint64_t getVis_id() const;
+    Staff getDoctor() const;
+    AnimalMedicalRecord getAnimal() const;
+    bool getAmbulatury() const;
+    QDate getVisit_date() const;
+    OwnerDynamic getOwner_dynamics() const;
+    QString getHistory_disease() const;
+    AnimalState getCur_state() const;
+    QString getDiagnosis() const;
+    QString getRecommendations() const;
+    QDate getNext_visit() const;
+    Prescribings getPrescribings() const;
+    bool getInitial() const;
+    QString getNote() const;
+
+    void setDoctor(const Staff &value);
+    void setAnimal(const AnimalMedicalRecord &value);
+    void setAmbulatury(bool value);
+    void setVisit_date(const QDate &value);
+    void setOwner_dynamics(const OwnerDynamic &value);
+    void setHistory_disease(const QString &value);
+    void setCur_state(const AnimalState &value);
+    void setDiagnosis(const QString &value);
+    void setRecommendations(const QString &value);
+    void setNext_visit(const QDate &value);
+    void setPrescribings(const Prescribings &value);
+    void setInitial(bool value);
+    void setNote(const QString &value);
 
 private:
     uint64_t vis_id;
@@ -47,7 +77,7 @@ private:
     QString diagnosis;
     QString recommendations;
     QDate next_visit;
-
+    Prescribings prescribings;
     bool initial;
     QString note;
 };

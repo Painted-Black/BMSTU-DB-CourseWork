@@ -2,75 +2,74 @@
 #include <QDebug>
 
 #include "animal_medical_record.h"
+#include "json_fields.h"
 
 bool AnimalMedicalRecord::deserialize(const QJsonObject &json) noexcept
 {
     bool cast = true;
-    anim_id = json.value("anim_id").toVariant().toULongLong(&cast);
+    anim_id = json.value(AnimalMedicalRecordJson::field_anim_id).toVariant().toULongLong(&cast);
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'anim_id' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalMedicalRecordJson::field_anim_id << "' field";
         return false;
     }
 
-    name = json.value("name").toString();
+    name = json.value(AnimalMedicalRecordJson::field_anim_name).toString();
 
-    breed = json.value("breed").toString();
+    breed = json.value(AnimalMedicalRecordJson::field_anim_breed).toString();
 
-    species = json.value("species").toString();
+    species = json.value(AnimalMedicalRecordJson::field_anim_species).toString();
 
-    species = json.value("species").toString();
-
-    if (sex.deserialize(json.value("sex")) == false)
+    if (sex.deserialize(json.value(AnimalMedicalRecordJson::field_anim_sex)) == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'sex' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalMedicalRecordJson::field_anim_sex << "' field";
         return false;
     }
 
-    castrated = json.value("castrated").toVariant().toBool();
+    castrated = json.value(AnimalMedicalRecordJson::field_anim_castrated).toVariant().toBool();
 
-    birth = QDate::fromString(json.value("birth").toString(), Qt::ISODate);
+    birth = QDate::fromString(json.value(AnimalMedicalRecordJson::field_anim_birth).toString(), Qt::ISODate);
     if (birth.isValid() == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'birth' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalMedicalRecordJson::field_anim_birth << "' field";
         return false;
     }
 
-    other_data = json.value("other_data").toString();
+    other_data = json.value(AnimalMedicalRecordJson::field_anim_other_data).toString();
 
-    color = json.value("color").toString();
+    color = json.value(AnimalMedicalRecordJson::field_anim_color).toString();
 
-    special_signs = json.value("special_signs").toString();
+    special_signs = json.value(AnimalMedicalRecordJson::field_anim_specil_signs).toString();
 
-    registr_date = QDate::fromString(json.value("registr_date").toString(), Qt::ISODate);
+    registr_date = QDate::fromString(json.value(AnimalMedicalRecordJson::field_anim_registr_date).toString(), Qt::ISODate);
     if (registr_date.isValid() == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'registr_date' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalMedicalRecordJson::field_anim_registr_date << "' field";
         return false;
     }
 
-    last_visit = QDate::fromString(json.value("last_visit").toString(), Qt::ISODate);
+    last_visit = QDate::fromString(json.value(AnimalMedicalRecordJson::field_anim_last_visit).toString(), Qt::ISODate);
     if (last_visit.isValid() == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'last_visit' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalMedicalRecordJson::field_anim_last_visit << "' field";
         return false;
     }
 
-    cast = chip.deserialize(json.value("chip_id").toObject());
+    cast = chip.deserialize(json.value(AnimalMedicalRecordJson::field_anim_chip_id).toObject());
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "invalid cast 'chip_id' field";
+        qCritical() << Q_FUNC_INFO << "invalid cast '" << AnimalMedicalRecordJson::field_anim_chip_id << "' field";
         return false;
     }
 
-    cast = contract.deserialize(json.value("contract").toObject());
+    cast = contract.deserialize(json.value(AnimalMedicalRecordJson::field_anim_contract).toObject());
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "invalid cast 'contract' field";
+        qCritical() << Q_FUNC_INFO << "invalid cast '" << AnimalMedicalRecordJson::field_anim_contract << "' field";
         return false;
     }
 
-    rel_path_to_photo = json.value("rel_path_to_photo").toString();
+    rel_path_to_photo = json.value(AnimalMedicalRecordJson::field_anim_rel_path_to_photo).toString();
 
     return true;
 }
@@ -78,21 +77,21 @@ bool AnimalMedicalRecord::deserialize(const QJsonObject &json) noexcept
 QJsonObject AnimalMedicalRecord::serialize() const
 {
     QJsonObject root_obj;
-    root_obj.insert("anim_id", QJsonValue::fromVariant(QVariant::fromValue(anim_id)));
-    root_obj.insert("name", QJsonValue(name));
-    root_obj.insert("breed", QJsonValue(breed));
-    root_obj.insert("species", QJsonValue(species));
-    root_obj.insert("sex", QVariant(sex.serialize()).toJsonValue());
-    root_obj.insert("castrated", QJsonValue::fromVariant(QVariant::fromValue(castrated)));
-    root_obj.insert("birth", QJsonValue(birth.toString(Qt::ISODate)));
-    root_obj.insert("other_data", QJsonValue(other_data));
-    root_obj.insert("color", QJsonValue(color));
-    root_obj.insert("special_signs", QJsonValue(special_signs));
-    root_obj.insert("registr_date", QJsonValue(registr_date.toString(Qt::ISODate)));
-    root_obj.insert("last_visit", QJsonValue(last_visit.toString(Qt::ISODate)));
-    root_obj.insert("chip_id", QVariant(chip.serialize()).toJsonValue());
-    root_obj.insert("contract", QVariant(contract.serialize()).toJsonValue());
-    root_obj.insert("rel_path_to_photo", QJsonValue(rel_path_to_photo));
+    root_obj.insert(AnimalMedicalRecordJson::field_anim_id, QJsonValue::fromVariant(QVariant::fromValue(anim_id)));
+    root_obj.insert(AnimalMedicalRecordJson::field_anim_name, QJsonValue(name));
+    root_obj.insert(AnimalMedicalRecordJson::field_anim_breed, QJsonValue(breed));
+    root_obj.insert(AnimalMedicalRecordJson::field_anim_species, QJsonValue(species));
+    root_obj.insert(AnimalMedicalRecordJson::field_anim_sex, QVariant(sex.serialize()).toJsonValue());
+    root_obj.insert(AnimalMedicalRecordJson::field_anim_castrated, QJsonValue::fromVariant(QVariant::fromValue(castrated)));
+    root_obj.insert(AnimalMedicalRecordJson::field_anim_birth, QJsonValue(birth.toString(Qt::ISODate)));
+    root_obj.insert(AnimalMedicalRecordJson::field_anim_other_data, QJsonValue(other_data));
+    root_obj.insert(AnimalMedicalRecordJson::field_anim_color, QJsonValue(color));
+    root_obj.insert(AnimalMedicalRecordJson::field_anim_specil_signs, QJsonValue(special_signs));
+    root_obj.insert(AnimalMedicalRecordJson::field_anim_registr_date, QJsonValue(registr_date.toString(Qt::ISODate)));
+    root_obj.insert(AnimalMedicalRecordJson::field_anim_last_visit, QJsonValue(last_visit.toString(Qt::ISODate)));
+    root_obj.insert(AnimalMedicalRecordJson::field_anim_chip_id, QVariant(chip.serialize()).toJsonValue());
+    root_obj.insert(AnimalMedicalRecordJson::field_anim_contract, QVariant(contract.serialize()).toJsonValue());
+    root_obj.insert(AnimalMedicalRecordJson::field_anim_rel_path_to_photo, QJsonValue(rel_path_to_photo));
     return root_obj;
 }
 

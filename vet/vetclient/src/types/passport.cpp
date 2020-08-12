@@ -2,59 +2,60 @@
 #include <QDebug>
 
 #include "passport.h"
+#include "json_fields.h"
 
 bool Passport::deserialize(const QJsonObject &obj) noexcept
 {
     bool cast = true;
-    id = obj.value("pass_id").toVariant().toULongLong(&cast);
+    id = obj.value(PassportJson::field_pass_id).toVariant().toULongLong(&cast);
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'pass_id' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << PassportJson::field_pass_id << "' field";
         return false;
     }
 
-    surname = obj.value("surname").toString();
-    name = obj.value("name").toString();
-    patronymic = obj.value("patronymic").toString();
+    surname = obj.value(PassportJson::field_pass_surname).toString();
+    name = obj.value(PassportJson::field_pass_name).toString();
+    patronymic = obj.value(PassportJson::field_pass_patronymic).toString();
 
-    if (gender.deserialize(obj.value("sex")) == false)
+    if (gender.deserialize(obj.value(PassportJson::field_pass_sex)) == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'gender' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << PassportJson::field_pass_sex << "' field";
         return false;
     }
     // 2020-12-20T12:40:40 (yyyy-mm-ddThh:MM:ss)
-    birthday = QDate::fromString(obj.value("birth").toString(), Qt::ISODate);
+    birthday = QDate::fromString(obj.value(PassportJson::field_pass_birth).toString(), Qt::ISODate);
     if (birthday.isValid() == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'birth' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << PassportJson::field_pass_birth << "' field";
         return false;
     }
 
-    QString num = obj.value("num").toString();
+    QString num = obj.value(PassportJson::field_pass_num).toString();
     std::copy(num.cbegin(), num.cend(), passport_num.begin());
-    issue_date = QDate::fromString(obj.value("issue_date").toString(), Qt::ISODate);
+    issue_date = QDate::fromString(obj.value(PassportJson::field_pass_issue_date).toString(), Qt::ISODate);
     if (issue_date.isValid() == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'issue_date' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << PassportJson::field_pass_issue_date <<"' field";
         return false;
     }
 
-    nationality = obj.value("nationality").toString();
+    nationality = obj.value(PassportJson::field_pass_nationality).toString();
     return true;
 }
 
 QJsonObject Passport::serialize() const
 {
     QJsonObject root_obj;
-    root_obj.insert("pass_id", QJsonValue::fromVariant(QVariant::fromValue(id)));
-    root_obj.insert("surname", QJsonValue(surname));
-    root_obj.insert("name", QJsonValue(name));
-    root_obj.insert("patronymic", QJsonValue(patronymic));
-    root_obj.insert("sex", QVariant(gender.serialize()).toJsonValue());
-    root_obj.insert("birth", QJsonValue(birthday.toString(Qt::ISODate)));
-    root_obj.insert("issue_date", QJsonValue(issue_date.toString(Qt::ISODate)));
-    root_obj.insert("nationality", QJsonValue(nationality));
-    root_obj.insert("num", QJsonValue(QString(passport_num.data(),
+    root_obj.insert(PassportJson::field_pass_id, QJsonValue::fromVariant(QVariant::fromValue(id)));
+    root_obj.insert(PassportJson::field_pass_surname, QJsonValue(surname));
+    root_obj.insert(PassportJson::field_pass_name, QJsonValue(name));
+    root_obj.insert(PassportJson::field_pass_patronymic, QJsonValue(patronymic));
+    root_obj.insert(PassportJson::field_pass_sex, QVariant(gender.serialize()).toJsonValue());
+    root_obj.insert(PassportJson::field_pass_birth, QJsonValue(birthday.toString(Qt::ISODate)));
+    root_obj.insert(PassportJson::field_pass_issue_date, QJsonValue(issue_date.toString(Qt::ISODate)));
+    root_obj.insert(PassportJson::field_pass_nationality, QJsonValue(nationality));
+    root_obj.insert(PassportJson::field_pass_num, QJsonValue(QString(passport_num.data(),
                                               static_cast<int>(passport_num.size()))));
     return root_obj;
 }

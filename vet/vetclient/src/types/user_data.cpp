@@ -1,26 +1,28 @@
 #include <QVariant>
+
 #include "user_data.h"
+#include "json_fields.h"
 
 bool AccessLevel::deserialize(const QJsonValue & v) noexcept
 {
 	QString value = v.toString();
 	bool is_ok = false;
-	if (value == "vet")
+    if (value == AccessLevelType::access_vet)
 	{
 		current = AccessLevelEnum::Vet;
 		is_ok = true;
 	}
-	else if (value == "main")
+    else if (value == AccessLevelType::access_main)
 	{
 		current = AccessLevelEnum::Main;
 		is_ok = true;
 	}
-	else if (value == "admin")
+    else if (value == AccessLevelType::access_admin)
 	{
 		current = AccessLevelEnum::Admin;
 		is_ok = true;
 	}
-	else if (value == "registry")
+    else if (value == AccessLevelType::access_registry)
 	{
 		current = AccessLevelEnum::Registry;
 		is_ok = true;
@@ -35,16 +37,16 @@ QJsonValue AccessLevel::serialize() const
 	switch (current)
 	{
 		case AccessLevelEnum::Vet:
-			value = QJsonValue("vet");
+            value = QJsonValue(AccessLevelType::access_vet);
 			break;
 		case AccessLevelEnum::Main:
-			value = QJsonValue("main");
+            value = QJsonValue(AccessLevelType::access_main);
 			break;
 		case AccessLevelEnum::Admin:
-			value = QJsonValue("admin");
+            value = QJsonValue(AccessLevelType::access_admin);
 			break;
 		case AccessLevelEnum::Registry:
-			value = QJsonValue("registry");
+            value = QJsonValue(AccessLevelType::access_registry);
 			break;
 	}
 
@@ -56,21 +58,21 @@ bool AccessData::deserialize(const QByteArray & data) noexcept
     bool ok = true;
 
     const QJsonObject& document = QJsonDocument::fromJson(data).object();
-    uid = document.value("acc_id").toVariant().toULongLong(&ok);
-    login = document.value("login").toString();
-    password = document.value("password").toVariant().toByteArray();
-    ok &= owner.deserialize(document.value("employee").toObject());
-    ok &= level.deserialize(document.value("access_level").toObject());
+    uid = document.value(AccessJson::field_acc_id).toVariant().toULongLong(&ok);
+    login = document.value(AccessJson::field_acc_login).toString();
+    password = document.value(AccessJson::field_acc_password).toVariant().toByteArray();
+    ok &= owner.deserialize(document.value(AccessJson::field_acc_employee).toObject());
+    ok &= level.deserialize(document.value(AccessJson::field_acc_access_level).toObject());
     return ok;
 }
 
 QByteArray AccessData::serialize() const
 {
     QJsonObject root;
-    root.insert("acc_id", QJsonValue::fromVariant(QVariant::fromValue(uid)));
-    root.insert("employee", owner.serialize());
-    root.insert("login", login);
-    root.insert("password", QJsonValue::fromVariant(password));
-    root.insert("access_level", level.serialize());
+    root.insert(AccessJson::field_acc_id, QJsonValue::fromVariant(QVariant::fromValue(uid)));
+    root.insert(AccessJson::field_acc_employee, owner.serialize());
+    root.insert(AccessJson::field_acc_login, login);
+    root.insert(AccessJson::field_acc_password, QJsonValue::fromVariant(password));
+    root.insert(AccessJson::field_acc_access_level, level.serialize());
     return QJsonDocument(root).toJson();
 }

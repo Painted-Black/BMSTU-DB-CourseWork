@@ -7,5 +7,5 @@ CREATE TABLE schedule(
     "type" VARCHAR(256) NOT NULL,
     "start" TIMESTAMP NOT NULL,
     "end" TIMESTAMP NOT NULL,
-    cabinet VARCHAR(5)
+    cabinet VARCHAR(10)
 );

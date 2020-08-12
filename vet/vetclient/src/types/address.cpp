@@ -10,26 +10,26 @@ bool Address::deserialize(const QJsonObject &obj) noexcept
     id = obj.value(AddressJson::field_addr_id).toVariant().toULongLong(&cast);
     if (cast == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast 'addr_id' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast  '" << AddressJson::field_addr_id <<"' field";
         return false;
     }
-    country = obj.value("country").toString();
-    city = obj.value("city").toString();
-    street = obj.value("street").toString();
-    house = obj.value("house").toString();
-    flat = obj.value("flat").toString();
+    country = obj.value(AddressJson::field_addr_country).toString();
+    city = obj.value(AddressJson::field_addr_city).toString();
+    street = obj.value(AddressJson::field_addr_street).toString();
+    house = obj.value(AddressJson::field_addr_house).toString();
+    flat = obj.value(AddressJson::field_addr_flat).toString();
     return true;
 }
 
 QJsonObject Address::serialize() const
 {
     QJsonObject root_obj;
-    root_obj.insert("addr_id", QJsonValue::fromVariant(QVariant::fromValue(id)));
-    root_obj.insert("country", QJsonValue(country));
-    root_obj.insert("city", QJsonValue(city));
-    root_obj.insert("street", QJsonValue(street));
-    root_obj.insert("house", QJsonValue(house));
-    root_obj.insert("flat", QJsonValue(flat));
+    root_obj.insert(AddressJson::field_addr_id, QJsonValue::fromVariant(QVariant::fromValue(id)));
+    root_obj.insert(AddressJson::field_addr_country, QJsonValue(country));
+    root_obj.insert(AddressJson::field_addr_city, QJsonValue(city));
+    root_obj.insert(AddressJson::field_addr_street, QJsonValue(street));
+    root_obj.insert(AddressJson::field_addr_house, QJsonValue(house));
+    root_obj.insert(AddressJson::field_addr_flat, QJsonValue(flat));
     return root_obj;
 }
 
