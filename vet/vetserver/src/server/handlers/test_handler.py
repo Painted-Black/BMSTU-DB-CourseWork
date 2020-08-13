@@ -12,4 +12,4 @@ class TestHandler(AbstractHandler):
 		print(req.data)
 
 	def endpoint_names(self):
-		return ["/test"]
+		return [["/test"], ["GET"]]

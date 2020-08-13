@@ -53,11 +53,9 @@ QJsonValue AccessLevel::serialize() const
 	return value;
 }
 
-bool AccessData::deserialize(const QByteArray & data) noexcept
+bool AccessData::deserialize(const QJsonObject &document) noexcept
 {
     bool ok = true;
-
-    const QJsonObject& document = QJsonDocument::fromJson(data).object();
     uid = document.value(AccessJson::field_acc_id).toVariant().toULongLong(&ok);
     login = document.value(AccessJson::field_acc_login).toString();
     password = document.value(AccessJson::field_acc_password).toVariant().toByteArray();
@@ -66,7 +64,7 @@ bool AccessData::deserialize(const QByteArray & data) noexcept
     return ok;
 }
 
-QByteArray AccessData::serialize() const
+QJsonObject AccessData::serialize() const
 {
     QJsonObject root;
     root.insert(AccessJson::field_acc_id, QJsonValue::fromVariant(QVariant::fromValue(uid)));
@@ -74,5 +72,5 @@ QByteArray AccessData::serialize() const
     root.insert(AccessJson::field_acc_login, login);
     root.insert(AccessJson::field_acc_password, QJsonValue::fromVariant(password));
     root.insert(AccessJson::field_acc_access_level, level.serialize());
-    return QJsonDocument(root).toJson();
+    return root;
 }

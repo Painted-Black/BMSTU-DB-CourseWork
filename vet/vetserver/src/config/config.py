@@ -16,6 +16,15 @@ class Config(object):
 	def get_repeat_number(self):
 		return int(self.__parser["SERVER"]["repeat"])
 
+	def get_ttl_key_hours(self):
+		return int(self.__parser["SERVER"]["key_ttl_h"])
+
+	def get_routes_auth(self):
+		return [str(self.__parser["ROUTES"]["post_auth"])]
+
+	def get_routes_schedule(self):
+		return [str(self.__parser["ROUTES"]["post_schedule"])]
+
 	def get_conn_info(self):
 		driver=self.__parser["DATABASE"]["driver"]
 		server=self.__parser["DATABASE"]["server"]

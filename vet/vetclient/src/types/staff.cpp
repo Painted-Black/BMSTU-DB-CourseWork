@@ -79,38 +79,32 @@ bool Staff::deserialize(const QJsonObject & json) noexcept
 	if (cast == false)
 	{
         qCritical() << Q_FUNC_INFO << "Invalid cast '" << StaffJson::field_staff_id << "' field";
-		return false;
 	}
 
     cast = passport.deserialize(json.value(StaffJson::field_staff_passport).toObject());
 	if (cast == false)
 	{
         qCritical() << Q_FUNC_INFO << "invalid cast '" << StaffJson::field_staff_passport << "' field";
-		return false;
 	}
 
     cast = position.deserialize(json.value(StaffJson::field_staff_position).toObject());
 	if (cast == false)
 	{
         qCritical() << Q_FUNC_INFO << "invalid cast '" << StaffJson::field_staff_position << "' field";
-		return false;
 	}
 
     cast = edu_level.deserialize(json.value(StaffJson::field_staff_edu_level));
 	if (cast == false)
 	{
         qCritical() << Q_FUNC_INFO << "invalid cast '" << StaffJson::field_staff_edu_level << "' field";
-		return false;
 	}
 
-	/* May be invalid */
     fire_date = QDate::fromString(json.value(StaffJson::field_staff_fire_date).toString(), Qt::ISODate);
 
     employ_date = QDate::fromString(json.value(StaffJson::field_staff_employ_date).toString(), Qt::ISODate);
 	if (employ_date.isValid() == false)
 	{
         qCritical() << Q_FUNC_INFO << "invalid cast '" << StaffJson::field_staff_employ_date << "' field";
-		return false;
 	}
 
 	return true;

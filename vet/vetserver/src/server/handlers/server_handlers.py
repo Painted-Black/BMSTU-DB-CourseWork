@@ -47,4 +47,4 @@ class TableHandler(AbstractHandler):
 
 
 	def endpoint_names(self):
-		return ["/table/all"]
+		return [["/table/all"], ['GET']]

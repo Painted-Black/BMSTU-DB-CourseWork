@@ -22,11 +22,11 @@ private:
 	AccessLevelEnum current;
 };
 
-class AccessData final : public ISerializable<QByteArray>
+class AccessData final : public ISerializable<QJsonObject>
 {
 public:
-	virtual bool deserialize(const QByteArray &) noexcept override;
-	virtual QByteArray serialize() const override;
+    virtual bool deserialize(const QJsonObject &) noexcept override;
+    virtual QJsonObject serialize() const override;
 
 private:
 	uint64_t uid;

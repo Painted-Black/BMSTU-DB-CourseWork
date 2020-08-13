@@ -64,6 +64,12 @@ void Auth::cb_request_auth(uint32_t code, std::unique_ptr<QByteArray> data)
     }
     else
     {
+        auth_data = ProxyAuth::deserialize(*data);
         accept();
     }
+}
+
+std::tuple<Staff, AccessData, Passport, QByteArray> Auth::getAuthData() const
+{
+    return auth_data;
 }

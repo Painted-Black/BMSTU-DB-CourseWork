@@ -27,6 +27,7 @@ SOURCES += \
 	types/passport.cpp \
 	types/position.cpp \
 	types/prescribings.cpp \
+	types/proxy_auth.cpp \
 	types/shedule.cpp \
 	types/staff.cpp \
 	types/user_data.cpp \
@@ -53,6 +54,7 @@ HEADERS += \
 	types/passport.h \
 	types/position.h \
 	types/prescribings.h \
+	types/proxy_auth.h \
 	types/shedule.h \
 	types/staff.h \
 	types/user_data.h \

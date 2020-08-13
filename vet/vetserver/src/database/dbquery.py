@@ -15,6 +15,8 @@ class DBQuery(object):
 		return l
 
 	def execQuery(self, query = ""):
+		print("QUERY:")
+		print(query)
 		if query != "":
 			self.query_buffer=query
 
