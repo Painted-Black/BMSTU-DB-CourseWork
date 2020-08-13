@@ -15,6 +15,9 @@ public:
     bool deserialize(const QJsonObject &json) noexcept override;
     QJsonObject serialize() const override;
 
+    bool isSoftInit() const;
+    bool isInit() const;
+
     uint64_t getAnim_id() const;
     QString getName() const;
     QString getBreed() const;
@@ -45,16 +48,15 @@ public:
     void setChip(const Microchip &value);
     void setContract(const Contract &value);
     void setRel_path_to_photo(const QString &value);
+private:
 
 
 private:
-    QMap<QString, QJsonValue> values;
     uint64_t anim_id;
     QString name;
     QString breed;
     QString species;
     Gender sex;
-    bool castrated;
     QDate birth;
     QString other_data;
     QString color;
@@ -64,5 +66,8 @@ private:
     Microchip chip;
     Contract contract;
     QString rel_path_to_photo;
+    bool castrated;
+    bool init_soft;
+    bool init_full;
 };
 

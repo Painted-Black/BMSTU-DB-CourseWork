@@ -478,8 +478,8 @@
     <property name="title">
      <string>Меню</string>
     </property>
-    <addaction name="action_3"/>
-    <addaction name="action_4"/>
+    <addaction name="acc_info_action"/>
+    <addaction name="log_out_action"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -512,12 +512,12 @@
     <string>m</string>
    </property>
   </action>
-  <action name="action_3">
+  <action name="acc_info_action">
    <property name="text">
     <string>Аккаунт</string>
    </property>
   </action>
-  <action name="action_4">
+  <action name="log_out_action">
    <property name="text">
     <string>Выйти</string>
    </property>

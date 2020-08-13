@@ -1,4 +1,5 @@
-QT       += core gui
+QT       += core gui \
+    quick
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,6 +14,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
 	core/animal_edit_widget.cpp \
 	core/animal_list_item_widget.cpp \
+	core/auth.cpp \
 	core/mainwindow.cpp \
 	main.cpp \
 	types/address.cpp \
@@ -36,6 +38,7 @@ HEADERS += \
 	core/ISerializable.h \
 	core/animal_edit_widget.h \
 	core/animal_list_item_widget.h \
+	core/auth.h \
 	core/mainwindow.h \
 	types/QJsonHeaders.h \
 	types/address.h \

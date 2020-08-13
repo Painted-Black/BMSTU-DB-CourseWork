@@ -7,67 +7,35 @@
 bool AnimalMedicalRecord::deserialize(const QJsonObject &json) noexcept
 {
     bool cast = true;
-    if (json.contains(AnimalMedicalRecordJson::field_anim_id))
+    anim_id = json.value(AnimalMedicalRecordJson::field_anim_id).toVariant().toULongLong(&cast);
+    if (cast == false)
     {
-        anim_id = json.value(AnimalMedicalRecordJson::field_anim_id).toVariant().toULongLong(&cast);
-        if (cast == false)
-        {
-            qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalMedicalRecordJson::field_anim_id << "' field";
-            return false;
-        }
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalMedicalRecordJson::field_anim_id << "' field";
+        return false;
     }
 
-    if (json.contains(AnimalMedicalRecordJson::field_anim_name))
-    {
-        name = json.value(AnimalMedicalRecordJson::field_anim_name).toString();
-    }
+    name = json.value(AnimalMedicalRecordJson::field_anim_name).toString();
+    breed = json.value(AnimalMedicalRecordJson::field_anim_breed).toString();
 
-    if (json.contains(AnimalMedicalRecordJson::field_anim_breed))
-    {
-        breed = json.value(AnimalMedicalRecordJson::field_anim_breed).toString();
-    }
-
-    if (json.contains(AnimalMedicalRecordJson::field_anim_species))
-    {
-        species = json.value(AnimalMedicalRecordJson::field_anim_species).toString();
-    }
-
-    if (json.contains(AnimalMedicalRecordJson::field_anim_sex))
-    {
-        if (sex.deserialize(json.value(AnimalMedicalRecordJson::field_anim_sex)) == false)
-        {
-            qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalMedicalRecordJson::field_anim_sex << "' field";
-            return false;
-        }
-    }
-
-
+    species = json.value(AnimalMedicalRecordJson::field_anim_species).toString();
     castrated = json.value(AnimalMedicalRecordJson::field_anim_castrated).toVariant().toBool();
-
     birth = QDate::fromString(json.value(AnimalMedicalRecordJson::field_anim_birth).toString(), Qt::ISODate);
-    if (birth.isValid() == false)
-    {
-        qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalMedicalRecordJson::field_anim_birth << "' field";
-        return false;
-    }
-
     other_data = json.value(AnimalMedicalRecordJson::field_anim_other_data).toString();
-
     color = json.value(AnimalMedicalRecordJson::field_anim_color).toString();
-
     special_signs = json.value(AnimalMedicalRecordJson::field_anim_specil_signs).toString();
-
     registr_date = QDate::fromString(json.value(AnimalMedicalRecordJson::field_anim_registr_date).toString(), Qt::ISODate);
-    if (registr_date.isValid() == false)
-    {
-        qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalMedicalRecordJson::field_anim_registr_date << "' field";
-        return false;
-    }
-
     last_visit = QDate::fromString(json.value(AnimalMedicalRecordJson::field_anim_last_visit).toString(), Qt::ISODate);
-    if (last_visit.isValid() == false)
+    rel_path_to_photo = json.value(AnimalMedicalRecordJson::field_anim_rel_path_to_photo).toString();
+
+    cast &= registr_date.isValid();
+    cast &= birth.isValid();
+    cast &= last_visit.isValid();
+
+    init_soft = cast;
+
+    if (sex.deserialize(json.value(AnimalMedicalRecordJson::field_anim_sex)) == false)
     {
-        qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalMedicalRecordJson::field_anim_last_visit << "' field";
+        qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalMedicalRecordJson::field_anim_sex << "' field";
         return false;
     }
 
@@ -85,9 +53,9 @@ bool AnimalMedicalRecord::deserialize(const QJsonObject &json) noexcept
         return false;
     }
 
-    rel_path_to_photo = json.value(AnimalMedicalRecordJson::field_anim_rel_path_to_photo).toString();
+    init_full = cast;
 
-    return true;
+    return cast;
 }
 
 QJsonObject AnimalMedicalRecord::serialize() const
@@ -109,6 +77,16 @@ QJsonObject AnimalMedicalRecord::serialize() const
     root_obj.insert(AnimalMedicalRecordJson::field_anim_contract, QVariant(contract.serialize()).toJsonValue());
     root_obj.insert(AnimalMedicalRecordJson::field_anim_rel_path_to_photo, QJsonValue(rel_path_to_photo));
     return root_obj;
+}
+
+bool AnimalMedicalRecord::isSoftInit() const
+{
+    return init_soft;
+}
+
+bool AnimalMedicalRecord::isInit() const
+{
+    return init_full;
 }
 
 uint64_t AnimalMedicalRecord::getAnim_id() const
