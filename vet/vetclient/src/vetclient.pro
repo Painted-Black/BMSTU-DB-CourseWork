@@ -1,8 +1,8 @@
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++14
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -11,6 +11,7 @@ CONFIG += c++11
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
+	core/fetcher.cpp \
 	main.cpp \
 	types/address.cpp \
 	types/animal_medical_record.cpp \
@@ -31,6 +32,7 @@ SOURCES += \
 
 HEADERS += \
 	core/ISerializable.h \
+	core/fetcher.h \
 	types/QJsonHeaders.h \
 	types/address.h \
 	types/animal_medical_record.h \

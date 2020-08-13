@@ -1,23 +1,28 @@
 #include <QApplication>
 #include <QDebug>
 #include <QFile>
+#include <QCryptographicHash>
+#include <QUuid>
 
 #include "utlis/utils.h"
 #include "types/staff.h"
 #include "types/address.h"
 #include "types/microchip.h"
+#include "core/fetcher.h"
+
+void cb (uint32_t, std::unique_ptr<QByteArray>);
 
 int main(int argc, char *argv[])
 {
-    //QApplication a(argc, argv);
+	QApplication a(argc, argv);
 
-    Microchip m;
-    m.setChip_num("122435");
-    m.setCountry("Russia");
-    m.setLocation("Back left leg");
-    QDate date(2020, 3, 5);
-    m.setImpl_date(date);
-    qDebug().noquote() << m.serialize();
+//    Microchip m;
+//    m.setChip_num("122435");
+//    m.setCountry("Russia");
+//    m.setLocation("Back left leg");
+//    QDate date(2020, 3, 5);
+//    m.setImpl_date(date);
+//    qDebug().noquote() << m.serialize();
 
 //	Position p;
 //	p.setTitle("Уборщик");
@@ -58,5 +63,5 @@ int main(int argc, char *argv[])
 //	stream << toJson(staff.serialize());
 //	f.close();
 
-    //return a.exec();
+	return a.exec();
 }
