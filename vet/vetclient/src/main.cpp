@@ -10,5 +10,8 @@ int main(int argc, char *argv[])
     {
         return 0;
     }
+    MainWindow mw;
+    mw.show();
+
     return a.exec();
 }

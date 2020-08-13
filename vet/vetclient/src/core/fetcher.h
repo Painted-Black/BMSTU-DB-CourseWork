@@ -14,15 +14,11 @@ class Fetcher : public QObject
 {
 	Q_OBJECT
 public:
-	using Callback = std::function<void(uint32_t, std::unique_ptr<QByteArray>)>;
+    using Callback = std::function<void(uint32_t, std::unique_ptr<QByteArray>)>;
 public:
 	Fetcher();
 
-	void httpGet(const QString&, Callback);
-	void httpPost(const QString&, const QByteArray&, Callback);
-	void httpPut(const QString&, const QByteArray&, Callback);
-
-	void httpGet(const QNetworkRequest&, Callback);
+    void httpGet(const QNetworkRequest&, Callback);
 	void httpPost(const QNetworkRequest&, const QByteArray&, Callback);
 	void httpPut(const QNetworkRequest&, const QByteArray&, Callback);
 	void httpDelete(const QNetworkRequest&req, Callback);
@@ -30,8 +26,9 @@ public:
 private:
 	void finish(QNetworkReply* rep);
 
+
 private:
 	std::unique_ptr<QNetworkAccessManager> manager;
-	QMap<QNetworkReply*, Callback> listeners;
+    QMap<QNetworkReply*, Callback> listeners;
 };
 
