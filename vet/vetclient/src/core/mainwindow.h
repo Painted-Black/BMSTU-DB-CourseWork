@@ -6,25 +6,25 @@
 
 namespace Ui
 {
-    class MainWindow;
+	class MainWindow;
 }
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+	explicit MainWindow(QWidget *parent = nullptr);
 
 private:
-    void runAnimalEditor();
+	void runAnimalEditor();
+	void addTab(const QIcon&, const QString&, std::tuple<uint64_t,  uint8_t> flags);
+	void closeTab(int);
 
 private:
-    Ui::MainWindow* ui;
-    QAction *acc_info_action;
-    QDockWidget* acc_info_widget;
+	Ui::MainWindow* ui;
 
 private slots:
-    void accInfo();
-    void exit();
+	void accInfo();
+	void exit();
 };
 

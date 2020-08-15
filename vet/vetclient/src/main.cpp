@@ -4,15 +4,15 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    Auth a_d;
-    if (a_d.exec() == QDialog::Rejected)
-    {
-        return 0;
-    }
+	QApplication a(argc, argv);
+	Auth a_d;
+	if (a_d.exec() == QDialog::Rejected)
+	{
+		return 0;
+	}
 
-    MainWindow mw;
-    mw.show();
+	MainWindow mw;
+	mw.show();
 
-    return a.exec();
+	return a.exec();
 }
