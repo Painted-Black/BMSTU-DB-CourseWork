@@ -2,6 +2,8 @@
 
 #include <QWidget>
 #include <QByteArray>
+#include <QNetworkAccessManager>
+
 #include "types/staff.h"
 #include "types/shedule.h"
 #include "types/user_data.h"
@@ -30,5 +32,6 @@ private:
     AccessData access_data;
     Passport passport;
     QByteArray key;
+    Shedule shedule;
 };
 

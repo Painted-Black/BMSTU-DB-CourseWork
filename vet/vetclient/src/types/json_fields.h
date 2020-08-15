@@ -166,6 +166,13 @@ namespace GenderType
     const QString gender_other = "other";
 }
 
+namespace GenderRussianType
+{
+    const QString gender_male = "м";
+    const QString gender_female = "ж";
+    const QString gender_other = "другое";
+}
+
 namespace InjectionTypes
 {
     const QString injection_subcutaneous = "s/c";

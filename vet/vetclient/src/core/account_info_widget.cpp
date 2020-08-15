@@ -35,4 +35,11 @@ void AccountInfoWidget::show()
     ui->input_name_label->setText(passport.getName());
     ui->input_surname_label->setText(passport.getSurname());
     ui->input_part_label->setText(passport.getPatronymic());
+    ui->input_sex_label->setText(passport.getGender().toString());
+    ui->input_birth_label->setText(passport.getBirthday().toString());
+    ui->input_num_label->setText(passport.getPassport_num());
+    ui->input_issue_date_label->setText(passport.getIssue_date().toString());
+    ui->input_nation_label->setText(passport.getNationality());
+
+
 }
