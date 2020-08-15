@@ -12,13 +12,14 @@
 
 enum TabType
 {
-    AccountWidget = 1,
+	AccountWidget = 1,
+	AnimalWidget
 };
 
 enum TabFlags
 {
 	Unclosable = 0b01,
-    Single     = 0b10
+	Single          = 0b10
 };
 
 MainWindow::MainWindow(QWidget *parent)
@@ -28,11 +29,13 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui->acc_action, &QAction::triggered, this, &MainWindow::accInfo);
 	connect(ui->exit_action, &QAction::triggered, this, &MainWindow::exit);
 	connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
+
+	addToolBarAction(QIcon(":/ui/icons/add_40.png"), "Животные", &MainWindow::runAnimalEditor);
 }
 
 void MainWindow::runAnimalEditor()
 {
-	//	qDebug() << Q_FUNC_INFO;
+	addTab(QIcon(":/ui/icons/add_user_80.png"), "Животные", {AnimalWidget, Single});
 }
 
 QWidget* MainWindow::addTab(const QIcon& icon, const QString& title, std::tuple<uint64_t, uint8_t> flags)
@@ -49,16 +52,23 @@ QWidget* MainWindow::addTab(const QIcon& icon, const QString& title, std::tuple<
 			if (searched == data)
 			{
 				bar->setCurrentIndex(i);
-                return ui->tabWidget->widget(i);
+				return ui->tabWidget->widget(i);
 			}
 		}
 	}
 
-    QWidget* widget = new QWidget(ui->tabWidget);
-    int idx = ui->tabWidget->addTab(widget, icon, title);
+	QWidget* widget = new QWidget(ui->tabWidget);
+	int idx = ui->tabWidget->addTab(widget, icon, title);
 	bar->setTabData(idx, QVariant::fromValue(fl));
-    bar->setCurrentIndex(idx);
-    return widget;
+	bar->setCurrentIndex(idx);
+	return widget;
+}
+
+void MainWindow::addToolBarAction(const QIcon& icon, const QString& text, const Callback &cb)
+{
+	QAction* action = new QAction(icon, text, ui->toolBar);
+	connect(action, &QAction::triggered, this, cb);
+	ui->toolBar->addAction(action);
 }
 
 void MainWindow::closeTab(int idx)
@@ -97,7 +107,7 @@ void MainWindow::setStaff(const Staff &value)
 void MainWindow::accInfo()
 {
     qDebug() << Q_FUNC_INFO << "Acc Info menu action";
-    QWidget* widg = this->addTab(QIcon(":/ui/icons/user_green_80.png"), "Аккаунт", std::tuple<uint64_t, uint8_t>(AccountWidget, Single));
+	QWidget* widg = addTab(QIcon(":/ui/icons/user_green_80.png"), "Аккаунт", {AccountWidget, Single});
     QHBoxLayout* layout = new QHBoxLayout();
     AccountInfoWidget* aiw = new AccountInfoWidget(widg);
     aiw->setKey(key);
