@@ -35,17 +35,20 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::runAnimalEditor()
 {
-	addTab(QIcon(":/ui/icons/add_user_80.png"), "Животные", {AnimalWidget, Single});
+	QWidget* widget =
+			addTab(QIcon(":/ui/icons/add_user_80.png"), "Животные",
+				{AnimalWidget, Single}, &MainWindow::createWidgetAnimals);
+
 }
 
-QWidget* MainWindow::addTab(const QIcon& icon, const QString& title, std::tuple<uint64_t, uint8_t> flags)
+QWidget* MainWindow::addTab(const QIcon& icon, const QString& title, std::tuple<uint64_t, uint8_t> flags, InitFunc<QWidget>)
 {
 	QTabBar* bar = ui->tabWidget->tabBar();
 	auto fl = std::get<1>(flags);
 	if (fl & Single)
 	{
 		auto count = bar->count();
-        auto searched = std::get<0>(flags);
+		auto searched = std::get<0>(flags);
 		for (decltype (count) i = 0; i < count; ++i)
 		{
 			auto data = bar->tabData(i).value<uint8_t>();
@@ -62,6 +65,11 @@ QWidget* MainWindow::addTab(const QIcon& icon, const QString& title, std::tuple<
 	bar->setTabData(idx, QVariant::fromValue(fl));
 	bar->setCurrentIndex(idx);
 	return widget;
+}
+
+void MainWindow::createWidgetAnimals(QWidget * w)
+{
+
 }
 
 void MainWindow::addToolBarAction(const QIcon& icon, const QString& text, const Callback &cb)

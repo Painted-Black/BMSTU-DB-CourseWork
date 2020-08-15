@@ -18,6 +18,8 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 private:
 	using  Callback = void(MainWindow::*)();
+	template<typename T>
+	using InitFunc = void(MainWindow::*)(T*);
 public:
 	explicit MainWindow(QWidget *parent = nullptr);
 
@@ -28,7 +30,7 @@ public:
 
 private:
 	void runAnimalEditor();
-	QWidget *addTab(const QIcon&, const QString&, std::tuple<uint64_t,  uint8_t> flags);
+	QWidget *addTab(const QIcon&, const QString&, std::tuple<uint64_t,  uint8_t> flags, );
 	void addToolBarAction(const QIcon&, const QString&, const Callback& cb);
 	void closeTab(int);
 
