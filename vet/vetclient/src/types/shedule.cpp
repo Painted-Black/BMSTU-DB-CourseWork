@@ -96,21 +96,12 @@ bool Shedule::deserialize(const QJsonObject &json) noexcept
         return false;
     }
 
-    cast = empoyee.deserialize(json.value(ScheduleJson::field_shed_employee_id).toObject());
-    if (cast == false)
-    {
-        qCritical() << Q_FUNC_INFO << "invalid cast '" << ScheduleJson::field_shed_employee_id << "' field";
-        return false;
-    }
-
     cast = day_of_week.deserialize(json.value(ScheduleJson::field_shed_day_of_week));
     if (cast == false)
     {
         qCritical() << Q_FUNC_INFO << "invalid cast '" << ScheduleJson::field_shed_day_of_week << "' field";
         return false;
     }
-
-    type = json.value(ScheduleJson::field_shed_type).toString();
 
     start = QDateTime::fromString(json.value(ScheduleJson::field_shed_start).toString(), Qt::ISODate);
     if (start.isValid() == false)
@@ -134,9 +125,7 @@ QJsonObject Shedule::serialize() const
 {
     QJsonObject root_obj;
     root_obj.insert(ScheduleJson::field_shed_id, QJsonValue::fromVariant(QVariant::fromValue(shed_id)));
-    root_obj.insert(ScheduleJson::field_shed_employee_id, QVariant(empoyee.serialize()).toJsonValue());
     root_obj.insert(ScheduleJson::field_shed_day_of_week, QVariant(day_of_week.serialize()).toJsonValue());
-    root_obj.insert(ScheduleJson::field_shed_type, QJsonValue(type));
     root_obj.insert(ScheduleJson::field_shed_start, QJsonValue(start.toString(Qt::ISODate)));
     root_obj.insert(ScheduleJson::field_shed_end, QJsonValue(end.toString(Qt::ISODate)));
     root_obj.insert(ScheduleJson::field_shed_cabinet, QJsonValue(cabinet));
@@ -148,16 +137,6 @@ uint64_t Shedule::getShed_id() const
     return shed_id;
 }
 
-Staff Shedule::getEmpoyee() const
-{
-    return empoyee;
-}
-
-void Shedule::setEmpoyee(const Staff &value)
-{
-    empoyee = value;
-}
-
 DayOfWeek Shedule::getDay_of_week() const
 {
     return day_of_week;
@@ -166,16 +145,6 @@ DayOfWeek Shedule::getDay_of_week() const
 void Shedule::setDay_of_week(const DayOfWeek &value)
 {
     day_of_week = value;
-}
-
-QString Shedule::getType() const
-{
-    return type;
-}
-
-void Shedule::setType(const QString &value)
-{
-    type = value;
 }
 
 QDateTime Shedule::getStart() const
@@ -206,4 +175,40 @@ QString Shedule::getCabinet() const
 void Shedule::setCabinet(const QString &value)
 {
     cabinet = value;
+}
+
+bool SheduleList::deserialize(const QJsonArray &jarray) noexcept
+{
+    bool is_ok = true;
+
+    for (const QJsonValue& val : jarray)
+    {
+        Shedule shed;
+        is_ok &= shed.deserialize(val.toObject());
+        add_shedule_item(shed);
+    }
+    return is_ok;
+}
+
+QJsonArray SheduleList::serialize() const
+{
+    QJsonArray result;
+
+    for (const Shedule& s : shedule_list)
+    {
+        const QJsonValue& val = s.serialize();
+        result.push_back(val);
+    }
+
+    return result;
+}
+
+void SheduleList::add_shedule_item(Shedule &shed)
+{
+    shedule_list.push_back(shed);
+}
+
+QList<Shedule> SheduleList::getShedule_list() const
+{
+    return shedule_list;
 }

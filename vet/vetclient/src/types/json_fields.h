@@ -70,6 +70,7 @@ namespace StaffJson
     const QString field_staff_edu_level = "edu_level";
     const QString field_staff_fire_date = "fire_date";
     const QString field_staff_employ_date = "employ_date";
+    const QString field_staff_shedule = "shedule";
 }
 
 namespace AnimalMedicalRecordJson

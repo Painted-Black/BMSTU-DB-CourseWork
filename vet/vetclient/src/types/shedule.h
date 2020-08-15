@@ -5,7 +5,6 @@
 #include "QJsonHeaders.h"
 
 #include "core/ISerializable.h"
-#include "types/staff.h"
 
 class DayOfWeek : public ISerializable<QJsonValue>
 {
@@ -38,14 +37,12 @@ public:
     QJsonObject serialize() const override;
 
     uint64_t getShed_id() const;
-    Staff getEmpoyee() const;
     DayOfWeek getDay_of_week() const;
     QString getType() const;
     QDateTime getStart() const;
     QDateTime getEnd() const;
     QString getCabinet() const;
 
-    void setEmpoyee(const Staff &value);
     void setDay_of_week(const DayOfWeek &value);
     void setType(const QString &value);
     void setStart(const QDateTime &value);
@@ -54,11 +51,23 @@ public:
 
 private:
     uint64_t shed_id;
-    Staff empoyee;
     DayOfWeek day_of_week;
-    QString type;
     QDateTime start;
     QDateTime end;
     QString cabinet;
 };
+
+class SheduleList final : public ISerializable<QJsonArray>
+{
+public:
+    bool deserialize(const QJsonArray &jarray) noexcept override;
+    QJsonArray serialize() const override;
+    void add_shedule_item(Shedule& shed);
+
+    QList<Shedule> getShedule_list() const;
+
+private:
+    QList<Shedule> shedule_list;
+};
+
 
