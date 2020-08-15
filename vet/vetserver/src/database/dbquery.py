@@ -10,7 +10,7 @@ class DBQuery(object):
 		# not impl
 		#pass
 
-	def get_colunm_names(self):
+	def get_column_names(self):
 		l = [ i[0] for i in self.column_names]
 		return l
 
