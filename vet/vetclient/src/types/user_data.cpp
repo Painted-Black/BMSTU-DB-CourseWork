@@ -81,7 +81,7 @@ bool AccessData::deserialize(const QJsonObject &document) noexcept
     login = document.value(AccessJson::field_acc_login).toString();
     password = document.value(AccessJson::field_acc_password).toVariant().toByteArray();
     ok &= owner.deserialize(document.value(AccessJson::field_acc_employee).toObject());
-    ok &= level.deserialize(document.value(AccessJson::field_acc_access_level).toObject());
+    ok &= level.deserialize(document.value(AccessJson::field_acc_access_level));
     return ok;
 }
 

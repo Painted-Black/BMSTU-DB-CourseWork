@@ -30,6 +30,9 @@ void AccountInfoWidget::setKey(const QByteArray &value)
 void AccountInfoWidget::show()
 {
     ui->input_login_label->setText(access_data.getLogin());
+    AccessLevel l = access_data.getLevel();
     ui->input_access_label->setText(access_data.getLevel().toString());
     ui->input_name_label->setText(passport.getName());
+    ui->input_surname_label->setText(passport.getSurname());
+    ui->input_part_label->setText(passport.getPatronymic());
 }
