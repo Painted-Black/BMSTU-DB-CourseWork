@@ -11,6 +11,7 @@ CONFIG += c++14
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
+	core/account_info_widget.cpp \
 	core/animal_edit_widget.cpp \
 	core/animal_list_item_widget.cpp \
 	core/auth.cpp \
@@ -37,6 +38,7 @@ SOURCES += \
 
 HEADERS += \
 	core/ISerializable.h \
+	core/account_info_widget.h \
 	core/animal_edit_widget.h \
 	core/animal_list_item_widget.h \
 	core/auth.h \
@@ -60,9 +62,11 @@ HEADERS += \
 	types/user_data.h \
 	types/vaccination.h \
 	types/visit.h \
+	utlis/Singlenton.h \
 	utlis/utils.h
 
 FORMS += \
+    ui/acc_info.ui \
     ui/add_contract.ui \
     ui/address.ui \
     ui/admin.ui \

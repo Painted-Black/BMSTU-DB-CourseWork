@@ -17,15 +17,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->acc_action, &QAction::triggered, this, &MainWindow::accInfo);
     connect(ui->exit_action, &QAction::triggered, this, &MainWindow::exit);
-
-
-//    QWidget* pTabCornerWidget = new QWidget(this);
-
-//    QLabel* pLabelTime = new QLabel(pTabCornerWidget);
-//    pLabelTime->setText("10:22:20");
-//    QHBoxLayout* pHLayout = new QHBoxLayout(pTabCornerWidget);
-//    pHLayout->addWidget(pLabelTime);
-//    ui->tabWidget->setCornerWidget(pTabCornerWidget, Qt::TopRightCorner);
 }
 
 void MainWindow::runAnimalEditor()

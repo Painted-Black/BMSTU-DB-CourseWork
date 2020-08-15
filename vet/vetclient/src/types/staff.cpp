@@ -76,37 +76,11 @@ bool Staff::deserialize(const QJsonObject & json) noexcept
 {
 	bool cast = true;
     id = json.value(StaffJson::field_staff_id).toVariant().toULongLong(&cast);
-	if (cast == false)
-	{
-        qCritical() << Q_FUNC_INFO << "Invalid cast '" << StaffJson::field_staff_id << "' field";
-	}
-
-    cast = passport.deserialize(json.value(StaffJson::field_staff_passport).toObject());
-	if (cast == false)
-	{
-        qCritical() << Q_FUNC_INFO << "invalid cast '" << StaffJson::field_staff_passport << "' field";
-	}
-
-    cast = position.deserialize(json.value(StaffJson::field_staff_position).toObject());
-	if (cast == false)
-	{
-        qCritical() << Q_FUNC_INFO << "invalid cast '" << StaffJson::field_staff_position << "' field";
-	}
-
-    cast = edu_level.deserialize(json.value(StaffJson::field_staff_edu_level));
-	if (cast == false)
-	{
-        qCritical() << Q_FUNC_INFO << "invalid cast '" << StaffJson::field_staff_edu_level << "' field";
-	}
-
+    cast &= passport.deserialize(json.value(StaffJson::field_staff_passport).toObject());
+    cast &= position.deserialize(json.value(StaffJson::field_staff_position).toObject());
+    cast &= edu_level.deserialize(json.value(StaffJson::field_staff_edu_level));
     fire_date = QDate::fromString(json.value(StaffJson::field_staff_fire_date).toString(), Qt::ISODate);
-
     employ_date = QDate::fromString(json.value(StaffJson::field_staff_employ_date).toString(), Qt::ISODate);
-	if (employ_date.isValid() == false)
-	{
-        qCritical() << Q_FUNC_INFO << "invalid cast '" << StaffJson::field_staff_employ_date << "' field";
-	}
-
 	return true;
 }
 

@@ -3,10 +3,6 @@
 #include <memory>
 #include <functional>
 
-/**/
-#include <QFile>
-/**/
-
 #include <QMap>
 #include <QNetworkAccessManager>
 
@@ -14,7 +10,7 @@ class Fetcher : public QObject
 {
 	Q_OBJECT
 public:
-    using Callback = std::function<void(uint32_t, std::unique_ptr<QByteArray>)>;
+    using Callback = std::function<void(uint32_t, QByteArray)>;
 public:
 	Fetcher();
 

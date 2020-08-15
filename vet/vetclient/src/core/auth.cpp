@@ -2,7 +2,9 @@
 #include <QPushButton>
 #include <QDebug>
 #include <QKeyEvent>
+#include <QNetworkReply>
 
+#include "utlis/Singlenton.h"
 #include "types/QJsonHeaders.h"
 #include "ISerializable.h"
 #include "auth.h"
@@ -24,23 +26,15 @@ struct AuthData : public ISerializable<QByteArray>
     QString pass;
 };
 
-void cb_request_auth(uint32_t, QByteArray);
-
 Auth::Auth(QWidget *parent)
     : QDialog(parent), ui(new Ui::auth_dialog())
 {
     ui->setupUi(this);
-    connect(ui->login_button_auth, &QPushButton::clicked, this, &Auth::procLog);
-    ui->error_label->hide();
-}
+    fetcher.reset(new QNetworkAccessManager());
 
-void Auth::keyPressEvent(QKeyEvent *event)
-{
-    QDialog::keyPressEvent(event);
-    if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
-    {
-        procLog();
-    }
+    connect(ui->login_button_auth, &QPushButton::clicked, this, &Auth::procLog);
+    connect(fetcher.get(), &QNetworkAccessManager::finished, this, &Auth::authReply);
+    ui->error_label->hide();
 }
 
 void Auth::procLog()
@@ -50,21 +44,20 @@ void Auth::procLog()
     data.pass = ui->password_lineEdit_auth->text();
 
     QNetworkRequest req(QUrl("http://127.0.0.1:4446/auth"));
-    req.setHeader(QNetworkRequest::ContentTypeHeader, "Application/json");
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-    cb = std::bind(&Auth::cb_request_auth, this, std::placeholders::_1, std::placeholders::_2);
-    fetcher.httpPost(req, data.serialize(), cb);
+    fetcher->post(req, data.serialize());
 }
 
-void Auth::cb_request_auth(uint32_t code, std::unique_ptr<QByteArray> data)
+void Auth::authReply(QNetworkReply *reply)
 {
-    if (code != 200)
+    if (reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toULongLong() != 200)
     {
         ui->error_label->show();
     }
     else
     {
-        auth_data = ProxyAuth::deserialize(*data);
+        auth_data = ProxyAuth::deserialize(reply->readAll());
         accept();
     }
 }

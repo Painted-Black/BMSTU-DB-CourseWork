@@ -34,7 +34,8 @@ void Fetcher::httpDelete(const QNetworkRequest & req, Fetcher::Callback cb)
 
 void Fetcher::finish(QNetworkReply *reply)
 {
-	auto value = std::make_unique<QByteArray>(reply->readAll());
+    auto value = reply->readAll();
+    qDebug() << Q_FUNC_INFO << "Exec" << value;
 	QVariant statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
 	if (statusCode.isNull())
 	{
@@ -48,5 +49,8 @@ void Fetcher::finish(QNetworkReply *reply)
 		return;
 	}
 
-	listeners[reply](code, std::move(value));
+    if (listeners.contains(reply))
+    {
+        listeners[reply](code, value);
+    }
 }
