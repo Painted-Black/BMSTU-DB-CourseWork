@@ -1,8 +1,12 @@
 DROP TABLE vaccinations;
+ALTER TABLE public.schedule DROP COLUMN "type";
 
-INSERT INTO passports (surname, name, patronymic, sex, birth, num, issue_date, nationality) VALUES ('Администраторов', 'Администратор, 'Администратович, 'm', '1994-04-06', '4516943943', '2014-04-09');
+ALTER TABLE public.schedule ALTER COLUMN "start" TYPE time USING "start"::time;
+ALTER TABLE public.schedule ALTER COLUMN "end" TYPE time USING "end"::time;
 
-INSERT INTO positions (title, salary) VALUES ('Системный администратор', 60000);
+INSERT INTO passports (surname, name, patronymic, sex, birth, num, issue_date, nationality) VALUES ('Администраторов', 'Администратор', 'Администратович', 'm', '1994-04-06', '4516943943', '2014-04-09', 'Русский');
+
+INSERT INTO position (title, salary) VALUES ('Системный администратор', 60000);
 
 INSERT INTO staff (passport, position, edu_level, fire_date, employ_date) VALUES (1, 1, 'specialist', NULL, '2015-04-06');
 

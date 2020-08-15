@@ -12,7 +12,8 @@
 
 enum TabType
 {
-	AccountWidget
+	AccountWidget,
+	AnimalWidget
 };
 
 enum TabFlags
@@ -29,11 +30,13 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui->acc_action, &QAction::triggered, this, &MainWindow::accInfo);
 	connect(ui->exit_action, &QAction::triggered, this, &MainWindow::exit);
 	connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
+
+	addToolBarAction(QIcon(":/ui/icons/add_40.png"), "Животные", &MainWindow::runAnimalEditor);
 }
 
 void MainWindow::runAnimalEditor()
 {
-	//	qDebug() << Q_FUNC_INFO;
+	addTab(QIcon(":/ui/icons/add_user_80.png"), "Животные", {AnimalWidget, Single});
 }
 
 void MainWindow::addTab(const QIcon& icon, const QString& title, std::tuple<uint64_t, uint8_t> flags)
@@ -57,6 +60,13 @@ void MainWindow::addTab(const QIcon& icon, const QString& title, std::tuple<uint
 
 	int idx = bar->addTab(icon, title);
 	bar->setTabData(idx, QVariant::fromValue(fl));
+}
+
+void MainWindow::addToolBarAction(const QIcon& icon, const QString& text, const Callback &cb)
+{
+	QAction* action = new QAction(icon, text, ui->toolBar);
+	connect(action, &QAction::triggered, this, cb);
+	ui->toolBar->addAction(action);
 }
 
 void MainWindow::closeTab(int idx)
