@@ -40,7 +40,7 @@ class TableHandler(AbstractHandler):
 			return False, None
 		else:
 			result = query.get_values()
-			column_names = query.get_colunm_names()
+			column_names = query.get_column_names()
 		access_manager.disconnect(conn_name)
 		return True, result, column_names
 
