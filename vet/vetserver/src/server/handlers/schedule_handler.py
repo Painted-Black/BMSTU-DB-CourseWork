@@ -52,4 +52,4 @@ class ScheduleHandler(AbstractHandler):
 			result = query.get_values()
 
 		access_manager.disconnect(conn_name)
-		return True, self.__to_json(result, query.get_colunm_names())
+		return True, self.__to_json(result, query.get_column_names())
