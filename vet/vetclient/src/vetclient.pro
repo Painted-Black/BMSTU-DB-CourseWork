@@ -29,7 +29,7 @@ SOURCES += \
 	types/position.cpp \
 	types/prescribings.cpp \
 	types/proxy_auth.cpp \
-	types/shedule.cpp \
+	types/schedule.cpp \
 	types/staff.cpp \
 	types/user_data.cpp \
 	types/vaccination.cpp \
@@ -57,7 +57,7 @@ HEADERS += \
 	types/position.h \
 	types/prescribings.h \
 	types/proxy_auth.h \
-	types/shedule.h \
+	types/schedule.h \
 	types/staff.h \
 	types/user_data.h \
 	types/vaccination.h \

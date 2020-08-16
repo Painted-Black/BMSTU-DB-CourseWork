@@ -4,7 +4,7 @@
 #include "core/ISerializable.h"
 #include "passport.h"
 #include "position.h"
-#include "types/shedule.h"
+#include "types/schedule.h"
 
 class EducationLevel : public ISerializable<QJsonValue>
 {
@@ -54,5 +54,5 @@ private:
 	EducationLevel edu_level;
 	QDate fire_date;
 	QDate employ_date;
-    SheduleList shed_list;
+    ScheduleList shed_list;
 };

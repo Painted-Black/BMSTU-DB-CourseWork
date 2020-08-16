@@ -44,5 +44,5 @@ private:
     QString login;
     QByteArray password;
     AccessLevel level;
-    Staff owner;
+    Staff employee;
 };

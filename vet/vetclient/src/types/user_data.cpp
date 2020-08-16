@@ -80,7 +80,7 @@ bool AccessData::deserialize(const QJsonObject &document) noexcept
     uid = document.value(AccessJson::field_acc_id).toVariant().toULongLong(&ok);
     login = document.value(AccessJson::field_acc_login).toString();
     password = document.value(AccessJson::field_acc_password).toVariant().toByteArray();
-    ok &= owner.deserialize(document.value(AccessJson::field_acc_employee).toObject());
+    ok &= employee.deserialize(document.value(AccessJson::field_acc_employee).toObject());
     ok &= level.deserialize(document.value(AccessJson::field_acc_access_level));
     return ok;
 }
@@ -89,7 +89,7 @@ QJsonObject AccessData::serialize() const
 {
     QJsonObject root;
     root.insert(AccessJson::field_acc_id, QJsonValue::fromVariant(QVariant::fromValue(uid)));
-    root.insert(AccessJson::field_acc_employee, owner.serialize());
+    root.insert(AccessJson::field_acc_employee, employee.serialize());
     root.insert(AccessJson::field_acc_login, login);
     root.insert(AccessJson::field_acc_password, QJsonValue::fromVariant(password));
     root.insert(AccessJson::field_acc_access_level, level.serialize());
@@ -133,10 +133,10 @@ void AccessData::setLevel(const AccessLevel &value)
 
 Staff AccessData::getOwner() const
 {
-    return owner;
+    return employee;
 }
 
 void AccessData::setOwner(const Staff &value)
 {
-    owner = value;
+    employee = value;
 }

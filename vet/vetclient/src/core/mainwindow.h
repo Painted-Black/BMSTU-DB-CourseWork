@@ -21,9 +21,7 @@ private:
 public:
 	explicit MainWindow(QWidget *parent = nullptr);
 
-	void setStaff(const Staff &value);
-	void setAccess_data(const AccessData &value);
-	void setPassport(const Passport &value);
+    void setAccess_data(const AccessData &value);
 	void setKey(const QByteArray &value);
 
 private:

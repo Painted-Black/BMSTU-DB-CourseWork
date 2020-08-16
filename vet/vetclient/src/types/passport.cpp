@@ -31,8 +31,7 @@ bool Passport::deserialize(const QJsonObject &obj) noexcept
         return false;
     }
 
-    QString num = obj.value(PassportJson::field_pass_num).toString();
-    std::copy(num.cbegin(), num.cend(), passport_num.begin());
+    passport_num = obj.value(PassportJson::field_pass_num).toString();
     issue_date = QDate::fromString(obj.value(PassportJson::field_pass_issue_date).toString(), Qt::ISODate);
     if (issue_date.isValid() == false)
     {

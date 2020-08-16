@@ -62,7 +62,7 @@ void Auth::authReply(QNetworkReply *reply)
     }
 }
 
-std::tuple<Staff, AccessData, Passport, QByteArray> Auth::getAuthData() const
+std::tuple<AccessData, QByteArray> Auth::getAuthData() const
 {
     return auth_data;
 }

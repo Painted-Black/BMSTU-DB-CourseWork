@@ -57,29 +57,26 @@ class AuthHandler(AbstractHandler):
 				d[column_names[j]] = str(i[j])
 			arr.append(d)
 		return arr
-    			
-
-
 
 	def __to_json_staff_schedule(self, rows, column_names):
 		out_json_obj = {}
 		row = rows[0]
 		for access in range(0, 2):
 			out_json_obj[column_names[access]] = str(row[access])
-			
+		
 		passport_json={}
-		for ps in range(10, len(row)):
+		for ps in range(11, len(row)):
 			passport_json[column_names[ps]] = str(row[ps])
 
 		positions_json={}
-		for pos in range(7,10):
+		for pos in range(8,11):
 			positions_json[column_names[pos]] = str(row[pos])
 
 		staff_json={}
-		for staff in range(2, 7):
+		for staff in range(2, 8):
 			staff_json[column_names[staff]] = str(row[staff])
 		
-		positions_json["passport"] = passport_json
+		staff_json["passport"] = passport_json
 		staff_json["position"] = positions_json
 		out_json_obj["employee"] = staff_json
 		return out_json_obj

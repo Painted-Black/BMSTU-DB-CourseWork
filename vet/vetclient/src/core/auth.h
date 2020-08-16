@@ -16,14 +16,14 @@ class Auth : public QDialog
 public:
     explicit Auth(QWidget *parent = nullptr);
 
-    std::tuple<Staff, AccessData, Passport, QByteArray> getAuthData() const;
+    std::tuple<AccessData, QByteArray> getAuthData() const;
 
 private:
     void procLog();
     void authReply(QNetworkReply*);
 private:
     Ui::auth_dialog* ui;
-    std::tuple<Staff, AccessData, Passport, QByteArray> auth_data;
+    std::tuple<AccessData, QByteArray> auth_data;
     std::unique_ptr<QNetworkAccessManager> fetcher;
 };
 

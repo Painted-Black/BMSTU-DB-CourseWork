@@ -89,19 +89,9 @@ void MainWindow::setKey(const QByteArray &value)
     key = value;
 }
 
-void MainWindow::setPassport(const Passport &value)
-{
-    passport = value;
-}
-
 void MainWindow::setAccess_data(const AccessData &value)
 {
     access_data = value;
-}
-
-void MainWindow::setStaff(const Staff &value)
-{
-    staff = value;
 }
 
 void MainWindow::accInfo()
@@ -111,8 +101,6 @@ void MainWindow::accInfo()
     QHBoxLayout* layout = new QHBoxLayout();
     AccountInfoWidget* aiw = new AccountInfoWidget(widg);
     aiw->setKey(key);
-    aiw->setStaff(staff);
-    aiw->setPassport(passport);
     aiw->setAccess_data(access_data);
     aiw->show();
     layout->addWidget(aiw);

@@ -30,7 +30,7 @@ private:
     DayOfWeekEnum current;
 };
 
-class Shedule final : public ISerializable<QJsonObject>
+class Schedule final : public ISerializable<QJsonObject>
 {
 public:
     bool deserialize(const QJsonObject &json) noexcept override;
@@ -39,35 +39,35 @@ public:
     uint64_t getShed_id() const;
     DayOfWeek getDay_of_week() const;
     QString getType() const;
-    QDateTime getStart() const;
-    QDateTime getEnd() const;
+    QTime getStart() const;
+    QTime getEnd() const;
     QString getCabinet() const;
 
     void setDay_of_week(const DayOfWeek &value);
     void setType(const QString &value);
-    void setStart(const QDateTime &value);
-    void setEnd(const QDateTime &value);
+    void setStart(const QTime &value);
+    void setEnd(const QTime &value);
     void setCabinet(const QString &value);
 
 private:
     uint64_t shed_id;
     DayOfWeek day_of_week;
-    QDateTime start;
-    QDateTime end;
+    QTime start;
+    QTime end;
     QString cabinet;
 };
 
-class SheduleList final : public ISerializable<QJsonArray>
+class ScheduleList final : public ISerializable<QJsonArray>
 {
 public:
     bool deserialize(const QJsonArray &jarray) noexcept override;
     QJsonArray serialize() const override;
-    void add_shedule_item(Shedule& shed);
+    void add_shedule_item(Schedule& shed);
 
-    QList<Shedule> getShedule_list() const;
+    QList<Schedule> getShedule_list() const;
 
 private:
-    QList<Shedule> shedule_list;
+    QList<Schedule> shedule_list;
 };
 
 

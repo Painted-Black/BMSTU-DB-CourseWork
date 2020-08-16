@@ -8,6 +8,6 @@
 class ProxyAuth
 {
 public:
-    static std::tuple<Staff, AccessData, Passport, QByteArray> deserialize(const QByteArray&);
+    static std::tuple<AccessData, QByteArray> deserialize(const QByteArray&);
 };
 

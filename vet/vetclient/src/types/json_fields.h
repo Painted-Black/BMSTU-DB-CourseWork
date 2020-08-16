@@ -22,7 +22,7 @@ namespace PassportJson
     const QString field_pass_birth = "birth";
     const QString field_pass_num = "num";
     const QString field_pass_issue_date = "issue_date";
-    const QString field_pass_nationality = "notionality";
+    const QString field_pass_nationality = "nationality";
 }
 
 namespace ClientJson
@@ -70,7 +70,7 @@ namespace StaffJson
     const QString field_staff_edu_level = "edu_level";
     const QString field_staff_fire_date = "fire_date";
     const QString field_staff_employ_date = "employ_date";
-    const QString field_staff_shedule = "shedule";
+    const QString field_staff_shedule = "schedule";
 }
 
 namespace AnimalMedicalRecordJson
@@ -194,7 +194,7 @@ namespace PrescribingsJson
 
 namespace DayOfWeekType
 {
-    const QString day_of_week_sun = "sun";
+    const QString day_of_week_sun = "Sun";
     const QString day_of_week_mon = "Mon";
     const QString day_of_week_tue = "Tue";
     const QString day_of_week_wed = "Wed";
