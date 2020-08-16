@@ -14,8 +14,7 @@ int main(int argc, char *argv[])
 	auto auth_data = a_d.getAuthData();
 
 	MainWindow mw;
-	mw.setAccessData(std::get<0>(auth_data));
-	mw.setKey(std::get<1>(auth_data));
+	mw.setAccessData(auth_data);
 	mw.show();
 
 	return a.exec();

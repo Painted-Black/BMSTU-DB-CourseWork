@@ -4,7 +4,7 @@
 #include <QKeyEvent>
 #include <QNetworkReply>
 
-#include "utlis/Singlenton.h"
+#include "utlis/utils.h"
 #include "types/QJsonHeaders.h"
 #include "ISerializable.h"
 #include "auth.h"
@@ -12,7 +12,7 @@
 
 struct AuthData : public ISerializable<QByteArray>
 {
-	QByteArray serialize() const override
+	virtual QByteArray serialize() const override
 	{
 		QJsonObject obj;
 		obj.insert("login", login);
@@ -58,12 +58,12 @@ void Auth::authReply(QNetworkReply *reply)
 	}
 	else
 	{
-		auth_data = ProxyAuth::deserialize(reply->readAll());
+		auth_data.deserialize(fromJson(reply->readAll()));
 		accept();
 	}
 }
 
-std::tuple<AccessData, QByteArray> Auth::getAuthData() const
+const AccessData& Auth::getAuthData() const
 {
 	return auth_data;
 }

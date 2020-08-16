@@ -79,6 +79,7 @@ bool Staff::deserialize(const QJsonObject & json) noexcept
 	cast &= passport.deserialize(json.value(StaffJson::field_staff_passport).toObject());
 	cast &= position.deserialize(json.value(StaffJson::field_staff_position).toObject());
 	cast &= edu_level.deserialize(json.value(StaffJson::field_staff_edu_level));
+	cast &= shed_list.deserialize(json.value(StaffJson::field_staff_shedule).toArray());
 	fire_date = QDate::fromString(json.value(StaffJson::field_staff_fire_date).toString(), Qt::ISODate);
 	employ_date = QDate::fromString(json.value(StaffJson::field_staff_employ_date).toString(), Qt::ISODate);
 	return true;
@@ -96,6 +97,7 @@ QJsonObject Staff::serialize() const
 	root_obj.insert(StaffJson::field_staff_edu_level, edu_level.serialize());
 	root_obj.insert(StaffJson::field_staff_fire_date, QJsonValue(fire_date.toString(Qt::ISODate)));
 	root_obj.insert(StaffJson::field_staff_employ_date, QJsonValue(employ_date.toString(Qt::ISODate)));
+	root_obj.insert(StaffJson::field_staff_shedule, QJsonValue(shed_list.serialize()));
 	return root_obj;
 }
 

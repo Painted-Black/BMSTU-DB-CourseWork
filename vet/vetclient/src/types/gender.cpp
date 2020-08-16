@@ -53,3 +53,21 @@ void Gender::setGenderType(GenderEnum value)
 {
 	current = value;
 }
+
+QString Gender::toString()
+{
+	QString value;
+	switch (current)
+	{
+		case GenderEnum::Male:
+			value = GenderRussianType::gender_male;
+			break;
+		case GenderEnum::Female:
+			value = GenderRussianType::gender_female;
+			break;
+		case GenderEnum::Other:
+			value = GenderRussianType::gender_other;
+			break;
+	}
+	return value;
+}

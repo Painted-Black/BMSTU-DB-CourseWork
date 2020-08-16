@@ -2,8 +2,10 @@
 
 #include <QWidget>
 #include <QByteArray>
+#include <QNetworkAccessManager>
+
 #include "types/staff.h"
-#include "types/shedule.h"
+#include "types/schedule.h"
 #include "types/user_data.h"
 #include "types/passport.h"
 
@@ -16,16 +18,13 @@ class AccountInfoWidget : public QWidget
 {
 	Q_OBJECT
 public:
-	explicit AccountInfoWidget(QWidget *parent = nullptr);
-	void setAccessData(const AccessData &value);
-	void setKey(const QByteArray &value);
+	explicit AccountInfoWidget(QWidget* = nullptr);
+
+	void setAccessData(const AccessData &);
 	void show();
 
 private:
 	Ui::acc_info_widget* ui;
-	Staff staff;
 	AccessData access_data;
-	Passport passport;
-	QByteArray key;
 };
 

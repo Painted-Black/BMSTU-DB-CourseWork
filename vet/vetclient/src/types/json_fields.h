@@ -70,6 +70,7 @@ namespace StaffJson
 	const QString field_staff_edu_level = "edu_level";
 	const QString field_staff_fire_date = "fire_date";
 	const QString field_staff_employ_date = "employ_date";
+	const QString field_staff_shedule = "schedule";
 }
 
 namespace AnimalMedicalRecordJson
@@ -164,6 +165,13 @@ namespace GenderType
 	const QString gender_male = "m";
 	const QString gender_female = "f";
 	const QString gender_other = "other";
+}
+
+namespace GenderRussianType
+{
+	const QString gender_male = "м";
+	const QString gender_female = "ж";
+	const QString gender_other = "другое";
 }
 
 namespace InjectionTypes

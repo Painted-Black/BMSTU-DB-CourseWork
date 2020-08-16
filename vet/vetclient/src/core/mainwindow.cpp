@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
+#include "account_info_widget.h"
 #include "animal_edit_widget.h"
 
 enum TabType
@@ -105,31 +106,14 @@ void MainWindow::closeTab(int idx)
 	}
 }
 
-void MainWindow::setKey(const QByteArray &value)
-{
-	key = value;
-}
-
-void MainWindow::setPassport(const Passport &value)
-{
-	passport = value;
-}
-
 void MainWindow::setAccessData(const AccessData &value)
 {
 	access_data = value;
 }
-
-void MainWindow::setStaff(const Staff &value)
-{
-	staff = value;
-}
-
 void MainWindow::accInfo()
 {
 	qDebug() << Q_FUNC_INFO << "Acc Info menu action";
-	addTab(QIcon(":/ui/icons/user_green_80.png"), "Аккаунт", {AccountWidget, Single},
-				   &MainWindow::createWidgetAccountInfo);
+	addTab(QIcon(":/ui/icons/user_green_80.png"), "Аккаунт", {AccountWidget, Single}, &MainWindow::createWidgetAccountInfo);
 }
 
 void MainWindow::exit()

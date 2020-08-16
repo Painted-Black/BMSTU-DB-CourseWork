@@ -18,6 +18,7 @@ public:
 
 	GenderEnum getGenderType() const;
 	void setGenderType(GenderEnum value);
+	QString toString();
 
 private:
 	GenderEnum current;
