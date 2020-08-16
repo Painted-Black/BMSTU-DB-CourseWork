@@ -19,7 +19,7 @@ enum TabType
 enum TabFlags
 {
 	Unclosable = 0b01,
-	Single          = 0b10
+	Single		  = 0b10
 };
 
 MainWindow::MainWindow(QWidget *parent)
@@ -41,7 +41,9 @@ void MainWindow::runAnimalEditor()
 
 }
 
-QWidget* MainWindow::addTab(const QIcon& icon, const QString& title, std::tuple<uint64_t, uint8_t> flags, InitFunc<QWidget>)
+QWidget* MainWindow::addTab(
+		const QIcon& icon, const QString& title,
+		std::tuple<uint64_t, uint8_t> flags, InitFunc<QWidget *> init_cb)
 {
 	QTabBar* bar = ui->tabWidget->tabBar();
 	auto fl = std::get<1>(flags);
@@ -61,6 +63,7 @@ QWidget* MainWindow::addTab(const QIcon& icon, const QString& title, std::tuple<
 	}
 
 	QWidget* widget = new QWidget(ui->tabWidget);
+	(this->*init_cb)(widget);
 	int idx = ui->tabWidget->addTab(widget, icon, title);
 	bar->setTabData(idx, QVariant::fromValue(fl));
 	bar->setCurrentIndex(idx);
@@ -70,6 +73,16 @@ QWidget* MainWindow::addTab(const QIcon& icon, const QString& title, std::tuple<
 void MainWindow::createWidgetAnimals(QWidget * w)
 {
 
+}
+
+void MainWindow::createWidgetAccountInfo(QWidget * w)
+{
+	QHBoxLayout* layout = new QHBoxLayout();
+	AccountInfoWidget* aiw = new AccountInfoWidget(w);
+	aiw->setAccessData(access_data);
+	aiw->show();
+	layout->addWidget(aiw);
+	w->setLayout(layout);
 }
 
 void MainWindow::addToolBarAction(const QIcon& icon, const QString& text, const Callback &cb)
@@ -94,37 +107,29 @@ void MainWindow::closeTab(int idx)
 
 void MainWindow::setKey(const QByteArray &value)
 {
-    key = value;
+	key = value;
 }
 
 void MainWindow::setPassport(const Passport &value)
 {
-    passport = value;
+	passport = value;
 }
 
-void MainWindow::setAccess_data(const AccessData &value)
+void MainWindow::setAccessData(const AccessData &value)
 {
-    access_data = value;
+	access_data = value;
 }
 
 void MainWindow::setStaff(const Staff &value)
 {
-    staff = value;
+	staff = value;
 }
 
 void MainWindow::accInfo()
 {
-    qDebug() << Q_FUNC_INFO << "Acc Info menu action";
-	QWidget* widg = addTab(QIcon(":/ui/icons/user_green_80.png"), "Аккаунт", {AccountWidget, Single});
-    QHBoxLayout* layout = new QHBoxLayout();
-    AccountInfoWidget* aiw = new AccountInfoWidget(widg);
-    aiw->setKey(key);
-    aiw->setStaff(staff);
-    aiw->setPassport(passport);
-    aiw->setAccess_data(access_data);
-    aiw->show();
-    layout->addWidget(aiw);
-    widg->setLayout(layout);
+	qDebug() << Q_FUNC_INFO << "Acc Info menu action";
+	addTab(QIcon(":/ui/icons/user_green_80.png"), "Аккаунт", {AccountWidget, Single},
+				   &MainWindow::createWidgetAccountInfo);
 }
 
 void MainWindow::exit()

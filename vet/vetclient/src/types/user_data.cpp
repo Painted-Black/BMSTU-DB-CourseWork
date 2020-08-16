@@ -7,22 +7,22 @@ bool AccessLevel::deserialize(const QJsonValue & v) noexcept
 {
 	QString value = v.toString();
 	bool is_ok = false;
-    if (value == AccessLevelType::access_vet)
+	if (value == AccessLevelType::access_vet)
 	{
 		current = AccessLevelEnum::Vet;
 		is_ok = true;
 	}
-    else if (value == AccessLevelType::access_main)
+	else if (value == AccessLevelType::access_main)
 	{
 		current = AccessLevelEnum::Main;
 		is_ok = true;
 	}
-    else if (value == AccessLevelType::access_admin)
+	else if (value == AccessLevelType::access_admin)
 	{
 		current = AccessLevelEnum::Admin;
 		is_ok = true;
 	}
-    else if (value == AccessLevelType::access_registry)
+	else if (value == AccessLevelType::access_registry)
 	{
 		current = AccessLevelEnum::Registry;
 		is_ok = true;
@@ -37,106 +37,106 @@ QJsonValue AccessLevel::serialize() const
 	switch (current)
 	{
 		case AccessLevelEnum::Vet:
-            value = QJsonValue(AccessLevelType::access_vet);
+			value = QJsonValue(AccessLevelType::access_vet);
 			break;
 		case AccessLevelEnum::Main:
-            value = QJsonValue(AccessLevelType::access_main);
+			value = QJsonValue(AccessLevelType::access_main);
 			break;
 		case AccessLevelEnum::Admin:
-            value = QJsonValue(AccessLevelType::access_admin);
+			value = QJsonValue(AccessLevelType::access_admin);
 			break;
 		case AccessLevelEnum::Registry:
-            value = QJsonValue(AccessLevelType::access_registry);
+			value = QJsonValue(AccessLevelType::access_registry);
 			break;
 	}
 
-    return value;
+	return value;
 }
 
 QString AccessLevel::toString()
 {
-    QString value;
-    switch (current)
-    {
-        case AccessLevelEnum::Vet:
-            value = AccessLevelType::access_vet;
-            break;
-        case AccessLevelEnum::Main:
-            value = AccessLevelType::access_main;
-            break;
-        case AccessLevelEnum::Admin:
-            value = AccessLevelType::access_admin;
-            break;
-        case AccessLevelEnum::Registry:
-            value = AccessLevelType::access_registry;
-            break;
-    }
-    return value;
+	QString value;
+	switch (current)
+	{
+		case AccessLevelEnum::Vet:
+			value = AccessLevelType::access_vet;
+			break;
+		case AccessLevelEnum::Main:
+			value = AccessLevelType::access_main;
+			break;
+		case AccessLevelEnum::Admin:
+			value = AccessLevelType::access_admin;
+			break;
+		case AccessLevelEnum::Registry:
+			value = AccessLevelType::access_registry;
+			break;
+	}
+	return value;
 }
 
 bool AccessData::deserialize(const QJsonObject &document) noexcept
 {
-    bool ok = true;
-    uid = document.value(AccessJson::field_acc_id).toVariant().toULongLong(&ok);
-    login = document.value(AccessJson::field_acc_login).toString();
-    password = document.value(AccessJson::field_acc_password).toVariant().toByteArray();
-    ok &= owner.deserialize(document.value(AccessJson::field_acc_employee).toObject());
-    ok &= level.deserialize(document.value(AccessJson::field_acc_access_level).toObject());
-    return ok;
+	bool ok = true;
+	uid = document.value(AccessJson::field_acc_id).toVariant().toULongLong(&ok);
+	login = document.value(AccessJson::field_acc_login).toString();
+	password = document.value(AccessJson::field_acc_password).toVariant().toByteArray();
+	ok &= owner.deserialize(document.value(AccessJson::field_acc_employee).toObject());
+	ok &= level.deserialize(document.value(AccessJson::field_acc_access_level).toObject());
+	return ok;
 }
 
 QJsonObject AccessData::serialize() const
 {
-    QJsonObject root;
-    root.insert(AccessJson::field_acc_id, QJsonValue::fromVariant(QVariant::fromValue(uid)));
-    root.insert(AccessJson::field_acc_employee, owner.serialize());
-    root.insert(AccessJson::field_acc_login, login);
-    root.insert(AccessJson::field_acc_password, QJsonValue::fromVariant(password));
-    root.insert(AccessJson::field_acc_access_level, level.serialize());
-    return root;
+	QJsonObject root;
+	root.insert(AccessJson::field_acc_id, QJsonValue::fromVariant(QVariant::fromValue(uid)));
+	root.insert(AccessJson::field_acc_employee, owner.serialize());
+	root.insert(AccessJson::field_acc_login, login);
+	root.insert(AccessJson::field_acc_password, QJsonValue::fromVariant(password));
+	root.insert(AccessJson::field_acc_access_level, level.serialize());
+	return root;
 }
 
 QString AccessData::getLogin() const
 {
-    return login;
+	return login;
 }
 
 void AccessData::setLogin(const QString &value)
 {
-    login = value;
+	login = value;
 }
 
 uint64_t AccessData::getUid() const
 {
-    return uid;
+	return uid;
 }
 
 QByteArray AccessData::getPassword() const
 {
-    return password;
+	return password;
 }
 
 void AccessData::setPassword(const QByteArray &value)
 {
-    password = value;
+	password = value;
 }
 
 AccessLevel AccessData::getLevel() const
 {
-    return level;
+	return level;
 }
 
 void AccessData::setLevel(const AccessLevel &value)
 {
-    level = value;
+	level = value;
 }
 
 Staff AccessData::getOwner() const
 {
-    return owner;
+	return owner;
 }
 
 void AccessData::setOwner(const Staff &value)
 {
-    owner = value;
+	owner = value;
 }

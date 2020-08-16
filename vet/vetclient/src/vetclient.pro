@@ -1,4 +1,4 @@
-QT       += core gui network
+QT	   += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,7 +16,6 @@ SOURCES += \
 	core/animal_list_item_widget.cpp \
 	core/auth.cpp \
 	core/mainwindow.cpp \
-	core/fetcher.cpp \
 	main.cpp \
 	types/address.cpp \
 	types/animal_medical_record.cpp \
@@ -29,7 +28,7 @@ SOURCES += \
 	types/position.cpp \
 	types/prescribings.cpp \
 	types/proxy_auth.cpp \
-	types/shedule.cpp \
+	types/schedule.cpp \
 	types/staff.cpp \
 	types/user_data.cpp \
 	types/vaccination.cpp \
@@ -43,7 +42,6 @@ HEADERS += \
 	core/animal_list_item_widget.h \
 	core/auth.h \
 	core/mainwindow.h \
-	core/fetcher.h \
 	types/QJsonHeaders.h \
 	types/address.h \
 	types/animal_medical_record.h \
@@ -66,25 +64,25 @@ HEADERS += \
 	utlis/utils.h
 
 FORMS += \
-    ui/acc_info.ui \
-    ui/add_contract.ui \
-    ui/address.ui \
-    ui/admin.ui \
-    ui/animal.ui \
-    ui/animal_list_item_widget.ui \
-    ui/auth_dialog.ui \
-    ui/chip.ui \
-    ui/contacts.ui \
-    ui/mainwindow.ui \
-    ui/passport.ui \
-    ui/shedule.ui \
-    ui/staff.ui \
-    ui/vaccination.ui \
-    ui/visit.ui
+	ui/acc_info.ui \
+	ui/add_contract.ui \
+	ui/address.ui \
+	ui/admin.ui \
+	ui/animal.ui \
+	ui/animal_list_item_widget.ui \
+	ui/auth_dialog.ui \
+	ui/chip.ui \
+	ui/contacts.ui \
+	ui/mainwindow.ui \
+	ui/passport.ui \
+	ui/shedule.ui \
+	ui/staff.ui \
+	ui/vaccination.ui \
+	ui/visit.ui
 
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    res.qrc
+	res.qrc

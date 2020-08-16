@@ -7,37 +7,37 @@
 
 namespace Ui
 {
-    class Form;
+	class Form;
 }
 
 class AnimalListItemWidget : public QWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    struct AnimalData final
-    {
-        uint64_t uid;
-        QString name;
-        QString spec;
-        QDate birth;
-    };
+	struct AnimalData final
+	{
+		uint64_t uid;
+		QString name;
+		QString spec;
+		QDate birth;
+	};
 public:
-    explicit AnimalListItemWidget(QWidget *parent = nullptr);
-    void view(const AnimalMedicalRecord& rec);
+	explicit AnimalListItemWidget(QWidget *parent = nullptr);
+	void view(const AnimalMedicalRecord& rec);
 
 private:
-    Ui::Form* ui;
+	Ui::Form* ui;
 };
 
 class AnimalListWidget : public QWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    AnimalListWidget();
-    bool loadFromJson(const QByteArray&);
+	AnimalListWidget();
+	bool loadFromJson(const QByteArray&);
 
-    void view();
+	void view();
 private:
-    QList<AnimalListItemWidget::AnimalData> widgets;
-    QListWidget widget;
+	QList<AnimalListItemWidget::AnimalData> widgets;
+	QListWidget widget;
 };

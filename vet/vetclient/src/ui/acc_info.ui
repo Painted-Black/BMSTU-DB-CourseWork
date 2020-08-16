@@ -4,10 +4,10 @@
  <widget class="QWidget" name="acc_info_widget">
   <property name="geometry">
    <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>488</width>
-    <height>724</height>
+	<x>0</x>
+	<y>0</y>
+	<width>488</width>
+	<height>724</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,589 +15,589 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QGroupBox" name="acc_info_groupBox">
-     <property name="font">
-      <font>
-       <pointsize>16</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="title">
-      <string>Информация об аккаунте</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="1">
-       <widget class="QLabel" name="input_login_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <italic>true</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Login</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="login_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Логин</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="access_level_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Уровень доступа</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLabel" name="input_access_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <italic>true</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>level</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
+	<widget class="QGroupBox" name="acc_info_groupBox">
+	 <property name="font">
+	  <font>
+	   <pointsize>16</pointsize>
+	   <weight>75</weight>
+	   <bold>true</bold>
+	  </font>
+	 </property>
+	 <property name="title">
+	  <string>Информация об аккаунте</string>
+	 </property>
+	 <layout class="QGridLayout" name="gridLayout">
+	  <item row="0" column="1">
+	   <widget class="QLabel" name="input_login_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <italic>true</italic>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>Login</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="0" column="0">
+	   <widget class="QLabel" name="login_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>Логин</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="1" column="0">
+	   <widget class="QLabel" name="access_level_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>Уровень доступа</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="1" column="1">
+	   <widget class="QLabel" name="input_access_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <italic>true</italic>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>level</string>
+		</property>
+	   </widget>
+	  </item>
+	 </layout>
+	</widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="owner_info_groupBox">
-     <property name="font">
-      <font>
-       <pointsize>16</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="title">
-      <string>Информация о владельце аккаунта</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="2" column="0">
-       <widget class="QLabel" name="part_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Отчество</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLabel" name="imput_part_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <italic>true</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="birth_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Дата рождения</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="sex_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Пол</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLabel" name="input_birth_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <italic>true</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="name_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Имя</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="surname_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Фамилия</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLabel" name="input_name_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <italic>true</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="input_surname_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <italic>true</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLabel" name="input_sex_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <italic>true</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0" colspan="2">
-       <widget class="QGroupBox" name="passport_groupBox">
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="title">
-         <string>Паспортные данные</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_3">
-         <item row="0" column="1">
-          <widget class="QLabel" name="input_num_label">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <italic>true</italic>
-            </font>
-           </property>
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_3">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Дата выдачи</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="input_issue_date_label">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <italic>true</italic>
-            </font>
-           </property>
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Серия, номер</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_5">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Национальность</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLabel" name="input_nation_label">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <italic>true</italic>
-            </font>
-           </property>
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-     </layout>
-    </widget>
+	<widget class="QGroupBox" name="owner_info_groupBox">
+	 <property name="font">
+	  <font>
+	   <pointsize>16</pointsize>
+	   <weight>75</weight>
+	   <bold>true</bold>
+	  </font>
+	 </property>
+	 <property name="title">
+	  <string>Информация о владельце аккаунта</string>
+	 </property>
+	 <layout class="QGridLayout" name="gridLayout_2">
+	  <item row="2" column="0">
+	   <widget class="QLabel" name="part_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>Отчество</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="2" column="1">
+	   <widget class="QLabel" name="imput_part_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <italic>true</italic>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>TextLabel</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="4" column="0">
+	   <widget class="QLabel" name="birth_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>Дата рождения</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="3" column="0">
+	   <widget class="QLabel" name="sex_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>Пол</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="4" column="1">
+	   <widget class="QLabel" name="input_birth_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <italic>true</italic>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>TextLabel</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="1" column="0">
+	   <widget class="QLabel" name="name_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>Имя</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="0" column="0">
+	   <widget class="QLabel" name="surname_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>Фамилия</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="1" column="1">
+	   <widget class="QLabel" name="input_name_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <italic>true</italic>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>TextLabel</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="0" column="1">
+	   <widget class="QLabel" name="input_surname_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <italic>true</italic>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>TextLabel</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="3" column="1">
+	   <widget class="QLabel" name="input_sex_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <italic>true</italic>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>TextLabel</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="5" column="0" colspan="2">
+	   <widget class="QGroupBox" name="passport_groupBox">
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="title">
+		 <string>Паспортные данные</string>
+		</property>
+		<layout class="QGridLayout" name="gridLayout_3">
+		 <item row="0" column="1">
+		  <widget class="QLabel" name="input_num_label">
+		   <property name="minimumSize">
+			<size>
+			 <width>0</width>
+			 <height>30</height>
+			</size>
+		   </property>
+		   <property name="font">
+			<font>
+			 <italic>true</italic>
+			</font>
+		   </property>
+		   <property name="text">
+			<string>TextLabel</string>
+		   </property>
+		  </widget>
+		 </item>
+		 <item row="1" column="0">
+		  <widget class="QLabel" name="label_3">
+		   <property name="minimumSize">
+			<size>
+			 <width>0</width>
+			 <height>30</height>
+			</size>
+		   </property>
+		   <property name="text">
+			<string>Дата выдачи</string>
+		   </property>
+		  </widget>
+		 </item>
+		 <item row="1" column="1">
+		  <widget class="QLabel" name="input_issue_date_label">
+		   <property name="minimumSize">
+			<size>
+			 <width>0</width>
+			 <height>30</height>
+			</size>
+		   </property>
+		   <property name="font">
+			<font>
+			 <italic>true</italic>
+			</font>
+		   </property>
+		   <property name="text">
+			<string>TextLabel</string>
+		   </property>
+		  </widget>
+		 </item>
+		 <item row="0" column="0">
+		  <widget class="QLabel" name="label">
+		   <property name="minimumSize">
+			<size>
+			 <width>0</width>
+			 <height>30</height>
+			</size>
+		   </property>
+		   <property name="text">
+			<string>Серия, номер</string>
+		   </property>
+		  </widget>
+		 </item>
+		 <item row="2" column="0">
+		  <widget class="QLabel" name="label_5">
+		   <property name="minimumSize">
+			<size>
+			 <width>0</width>
+			 <height>30</height>
+			</size>
+		   </property>
+		   <property name="text">
+			<string>Национальность</string>
+		   </property>
+		  </widget>
+		 </item>
+		 <item row="2" column="1">
+		  <widget class="QLabel" name="input_nation_label">
+		   <property name="minimumSize">
+			<size>
+			 <width>0</width>
+			 <height>30</height>
+			</size>
+		   </property>
+		   <property name="font">
+			<font>
+			 <italic>true</italic>
+			</font>
+		   </property>
+		   <property name="text">
+			<string>TextLabel</string>
+		   </property>
+		  </widget>
+		 </item>
+		</layout>
+	   </widget>
+	  </item>
+	 </layout>
+	</widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="position_groupBox">
-     <property name="font">
-      <font>
-       <pointsize>16</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="title">
-      <string>Должность</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_4">
-      <item row="2" column="0">
-       <widget class="QLabel" name="pos_name_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Наименование должности</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLabel" name="input_pos_title_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <italic>true</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="employ_date_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Дата найма</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="input_edu_level_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <italic>true</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLabel" name="input_emloy_date_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <italic>true</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="edu_level_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Уровень образования</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="salary_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Заработная плата</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLabel" name="input_salary_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <italic>true</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
+	<widget class="QGroupBox" name="position_groupBox">
+	 <property name="font">
+	  <font>
+	   <pointsize>16</pointsize>
+	   <weight>75</weight>
+	   <bold>true</bold>
+	  </font>
+	 </property>
+	 <property name="title">
+	  <string>Должность</string>
+	 </property>
+	 <layout class="QGridLayout" name="gridLayout_4">
+	  <item row="2" column="0">
+	   <widget class="QLabel" name="pos_name_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>Наименование должности</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="2" column="1">
+	   <widget class="QLabel" name="input_pos_title_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <italic>true</italic>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>TextLabel</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="1" column="0">
+	   <widget class="QLabel" name="employ_date_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>Дата найма</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="0" column="1">
+	   <widget class="QLabel" name="input_edu_level_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <italic>true</italic>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>TextLabel</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="1" column="1">
+	   <widget class="QLabel" name="input_emloy_date_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <italic>true</italic>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>TextLabel</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="0" column="0">
+	   <widget class="QLabel" name="edu_level_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>Уровень образования</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="3" column="0">
+	   <widget class="QLabel" name="salary_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>Заработная плата</string>
+		</property>
+	   </widget>
+	  </item>
+	  <item row="3" column="1">
+	   <widget class="QLabel" name="input_salary_label">
+		<property name="minimumSize">
+		 <size>
+		  <width>0</width>
+		  <height>30</height>
+		 </size>
+		</property>
+		<property name="font">
+		 <font>
+		  <weight>50</weight>
+		  <italic>true</italic>
+		  <bold>false</bold>
+		 </font>
+		</property>
+		<property name="text">
+		 <string>TextLabel</string>
+		</property>
+	   </widget>
+	  </item>
+	 </layout>
+	</widget>
    </item>
   </layout>
  </widget>

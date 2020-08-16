@@ -3,7 +3,7 @@
 
 
 AnimalEditWidget::AnimalEditWidget(QWidget *parent)
-    : QWidget(parent), ui(new Ui::animal_widget())
+	: QWidget(parent), ui(new Ui::animal_widget())
 {
 
 }

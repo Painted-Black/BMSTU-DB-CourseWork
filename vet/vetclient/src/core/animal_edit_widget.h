@@ -4,16 +4,16 @@
 
 namespace Ui
 {
-    class animal_widget;
+	class animal_widget;
 }
 
 class AnimalEditWidget : public QWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    explicit AnimalEditWidget(QWidget *parent = nullptr);
+	explicit AnimalEditWidget(QWidget *parent = nullptr);
 
 private:
-    Ui::animal_widget* ui;
+	Ui::animal_widget* ui;
 };
 

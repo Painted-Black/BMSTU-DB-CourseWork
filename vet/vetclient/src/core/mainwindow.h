@@ -19,20 +19,22 @@ class MainWindow : public QMainWindow
 private:
 	using  Callback = void(MainWindow::*)();
 	template<typename T>
-	using InitFunc = void(MainWindow::*)(T*);
+	using InitFunc = void(MainWindow::*)(T);
 public:
 	explicit MainWindow(QWidget *parent = nullptr);
 
 	void setStaff(const Staff &value);
-	void setAccess_data(const AccessData &value);
+	void setAccessData(const AccessData &value);
 	void setPassport(const Passport &value);
 	void setKey(const QByteArray &value);
 
 private:
 	void runAnimalEditor();
-	QWidget *addTab(const QIcon&, const QString&, std::tuple<uint64_t,  uint8_t> flags, );
+	QWidget *addTab(const QIcon&, const QString&, std::tuple<uint64_t,  uint8_t> , InitFunc<QWidget*>);
 	void addToolBarAction(const QIcon&, const QString&, const Callback& cb);
 	void closeTab(int);
+	void createWidgetAnimals(QWidget*);
+	void createWidgetAccountInfo(QWidget*);
 
 private:
 	Ui::MainWindow* ui;
