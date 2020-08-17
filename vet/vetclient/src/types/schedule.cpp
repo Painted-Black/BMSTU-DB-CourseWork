@@ -83,7 +83,37 @@ DayOfWeek::DayOfWeekEnum DayOfWeek::getDayOfkWeek() const
 
 void DayOfWeek::setDayOfkWeek(DayOfWeek::DayOfWeekEnum value)
 {
-	current = value;
+    current = value;
+}
+
+QString DayOfWeek::toString()
+{
+    QString value;
+    switch (current)
+    {
+        case DayOfWeekEnum::Sun:
+            value = RussianDayOfWeekType::rus_day_of_week_sun;
+            break;
+        case DayOfWeekEnum::Mon:
+            value = RussianDayOfWeekType::rus_day_of_week_mon;
+            break;
+        case DayOfWeekEnum::Tue:
+            value = RussianDayOfWeekType::rus_day_of_week_tue;
+            break;
+        case DayOfWeekEnum::Wed:
+            value = RussianDayOfWeekType::rus_day_of_week_wed;
+            break;
+        case DayOfWeekEnum::Thu:
+            value = RussianDayOfWeekType::rus_day_of_week_thu;
+            break;
+        case DayOfWeekEnum::Fri:
+            value = RussianDayOfWeekType::rus_day_of_week_fri;
+            break;
+        case DayOfWeekEnum::Sat:
+            value = RussianDayOfWeekType::rus_day_of_week_fri;
+            break;
+    }
+    return value;
 }
 
 bool Schedule::deserialize(const QJsonObject &json) noexcept
@@ -184,10 +214,20 @@ QJsonArray ScheduleList::serialize() const
 
 void ScheduleList::add_shedule_item(Schedule &shed)
 {
-	shedule_list.push_back(shed);
+    shedule_list.push_back(shed);
 }
 
-QList<Schedule> ScheduleList::getShedule_list() const
+const Schedule& ScheduleList::at(size_t idx) const
+{
+    return shedule_list.at(idx);
+}
+
+int ScheduleList::size() const
+{
+    return shedule_list.size();
+}
+
+QVector<Schedule> ScheduleList::getShedule_list() const
 {
 	return shedule_list;
 }

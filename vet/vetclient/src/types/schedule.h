@@ -2,6 +2,7 @@
 
 #include <QString>
 #include <QDateTime>
+#include <QVector>
 #include "QJsonHeaders.h"
 
 #include "core/ISerializable.h"
@@ -25,7 +26,7 @@ public:
 
 	DayOfWeekEnum getDayOfkWeek() const;
 	void setDayOfkWeek(DayOfWeekEnum value);
-
+    QString toString();
 private:
 	DayOfWeekEnum current;
 };
@@ -37,14 +38,12 @@ public:
 	QJsonObject serialize() const override;
 
 	uint64_t getShed_id() const;
-	DayOfWeek getDay_of_week() const;
-	QString getType() const;
+    DayOfWeek getDay_of_week() const;
 	QTime getStart() const;
 	QTime getEnd() const;
 	QString getCabinet() const;
 
-	void setDay_of_week(const DayOfWeek &value);
-	void setType(const QString &value);
+    void setDay_of_week(const DayOfWeek &value);
 	void setStart(const QTime &value);
 	void setEnd(const QTime &value);
 	void setCabinet(const QString &value);
@@ -63,11 +62,12 @@ public:
 	bool deserialize(const QJsonArray &jarray) noexcept override;
 	QJsonArray serialize() const override;
 	void add_shedule_item(Schedule& shed);
-
-	QList<Schedule> getShedule_list() const;
+    const Schedule& at(size_t idx) const;
+    int size() const;
+    QVector<Schedule> getShedule_list() const;
 
 private:
-	QList<Schedule> shedule_list;
+    QVector <Schedule> shedule_list;
 };
 
 

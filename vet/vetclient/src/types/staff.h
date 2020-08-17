@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QString>
+
 #include "QJsonHeaders.h"
 #include "core/ISerializable.h"
 #include "passport.h"
@@ -24,6 +26,8 @@ public:
 	EducationLevelEnum getEducationLevel() const;
 	void setEducationLevel(const EducationLevelEnum &value);
 
+    QString toString();
+
 private:
 	EducationLevelEnum current;
 };
@@ -40,18 +44,20 @@ public:
 	EducationLevel getEdu_level() const;
 	QDate getFire_date() const;
 	QDate getEmploy_date() const;
+    ScheduleList getShed_list() const;
 
 	void setPassport(const Passport &value);
 	void setPosition(const Position &value);
 	void setEdu_level(const EducationLevel &value);
 	void setFire_date(const QDate &value);
 	void setEmploy_date(const QDate &value);
+    void setShed_list(const ScheduleList &value);
 
 private:
-	uint64_t id;
-	Passport passport;
-	Position position;
-	EducationLevel edu_level;
+    uint64_t id;
+    Passport passport;
+    Position position;
+    EducationLevel edu_level;
 	QDate fire_date;
 	QDate employ_date;
 	ScheduleList shed_list;

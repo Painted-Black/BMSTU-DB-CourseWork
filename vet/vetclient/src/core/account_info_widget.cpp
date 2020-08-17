@@ -1,5 +1,9 @@
 #include "ui_acc_info.h"
 #include "account_info_widget.h"
+#include "types/schedule.h"
+
+#include <QVariant>
+#include <QFormLayout>
 
 AccountInfoWidget::AccountInfoWidget(QWidget *parent)
 	: QWidget(parent), ui(new Ui::acc_info_widget())
@@ -18,6 +22,7 @@ void AccountInfoWidget::update()
 	ui->input_access_label->setText(access_data.getLevel().toString());
 	const Staff& staff = access_data.getOwner();
 	const Passport& passport = staff.getPassport();
+    const Position& pos = staff.getPosition();
 	ui->input_surname_label->setText(passport.getName());
 	ui->input_name_label->setText(passport.getName());
 	ui->input_part_label->setText(passport.getPatronymic());
@@ -26,4 +31,26 @@ void AccountInfoWidget::update()
 	ui->input_birth_label->setText(passport.getBirthday().toString(Qt::RFC2822Date));
 	ui->input_issue_date_label->setText(passport.getIssueDate().toString(Qt::RFC2822Date));
 	ui->input_nation_label->setText(passport.getNationality());
+    ui->input_edu_level_label->setText(staff.getEdu_level().toString());
+    ui->input_emloy_date_label->setText(staff.getEmploy_date().toString());
+    ui->input_pos_title_label->setText(pos.getTitle());
+    ui->input_salary_label->setText(QVariant(pos.getSalary()).toString());
+    const ScheduleList shed = staff.getShed_list();
+    int shed_size = shed.size();
+    QFormLayout* lay = new QFormLayout(this);
+    for (int i = 0; i < shed_size; ++i)
+    {
+        const Schedule& cur = shed.at(i);
+        QLabel* day_label = new QLabel(this);
+        QLabel* time_label = new QLabel(this);
+        day_label->setText(cur.getDay_of_week().toString());
+        QString time = cur.getStart().toString();
+        time += " -- ";
+        time += cur.getEnd().toString();
+        time_label->setText(time);
+//        lay->insertRow(i, day_label, time_label);
+        lay->addRow(day_label, time_label);
+    }
+    ui->sched_groupBox->setLayout(lay);
+    ui->sched_groupBox->show();
 }

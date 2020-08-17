@@ -203,6 +203,17 @@ namespace DayOfWeekType
 	const QString day_of_week_sat = "Sat";
 }
 
+namespace RussianDayOfWeekType
+{
+    const QString rus_day_of_week_sun = "Воскресенье";
+    const QString rus_day_of_week_mon = "Понедельник";
+    const QString rus_day_of_week_tue = "Вторник";
+    const QString rus_day_of_week_wed = "Среда";
+    const QString rus_day_of_week_thu = "Четверг";
+    const QString rus_day_of_week_fri = "Пятница";
+    const QString rus_day_of_week_sat = "Суббота";
+}
+
 namespace EduLevelType
 {
 	const QString edu_resident = "resident";
