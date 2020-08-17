@@ -33,7 +33,7 @@ public:
 	uint64_t getUid() const;
 	QByteArray getPassword() const;
 	AccessLevel getLevel() const;
-	Staff getOwner() const;
+	const Staff &getOwner() const;
 	void setLogin(const QString &value);
 	void setPassword(const QByteArray &value);
 	void setLevel(const AccessLevel &value);

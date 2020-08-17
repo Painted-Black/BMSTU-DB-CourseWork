@@ -169,8 +169,8 @@ namespace GenderType
 
 namespace GenderRussianType
 {
-	const QString gender_male = "м";
-	const QString gender_female = "ж";
+	const QString gender_male = "муж.";
+	const QString gender_female = "жен.";
 	const QString gender_other = "другое";
 }
 

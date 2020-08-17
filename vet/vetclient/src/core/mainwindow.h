@@ -19,7 +19,6 @@ private:
 	using InitFunc = void(MainWindow::*)(T);
 public:
 	explicit MainWindow(QWidget *parent = nullptr);
-
 	void setAccessData(const AccessData &value);
 
 private:
@@ -38,4 +37,3 @@ private slots:
 	void accInfo();
 	void exit();
 };
-

@@ -21,7 +21,7 @@ public:
 	explicit AccountInfoWidget(QWidget* = nullptr);
 
 	void setAccessData(const AccessData &);
-	void show();
+	void update();
 
 private:
 	Ui::acc_info_widget* ui;

@@ -35,7 +35,7 @@ public:
 	QJsonObject serialize() const override;
 
 	uint64_t getId() const;
-	Passport getPassport() const;
+	const Passport &getPassport() const;
 	Position getPosition() const;
 	EducationLevel getEdu_level() const;
 	QDate getFire_date() const;

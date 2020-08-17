@@ -11,31 +11,25 @@ class Passport : public ISerializable<QJsonObject>
 public:
 	bool deserialize(const QJsonObject&) noexcept override;
 	QJsonObject serialize() const override;
-	uint64_t getId() const;
 
-	QString getSurname() const;
 	void setSurname(const QString &value);
-
-	QString getName() const;
 	void setName(const QString &value);
-
-	QString getPatronymic() const;
 	void setPatronymic(const QString &value);
-
-	QDate getBirthday() const;
 	void setBirthday(const QDate &value);
-
-	QDate getIssue_date() const;
-	void setIssue_date(const QDate &value);
-
-	QString getNationality() const;
+	void setIssueDate(const QDate &value);
 	void setNationality(const QString &value);
-
-	QString getPassport_num() const;
-	void setPassport_num(const QString &value);
-
-	Gender getGender() const;
+	void setPassportNum(const QString &value);
 	void setGender(const Gender &value);
+
+	uint64_t getId() const;
+	const QString& getSurname() const;
+	const QString& getName() const;
+	const QString& getPatronymic() const;
+	const QDate& getBirthday() const;
+	const QDate& getIssueDate() const;
+	const QString& getNationality() const;
+	const QString& getPassportNum() const;
+	Gender getGender() const;
 
 private:
 	uint64_t id;

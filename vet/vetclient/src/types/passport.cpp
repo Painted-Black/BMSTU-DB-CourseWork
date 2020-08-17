@@ -64,7 +64,7 @@ uint64_t Passport::getId() const
 	return id;
 }
 
-QString Passport::getSurname() const
+const QString &Passport::getSurname() const
 {
 	return surname;
 }
@@ -74,7 +74,7 @@ void Passport::setSurname(const QString &value)
 	surname = value;
 }
 
-QString Passport::getName() const
+const QString& Passport::getName() const
 {
 	return name;
 }
@@ -84,7 +84,7 @@ void Passport::setName(const QString &value)
 	name = value;
 }
 
-QString Passport::getPatronymic() const
+const QString &Passport::getPatronymic() const
 {
 	return patronymic;
 }
@@ -94,7 +94,7 @@ void Passport::setPatronymic(const QString &value)
 	patronymic = value;
 }
 
-QDate Passport::getBirthday() const
+const QDate &Passport::getBirthday() const
 {
 	return birthday;
 }
@@ -104,17 +104,17 @@ void Passport::setBirthday(const QDate &value)
 	birthday = value;
 }
 
-QDate Passport::getIssue_date() const
+const QDate &Passport::getIssueDate() const
 {
 	return issue_date;
 }
 
-void Passport::setIssue_date(const QDate &value)
+void Passport::setIssueDate(const QDate &value)
 {
 	issue_date = value;
 }
 
-QString Passport::getNationality() const
+const QString &Passport::getNationality() const
 {
 	return nationality;
 }
@@ -124,12 +124,12 @@ void Passport::setNationality(const QString &value)
 	nationality = value;
 }
 
-QString Passport::getPassport_num() const
+const QString &Passport::getPassportNum() const
 {
 	return passport_num;
 }
 
-void Passport::setPassport_num(const QString &value)
+void Passport::setPassportNum(const QString &value)
 {
 	passport_num = value;
 }

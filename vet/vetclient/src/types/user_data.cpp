@@ -131,7 +131,7 @@ void AccessData::setLevel(const AccessLevel &value)
 	level = value;
 }
 
-Staff AccessData::getOwner() const
+const Staff& AccessData::getOwner() const
 {
 	return employee;
 }

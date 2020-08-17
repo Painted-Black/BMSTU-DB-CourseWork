@@ -1,4 +1,5 @@
 #include <limits>
+#include <QList>
 #include <QDebug>
 #include <QDockWidget>
 #include <QLabel>
@@ -30,16 +31,18 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui->acc_action, &QAction::triggered, this, &MainWindow::accInfo);
 	connect(ui->exit_action, &QAction::triggered, this, &MainWindow::exit);
 	connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
-
 	addToolBarAction(QIcon(":/ui/icons/add_40.png"), "Животные", &MainWindow::runAnimalEditor);
 }
 
 void MainWindow::runAnimalEditor()
 {
-	QWidget* widget =
-			addTab(QIcon(":/ui/icons/add_user_80.png"), "Животные",
+	qDebug() << Q_FUNC_INFO;
+	QWidget* w = addTab(QIcon(":/ui/icons/add_user_80.png"), "Животные",
 				{AnimalWidget, Single}, &MainWindow::createWidgetAnimals);
 
+	auto* animal =
+			w->findChild<AnimalEditWidget*>("AnimalEditWidget", Qt::FindDirectChildrenOnly);
+	animal->update();
 }
 
 QWidget* MainWindow::addTab(
@@ -47,15 +50,24 @@ QWidget* MainWindow::addTab(
 		std::tuple<uint64_t, uint8_t> flags, InitFunc<QWidget *> init_cb)
 {
 	QTabBar* bar = ui->tabWidget->tabBar();
-	auto fl = std::get<1>(flags);
-	if (fl & Single)
+
+	auto srch_type = std::get<0>(flags);
+	auto flg = std::get<1>(flags);
+	QVariantList user_data = { QVariant::fromValue(srch_type), QVariant::fromValue(flg)};
+
+	if (flg & Single)
 	{
 		auto count = bar->count();
-		auto searched = std::get<0>(flags);
 		for (decltype (count) i = 0; i < count; ++i)
 		{
-			auto data = bar->tabData(i).value<uint8_t>();
-			if (searched == data)
+			QVariantList user_data_i = bar->tabData(i).toList();
+			if (user_data_i.count() != 2)
+			{
+				continue;
+			}
+
+			uint64_t srch_type_i = user_data_i.first().toULongLong();
+			if (srch_type == srch_type_i)
 			{
 				bar->setCurrentIndex(i);
 				return ui->tabWidget->widget(i);
@@ -66,20 +78,26 @@ QWidget* MainWindow::addTab(
 	QWidget* widget = new QWidget(ui->tabWidget);
 	(this->*init_cb)(widget);
 	int idx = ui->tabWidget->addTab(widget, icon, title);
-	bar->setTabData(idx, QVariant::fromValue(fl));
-	bar->setCurrentIndex(idx);
+	bar->setTabData(idx, user_data);
+	ui->tabWidget->setCurrentIndex(idx);
 	return widget;
 }
 
 void MainWindow::createWidgetAnimals(QWidget * w)
 {
-
+	QHBoxLayout* lay = new QHBoxLayout();
+	AnimalEditWidget* animal = new AnimalEditWidget(w);
+	animal->setObjectName("AnimalEditWidget");
+	animal->show();
+	lay->addWidget(animal);
+	w->setLayout(lay);
 }
 
 void MainWindow::createWidgetAccountInfo(QWidget * w)
 {
 	QHBoxLayout* layout = new QHBoxLayout();
 	AccountInfoWidget* aiw = new AccountInfoWidget(w);
+	aiw->setObjectName("AccountInfoWidget");
 	aiw->setAccessData(access_data);
 	aiw->show();
 	layout->addWidget(aiw);
@@ -95,6 +113,7 @@ void MainWindow::addToolBarAction(const QIcon& icon, const QString& text, const 
 
 void MainWindow::closeTab(int idx)
 {
+	qDebug() << Q_FUNC_INFO;
 	auto flags = ui->tabWidget->tabBar()->tabData(idx).value<uint8_t>();
 	if (flags & Unclosable)
 	{
@@ -113,7 +132,11 @@ void MainWindow::setAccessData(const AccessData &value)
 void MainWindow::accInfo()
 {
 	qDebug() << Q_FUNC_INFO << "Acc Info menu action";
-	addTab(QIcon(":/ui/icons/user_green_80.png"), "Аккаунт", {AccountWidget, Single}, &MainWindow::createWidgetAccountInfo);
+	QWidget* w = addTab(QIcon(":/ui/icons/user_green_80.png"), "Аккаунт",
+		{AccountWidget, Single}, &MainWindow::createWidgetAccountInfo);
+
+	AccountInfoWidget* acc = w->findChild<AccountInfoWidget*>("AccountInfoWidget");
+	acc->update();
 }
 
 void MainWindow::exit()

@@ -7,3 +7,8 @@ AnimalEditWidget::AnimalEditWidget(QWidget *parent)
 {
 
 }
+
+void AnimalEditWidget::update()
+{
+
+}

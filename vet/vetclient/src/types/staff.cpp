@@ -106,7 +106,7 @@ uint64_t Staff::getId() const
 	return id;
 }
 
-Passport Staff::getPassport() const
+const Passport& Staff::getPassport() const
 {
 	return passport;
 }
