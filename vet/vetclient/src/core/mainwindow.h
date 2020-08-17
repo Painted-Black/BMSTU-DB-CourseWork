@@ -28,6 +28,8 @@ private:
 	void closeTab(int);
 	void createWidgetAnimals(QWidget*);
 	void createWidgetAccountInfo(QWidget*);
+    void createWidgetNewVisit(QWidget*);
+    void newVisit();
 
 private:
 	Ui::MainWindow* ui;

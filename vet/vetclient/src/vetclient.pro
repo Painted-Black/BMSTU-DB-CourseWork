@@ -16,6 +16,7 @@ SOURCES += \
 	core/animal_list_item_widget.cpp \
 	core/auth.cpp \
 	core/mainwindow.cpp \
+	core/new_visit_widget.cpp \
 	main.cpp \
 	types/address.cpp \
 	types/animal_medical_record.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
 	core/animal_list_item_widget.h \
 	core/auth.h \
 	core/mainwindow.h \
+	core/new_visit_widget.h \
 	types/QJsonHeaders.h \
 	types/address.h \
 	types/animal_medical_record.h \

@@ -11,11 +11,13 @@
 #include "mainwindow.h"
 #include "account_info_widget.h"
 #include "animal_edit_widget.h"
+#include "new_visit_widget.h"
 
 enum TabType
 {
 	AccountWidget = 1,
-	AnimalWidget
+    AnimalWidget,
+    VisitWidget
 };
 
 enum TabFlags
@@ -32,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui->exit_action, &QAction::triggered, this, &MainWindow::exit);
 	connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
 	addToolBarAction(QIcon(":/ui/icons/add_40.png"), "Животные", &MainWindow::runAnimalEditor);
+    addToolBarAction(QIcon(":/ui/icons/treatment-80.png"), "Ветеринарный осмотр", &MainWindow::newVisit);
 }
 
 void MainWindow::runAnimalEditor()
@@ -101,7 +104,28 @@ void MainWindow::createWidgetAccountInfo(QWidget * w)
 	aiw->setAccessData(access_data);
 	aiw->show();
 	layout->addWidget(aiw);
-	w->setLayout(layout);
+    w->setLayout(layout);
+}
+
+void MainWindow::createWidgetNewVisit(QWidget *w)
+{
+    QHBoxLayout* layout = new QHBoxLayout();
+    NewVisitWidget* nvw = new NewVisitWidget(w);
+    nvw->setObjectName("NewVisitWidget");
+    nvw->setAccessData(access_data);
+    nvw->show();
+    layout->addWidget(nvw);
+    w->setLayout(layout);
+}
+
+void MainWindow::newVisit()
+{
+    qDebug() << Q_FUNC_INFO << "New visit";
+    QWidget* w = addTab(QIcon(":/ui/icons/treatment-80.png"), "Ветеринарный осмотр",
+                {VisitWidget, Single}, &MainWindow::createWidgetNewVisit);
+
+    NewVisitWidget* nvw = w->findChild<NewVisitWidget*>("NewVisitWidget");
+    nvw->update();
 }
 
 void MainWindow::addToolBarAction(const QIcon& icon, const QString& text, const Callback &cb)
@@ -135,8 +159,8 @@ void MainWindow::accInfo()
 	QWidget* w = addTab(QIcon(":/ui/icons/user_green_80.png"), "Аккаунт",
 		{AccountWidget, Single}, &MainWindow::createWidgetAccountInfo);
 
-	AccountInfoWidget* acc = w->findChild<AccountInfoWidget*>("AccountInfoWidget");
-	acc->update();
+    AccountInfoWidget* acc = w->findChild<AccountInfoWidget*>("AccountInfoWidget");
+    acc->update();
 }
 
 void MainWindow::exit()
