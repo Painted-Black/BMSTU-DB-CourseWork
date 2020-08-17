@@ -37,20 +37,22 @@ void AccountInfoWidget::update()
     ui->input_salary_label->setText(QVariant(pos.getSalary()).toString());
     const ScheduleList shed = staff.getShed_list();
     int shed_size = shed.size();
-    QFormLayout* lay = new QFormLayout(this);
+    QFormLayout* lay = new QFormLayout(ui->sched_groupBox);
     for (int i = 0; i < shed_size; ++i)
     {
         const Schedule& cur = shed.at(i);
-        QLabel* day_label = new QLabel(this);
-        QLabel* time_label = new QLabel(this);
+        QLabel* day_label = new QLabel(ui->sched_groupBox);
+        QLabel* time_label = new QLabel(ui->sched_groupBox);
         day_label->setText(cur.getDay_of_week().toString());
         QString time = cur.getStart().toString();
         time += " -- ";
         time += cur.getEnd().toString();
         time_label->setText(time);
-//        lay->insertRow(i, day_label, time_label);
+        QFont font = QFont();
+        font.setBold(false);
+        day_label->setFont(font);
+        time_label->setFont(font);
         lay->addRow(day_label, time_label);
     }
-    ui->sched_groupBox->setLayout(lay);
-    ui->sched_groupBox->show();
+    ui->sched_frame->setLayout(lay);
 }
