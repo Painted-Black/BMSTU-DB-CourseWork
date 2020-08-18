@@ -42,7 +42,7 @@ NewVisitWidget::NewVisitWidget(QWidget *parent) : QWidget(parent), ui(new Ui::vi
     ui->tableWidget->setHorizontalHeaderItem(5, terms_header);
     ui->tableWidget->setHorizontalHeaderItem(6, notes_header);
 
-    ui->tableWidget->adjustSize();
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
 //    ui->prescribings_tableView.
 }

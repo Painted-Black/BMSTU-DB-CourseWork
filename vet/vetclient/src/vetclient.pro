@@ -17,6 +17,7 @@ SOURCES += \
 	core/auth.cpp \
 	core/mainwindow.cpp \
 	core/new_visit_widget.cpp \
+        core/network/network_fetcher.cpp \
 	main.cpp \
 	types/address.cpp \
 	types/animal_medical_record.cpp \
@@ -41,8 +42,9 @@ HEADERS += \
 	core/animal_edit_widget.h \
 	core/animal_list_item_widget.h \
 	core/auth.h \
-	core/mainwindow.h \
-	core/new_visit_widget.h \
+        core/mainwindow.h \
+        core/new_visit_widget.h \
+        core/network/network_fetcher.h \
 	types/QJsonHeaders.h \
 	types/address.h \
 	types/animal_medical_record.h \
@@ -80,6 +82,8 @@ FORMS += \
 	ui/staff.ui \
 	ui/vaccination.ui \
 	ui/visit.ui
+
+LIBS += -lcurl
 
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
