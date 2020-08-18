@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <QNetworkAccessManager>
 #include <QMainWindow>
 #include <QByteArray>
 #include "auth.h"

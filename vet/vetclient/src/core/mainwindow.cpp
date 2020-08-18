@@ -10,11 +10,12 @@
 #include "mainwindow.h"
 #include "account_info_widget.h"
 #include "animal_edit_widget.h"
+#include "animal_list_item_widget.h"
 
 enum TabType
 {
 	AccountWidget = 1,
-	AnimalWidget
+	AnimalWidget   = 2
 };
 
 enum TabFlags
@@ -36,10 +37,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::runAnimalEditor()
 {
-	QWidget* widget =
-			addTab(QIcon(":/ui/icons/add_user_80.png"), "Животные",
+	QWidget* w = addTab(QIcon(":/ui/icons/add_user_80.png"), "Животные",
 				{AnimalWidget, Single}, &MainWindow::createWidgetAnimals);
-
+	w->show();
 }
 
 QWidget* MainWindow::addTab(
@@ -73,7 +73,11 @@ QWidget* MainWindow::addTab(
 
 void MainWindow::createWidgetAnimals(QWidget * w)
 {
-
+	QHBoxLayout* layout = new QHBoxLayout();
+	AnimalListWidget* aiw = new AnimalListWidget(w);
+	aiw->show(QUrl("http://127.0.0.1:4446/animals/all/short"), access_data.getPassword());
+	layout->addWidget(aiw);
+	w->setLayout(layout);
 }
 
 void MainWindow::createWidgetAccountInfo(QWidget * w)

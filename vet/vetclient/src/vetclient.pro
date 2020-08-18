@@ -15,7 +15,9 @@ SOURCES += \
 	core/animal_edit_widget.cpp \
 	core/animal_list_item_widget.cpp \
 	core/auth.cpp \
+	core/delegate/animallistdelegate.cpp \
 	core/mainwindow.cpp \
+	core/model/animallistmodel.cpp \
 	main.cpp \
 	types/address.cpp \
 	types/animal_medical_record.cpp \
@@ -28,6 +30,7 @@ SOURCES += \
 	types/position.cpp \
 	types/prescribings.cpp \
 	types/schedule.cpp \
+	types/short_animal_info.cpp \
 	types/staff.cpp \
 	types/user_data.cpp \
 	types/vaccination.cpp \
@@ -40,7 +43,9 @@ HEADERS += \
 	core/animal_edit_widget.h \
 	core/animal_list_item_widget.h \
 	core/auth.h \
+	core/delegate/animallistdelegate.h \
 	core/mainwindow.h \
+	core/model/animallistmodel.h \
 	types/QJsonHeaders.h \
 	types/address.h \
 	types/animal_medical_record.h \
@@ -55,6 +60,7 @@ HEADERS += \
 	types/prescribings.h \
 	types/proxy_auth.h \
 	types/schedule.h \
+	types/short_animal_info.h \
 	types/staff.h \
 	types/user_data.h \
 	types/vaccination.h \

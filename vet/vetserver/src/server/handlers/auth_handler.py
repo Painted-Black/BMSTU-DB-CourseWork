@@ -6,8 +6,6 @@ from server.key_data_checker import valid_key_checker
 import json
 import uuid
 
-from flask import request
-
 class AuthHandler(AbstractHandler):
 	def request(self, req, res):
 		res.content_type = "Application/Json"

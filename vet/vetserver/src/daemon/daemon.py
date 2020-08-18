@@ -1,6 +1,7 @@
 from server.server import Server
 from server.handlers.test_handler import TestHandler
 from server.handlers.auth_handler import AuthHandler
+from server.handlers.animal_handler import AnimalHandler
 from server.handlers.schedule_handler import ScheduleHandler
 from server.key_data_checker import KeyDataChecker
 from server.key_data_checker import valid_key_checker
@@ -23,7 +24,9 @@ class Daemon(object):
 	def start(self):
 		auth_=self.__config.get_routes_auth()
 		schedule_=self.__config.get_routes_schedule()
+		animal_=self.__config.get_routes_short_animal_info()
 
 		self.__server.add_endpoint(AuthHandler(auth_, ["POST"]))
 		self.__server.add_endpoint(ScheduleHandler(schedule_, ["POST"]))
+		self.__server.add_endpoint(AnimalHandler(animal_, ["GET"]))
 		self.__server.start(port=self.__config.get_server_port())

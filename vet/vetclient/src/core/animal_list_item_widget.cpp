@@ -1,36 +1,49 @@
-#include "types/QJsonHeaders.h"
+#include <QNetworkReply>
+#include "utlis/utils.h"
 #include "ui_animal_list_item_widget.h"
 #include "animal_list_item_widget.h"
-#include "types/json_fields.h"
 
-AnimalListItemWidget::AnimalListItemWidget(QWidget *parent)
-	: QWidget(parent), ui(new Ui::Form())
+AnimalListWidget::AnimalListWidget(QWidget * parent)
+	: QWidget(parent)
 {
-	ui->setupUi(this);
+	view = new QListView(this);
+	view->setSelectionMode(QAbstractItemView::SingleSelection);
+	view->setDragEnabled(true);
+	view->setAcceptDrops(true);
+	view->setDropIndicatorShown(true);
+	model = new AnimalListModel();
+	delegate = new AnimalListDelegate(this);
+	delegate->setModelData(this, model, QModelIndex());
+	view->setModel(model);
+	view->setItemDelegate(delegate);
+
+	QHBoxLayout* lay = new QHBoxLayout(this);
+	lay->addWidget(view);
+	setLayout(lay);
+
+	manager = new QNetworkAccessManager();
+	connect(manager, &QNetworkAccessManager::finished, this, &AnimalListWidget::response);
 }
 
-AnimalListWidget::AnimalListWidget()
-	: widget(nullptr)
+void AnimalListWidget::show(const QUrl& url, const QByteArray &data)
 {
-
+	QNetworkRequest req;
+	req.setRawHeader("Authorization", QByteArray("Explicit: ").append(data));
+	req.setUrl(url);
+	manager->get(req);
 }
 
-bool AnimalListWidget::loadFromJson(const QByteArray& json)
+void AnimalListWidget::response(QNetworkReply * rep)
 {
-	bool cast = true;
-	QJsonArray datas = QJsonDocument::fromJson(json).array();
-	for (const QJsonValue& data : datas)
+	uint32_t code = rep->attribute(QNetworkRequest::HttpStatusCodeAttribute).toUInt();
+	if (code == true)
 	{
-		QJsonObject obj = data.toObject();
-		AnimalListItemWidget::AnimalData _d;
-		_d.uid = obj.value(AnimalMedicalRecordJson::field_anim_id).toVariant().toULongLong(&cast);
-		_d.name = obj.value(AnimalMedicalRecordJson::field_anim_name).toString();
-		_d.spec = obj.value(AnimalMedicalRecordJson::field_anim_species).toString();
-		_d.birth = QDate::fromString(obj.value(AnimalMedicalRecordJson::field_anim_birth).toString(), Qt::ISODate);
+		Q_EMIT interruptRequestData();
 	}
-}
-
-void AnimalListWidget::view()
-{
-#pragma message "TODO"
+	else
+	{
+		auto arr_info = deserializeArray<ShortAnimalInfo>(rep->readAll());
+		model->setAnimalsInfo(std::move(arr_info));
+		view->reset();
+	}
 }
