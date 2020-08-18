@@ -61,6 +61,7 @@ public:
 	QJsonArray serialize() const override;
 	bool append(const Medicine &med);
 	bool remove(const QString &med_name);
+    int size();
 private:
 	QMap<QString, Medicine> prescribings;
 };

@@ -196,5 +196,10 @@ bool Prescribings::remove(const QString &med_name)
 		prescribings.remove(med_name);
 		is_ok = true;
 	}
-	return is_ok;
+    return is_ok;
+}
+
+int Prescribings::size()
+{
+    return prescribings.size();
 }

@@ -25,6 +25,8 @@ public:
 
 	OwnerDynamicEnum getOwnerDynamic() const;
 	void setOwnerDynamic(OwnerDynamicEnum value);
+    bool fromString(QString dyn);
+    QString toString();
 
 private:
 	OwnerDynamicEnum current;

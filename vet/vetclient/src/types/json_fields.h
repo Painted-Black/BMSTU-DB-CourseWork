@@ -160,6 +160,13 @@ namespace GeneralStateType
 	const QString general_state_bad = "bad";
 }
 
+namespace RusGeneralStateType
+{
+    const QString rus_general_state_middle = "средне";
+    const QString rus_general_state_good = "хорошо";
+    const QString rus_general_state_bad = "плохо";
+}
+
 namespace GenderType
 {
 	const QString gender_male = "m";
@@ -242,4 +249,11 @@ namespace OwnerDynamicsType
 	const QString owner_dynamics_stably = "stably";
 	const QString owner_dynamics_worse = "worse";
 	const QString owner_dynamics_better = "better";
+}
+
+namespace RusOwnerDynamicsType
+{
+    const QString rus_owner_dynamics_stably = "стабильно";
+    const QString rus_owner_dynamics_worse = "лучше";
+    const QString rus_owner_dynamics_better = "хуже";
 }
