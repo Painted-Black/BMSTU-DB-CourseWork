@@ -230,6 +230,15 @@ namespace EduLevelType
 	const QString edu_bachelor = "bachelor";
 }
 
+namespace RusEduLevelType
+{
+    const QString rus_edu_resident = "ординатор";
+    const QString rus_edu_middle = "среднее";
+    const QString rus_edu_postgraduate = "аспирант";
+    const QString rus_edu_specialist = "специалист";
+    const QString rus_edu_bachelor = "бакалавр";
+}
+
 namespace AccessLevelType
 {
 	const QString access_vet = "vet";

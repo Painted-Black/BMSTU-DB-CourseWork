@@ -1449,18 +1449,20 @@
           <string>Назначение, рекомендации</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_6">
-          <item row="0" column="0" colspan="2">
-           <widget class="QLabel" name="label_3">
-            <property name="font">
-             <font>
-              <family>Accanthis ADF Std</family>
-              <pointsize>16</pointsize>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="recommendations_lineEdit">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
             </property>
-            <property name="text">
-             <string>Назначение</string>
+            <property name="styleSheet">
+             <string notr="true"> QLineEdit {
+	  border-width: 1px;
+	  border-style: solid;
+	  border-radius: 0px;
+  }</string>
             </property>
            </widget>
           </item>
@@ -1485,38 +1487,23 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="recommendations_lineEdit">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"> QLineEdit {
-	  border-width: 1px;
-	  border-style: solid;
-	  border-radius: 0px;
-  }</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QTableWidget" name="tableWidget">
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="label_3">
             <property name="font">
              <font>
+              <family>Accanthis ADF Std</family>
+              <pointsize>16</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
             </property>
-            <property name="sizeAdjustPolicy">
-             <enum>QAbstractScrollArea::AdjustToContents</enum>
+            <property name="text">
+             <string>Назначение</string>
             </property>
-            <attribute name="horizontalHeaderStretchLastSection">
-             <bool>false</bool>
-            </attribute>
            </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QTableView" name="prescribings_tableView"/>
           </item>
          </layout>
         </widget>
@@ -2161,6 +2148,7 @@
   <tabstop>cfr_spinBox</tabstop>
   <tabstop>resp_rate_spinBox</tabstop>
   <tabstop>diagnosis_lineEdit</tabstop>
+  <tabstop>prescribings_tableView</tabstop>
   <tabstop>recommendations_lineEdit</tabstop>
   <tabstop>next_visit_checkBox</tabstop>
   <tabstop>next_visit_dateEdit</tabstop>

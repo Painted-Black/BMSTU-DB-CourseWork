@@ -23,6 +23,7 @@ private:
     void choseAnimal();
 private slots:
     void handle_save_button();
+    void handle_chose_animal_btn();
 private:
     Ui::visit_widget* ui;
     AccessData access_data;

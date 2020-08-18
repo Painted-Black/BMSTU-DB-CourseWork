@@ -78,19 +78,19 @@ QString EducationLevel::toString()
     switch (current)
     {
         case EducationLevelEnum::Resident:
-            value = EduLevelType::edu_resident;
+            value = RusEduLevelType::rus_edu_resident;
             break;
         case EducationLevelEnum::Middle:
-            value = EduLevelType::edu_middle;
+            value = RusEduLevelType::rus_edu_middle;
             break;
         case EducationLevelEnum::Postgraduate:
-            value = EduLevelType::edu_postgraduate;
+            value = RusEduLevelType::rus_edu_postgraduate;
             break;
         case EducationLevelEnum::Specialist:
-            value = EduLevelType::edu_specialist;
+            value = RusEduLevelType::rus_edu_specialist;
             break;
         case EducationLevelEnum::Bachelor:
-            value = EduLevelType::edu_bachelor;
+            value = RusEduLevelType::rus_edu_bachelor;
             break;
     }
 

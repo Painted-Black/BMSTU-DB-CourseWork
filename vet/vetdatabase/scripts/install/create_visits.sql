@@ -12,7 +12,7 @@ CREATE TABLE visits(
     diagnosis TEXT NOT NULL,
     recommendations TEXT NOT NULL,
     next_visit DATE,
-    prescribings JSON NOT NULL,
+    prescribings JSON,
     initial BOOLEAN NOT NULL,
-    note TEXT NOT NULL
+    note TEXT
 );
