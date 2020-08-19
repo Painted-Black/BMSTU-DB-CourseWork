@@ -2,13 +2,13 @@
 #include <QPushButton>
 #include <QDebug>
 #include <QKeyEvent>
-#include <QNetworkReply>
 
 #include "utlis/utils.h"
 #include "types/QJsonHeaders.h"
 #include "ISerializable.h"
 #include "auth.h"
 #include "ui_auth_dialog.h"
+#include "core/network/network_fetcher.h"
 
 struct AuthData : public ISerializable<QByteArray>
 {
@@ -31,10 +31,8 @@ Auth::Auth(QWidget *parent)
 	: QDialog(parent), ui(new Ui::auth_dialog())
 {
 	ui->setupUi(this);
-	fetcher.reset(new QNetworkAccessManager());
 
 	connect(ui->login_button_auth, &QPushButton::clicked, this, &Auth::procLog);
-	connect(fetcher.get(), &QNetworkAccessManager::finished, this, &Auth::authReply);
 	ui->error_label->hide();
 }
 
@@ -46,19 +44,16 @@ void Auth::procLog()
 
 	QNetworkRequest req(QUrl("http://127.0.0.1:4446/auth"));
 	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-	fetcher->post(req, data.serialize());
-}
-
-void Auth::authReply(QNetworkReply *reply)
-{
-	if (reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toULongLong() != 200)
+	NetworkFetcher fetcher;
+	auto responce = fetcher.httpPost(req, data.serialize(), std::chrono::milliseconds(10000));
+	auto code = std::get<0>(responce);
+	if (code != 200)
 	{
 		ui->error_label->show();
 	}
 	else
 	{
-		auth_data.deserialize(fromJson(reply->readAll()));
+		auth_data.deserialize(fromJson(std::get<2>(responce)));
 		accept();
 	}
 }
