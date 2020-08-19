@@ -2,7 +2,6 @@
 
 #include <QWidget>
 #include <QByteArray>
-#include <QNetworkAccessManager>
 
 #include "types/staff.h"
 #include "types/schedule.h"

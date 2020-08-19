@@ -2,7 +2,6 @@
 
 #include <memory>
 #include <QDialog>
-#include <QNetworkAccessManager>
 #include "types/proxy_auth.h"
 
 namespace Ui
@@ -20,10 +19,8 @@ public:
 
 private:
 	void procLog();
-	void authReply(QNetworkReply*);
 private:
 	Ui::auth_dialog* ui;
 	AccessData auth_data;
-	std::unique_ptr<QNetworkAccessManager> fetcher;
 };
 
