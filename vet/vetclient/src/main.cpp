@@ -13,11 +13,11 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
-//	auto auth_data = a_d.getAuthData();
+	auto auth_data = a_d.getAuthData();
 
-//	MainWindow mw;
-//	mw.setAccessData(auth_data);
-//	mw.show();
+	MainWindow mw;
+	mw.setAccessData(auth_data);
+	mw.show();
 
 	return a.exec();
 }

@@ -12,7 +12,7 @@ class AnimalEditWidget : public QWidget
 	Q_OBJECT
 public:
 	explicit AnimalEditWidget(QWidget *parent = nullptr);
-
+	void show(const QUrl &, const QByteArray&);
 private:
 	Ui::animal_widget* ui;
 };

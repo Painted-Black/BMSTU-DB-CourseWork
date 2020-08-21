@@ -15,9 +15,9 @@ class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 private:
-	using  Callback = void(MainWindow::*)();
 	template<typename T>
 	using InitFunc = void(MainWindow::*)(T);
+	using  Callback = void(MainWindow::*)();
 public:
 	explicit MainWindow(QWidget *parent = nullptr);
 
@@ -29,14 +29,16 @@ private:
 	void addToolBarAction(const QIcon&, const QString&, const Callback& cb);
 	void closeTab(int);
 	void createWidgetAnimals(QWidget*);
+	void createWidgetAnimalInfo(uint64_t);
 	void createWidgetAccountInfo(QWidget*);
+
+private slots:
+	void accInfo();
+	void exit();
 
 private:
 	Ui::MainWindow* ui;
 	Staff staff;
 	AccessData access_data;
-private slots:
-	void accInfo();
-	void exit();
 };
 

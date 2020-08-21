@@ -9,7 +9,8 @@ from server.key_data_checker import valid_key_checker
 import json
 import uuid
 
-class AnimalHandler(AbstractHandler):
+
+class AnimalInfoHandler(AbstractHandler):
 	def request(self, req, res):
 		key = str(req.headers.get("Authorization"))
 		# Authorization: Explicit Key
@@ -25,7 +26,8 @@ class AnimalHandler(AbstractHandler):
 			res.status_code=401
 			return
 
-		status, data = self.__queryDb(staff_id)
+		id = request.args.get("id", default=None, type=None)
+		status, data = self.__queryDb(id)
 		if not status:
 			res.status_code=500
 			return
@@ -36,7 +38,7 @@ class AnimalHandler(AbstractHandler):
 	def __queryDb(self, id : int):
 		conn_name = str(uuid.uuid4())
 		conn = access_manager.connect(conn_name)
-		str_query = 'SELECT anim_id, name, species, birth FROM animals_medical_records;'
+		str_query = 'SELECT * FROM animals_medical_records WHERE anim_id={};'.format(id)
 		query = DBQuery(conn, str_query)
 		if not query.execQuery():
 			return False, ""
@@ -44,4 +46,4 @@ class AnimalHandler(AbstractHandler):
 			result = query.get_values()
 
 		access_manager.disconnect(conn_name)
-		return True, to_json(result, query.get_column_names())
+		return True, self.to_json(result, query.get_column_names())

@@ -14,14 +14,16 @@
 
 enum TabType
 {
-	AccountWidget = 1,
-	AnimalWidget   = 2
+	AccountWidget      = 1,
+	AnimalWidget        = 2,
+	EditAnimalWidget = 3
 };
 
 enum TabFlags
 {
+	None           = 0b00,
 	Unclosable = 0b01,
-	Single		  = 0b10
+	Single          = 0b10
 };
 
 MainWindow::MainWindow(QWidget *parent)
@@ -75,9 +77,28 @@ void MainWindow::createWidgetAnimals(QWidget * w)
 {
 	QHBoxLayout* layout = new QHBoxLayout();
 	AnimalListWidget* aiw = new AnimalListWidget(w);
+	connect(aiw, &AnimalListWidget::selectItem, this, &MainWindow::createWidgetAnimalInfo);
+
 	aiw->show(QUrl("http://127.0.0.1:4446/animals/all/short"), access_data.getPassword());
 	layout->addWidget(aiw);
 	w->setLayout(layout);
+}
+
+void MainWindow::createWidgetAnimalInfo(uint64_t id)
+{
+	qDebug() << Q_FUNC_INFO << "Animal widget create" << id;
+	QTabBar* bar = ui->tabWidget->tabBar();
+	QWidget* w = new QWidget(ui->tabWidget);
+	QHBoxLayout* layout = new QHBoxLayout();
+	AnimalEditWidget* aiw = new AnimalEditWidget(w);
+	QUrl url(QString("http://127.0.0.1:4446/animals?id=%1").arg(static_cast<qulonglong>(id)));
+	aiw->show(url, access_data.getPassword());
+	layout->addWidget(aiw);
+	w->setLayout(layout);
+
+	int idx = ui->tabWidget->addTab(w, QIcon(":/ui/icons/user_green_80.png"), "Pets info");
+	bar->setTabData(idx, QVariant::fromValue<uint8_t>(None));
+	ui->tabWidget->setCurrentIndex(idx);
 }
 
 void MainWindow::createWidgetAccountInfo(QWidget * w)
@@ -117,7 +138,8 @@ void MainWindow::setAccessData(const AccessData &value)
 void MainWindow::accInfo()
 {
 	qDebug() << Q_FUNC_INFO << "Acc Info menu action";
-	addTab(QIcon(":/ui/icons/user_green_80.png"), "Аккаунт", {AccountWidget, Single}, &MainWindow::createWidgetAccountInfo);
+	addTab(QIcon(":/ui/icons/user_green_80.png"), "Аккаунт",
+		{AccountWidget, Single}, &MainWindow::createWidgetAccountInfo);
 }
 
 void MainWindow::exit()

@@ -13,11 +13,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
 	core/account_info_widget.cpp \
 	core/animal_edit_widget.cpp \
+	core/animal_info_widget.cpp \
 	core/animal_list_item_widget.cpp \
 	core/auth.cpp \
-	core/delegate/animallistdelegate.cpp \
 	core/mainwindow.cpp \
-	core/model/animallistmodel.cpp \
 	core/network/network_fetcher.cpp \
 	main.cpp \
 	types/address.cpp \
@@ -42,11 +41,10 @@ HEADERS += \
 	core/ISerializable.h \
 	core/account_info_widget.h \
 	core/animal_edit_widget.h \
+	core/animal_info_widget.h \
 	core/animal_list_item_widget.h \
 	core/auth.h \
-	core/delegate/animallistdelegate.h \
 	core/mainwindow.h \
-	core/model/animallistmodel.h \
 	core/network/network_fetcher.h \
 	types/QJsonHeaders.h \
 	types/address.h \

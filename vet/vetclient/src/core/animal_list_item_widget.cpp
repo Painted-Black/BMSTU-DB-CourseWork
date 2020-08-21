@@ -1,49 +1,63 @@
 #include <QNetworkReply>
+#include <QVariant>
 #include "utlis/utils.h"
 #include "ui_animal_list_item_widget.h"
 #include "animal_list_item_widget.h"
+#include "core/network/network_fetcher.h"
 
 AnimalListWidget::AnimalListWidget(QWidget * parent)
 	: QWidget(parent)
 {
-	view = new QListView(this);
-	view->setSelectionMode(QAbstractItemView::SingleSelection);
-	view->setDragEnabled(true);
-	view->setAcceptDrops(true);
-	view->setDropIndicatorShown(true);
-	model = new AnimalListModel();
-	delegate = new AnimalListDelegate(this);
-	delegate->setModelData(this, model, QModelIndex());
-	view->setModel(model);
-	view->setItemDelegate(delegate);
-
+	view = new QListWidget(this);
 	QHBoxLayout* lay = new QHBoxLayout(this);
 	lay->addWidget(view);
 	setLayout(lay);
 
-	manager = new QNetworkAccessManager();
-	connect(manager, &QNetworkAccessManager::finished, this, &AnimalListWidget::response);
+	connect(view, &QListWidget::itemDoubleClicked, this, &AnimalListWidget::selectItemWidget);
 }
 
-void AnimalListWidget::show(const QUrl& url, const QByteArray &data)
+bool AnimalListWidget::show(const QUrl& url, const QByteArray &data)
 {
 	QNetworkRequest req;
 	req.setRawHeader("Authorization", QByteArray("Explicit: ").append(data));
 	req.setUrl(url);
-	manager->get(req);
-}
 
-void AnimalListWidget::response(QNetworkReply * rep)
-{
-	uint32_t code = rep->attribute(QNetworkRequest::HttpStatusCodeAttribute).toUInt();
-	if (code == true)
+	NetworkFetcher fetcher;
+	auto reply = fetcher.httpGet(req, std::chrono::milliseconds(10000));
+	if (std::get<0>(reply) != 200)
 	{
-		Q_EMIT interruptRequestData();
+		qCritical() << Q_FUNC_INFO << "Invalid data" << std::get<2>(reply);
+		return  false;
 	}
 	else
 	{
-		auto arr_info = deserializeArray<ShortAnimalInfo>(rep->readAll());
-		model->setAnimalsInfo(std::move(arr_info));
-		view->reset();
+		auto animals_info = deserializeArray<ShortAnimalInfo>(std::get<2>(reply));
+		for (const auto& v : animals_info)
+		{
+			QListWidgetItem* item = new QListWidgetItem(view);
+			view->addItem(item);
+			QWidget* inserted_widget = addWidget(v);
+			inserted_widget->setProperty("UID", QVariant::fromValue(v.getUid()));
+			item->setSizeHint(inserted_widget->sizeHint());
+			view->setItemWidget(item, inserted_widget);
+		}
 	}
+	return true;
+}
+
+QWidget* AnimalListWidget::addWidget(const ShortAnimalInfo & info)
+{
+	QWidget* form = new QWidget();
+	Ui::Form* ui = new Ui::Form();
+	ui->setupUi(form);
+	ui->input_name->setText(info.getName());
+	ui->input_spec->setText(info.getSpec());
+	ui->input_birth->setText(info.getBirth().toString(Qt::SystemLocaleLongDate));
+	return form;
+}
+
+void AnimalListWidget::selectItemWidget(QListWidgetItem * item)
+{
+	uint64_t uid =view->itemWidget(item)->property("UID").value<uint64_t>();
+	Q_EMIT selectItem(uid);
 }

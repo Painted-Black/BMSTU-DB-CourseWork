@@ -28,6 +28,9 @@ class Config(object):
 	def get_routes_short_animal_info(self):
 		return [str(self.__parser["ROUTES"]["animal_short_info"])]
 
+	def get_routes_full_animal_info(self):
+		return [str(self.__parser["ROUTES"]["animal_full_info"])]
+
 	def get_conn_info(self):
 		driver=self.__parser["DATABASE"]["driver"]
 		server=self.__parser["DATABASE"]["server"]
