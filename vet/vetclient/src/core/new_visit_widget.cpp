@@ -9,13 +9,17 @@
 #include "types/json_fields.h"
 #include "types/visit.h"
 #include "types/prescribings.h"
+#include "add_med_dialog.h"
 
-NewVisitWidget::NewVisitWidget(QWidget *parent) : QWidget(parent), ui(new Ui::visit_widget())
+NewVisitWidget::NewVisitWidget(QWidget *parent)
+    : QWidget(parent), ui(new Ui::visit_widget()), model(new PrescribingsTableModel())
 {
     ui->setupUi(this);
-    connect(ui->save_pushButton, SIGNAL(released()), this, SLOT(handle_save_button()));
-    connect(ui->chose_animal_pushButton, SIGNAL(released()), this, SLOT(choseAnimal()));
-    connect(ui->save_pushButton, SIGNAL(released()), this, SLOT(handle_save_button()));
+    connect(ui->save_pushButton, &QPushButton::released, this, &NewVisitWidget::handle_save_button);
+    connect(ui->chose_animal_pushButton, &QPushButton::released, this, &NewVisitWidget::choseAnimal);
+    connect(ui->save_pushButton, &QPushButton::released, this, &NewVisitWidget::handle_save_button);
+    connect(ui->add_prescr_toolButton, &QPushButton::released, this, &NewVisitWidget::add_prescr_btn);
+    connect(ui->delete_prescr_toolButton, &QPushButton::released, this, &NewVisitWidget::delete_prescr_btn);
 
     ui->owner_dynamics_comboBox->addItem(RusOwnerDynamicsType::rus_owner_dynamics_stably);
     ui->owner_dynamics_comboBox->addItem(RusOwnerDynamicsType::rus_owner_dynamics_better);
@@ -24,27 +28,6 @@ NewVisitWidget::NewVisitWidget(QWidget *parent) : QWidget(parent), ui(new Ui::vi
     ui->general_state_comboBox->addItem(RusGeneralStateType::rus_general_state_good);
     ui->general_state_comboBox->addItem(RusGeneralStateType::rus_general_state_middle);
     ui->general_state_comboBox->addItem(RusGeneralStateType::rus_general_state_bad);
-
-    ui->tableWidget->setColumnCount(7);
-    QTableWidgetItem* num_header = new QTableWidgetItem("№");
-    QTableWidgetItem* name_header = new QTableWidgetItem("Название");
-    QTableWidgetItem* dosage_header = new QTableWidgetItem("Дозировка");
-    QTableWidgetItem* type_header = new QTableWidgetItem("Вид приема");
-    QTableWidgetItem* freq_header = new QTableWidgetItem("Частота приема");
-    QTableWidgetItem* terms_header = new QTableWidgetItem("Длительность приема");
-    QTableWidgetItem* notes_header = new QTableWidgetItem("Примечание");
-
-    ui->tableWidget->setHorizontalHeaderItem(0, num_header);
-    ui->tableWidget->setHorizontalHeaderItem(1, name_header);
-    ui->tableWidget->setHorizontalHeaderItem(2, dosage_header);
-    ui->tableWidget->setHorizontalHeaderItem(3, type_header);
-    ui->tableWidget->setHorizontalHeaderItem(4, freq_header);
-    ui->tableWidget->setHorizontalHeaderItem(5, terms_header);
-    ui->tableWidget->setHorizontalHeaderItem(6, notes_header);
-
-    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
-//    ui->prescribings_tableView.
 }
 
 void NewVisitWidget::update()
@@ -53,9 +36,15 @@ void NewVisitWidget::update()
     const Passport& pass = staff.getPassport();
     const Position& staff_pos = staff.getPosition();
     QString staff_snp = pass.getSurname() + " " + pass.getName() + " " + pass.getPatronymic();
-
     ui->input_specialist_label->setText(staff_pos.getTitle());
     ui->input_visit_by_label->setText(staff_snp);
+    ui->prescr_tableView->setModel(model);
+
+    int model_col_count = model->columnCount();
+    for (int i = 0; i < model_col_count; ++i)
+    {
+        ui->prescr_tableView->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
+    }
 }
 
 void NewVisitWidget::handle_save_button()
@@ -112,12 +101,6 @@ void NewVisitWidget::handle_save_button()
     qDebug() << Q_FUNC_INFO << "Saved";
 }
 
-void NewVisitWidget::handle_chose_animal_btn()
-{
-    qDebug() << Q_FUNC_INFO << "Chose animal...";
-#pragma message "TODO"
-}
-
 void NewVisitWidget::setAccessData(const AccessData &value)
 {
     access_data = value;
@@ -125,5 +108,26 @@ void NewVisitWidget::setAccessData(const AccessData &value)
 
 void NewVisitWidget::choseAnimal()
 {
+    qDebug() << Q_FUNC_INFO << "Chose animal...";
 #pragma message "TODO"
+}
+
+void NewVisitWidget::add_prescr_btn()
+{
+    qDebug() << Q_FUNC_INFO << "Add prescr...";
+    AddMedDialog add_med_dialog;
+    if (add_med_dialog.exec() == QDialog::Accepted)
+    {
+        Medicine med = add_med_dialog.getMed();
+        model->addMed(med);
+        pres.append(med);
+    }
+}
+
+void NewVisitWidget::delete_prescr_btn()
+{
+    qDebug() << Q_FUNC_INFO << "Delete prescr...";
+    QItemSelectionModel *select = ui->prescr_tableView->selectionModel();
+    QModelIndexList selected_rows = select->selectedRows();
+    int a = 9;
 }

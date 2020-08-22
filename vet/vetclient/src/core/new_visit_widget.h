@@ -1,11 +1,11 @@
 #pragma once
 
 #include <QWidget>
-#include <QNetworkAccessManager>
 #include "types/user_data.h"
 #include "types/animal_medical_record.h"
 #include "types/client.h"
 #include "types/contract.h"
+#include "model/prescribings_table_model.h"
 
 namespace Ui
 {
@@ -20,13 +20,15 @@ public:
     void update();
     void setAccessData(const AccessData &value);
 private:
-    void choseAnimal();
-private slots:
     void handle_save_button();
-    void handle_chose_animal_btn();
+    void choseAnimal();
+    void add_prescr_btn();
+    void delete_prescr_btn();
 private:
     Ui::visit_widget* ui;
     AccessData access_data;
+    Prescribings pres;
     AnimalMedicalRecord chosed_animal;
+    PrescribingsTableModel* model;
 };
 

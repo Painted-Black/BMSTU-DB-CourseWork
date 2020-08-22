@@ -8,21 +8,22 @@
 class InjectionType : public ISerializable<QJsonValue>
 {
 public:
-	enum class InjectionTypeEnum
-	{
-		Subcutaneous,
-		Intravenous,
-		Intramuscular,
-		Ingest
-	};
-	bool deserialize(const QJsonValue &json) noexcept override;
-	QJsonValue serialize() const override;
-
-	InjectionTypeEnum getInjectionType() const;
-	void setInjectionType(const InjectionTypeEnum &value);
+    enum class InjectionTypeEnum
+    {
+        Subcutaneous,
+        Intravenous,
+        Intramuscular,
+        Ingest
+    };
+    bool deserialize(const QJsonValue &json) noexcept override;
+    QJsonValue serialize() const override;
+    QString toString();
+    InjectionTypeEnum getInjectionType() const;
+    void setInjectionType(const InjectionTypeEnum &value);
+    bool fromString(const QString& type);
 
 private:
-	InjectionTypeEnum current;
+    InjectionTypeEnum current;
 };
 
 class Medicine : public ISerializable<QJsonObject>
@@ -32,24 +33,24 @@ public:
 	QJsonObject serialize() const override;
 
 	QString getName() const;
-	QString getDosage() const;
-	InjectionType getType() const;
+    QString getDosage() const;
 	QString getFrequency_of_medication() const;
 	QString getTerm_of_taking() const;
 	QString getNotes() const;
+    InjectionType getType() const;
 
 	void setName(const QString &value);
-	void setDosage(const QString &value);
-	void setType(const InjectionType &value);
+    void setDosage(const QString &value);
 	void setFrequency_of_medication(const QString &value);
 	void setTerm_of_taking(const QString &value);
-	void setNotes(const QString &value);
+    void setNotes(const QString &value);
+    void setType(const InjectionType &value);
 
 private:
-	QString name;
-	QString dosage;
-	InjectionType type;
-	QString frequency_of_medication;
+    QString name;
+    QString dosage;
+    InjectionType type;
+    QString frequency_of_medication;
 	QString term_of_taking;
 	QString notes;
 };
@@ -61,7 +62,9 @@ public:
 	QJsonArray serialize() const override;
 	bool append(const Medicine &med);
 	bool remove(const QString &med_name);
-    int size();
+    int size() const;
+    Medicine at(QString key) const;
+    QStringList keys();
 private:
 	QMap<QString, Medicine> prescribings;
 };

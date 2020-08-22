@@ -33,8 +33,11 @@ SOURCES += \
 	types/staff.cpp \
 	types/user_data.cpp \
 	types/vaccination.cpp \
-	types/visit.cpp \
-	utlis/utils.cpp
+        types/visit.cpp \
+        core/add_med_dialog.cpp \
+        utlis/utils.cpp \
+        model/prescribings_table_model.cpp
+
 
 HEADERS += \
 	core/ISerializable.h \
@@ -62,13 +65,16 @@ HEADERS += \
 	types/staff.h \
 	types/user_data.h \
 	types/vaccination.h \
-	types/visit.h \
+        types/visit.h \
+        core/add_med_dialog.h \
 	utlis/Singlenton.h \
-	utlis/utils.h
+        utlis/utils.h \
+        model/prescribings_table_model.h
 
 FORMS += \
 	ui/acc_info.ui \
 	ui/add_contract.ui \
+    ui/add_med_dialog.ui \
 	ui/address.ui \
 	ui/admin.ui \
 	ui/animal.ui \
@@ -78,10 +84,10 @@ FORMS += \
 	ui/contacts.ui \
 	ui/mainwindow.ui \
 	ui/passport.ui \
+    ui/prescribings_widget.ui \
 	ui/shedule.ui \
 	ui/staff.ui \
-	ui/vaccination.ui \
-	ui/visit.ui
+        ui/visit.ui
 
 LIBS += -lcurl
 

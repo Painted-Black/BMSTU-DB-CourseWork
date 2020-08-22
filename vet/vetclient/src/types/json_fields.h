@@ -189,6 +189,14 @@ namespace InjectionTypes
 	const QString injection_ingest = "ingest";
 }
 
+namespace RusInjectionTypes
+{
+    const QString rus_injection_subcutaneous = "подкожно";
+    const QString rus_injection_intravenous = "внутривенно";
+    const QString rus_injection_intramuscular = "внутримышечно";
+    const QString rus_injection_ingest = "внутрь";
+}
+
 namespace PrescribingsJson
 {
 	const QString field_prescr_name = "name";
