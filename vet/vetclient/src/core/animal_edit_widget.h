@@ -28,6 +28,7 @@ public:
 private:
 	void activeInfoDialog();
 	void activeSignDialog();
+	void active();
 	QString showInfoDialog(const QString&);
 	void showContract();
 
