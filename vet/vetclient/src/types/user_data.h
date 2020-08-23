@@ -1,7 +1,7 @@
 #pragma once
 
 #include "QJsonHeaders.h"
-#include "core/ISerializable.h"
+#include "core/iserializable.h"
 #include "types/staff.h"
 
 class AccessLevel : public ISerializable<QJsonValue>

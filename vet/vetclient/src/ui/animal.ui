@@ -52,7 +52,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-198</y>
+        <y>0</y>
         <width>609</width>
         <height>1105</height>
        </rect>
@@ -2057,6 +2057,18 @@
              </property>
              <property name="text">
               <string>Выбрать фотографию</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Info_client">
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>PushButton</string>
              </property>
             </widget>
            </item>

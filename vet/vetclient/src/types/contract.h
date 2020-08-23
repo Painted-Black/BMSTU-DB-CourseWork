@@ -4,7 +4,7 @@
 #include <QDate>
 #include "QJsonHeaders.h"
 
-#include "core/ISerializable.h"
+#include "core/iserializable.h"
 #include "types/client.h"
 
 class Contract final : public ISerializable<QJsonObject>

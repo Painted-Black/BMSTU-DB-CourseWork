@@ -1,7 +1,7 @@
 #include <QApplication>
 #include "core/mainwindow.h"
 #include "core/auth.h"
-#include "utlis/Singlenton.h"
+#include "utlis/singlenton.h"
 #include "core/popup.h"
 
 #include "core/network/network_fetcher.h"

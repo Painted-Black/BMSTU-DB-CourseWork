@@ -54,7 +54,8 @@ AnimalEditWidget::AnimalEditWidget(QWidget *parent)
 	info_dlg_ui->setupUi(info_dlg);
 	info_dlg->setModal(true);
 
-	connect(ui->sign_tb, &QToolButton::clicked, this, &AnimalEditWidget::activeSignDialog);
+	connect(ui->Info_client, &QPushButton::released)
+	connect(ui->sign_tb, &QToolButton::released, this, &AnimalEditWidget::activeSignDialog);
 	connect(ui->info_tb, &QToolButton::released, this, &AnimalEditWidget::activeInfoDialog);
 }
 

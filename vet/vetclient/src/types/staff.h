@@ -1,7 +1,7 @@
 #pragma once
 
 #include "QJsonHeaders.h"
-#include "core/ISerializable.h"
+#include "core/iserializable.h"
 #include "passport.h"
 #include "position.h"
 #include "types/schedule.h"

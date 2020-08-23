@@ -5,7 +5,7 @@
 
 #include "utlis/utils.h"
 #include "types/QJsonHeaders.h"
-#include "ISerializable.h"
+#include "iserializable.h"
 #include "auth.h"
 #include "ui_auth_dialog.h"
 #include "core/network/network_fetcher.h"

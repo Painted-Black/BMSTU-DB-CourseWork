@@ -39,13 +39,13 @@ SOURCES += \
 	utlis/utils.cpp
 
 HEADERS += \
-	core/ISerializable.h \
 	core/account_info_widget.h \
 	core/add_contract_widget.h \
 	core/animal_edit_widget.h \
 	core/animal_info_widget.h \
 	core/animal_list_item_widget.h \
 	core/auth.h \
+	core/iserializable.h \
 	core/mainwindow.h \
 	core/network/network_fetcher.h \
 	core/popup.h \
@@ -68,7 +68,7 @@ HEADERS += \
 	types/user_data.h \
 	types/vaccination.h \
 	types/visit.h \
-	utlis/Singlenton.h \
+	utlis/singlenton.h \
 	utlis/utils.h
 
 FORMS += \
@@ -80,6 +80,7 @@ FORMS += \
 	ui/animal_list_item_widget.ui \
 	ui/auth_dialog.ui \
 	ui/chip.ui \
+	ui/client.ui \
 	ui/contacts.ui \
 	ui/mainwindow.ui \
 	ui/passport.ui \

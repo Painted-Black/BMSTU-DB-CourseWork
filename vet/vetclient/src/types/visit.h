@@ -4,7 +4,7 @@
 #include <QDate>
 
 #include "QJsonHeaders.h"
-#include "core/ISerializable.h"
+#include "core/iserializable.h"
 #include "staff.h"
 #include "animal_medical_record.h"
 #include "animalstate.h"

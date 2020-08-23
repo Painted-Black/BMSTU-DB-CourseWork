@@ -7,7 +7,7 @@
 #include <QScreen>
 #include <QHBoxLayout>
 #include <QPushButton>
-#include "utlis/Singlenton.h"
+#include "utlis/singlenton.h"
 #include "popup.h"
 #include "ui_mainwindow.h"
 #include "mainwindow.h"

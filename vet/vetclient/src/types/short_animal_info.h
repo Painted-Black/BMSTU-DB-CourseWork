@@ -2,7 +2,7 @@
 
 #include <QDate>
 #include "types/QJsonHeaders.h"
-#include "core/ISerializable.h"
+#include "core/iserializable.h"
 
 class ShortAnimalInfo : public ISerializable<QJsonObject>
 {

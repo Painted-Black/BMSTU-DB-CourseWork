@@ -3,7 +3,7 @@
 #include <QMap>
 
 #include "QJsonHeaders.h"
-#include "core/ISerializable.h"
+#include "core/iserializable.h"
 
 class InjectionType : public ISerializable<QJsonValue>
 {

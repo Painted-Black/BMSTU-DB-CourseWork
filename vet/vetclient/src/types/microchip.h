@@ -5,7 +5,7 @@
 #include <QDate>
 #include "QJsonHeaders.h"
 
-#include "core/ISerializable.h"
+#include "core/iserializable.h"
 
 class Microchip final : public ISerializable<QJsonObject>
 {

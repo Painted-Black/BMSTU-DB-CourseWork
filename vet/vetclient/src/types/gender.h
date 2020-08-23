@@ -1,7 +1,7 @@
 #pragma once
 
 #include "QJsonHeaders.h"
-#include "core/ISerializable.h"
+#include "core/iserializable.h"
 
 class Gender : public ISerializable<QJsonValue>
 {
