@@ -1,3 +1,5 @@
+from .animal_state import AnimalState
+
 class Visit():
     def __init__(self):
         self.__vis_id = None
@@ -7,13 +9,28 @@ class Visit():
         self.__visit_date = None
         self.__owner_dynamics = None
         self.__history_disease = None
-        self.__cur_state =  = None
+        self.__cur_state =  = AnimalState()
         self.__diagnosis = None
         self.__recommendations = None
         self.__next_visit = None
         self.__prescribings = None
         self.__initial = None
         self.__note = None
+
+    def deserialize(self, json):
+        self.__doctor = json['doctor']
+        self.__animal = json['animal']
+        self.__ambulatory = json['ambulatury']
+        self.__visit_date = json['visit_date']
+        self.__owner_dynamics = json['owner_dynamics']
+        self.__history_disease = json['history_disease']
+        self.__cur_state.deserialize(json['cur_state'])
+        self.__diagnosis = json['diagnosis']
+        self.__recommendations = json['recommendations']
+        self.__next_visit = json['next_visit']
+        self.__prescribings = json['prescribings']
+        self.__initial = json['initial']
+        self.__note = json['note']
 
     def is_valid(self):
         #TODO check date is valid 

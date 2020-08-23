@@ -26,7 +26,17 @@ class NewVisitHandler(AbstractHandler):
 
         anim_st = self.__get_state_from_json(json_data)
         visit = self.__get_visit_from_json(json_data)
-        state, data = self.__insert_state_to_db(anim_st)
+        state, state_id = self.__insert_state_to_db(anim_st)
+        if (not state):
+			res.status_code=403
+			res.data = json.dumps({"error" : "insertion (animal_state) failed"})
+			return
+        
+        state = self.__insert_visit_to_json(state_id)
+        if not state:
+            res.status_code=403
+			res.data = json.dumps({"error" : "insertion (visit) failed"})
+			return
 
     def __get_state_from_json(self, json):
         state = AnimalState()
@@ -55,6 +65,9 @@ class NewVisitHandler(AbstractHandler):
         vis.set_initial(json['initial'])
         vis.set_note(json['note'])
         return vis
+    
+    def __insert_visit_to_json(self, state_id : int):
+        
 
     def __insert_state_to_db(self, animal_state : AnimalState):
         conn_name = str(uuid.uuid4())

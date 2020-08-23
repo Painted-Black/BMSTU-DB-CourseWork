@@ -8,6 +8,15 @@ class AnimalState():
         self.__temperature = None
         self.__cfr = None
         self.__resp_rate = None
+    
+    def deserialize(self, json):
+        self.__general = json['general']
+        self.__pulse = json['pulse']
+        self.__weight = json['weight']
+        self.__ap = json['ap']
+        self.__temperature = json['temperature']
+        self.__cfr = json['cfr']
+        self.__resp_rate = json['resp_rate']
 
     def get_state_id(self):
         return self.__state_id

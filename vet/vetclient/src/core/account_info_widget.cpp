@@ -52,6 +52,7 @@ void AccountInfoWidget::update()
         font.setBold(false);
         day_label->setFont(font);
         time_label->setFont(font);
+        time_label->setAlignment(Qt::AlignLeft);
         lay->addRow(day_label, time_label);
     }
     ui->sched_frame->setLayout(lay);
