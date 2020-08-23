@@ -12,6 +12,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
 	core/account_info_widget.cpp \
+	core/add_contract_widget.cpp \
 	core/animal_edit_widget.cpp \
 	core/animal_info_widget.cpp \
 	core/animal_list_item_widget.cpp \
@@ -40,6 +41,7 @@ SOURCES += \
 HEADERS += \
 	core/ISerializable.h \
 	core/account_info_widget.h \
+	core/add_contract_widget.h \
 	core/animal_edit_widget.h \
 	core/animal_info_widget.h \
 	core/animal_list_item_widget.h \
@@ -82,6 +84,7 @@ FORMS += \
 	ui/passport.ui \
 	ui/shedule.ui \
 	ui/staff.ui \
+	ui/text_dialog.ui \
 	ui/vaccination.ui \
 	ui/visit.ui
 

@@ -11,7 +11,6 @@ bool AnimalMedicalRecord::deserialize(const QJsonObject &json) noexcept
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalMedicalRecordJson::field_anim_id << "' field";
-		return false;
 	}
 
 	name = json.value(AnimalMedicalRecordJson::field_anim_name).toString();
@@ -36,21 +35,18 @@ bool AnimalMedicalRecord::deserialize(const QJsonObject &json) noexcept
 	if (sex.deserialize(json.value(AnimalMedicalRecordJson::field_anim_sex)) == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalMedicalRecordJson::field_anim_sex << "' field";
-		return false;
 	}
 
 	cast = chip.deserialize(json.value(AnimalMedicalRecordJson::field_anim_chip_id).toObject());
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "invalid cast '" << AnimalMedicalRecordJson::field_anim_chip_id << "' field";
-		return false;
 	}
 
 	cast = contract.deserialize(json.value(AnimalMedicalRecordJson::field_anim_contract).toObject());
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "invalid cast '" << AnimalMedicalRecordJson::field_anim_contract << "' field";
-		return false;
 	}
 
 	init_full = cast;
@@ -89,12 +85,12 @@ bool AnimalMedicalRecord::isInit() const
 	return init_full;
 }
 
-uint64_t AnimalMedicalRecord::getAnim_id() const
+uint64_t AnimalMedicalRecord::getAnimId() const
 {
 	return anim_id;
 }
 
-QString AnimalMedicalRecord::getName() const
+const QString &AnimalMedicalRecord::getName() const
 {
 	return name;
 }
@@ -104,7 +100,7 @@ void AnimalMedicalRecord::setName(const QString &value)
 	name = value;
 }
 
-QString AnimalMedicalRecord::getBreed() const
+const QString &AnimalMedicalRecord::getBreed() const
 {
 	return breed;
 }
@@ -114,7 +110,7 @@ void AnimalMedicalRecord::setBreed(const QString &value)
 	breed = value;
 }
 
-QString AnimalMedicalRecord::getSpecies() const
+const QString &AnimalMedicalRecord::getSpecies() const
 {
 	return species;
 }
@@ -124,7 +120,7 @@ void AnimalMedicalRecord::setSpecies(const QString &value)
 	species = value;
 }
 
-Gender AnimalMedicalRecord::getSex() const
+const Gender &AnimalMedicalRecord::getSex() const
 {
 	return sex;
 }
@@ -144,7 +140,7 @@ void AnimalMedicalRecord::setCastrated(bool value)
 	castrated = value;
 }
 
-QDate AnimalMedicalRecord::getBirth() const
+const QDate &AnimalMedicalRecord::getBirth() const
 {
 	return birth;
 }
@@ -154,17 +150,17 @@ void AnimalMedicalRecord::setBirth(const QDate &value)
 	birth = value;
 }
 
-QString AnimalMedicalRecord::getOther_data() const
+const QString &AnimalMedicalRecord::getOtherData() const
 {
 	return other_data;
 }
 
-void AnimalMedicalRecord::setOther_data(const QString &value)
+void AnimalMedicalRecord::setOtherData(const QString &value)
 {
 	other_data = value;
 }
 
-QString AnimalMedicalRecord::getColor() const
+const QString &AnimalMedicalRecord::getColor() const
 {
 	return color;
 }
@@ -174,37 +170,37 @@ void AnimalMedicalRecord::setColor(const QString &value)
 	color = value;
 }
 
-QString AnimalMedicalRecord::getSpecial_signs() const
+const QString &AnimalMedicalRecord::getSpecialSigns() const
 {
 	return special_signs;
 }
 
-void AnimalMedicalRecord::setSpecial_signs(const QString &value)
+void AnimalMedicalRecord::setSpecialSigns(const QString &value)
 {
 	special_signs = value;
 }
 
-QDate AnimalMedicalRecord::getRegistr_date() const
+const QDate &AnimalMedicalRecord::getRegistrDate() const
 {
 	return registr_date;
 }
 
-void AnimalMedicalRecord::setRegistr_date(const QDate &value)
+void AnimalMedicalRecord::setRegistrDate(const QDate &value)
 {
 	registr_date = value;
 }
 
-QDate AnimalMedicalRecord::getLast_visit() const
+const QDate &AnimalMedicalRecord::getLastVisit() const
 {
 	return last_visit;
 }
 
-void AnimalMedicalRecord::setLast_visit(const QDate &value)
+void AnimalMedicalRecord::setLastVisit(const QDate &value)
 {
 	last_visit = value;
 }
 
-Microchip AnimalMedicalRecord::getChip() const
+const Microchip &AnimalMedicalRecord::getChip() const
 {
 	return chip;
 }
@@ -214,7 +210,7 @@ void AnimalMedicalRecord::setChip(const Microchip &value)
 	chip = value;
 }
 
-Contract AnimalMedicalRecord::getContract() const
+const Contract &AnimalMedicalRecord::getContract() const
 {
 	return contract;
 }
@@ -224,12 +220,12 @@ void AnimalMedicalRecord::setContract(const Contract &value)
 	contract = value;
 }
 
-QString AnimalMedicalRecord::getRel_path_to_photo() const
+const QString &AnimalMedicalRecord::getRelPathToPhoto() const
 {
 	return rel_path_to_photo;
 }
 
-void AnimalMedicalRecord::setRel_path_to_photo(const QString &value)
+void AnimalMedicalRecord::setRelPathToPhoto(const QString &value)
 {
 	rel_path_to_photo = value;
 }

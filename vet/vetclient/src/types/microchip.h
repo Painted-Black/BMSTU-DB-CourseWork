@@ -14,8 +14,8 @@ public:
 	QJsonObject serialize() const override;
 	uint64_t getId() const;
 
-	QString getChip_num() const;
-	QDate getImpl_date() const;
+	QString getChipNum() const;
+	QDate getImplDate() const;
 	QString getCountry() const;
 	QString getLocation() const;
 

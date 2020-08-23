@@ -41,7 +41,7 @@ uint64_t Microchip::getId() const
 	return id;
 }
 
-QString Microchip::getChip_num() const
+QString Microchip::getChipNum() const
 {
 	return chip_num;
 }
@@ -51,7 +51,7 @@ void Microchip::setChip_num(const QString &value)
 	chip_num = value;
 }
 
-QDate Microchip::getImpl_date() const
+QDate Microchip::getImplDate() const
 {
 	return impl_date;
 }

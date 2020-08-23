@@ -32,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->setupUi(this);
 	connect(ui->acc_action, &QAction::triggered, this, &MainWindow::accInfo);
 	connect(ui->exit_action, &QAction::triggered, this, &MainWindow::exit);
+	connect(ui->pet_reg, &QAction::triggered, this, &MainWindow::createNewAnimal);
+	connect(ui->pet_find, &QAction::triggered, this, &MainWindow::runAnimalEditor);
 	connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
 
 	addToolBarAction(QIcon(":/ui/icons/add_40.png"), "Животные", &MainWindow::runAnimalEditor);
@@ -86,7 +88,6 @@ void MainWindow::createWidgetAnimals(QWidget * w)
 
 void MainWindow::createWidgetAnimalInfo(uint64_t id)
 {
-	qDebug() << Q_FUNC_INFO << "Animal widget create" << id;
 	QTabBar* bar = ui->tabWidget->tabBar();
 	QWidget* w = new QWidget(ui->tabWidget);
 	QHBoxLayout* layout = new QHBoxLayout();
@@ -96,7 +97,7 @@ void MainWindow::createWidgetAnimalInfo(uint64_t id)
 	layout->addWidget(aiw);
 	w->setLayout(layout);
 
-	int idx = ui->tabWidget->addTab(w, QIcon(":/ui/icons/user_green_80.png"), "Pets info");
+	int idx = ui->tabWidget->addTab(w, QIcon(":/ui/icons/user_green_80.png"), "Добавить");
 	bar->setTabData(idx, QVariant::fromValue<uint8_t>(None));
 	ui->tabWidget->setCurrentIndex(idx);
 }
@@ -109,6 +110,20 @@ void MainWindow::createWidgetAccountInfo(QWidget * w)
 	aiw->show();
 	layout->addWidget(aiw);
 	w->setLayout(layout);
+}
+
+void MainWindow::createNewAnimal()
+{
+	QTabBar* bar = ui->tabWidget->tabBar();
+	QWidget* w = new QWidget(ui->tabWidget);
+	QHBoxLayout* layout = new QHBoxLayout();
+	AnimalEditWidget* aiw = new AnimalEditWidget(w);
+	layout->addWidget(aiw);
+	w->setLayout(layout);
+
+	int idx = ui->tabWidget->addTab(w, QIcon(":/ui/icons/user_green_80.png"), "Добавить");
+	bar->setTabData(idx, QVariant::fromValue<uint8_t>(None));
+	ui->tabWidget->setCurrentIndex(idx);
 }
 
 void MainWindow::addToolBarAction(const QIcon& icon, const QString& text, const Callback &cb)
@@ -137,12 +152,11 @@ void MainWindow::setAccessData(const AccessData &value)
 }
 void MainWindow::accInfo()
 {
-	qDebug() << Q_FUNC_INFO << "Acc Info menu action";
 	addTab(QIcon(":/ui/icons/user_green_80.png"), "Аккаунт",
 		{AccountWidget, Single}, &MainWindow::createWidgetAccountInfo);
 }
 
 void MainWindow::exit()
 {
-	qDebug() << Q_FUNC_INFO << "Exit menu action";
+	QCoreApplication::instance()->exit(0);
 }

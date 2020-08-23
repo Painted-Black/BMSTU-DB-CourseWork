@@ -32,7 +32,8 @@ private:
 	void createWidgetAnimalInfo(uint64_t);
 	void createWidgetAccountInfo(QWidget*);
 
-private slots:
+	void createNewAnimal();
+
 	void accInfo();
 	void exit();
 

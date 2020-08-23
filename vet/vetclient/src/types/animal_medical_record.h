@@ -18,21 +18,21 @@ public:
 	bool isSoftInit() const;
 	bool isInit() const;
 
-	uint64_t getAnim_id() const;
-	QString getName() const;
-	QString getBreed() const;
-	QString getSpecies() const;
-	Gender getSex() const;
+	uint64_t getAnimId() const;
+	const QString& getName() const;
+	const QString& getBreed() const;
+	const QString& getSpecies() const;
+	const Gender& getSex() const;
 	bool getCastrated() const;
-	QDate getBirth() const;
-	QString getOther_data() const;
-	QString getColor() const;
-	QString getSpecial_signs() const;
-	QDate getRegistr_date() const;
-	QDate getLast_visit() const;
-	Microchip getChip() const;
-	Contract getContract() const;
-	QString getRel_path_to_photo() const;
+	const QDate& getBirth() const;
+	const QString& getOtherData() const;
+	const QString& getColor() const;
+	const QString& getSpecialSigns() const;
+	const QDate& getRegistrDate() const;
+	const QDate& getLastVisit() const;
+	const Microchip& getChip() const;
+	const Contract& getContract() const;
+	const QString& getRelPathToPhoto() const;
 
 	void setName(const QString &value);
 	void setBreed(const QString &value);
@@ -40,14 +40,14 @@ public:
 	void setSex(const Gender &value);
 	void setCastrated(bool value);
 	void setBirth(const QDate &value);
-	void setOther_data(const QString &value);
+	void setOtherData(const QString &value);
 	void setColor(const QString &value);
-	void setSpecial_signs(const QString &value);
-	void setRegistr_date(const QDate &value);
-	void setLast_visit(const QDate &value);
+	void setSpecialSigns(const QString &value);
+	void setRegistrDate(const QDate &value);
+	void setLastVisit(const QDate &value);
 	void setChip(const Microchip &value);
 	void setContract(const Contract &value);
-	void setRel_path_to_photo(const QString &value);
+	void setRelPathToPhoto(const QString &value);
 private:
 
 
