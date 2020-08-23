@@ -9,7 +9,7 @@ class Visit():
         self.__visit_date = None
         self.__owner_dynamics = None
         self.__history_disease = None
-        self.__cur_state =  = AnimalState()
+        self.__cur_state = None
         self.__diagnosis = None
         self.__recommendations = None
         self.__next_visit = None
@@ -24,7 +24,7 @@ class Visit():
         self.__visit_date = json['visit_date']
         self.__owner_dynamics = json['owner_dynamics']
         self.__history_disease = json['history_disease']
-        self.__cur_state.deserialize(json['cur_state'])
+        #self.__cur_state.deserialize(json['cur_state'])
         self.__diagnosis = json['diagnosis']
         self.__recommendations = json['recommendations']
         self.__next_visit = json['next_visit']

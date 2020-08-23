@@ -16,6 +16,8 @@ SOURCES += \
 	core/animal_info_widget.cpp \
 	core/animal_list_item_widget.cpp \
 	core/auth.cpp \
+	core/chose_animal_dialog.cpp \
+	core/chose_animal_full_dialog.cpp \
 	core/mainwindow.cpp \
 	core/new_visit_widget.cpp \
 	core/network/network_fetcher.cpp \
@@ -48,6 +50,8 @@ HEADERS += \
 	core/animal_info_widget.h \
 	core/animal_list_item_widget.h \
 	core/auth.h \
+	core/chose_animal_dialog.h \
+	core/chose_animal_full_dialog.h \
 	core/new_visit_widget.h \
 	core/iserializable.h \
 	core/mainwindow.h \
@@ -78,9 +82,11 @@ HEADERS += \
 	utils/singlenton.h
 
 FORMS += \
+    core/chose_animal_full_dialog.ui \
+        ui/chose_animal_dialog.ui \
 	ui/acc_info.ui \
 	ui/add_contract.ui \
-	 ui/add_med_dialog.ui \
+        ui/add_med_dialog.ui \
 	ui/address.ui \
 	ui/admin.ui \
 	ui/animal.ui \

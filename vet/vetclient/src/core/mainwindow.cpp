@@ -41,14 +41,14 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui->pet_reg, &QAction::triggered, this, &MainWindow::createWidgetNewAnimal);
 	connect(ui->pet_find, &QAction::triggered, this, &MainWindow::runAnimalEditor);
 	connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
-	addToolBarAction(QIcon(":/ui/icons/add_40.png"), "Животные", &MainWindow::runAnimalEditor);
+    addToolBarAction(QIcon(":/ui/icons/icons8-group-of-animals-48.png"), "Животные", &MainWindow::runAnimalEditor);
     addToolBarAction(QIcon(":/ui/icons/treatment-80.png"), "Ветеринарный осмотр", &MainWindow::newVisit);
 }
 
 void MainWindow::runAnimalEditor()
 {
 	qDebug() << Q_FUNC_INFO;
-	QWidget* w = addTab(QIcon(":/ui/icons/add_user_80.png"), "Животные",
+    QWidget* w = addTab(QIcon(":/ui/icons/icons8-group-of-animals-48.png"), "Животные",
 				{AnimalWidget, Single}, &MainWindow::createWidgetAnimals);
 	w->show();
 }

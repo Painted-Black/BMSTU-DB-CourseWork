@@ -10,6 +10,7 @@
 #include "types/visit.h"
 #include "types/prescribings.h"
 #include "add_med_dialog.h"
+#include "chose_animal_dialog.h"
 
 NewVisitWidget::NewVisitWidget(QWidget *parent)
     : QWidget(parent), ui(new Ui::visit_widget()), model(new PrescribingsTableModel())
@@ -96,7 +97,10 @@ void NewVisitWidget::handle_save_button()
     {
         qDebug() << "Recommendations is empty!";
     }
-
+    if (animal_id == -1)
+    {
+        qDebug() << "Animal id is empty!";
+    }
 
     qDebug() << Q_FUNC_INFO << "Saved";
 }
@@ -109,7 +113,15 @@ void NewVisitWidget::setAccessData(const AccessData &value)
 void NewVisitWidget::choseAnimal()
 {
     qDebug() << Q_FUNC_INFO << "Chose animal...";
-#pragma message "TODO"
+    ChoseAnimalDialog chose_dialog(this);
+    chose_dialog.setAccess_data(access_data);
+    chose_dialog.show();
+    if (chose_dialog.exec() == QDialog::Rejected)
+    {
+        return;
+    }
+
+    animal_id = chose_dialog.getAnimal_id();
 }
 
 void NewVisitWidget::add_prescr_btn()
