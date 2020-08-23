@@ -18,7 +18,9 @@ class AnimalEditWidget : public QWidget
 public:
 	explicit AnimalEditWidget(QWidget *parent = nullptr);
 	void show(const QUrl &, const QByteArray&);
-
+	bool isFills() const;
+	bool isEdit() const;
+	AnimalMedicalRecord getAnimalMedicalRecort();
 private:
 	void activeInfoDialog();
 	void activeSignDialog();

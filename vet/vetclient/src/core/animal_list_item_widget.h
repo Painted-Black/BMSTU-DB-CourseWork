@@ -15,6 +15,7 @@ class AnimalListWidget : public QWidget
 public:
 	AnimalListWidget(QWidget* = nullptr);
 	bool show(const QUrl&, const QByteArray&);
+	void addAnimal();
 private:
 	QWidget* addWidget(const ShortAnimalInfo&);
 	void selectItemWidget(QListWidgetItem*);

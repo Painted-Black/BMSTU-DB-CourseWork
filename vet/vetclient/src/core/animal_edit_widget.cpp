@@ -86,6 +86,68 @@ void AnimalEditWidget::show(const QUrl& url, const QByteArray& pass)
 	chip_ui->location_le->setText(chip_object.getLocation());
 }
 
+bool AnimalEditWidget::isFills() const
+{
+	bool is_empty = false;
+	QList<QLineEdit*> children = findChildren<QLineEdit*>();
+	for (auto child : children)
+	{
+		is_empty |= child->text().isEmpty();
+	}
+
+	children = contract->findChildren<QLineEdit*>();
+	for (auto child : children)
+	{
+		is_empty |= child->text().isEmpty();
+	}
+
+	children = chip->findChildren<QLineEdit*>();
+	for (auto child : children)
+	{
+		is_empty |= child->text().isEmpty();
+	}
+
+	return is_empty == false;
+}
+
+bool AnimalEditWidget::isEdit() const
+{
+	return false;
+}
+
+AnimalMedicalRecord AnimalEditWidget::getAnimalMedicalRecort()
+{
+	AnimalMedicalRecord record;
+	record.setName(ui->name_le->text());
+	record.setSpecies(ui->species_le->text());
+	record.setBreed(ui->breed_le->text());
+
+	Gender sex;
+	sex.setGenderType(static_cast<Gender::GenderEnum>(ui->sex_cb->currentData().toUInt()));
+	record.setSex(sex);
+	record.setBirth(ui->birth_de->date());
+	record.setCastrated(ui->costrat_cb->isChecked());
+	record.setColor(ui->color_le->text());
+	record.setSpecialSigns(ui->sign_le->text());
+	record.setOtherData(ui->info_le->text());
+	record.setRegistrDate(ui->reg_de->date());
+	record.setLastVisit(ui->last_visit_de->date());
+
+	Contract contract_object;
+	contract_object.setCode(contract_ui->num_le->text());
+	contract_object.setValidUntil(contract_ui->valid_to_de->date());
+	contract_object.setConclusionDate(contract_ui->conclusion_de->date());
+	record.setContract(contract_object);
+
+	Microchip chip_object;
+	chip_object.setChipNum(chip_ui->num_le->text());
+	chip_object.setCountry(chip_ui->country_le->text());
+	chip_object.setImplDate(chip_ui->impl_de->date());
+	chip_object.setLocation(chip_ui->location_le->text());
+	record.setChip(chip_object);
+	return record;
+}
+
 void AnimalEditWidget::activeInfoDialog()
 {
 	info_dlg->show();

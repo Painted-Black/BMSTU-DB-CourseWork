@@ -19,8 +19,8 @@ public:
 	QString getCountry() const;
 	QString getLocation() const;
 
-	void setChip_num(const QString &value);
-	void setImpl_date(const QDate &value);
+	void setChipNum(const QString &value);
+	void setImplDate(const QDate &value);
 	void setCountry(const QString &value);
 	void setLocation(const QString &value);
 private:

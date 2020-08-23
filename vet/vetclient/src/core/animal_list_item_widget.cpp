@@ -45,6 +45,11 @@ bool AnimalListWidget::show(const QUrl& url, const QByteArray &data)
 	return true;
 }
 
+void AnimalListWidget::addAnimal()
+{
+
+}
+
 QWidget* AnimalListWidget::addWidget(const ShortAnimalInfo & info)
 {
 	QWidget* form = new QWidget();

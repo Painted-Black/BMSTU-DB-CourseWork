@@ -12,13 +12,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
 	core/account_info_widget.cpp \
-	core/add_contract_widget.cpp \
 	core/animal_edit_widget.cpp \
 	core/animal_info_widget.cpp \
 	core/animal_list_item_widget.cpp \
 	core/auth.cpp \
 	core/mainwindow.cpp \
 	core/network/network_fetcher.cpp \
+	core/popup.cpp \
 	main.cpp \
 	types/address.cpp \
 	types/animal_medical_record.cpp \
@@ -48,6 +48,7 @@ HEADERS += \
 	core/auth.h \
 	core/mainwindow.h \
 	core/network/network_fetcher.h \
+	core/popup.h \
 	types/QJsonHeaders.h \
 	types/address.h \
 	types/animal_medical_record.h \
