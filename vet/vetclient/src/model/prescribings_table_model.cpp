@@ -49,6 +49,14 @@ void PrescribingsTableModel::addMed(const Medicine &med)
     keys = m_data.keys();
 }
 
+void PrescribingsTableModel::removeMed(const QString &name, int index)
+{
+    beginRemoveRows(QModelIndex(), index, index);
+    m_data.remove(name);
+    endRemoveRows();
+    keys = m_data.keys();
+}
+
 QVariant PrescribingsTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role != Qt::DisplayRole)
@@ -75,4 +83,9 @@ QVariant PrescribingsTableModel::headerData(int section, Qt::Orientation orienta
             return QString(" Примечание ");
     }
     return QVariant();
+}
+
+Prescribings &PrescribingsTableModel::getPresctibings()
+{
+    return m_data;
 }

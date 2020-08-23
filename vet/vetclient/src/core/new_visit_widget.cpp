@@ -120,7 +120,7 @@ void NewVisitWidget::add_prescr_btn()
     {
         Medicine med = add_med_dialog.getMed();
         model->addMed(med);
-        pres.append(med);
+//        pres.append(med);
     }
 }
 
@@ -129,5 +129,10 @@ void NewVisitWidget::delete_prescr_btn()
     qDebug() << Q_FUNC_INFO << "Delete prescr...";
     QItemSelectionModel *select = ui->prescr_tableView->selectionModel();
     QModelIndexList selected_rows = select->selectedRows();
-    int a = 9;
+    int rows_selected = selected_rows.size();
+    for (int i = 0; i < rows_selected; ++i)
+    {
+        model->removeMed(selected_rows.at(i).data().toString(), i);
+    }
+//    Prescribings pr = model->getPresctibings();
 }

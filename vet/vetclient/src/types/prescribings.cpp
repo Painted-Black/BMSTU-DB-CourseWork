@@ -245,7 +245,7 @@ bool Prescribings::append(const Medicine &med)
 bool Prescribings::remove(const QString &med_name)
 {
 	bool is_ok = false;
-	if (prescribings.contains(med_name) == false)
+    if (prescribings.contains(med_name) == true)
 	{
 		prescribings.remove(med_name);
 		is_ok = true;

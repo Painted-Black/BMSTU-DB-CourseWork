@@ -27,7 +27,7 @@ private:
 private:
     Ui::visit_widget* ui;
     AccessData access_data;
-    Prescribings pres;
+//    Prescribings pres;
     AnimalMedicalRecord chosed_animal;
     PrescribingsTableModel* model;
 };
