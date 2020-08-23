@@ -5,7 +5,7 @@
 #include <QDate>
 #include "QJsonHeaders.h"
 
-#include "core/ISerializable.h"
+#include "core/iserializable.h"
 
 class Microchip final : public ISerializable<QJsonObject>
 {
@@ -14,13 +14,13 @@ public:
 	QJsonObject serialize() const override;
 	uint64_t getId() const;
 
-	QString getChip_num() const;
-	QDate getImpl_date() const;
+	QString getChipNum() const;
+	QDate getImplDate() const;
 	QString getCountry() const;
 	QString getLocation() const;
 
-	void setChip_num(const QString &value);
-	void setImpl_date(const QDate &value);
+	void setChipNum(const QString &value);
+	void setImplDate(const QDate &value);
 	void setCountry(const QString &value);
 	void setLocation(const QString &value);
 private:

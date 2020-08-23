@@ -11,19 +11,19 @@ bool Client::deserialize(const QJsonObject &json) noexcept
 
 	QJsonObject contacts = json.value(ClientJson::field_cli_contacts).toObject();
 	QJsonArray phones_json = contacts.value(ClientJson::field_cli_phone).toArray();
-	for (const auto& v : phones_json)
+	for (auto v : phones_json)
 	{
 		phones.push_back(v.toString());
 	}
 
 	QJsonArray email_json = contacts.value(ClientJson::field_cli_email).toArray();
-	for (const auto& v : email_json)
+	for (auto v : email_json)
 	{
 		emails.push_back(v.toString());
 	}
 
 	QJsonArray social_json = contacts.value(ClientJson::field_cli_social).toArray();
-	for (const auto& v : social_json)
+	for (auto v : social_json)
 	{
 		social.push_back(v.toString());
 	}

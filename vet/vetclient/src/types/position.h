@@ -3,7 +3,7 @@
 #include <QString>
 #include "QJsonHeaders.h"
 
-#include "core/ISerializable.h"
+#include "core/iserializable.h"
 
 class Position final : public ISerializable<QJsonObject>
 {

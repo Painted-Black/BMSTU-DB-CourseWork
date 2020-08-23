@@ -3,7 +3,7 @@
 #include <QDate>
 
 #include "QJsonHeaders.h"
-#include "core/ISerializable.h"
+#include "core/iserializable.h"
 #include "gender.h"
 
 class Passport : public ISerializable<QJsonObject>

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <QNetworkAccessManager>
 #include <QMainWindow>
 #include <QByteArray>
 #include "auth.h"
@@ -14,28 +15,34 @@ class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 private:
-	using  Callback = void(MainWindow::*)();
 	template<typename T>
 	using InitFunc = void(MainWindow::*)(T);
+	using  Callback = void(MainWindow::*)();
 public:
 	explicit MainWindow(QWidget *parent = nullptr);
 	void setAccessData(const AccessData &value);
+	void show();
 
 private:
 	void runAnimalEditor();
 	QWidget *addTab(const QIcon&, const QString&, std::tuple<uint64_t,  uint8_t> , InitFunc<QWidget*>);
+	std::tuple<bool, QWidget*> findTag(uint64_t) const;
 	void addToolBarAction(const QIcon&, const QString&, const Callback& cb);
 	void closeTab(int);
 	void createWidgetAnimals(QWidget*);
+	void createWidgetAnimalInfo(uint64_t);
+	void createWidgetNewAnimal();
+	void addNewAnimal();
 	void createWidgetAccountInfo(QWidget*);
     void createWidgetNewVisit(QWidget*);
     void newVisit();
+
+
+	void accInfo();
+	void exit();
 
 private:
 	Ui::MainWindow* ui;
 	Staff staff;
 	AccessData access_data;
-private slots:
-	void accInfo();
-	void exit();
 };

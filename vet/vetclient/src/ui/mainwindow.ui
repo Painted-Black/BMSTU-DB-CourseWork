@@ -30,6 +30,15 @@
       <property name="tabsClosable">
        <bool>true</bool>
       </property>
+      <property name="documentMode">
+       <bool>true</bool>
+      </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
+      <property name="movable">
+       <bool>true</bool>
+      </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
         <string>Главная страница</string>
@@ -500,7 +509,15 @@
     <addaction name="exit_action"/>
     <addaction name="separator"/>
    </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>Животное</string>
+    </property>
+    <addaction name="pet_reg"/>
+    <addaction name="pet_find"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -547,6 +564,16 @@
   <action name="exit_action">
    <property name="text">
     <string>Выйти</string>
+   </property>
+  </action>
+  <action name="pet_reg">
+   <property name="text">
+    <string>Зарегестрировать</string>
+   </property>
+  </action>
+  <action name="pet_find">
+   <property name="text">
+    <string>Найти</string>
    </property>
   </action>
  </widget>

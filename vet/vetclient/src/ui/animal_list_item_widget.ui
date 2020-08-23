@@ -4,146 +4,191 @@
  <widget class="QWidget" name="Form">
   <property name="geometry">
    <rect>
-	<x>0</x>
-	<y>0</y>
-	<width>406</width>
-	<height>114</height>
+    <x>0</x>
+    <y>0</y>
+    <width>406</width>
+    <height>122</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>2</number>
+   </property>
+   <property name="leftMargin">
+    <number>2</number>
+   </property>
+   <property name="topMargin">
+    <number>2</number>
+   </property>
+   <property name="rightMargin">
+    <number>2</number>
+   </property>
+   <property name="bottomMargin">
+    <number>2</number>
+   </property>
    <item>
-	<widget class="QLabel" name="photo_label">
-	 <property name="minimumSize">
-	  <size>
-	   <width>100</width>
-	   <height>0</height>
-	  </size>
-	 </property>
-	 <property name="frameShape">
-	  <enum>QFrame::NoFrame</enum>
-	 </property>
-	 <property name="text">
-	  <string/>
-	 </property>
-	 <property name="pixmap">
-	  <pixmap resource="../res.qrc">:/ui/icons/pigeon.png</pixmap>
-	 </property>
-	</widget>
-   </item>
-   <item>
-	<layout class="QFormLayout" name="data_formLayout">
-	 <item row="0" column="0">
-	  <widget class="QLabel" name="label_4">
-	   <property name="minimumSize">
-		<size>
-		 <width>100</width>
-		 <height>30</height>
-		</size>
-	   </property>
-	   <property name="font">
-		<font>
-		 <pointsize>12</pointsize>
-		</font>
-	   </property>
-	   <property name="text">
-		<string>Кличка:</string>
-	   </property>
-	  </widget>
-	 </item>
-	 <item row="1" column="0">
-	  <widget class="QLabel" name="label_3">
-	   <property name="minimumSize">
-		<size>
-		 <width>100</width>
-		 <height>30</height>
-		</size>
-	   </property>
-	   <property name="font">
-		<font>
-		 <pointsize>12</pointsize>
-		</font>
-	   </property>
-	   <property name="text">
-		<string>Вид:</string>
-	   </property>
-	  </widget>
-	 </item>
-	 <item row="2" column="0">
-	  <widget class="QLabel" name="label_2">
-	   <property name="minimumSize">
-		<size>
-		 <width>100</width>
-		 <height>30</height>
-		</size>
-	   </property>
-	   <property name="font">
-		<font>
-		 <pointsize>12</pointsize>
-		</font>
-	   </property>
-	   <property name="text">
-		<string>Дата рождения:</string>
-	   </property>
-	  </widget>
-	 </item>
-	 <item row="0" column="1">
-	  <widget class="QLabel" name="input_name">
-	   <property name="minimumSize">
-		<size>
-		 <width>100</width>
-		 <height>30</height>
-		</size>
-	   </property>
-	   <property name="font">
-		<font>
-		 <pointsize>12</pointsize>
-		</font>
-	   </property>
-	   <property name="text">
-		<string/>
-	   </property>
-	  </widget>
-	 </item>
-	 <item row="1" column="1">
-	  <widget class="QLabel" name="input_spec">
-	   <property name="minimumSize">
-		<size>
-		 <width>100</width>
-		 <height>30</height>
-		</size>
-	   </property>
-	   <property name="font">
-		<font>
-		 <pointsize>12</pointsize>
-		</font>
-	   </property>
-	   <property name="text">
-		<string/>
-	   </property>
-	  </widget>
-	 </item>
-	 <item row="2" column="1">
-	  <widget class="QLabel" name="input_birth">
-	   <property name="minimumSize">
-		<size>
-		 <width>100</width>
-		 <height>30</height>
-		</size>
-	   </property>
-	   <property name="font">
-		<font>
-		 <pointsize>12</pointsize>
-		</font>
-	   </property>
-	   <property name="text">
-		<string/>
-	   </property>
-	  </widget>
-	 </item>
-	</layout>
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="photo_label">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::RightToLeft</enum>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="../res.qrc">:/ui/icons/pigeon.png</pixmap>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QFormLayout" name="data_formLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Кличка:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="input_name">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Вид:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="input_spec">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="input_birth">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Дата рождения:</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
    </item>
   </layout>
  </widget>

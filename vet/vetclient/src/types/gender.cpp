@@ -1,7 +1,6 @@
 #include "gender.h"
 #include "json_fields.h"
 
-
 bool Gender::deserialize(const QJsonValue& json) noexcept
 {
 	QString v = json.toString();

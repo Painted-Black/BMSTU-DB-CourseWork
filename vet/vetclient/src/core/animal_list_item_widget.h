@@ -2,42 +2,27 @@
 
 #include <QWidget>
 #include <QListWidget>
-
-#include "types/animal_medical_record.h"
+#include "types/short_animal_info.h"
 
 namespace Ui
 {
 	class Form;
 }
 
-class AnimalListItemWidget : public QWidget
-{
-	Q_OBJECT
-public:
-	struct AnimalData final
-	{
-		uint64_t uid;
-		QString name;
-		QString spec;
-		QDate birth;
-	};
-public:
-	explicit AnimalListItemWidget(QWidget *parent = nullptr);
-	void view(const AnimalMedicalRecord& rec);
-
-private:
-	Ui::Form* ui;
-};
-
 class AnimalListWidget : public QWidget
 {
 	Q_OBJECT
 public:
-	AnimalListWidget();
-	bool loadFromJson(const QByteArray&);
-
-	void view();
+	AnimalListWidget(QWidget* = nullptr);
+	bool show(const QUrl&, const QByteArray&);
+	void addAnimal();
 private:
-	QList<AnimalListItemWidget::AnimalData> widgets;
-	QListWidget widget;
+	QWidget* addWidget(const ShortAnimalInfo&);
+	void selectItemWidget(QListWidgetItem*);
+
+Q_SIGNALS:
+	void selectItem(uint64_t);
+
+private:
+	QListWidget* view;
 };

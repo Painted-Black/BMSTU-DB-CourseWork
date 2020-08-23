@@ -3,9 +3,9 @@
 #include <QDebug>
 #include <QKeyEvent>
 
-#include "utlis/utils.h"
+#include "utils/utils.h"
 #include "types/QJsonHeaders.h"
-#include "ISerializable.h"
+#include "iserializable.h"
 #include "auth.h"
 #include "ui_auth_dialog.h"
 #include "core/network/network_fetcher.h"
@@ -47,12 +47,19 @@ void Auth::procLog()
 	NetworkFetcher fetcher;
 	auto responce = fetcher.httpPost(req, data.serialize(), std::chrono::milliseconds(10000));
 	auto code = std::get<0>(responce);
-	if (code != 200)
+	if (code == -1)
 	{
+		ui->error_label->setText("Отсутстует подключение к интернету");
+		ui->error_label->show();
+	}
+	else if (code != 200)
+	{
+		ui->error_label->setText("Неверный логин/пароль");
 		ui->error_label->show();
 	}
 	else
 	{
+		ui->error_label->hide();
 		auth_data.deserialize(fromJson(std::get<2>(responce)));
 		accept();
 	}

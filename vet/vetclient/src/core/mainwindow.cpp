@@ -5,25 +5,31 @@
 #include <QLabel>
 #include <QTabBar>
 #include <QDialog>
+#include <QScreen>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include "utils/singlenton.h"
+#include "popup.h"
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
 #include "account_info_widget.h"
 #include "animal_edit_widget.h"
 #include "new_visit_widget.h"
+#include "animal_list_item_widget.h"
 
 enum TabType
 {
-	AccountWidget = 1,
-    AnimalWidget,
-    VisitWidget
+	AccountWidget      = 1,
+	AnimalWidget        = 2,
+	EditAnimalWidget = 3,
+	VisitWidget            = 4
 };
 
 enum TabFlags
 {
+	None           = 0b00,
 	Unclosable = 0b01,
-	Single		  = 0b10
+	Single          = 0b10
 };
 
 MainWindow::MainWindow(QWidget *parent)
@@ -32,6 +38,8 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->setupUi(this);
 	connect(ui->acc_action, &QAction::triggered, this, &MainWindow::accInfo);
 	connect(ui->exit_action, &QAction::triggered, this, &MainWindow::exit);
+	connect(ui->pet_reg, &QAction::triggered, this, &MainWindow::createWidgetNewAnimal);
+	connect(ui->pet_find, &QAction::triggered, this, &MainWindow::runAnimalEditor);
 	connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
 	addToolBarAction(QIcon(":/ui/icons/add_40.png"), "Животные", &MainWindow::runAnimalEditor);
     addToolBarAction(QIcon(":/ui/icons/treatment-80.png"), "Ветеринарный осмотр", &MainWindow::newVisit);
@@ -42,10 +50,7 @@ void MainWindow::runAnimalEditor()
 	qDebug() << Q_FUNC_INFO;
 	QWidget* w = addTab(QIcon(":/ui/icons/add_user_80.png"), "Животные",
 				{AnimalWidget, Single}, &MainWindow::createWidgetAnimals);
-
-	auto* animal =
-			w->findChild<AnimalEditWidget*>("AnimalEditWidget", Qt::FindDirectChildrenOnly);
-	animal->update();
+	w->show();
 }
 
 QWidget* MainWindow::addTab(
@@ -60,21 +65,10 @@ QWidget* MainWindow::addTab(
 
 	if (flg & Single)
 	{
-		auto count = bar->count();
-		for (decltype (count) i = 0; i < count; ++i)
+		auto find = findTag(std::get<0>(flags));
+		if (std::get<0>(find) == true)
 		{
-			QVariantList user_data_i = bar->tabData(i).toList();
-			if (user_data_i.count() != 2)
-			{
-				continue;
-			}
-
-			uint64_t srch_type_i = user_data_i.first().toULongLong();
-			if (srch_type == srch_type_i)
-			{
-				bar->setCurrentIndex(i);
-				return ui->tabWidget->widget(i);
-			}
+			return std::get<1>(find);
 		}
 	}
 
@@ -86,14 +80,58 @@ QWidget* MainWindow::addTab(
 	return widget;
 }
 
+std::tuple<bool, QWidget *> MainWindow::findTag(uint64_t searched) const
+{
+	QTabBar* bar = ui->tabWidget->tabBar();
+	auto count = bar->count();
+	for (decltype (count) i = 0; i < count; ++i)
+	{
+		auto data = bar->tabData(i).value<uint8_t>();
+		if (searched == data)
+		{
+			bar->setCurrentIndex(i);
+			return { true, ui->tabWidget->widget(i) };
+		}
+	}
+
+	return { false, nullptr };
+}
+
 void MainWindow::createWidgetAnimals(QWidget * w)
 {
-	QHBoxLayout* lay = new QHBoxLayout();
-	AnimalEditWidget* animal = new AnimalEditWidget(w);
-	animal->setObjectName("AnimalEditWidget");
-	animal->show();
-	lay->addWidget(animal);
-	w->setLayout(lay);
+	QBoxLayout* layout = new QVBoxLayout();
+	AnimalListWidget* aiw = new AnimalListWidget(w);
+	QPushButton* add_btn = new QPushButton(w);
+	add_btn->setText("Добавить запись");
+
+	connect(add_btn, &QPushButton::released, this, &MainWindow::createWidgetNewAnimal);
+	connect(aiw, &AnimalListWidget::selectItem, this, &MainWindow::createWidgetAnimalInfo);
+
+	aiw->show(QUrl("http://127.0.0.1:4446/animals/all/short"), access_data.getPassword());
+	layout->addWidget(aiw);
+	layout->addWidget(add_btn);
+	w->setLayout(layout);
+}
+
+void MainWindow::createWidgetAnimalInfo(uint64_t id)
+{
+	QTabBar* bar = ui->tabWidget->tabBar();
+	QWidget* w = new QWidget(ui->tabWidget);
+	QVBoxLayout* layout = new QVBoxLayout();
+	AnimalEditWidget* aiw = new AnimalEditWidget(w);
+	QUrl url(QString("http://127.0.0.1:4446/animals?id=%1").arg(static_cast<qulonglong>(id)));
+	QPushButton* add_btn = new QPushButton(w);
+	add_btn->setText("Добавить запись");
+	connect(add_btn, &QPushButton::released, this, &MainWindow::addNewAnimal);
+
+	aiw->show(url, access_data.getPassword());
+	layout->addWidget(aiw);
+	layout->addWidget(add_btn);
+	w->setLayout(layout);
+
+	int idx = ui->tabWidget->addTab(w, QIcon(":/ui/icons/user_green_80.png"), "Добавить");
+	bar->setTabData(idx, QVariant::fromValue<uint8_t>(None));
+	ui->tabWidget->setCurrentIndex(idx);
 }
 
 void MainWindow::createWidgetAccountInfo(QWidget * w)
@@ -109,13 +147,13 @@ void MainWindow::createWidgetAccountInfo(QWidget * w)
 
 void MainWindow::createWidgetNewVisit(QWidget *w)
 {
-    QHBoxLayout* layout = new QHBoxLayout();
-    NewVisitWidget* nvw = new NewVisitWidget(w);
-    nvw->setObjectName("NewVisitWidget");
-    nvw->setAccessData(access_data);
-    nvw->show();
-    layout->addWidget(nvw);
-    w->setLayout(layout);
+	QHBoxLayout* layout = new QHBoxLayout();
+	NewVisitWidget* nvw = new NewVisitWidget(w);
+	nvw->setObjectName("NewVisitWidget");
+	nvw->setAccessData(access_data);
+	nvw->show();
+	layout->addWidget(nvw);
+	w->setLayout(layout);
 }
 
 void MainWindow::newVisit()
@@ -126,6 +164,47 @@ void MainWindow::newVisit()
 
     NewVisitWidget* nvw = w->findChild<NewVisitWidget*>("NewVisitWidget");
     nvw->update();
+}
+
+void MainWindow::createWidgetNewAnimal()
+{
+	QTabBar* bar = ui->tabWidget->tabBar();
+	QWidget* w = new QWidget(ui->tabWidget);
+	QVBoxLayout* layout = new QVBoxLayout();
+	AnimalEditWidget* aiw = new AnimalEditWidget(w);
+	QPushButton* add_btn = new QPushButton(w);
+	add_btn->setText("Добавить запись");
+	add_btn->setPalette(palette());
+	layout->addWidget(aiw);
+	layout->addWidget(add_btn);
+	w->setLayout(layout);
+	w->show();
+	connect(add_btn, &QPushButton::released, this, &MainWindow::addNewAnimal);
+
+	int idx = ui->tabWidget->addTab(w, QIcon(":/ui/icons/user_green_80.png"), "Добавить");
+	bar->setTabData(idx, QVariant::fromValue<uint8_t>(None));
+	ui->tabWidget->setCurrentIndex(idx);
+}
+
+void MainWindow::addNewAnimal()
+{
+	AnimalEditWidget* widget = sender()->parent()->findChild<AnimalEditWidget*>();
+	bool is_fill = widget->isFills();
+	if (is_fill == false)
+	{
+		PopUp& notifier = Singlenton<PopUp>::getInstance();
+		notifier.setPopupText("Не все поля были заполнены");
+		notifier.show();
+		return;
+	}
+
+	auto record = widget->getAnimalMedicalRecort();
+	auto animal_widget = findTag(AnimalWidget);
+	if (std::get<0>(animal_widget) == true)
+	{
+		AnimalListWidget* lst = std::get<1>(animal_widget)->findChild<AnimalListWidget*>();
+		lst->addAnimal();
+	}
 }
 
 void MainWindow::addToolBarAction(const QIcon& icon, const QString& text, const Callback &cb)
@@ -153,17 +232,27 @@ void MainWindow::setAccessData(const AccessData &value)
 {
 	access_data = value;
 }
+
+void MainWindow::show()
+{
+	QRect rect = QGuiApplication::screens().first()->geometry();
+	int x = (rect.width() - width()) / 2;
+	int y = (rect.height() - height()) / 2;
+
+	setGeometry(x, y, width(), height());
+	QMainWindow::show();
+}
 void MainWindow::accInfo()
 {
 	qDebug() << Q_FUNC_INFO << "Acc Info menu action";
 	QWidget* w = addTab(QIcon(":/ui/icons/user_green_80.png"), "Аккаунт",
 		{AccountWidget, Single}, &MainWindow::createWidgetAccountInfo);
 
-    AccountInfoWidget* acc = w->findChild<AccountInfoWidget*>("AccountInfoWidget");
-    acc->update();
+	AccountInfoWidget* acc = w->findChild<AccountInfoWidget*>("AccountInfoWidget");
+	acc->update();
 }
 
 void MainWindow::exit()
 {
-	qDebug() << Q_FUNC_INFO << "Exit menu action";
+	QCoreApplication::instance()->exit(0);
 }
