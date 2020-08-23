@@ -13,11 +13,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
 	core/account_info_widget.cpp \
 	core/animal_edit_widget.cpp \
+	core/animal_info_widget.cpp \
 	core/animal_list_item_widget.cpp \
 	core/auth.cpp \
 	core/mainwindow.cpp \
 	core/new_visit_widget.cpp \
-        core/network/network_fetcher.cpp \
+	core/network/network_fetcher.cpp \
+	core/popup.cpp \
 	main.cpp \
 	types/address.cpp \
 	types/animal_medical_record.cpp \
@@ -30,24 +32,27 @@ SOURCES += \
 	types/position.cpp \
 	types/prescribings.cpp \
 	types/schedule.cpp \
+	types/short_animal_info.cpp \
 	types/staff.cpp \
 	types/user_data.cpp \
 	types/vaccination.cpp \
-        types/visit.cpp \
-        core/add_med_dialog.cpp \
-        utlis/utils.cpp \
-        model/prescribings_table_model.cpp
-
+	types/visit.cpp \
+	core/add_med_dialog.cpp \
+	utils/utils.cpp \
+	model/prescribings_table_model.cpp
 
 HEADERS += \
-	core/ISerializable.h \
 	core/account_info_widget.h \
+	core/add_contract_widget.h \
 	core/animal_edit_widget.h \
+	core/animal_info_widget.h \
 	core/animal_list_item_widget.h \
 	core/auth.h \
-        core/mainwindow.h \
-        core/new_visit_widget.h \
-        core/network/network_fetcher.h \
+	core/new_visit_widget.h \
+	core/iserializable.h \
+	core/mainwindow.h \
+	core/network/network_fetcher.h \
+	core/popup.h \
 	types/QJsonHeaders.h \
 	types/address.h \
 	types/animal_medical_record.h \
@@ -62,32 +67,35 @@ HEADERS += \
 	types/prescribings.h \
 	types/proxy_auth.h \
 	types/schedule.h \
+	types/short_animal_info.h \
 	types/staff.h \
 	types/user_data.h \
 	types/vaccination.h \
-        types/visit.h \
-        core/add_med_dialog.h \
-	utlis/Singlenton.h \
-        utlis/utils.h \
-        model/prescribings_table_model.h
+	core/add_med_dialog.h \
+	model/prescribings_table_model.h \
+	types/visit.h \
+	utils/utils.h \
+	utils/singlenton.h
 
 FORMS += \
 	ui/acc_info.ui \
 	ui/add_contract.ui \
-    ui/add_med_dialog.ui \
+	 ui/add_med_dialog.ui \
 	ui/address.ui \
 	ui/admin.ui \
 	ui/animal.ui \
 	ui/animal_list_item_widget.ui \
 	ui/auth_dialog.ui \
 	ui/chip.ui \
+	ui/client.ui \
 	ui/contacts.ui \
 	ui/mainwindow.ui \
 	ui/passport.ui \
-    ui/prescribings_widget.ui \
+	ui/prescribings_widget.ui \
 	ui/shedule.ui \
 	ui/staff.ui \
-        ui/visit.ui
+	ui/text_dialog.ui \
+	ui/visit.ui
 
 LIBS += -lcurl
 

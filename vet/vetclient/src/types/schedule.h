@@ -5,7 +5,7 @@
 #include <QVector>
 #include "QJsonHeaders.h"
 
-#include "core/ISerializable.h"
+#include "core/iserializable.h"
 
 class DayOfWeek : public ISerializable<QJsonValue>
 {

@@ -11,3 +11,8 @@ QJsonObject fromJson(const QByteArray & json) noexcept
 {
 	return QJsonDocument::fromJson(json).object();
 }
+
+QJsonArray fromJsonArray(const QByteArray & json) noexcept
+{
+	return QJsonDocument::fromJson(json).array();
+}

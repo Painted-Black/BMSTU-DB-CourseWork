@@ -4,7 +4,7 @@
 #include <QDate>
 #include "QJsonHeaders.h"
 
-#include "core/ISerializable.h"
+#include "core/iserializable.h"
 #include "types/client.h"
 
 class Contract final : public ISerializable<QJsonObject>
@@ -13,16 +13,16 @@ public:
 	bool deserialize(const QJsonObject &json) noexcept override;
 	QJsonObject serialize() const override;
 
-	uint64_t getContr_id() const;
-	QDate getConclusion_date() const;
-	QDate getLast_update_date() const;
-	QDate getValid_until() const;
+	uint64_t getContrId() const;
+	QDate getConclusionDate() const;
+	QDate getLastUpdateDate() const;
+	QDate getValidUntil() const;
 	Client getClient() const;
 	QString getCode() const;
 
-	void setConclusion_date(const QDate &value);
-	void setLast_update_date(const QDate &value);
-	void setValid_until(const QDate &value);
+	void setConclusionDate(const QDate &value);
+	void setLastUpdateDate(const QDate &value);
+	void setValidUntil(const QDate &value);
 	void setClient(const Client &value);
 	void setCode(const QString &value);
 
