@@ -11,6 +11,8 @@ CONFIG += c++14
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
+	config/config.cpp \
+	config/consoleparser.cpp \
 	core/account_info_widget.cpp \
 	core/animal_edit_widget.cpp \
 	core/animal_info_widget.cpp \
@@ -42,6 +44,8 @@ SOURCES += \
 	model/prescribings_table_model.cpp
 
 HEADERS += \
+	config/config.h \
+	config/consoleparser.h \
 	core/account_info_widget.h \
 	core/add_contract_widget.h \
 	core/animal_edit_widget.h \

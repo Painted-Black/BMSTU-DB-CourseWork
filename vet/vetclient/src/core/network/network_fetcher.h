@@ -8,8 +8,6 @@
 
 class Multipart final
 {
-
-
 	void addPart(const QString&, const QByteArray&);
 	void addFilePart(const QString&, const QString&);
 

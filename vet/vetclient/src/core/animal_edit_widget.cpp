@@ -59,14 +59,14 @@ AnimalEditWidget::AnimalEditWidget(QWidget *parent)
 	connect(ui->info_tb, &QToolButton::released, this, &AnimalEditWidget::activeInfoDialog);
 }
 
-void AnimalEditWidget::show(const QUrl& url, const QByteArray& pass)
+void AnimalEditWidget::show(const QUrl& url, std::chrono::milliseconds tout, const QByteArray& pass)
 {
 	QNetworkRequest request;
 	request.setUrl(url);
 	request.setRawHeader("Authorization", QByteArray("Explicit: ").append(pass));
 
 	NetworkFetcher fetcher;
-	auto reply = fetcher.httpGet(request, std::chrono::milliseconds(10000));
+	auto reply = fetcher.httpGet(request, tout);
 	const auto& code = std::get<0>(reply);
 	const auto& body = std::get<2>(reply);
 	if (code != 200)

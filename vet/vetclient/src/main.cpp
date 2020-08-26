@@ -3,13 +3,27 @@
 #include "core/auth.h"
 #include "utils/singlenton.h"
 #include "core/popup.h"
+#include "config/config.h"
+#include "config/consoleparser.h"
 
 #include "core/network/network_fetcher.h"
 
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
-	PopUp& notifier = Singlenton<PopUp>::getInstance();
+	QString path_to_config;
+	{
+		ConsoleParser parser;
+		parser.parse(a.arguments());
+		path_to_config = parser.getPathToConfig();
+	}
+
+	Q_ASSERT(path_to_config.isEmpty() == false);
+
+	auto& config = Singlenton<Config>::getInstance();
+	Q_ASSERT(config.loadConfig(path_to_config));
+
+	auto& notifier = Singlenton<PopUp>::getInstance();
 
 	Auth a_d;
 	if (a_d.exec() == QDialog::Rejected)

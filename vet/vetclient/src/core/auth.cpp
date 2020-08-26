@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <QKeyEvent>
 
+#include "config/config.h"
+#include "utils/singlenton.h"
 #include "utils/utils.h"
 #include "types/QJsonHeaders.h"
 #include "iserializable.h"
@@ -12,6 +14,7 @@
 
 struct AuthData : public ISerializable<QByteArray>
 {
+	virtual ~AuthData() noexcept override {}
 	virtual QByteArray serialize() const override
 	{
 		QJsonObject obj;
@@ -19,9 +22,6 @@ struct AuthData : public ISerializable<QByteArray>
 		obj.insert("password", pass);
 		return QJsonDocument(obj).toJson();
 	}
-
-	/* Unused */
-	bool deserialize(const QByteArray &) noexcept override { return true; }
 
 	QString login;
 	QString pass;
@@ -42,10 +42,12 @@ void Auth::procLog()
 	data.login = ui->login_lineEdit_auth->text();
 	data.pass = ui->password_lineEdit_auth->text();
 
-	QNetworkRequest req(QUrl("http://127.0.0.1:4446/auth"));
+	auto& cfg = Singlenton<Config>::getInstance();
+
+	QNetworkRequest req(cfg.getUrlAuthication());
 	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 	NetworkFetcher fetcher;
-	auto responce = fetcher.httpPost(req, data.serialize(), std::chrono::milliseconds(10000));
+	auto responce = fetcher.httpPost(req, data.serialize(), cfg.getTimeout());
 	auto code = std::get<0>(responce);
 	if (code == -1)
 	{

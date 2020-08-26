@@ -22,7 +22,7 @@ class AnimalEditWidget : public QWidget
 public:
 	explicit AnimalEditWidget(QWidget *parent = nullptr);
 	void update();
-	void show(const QUrl &, const QByteArray&);
+	void show(const QUrl &, std::chrono::milliseconds, const QByteArray&);
 	bool isFills() const;
 	bool isEdit() const;
 	AnimalMedicalRecord getAnimalMedicalRecort();
