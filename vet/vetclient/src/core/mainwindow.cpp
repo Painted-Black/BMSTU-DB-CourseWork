@@ -19,17 +19,17 @@
 
 enum TabType
 {
-	AccountWidget      = 1,
-	AnimalWidget        = 2,
+	AccountWidget	  = 1,
+	AnimalWidget		= 2,
 	EditAnimalWidget = 3,
-	VisitWidget            = 4
+	VisitWidget			= 4
 };
 
 enum TabFlags
 {
-	None           = 0b00,
+	None		   = 0b00,
 	Unclosable = 0b01,
-	Single          = 0b10
+	Single		  = 0b10
 };
 
 MainWindow::MainWindow(QWidget *parent)
@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui->pet_find, &QAction::triggered, this, &MainWindow::runAnimalEditor);
 	connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
 	addToolBarAction(QIcon(":/ui/icons/add_40.png"), "Животные", &MainWindow::runAnimalEditor);
-    addToolBarAction(QIcon(":/ui/icons/treatment-80.png"), "Ветеринарный осмотр", &MainWindow::newVisit);
+	addToolBarAction(QIcon(":/ui/icons/treatment-80.png"), "Ветеринарный осмотр", &MainWindow::newVisit);
 }
 
 void MainWindow::runAnimalEditor()
@@ -142,7 +142,7 @@ void MainWindow::createWidgetAccountInfo(QWidget * w)
 	aiw->setAccessData(access_data);
 	aiw->show();
 	layout->addWidget(aiw);
-    w->setLayout(layout);
+	w->setLayout(layout);
 }
 
 void MainWindow::createWidgetNewVisit(QWidget *w)
@@ -158,12 +158,12 @@ void MainWindow::createWidgetNewVisit(QWidget *w)
 
 void MainWindow::newVisit()
 {
-    qDebug() << Q_FUNC_INFO << "New visit";
-    QWidget* w = addTab(QIcon(":/ui/icons/treatment-80.png"), "Ветеринарный осмотр",
-                {VisitWidget, Single}, &MainWindow::createWidgetNewVisit);
+	qDebug() << Q_FUNC_INFO << "New visit";
+	QWidget* w = addTab(QIcon(":/ui/icons/treatment-80.png"), "Ветеринарный осмотр",
+				{VisitWidget, Single}, &MainWindow::createWidgetNewVisit);
 
-    NewVisitWidget* nvw = w->findChild<NewVisitWidget*>("NewVisitWidget");
-    nvw->update();
+	NewVisitWidget* nvw = w->findChild<NewVisitWidget*>("NewVisitWidget");
+	nvw->update();
 }
 
 void MainWindow::createWidgetNewAnimal()

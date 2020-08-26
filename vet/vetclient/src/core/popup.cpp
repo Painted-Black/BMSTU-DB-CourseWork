@@ -7,14 +7,14 @@
 
 PopUp::PopUp(QWidget *parent) : QWidget(parent)
 {
-	setWindowFlags(Qt::FramelessWindowHint |        // Disable window decoration
-				   Qt::Tool |                       // Discard display in a separate window
-				   Qt::WindowStaysOnTopHint);       // Set on top of all windows
-	setAttribute(Qt::WA_TranslucentBackground);     // Indicates that the background will be transparent
-	setAttribute(Qt::WA_ShowWithoutActivating);     // At the show, the widget does not get the focus automatically
+	setWindowFlags(Qt::FramelessWindowHint |		// Disable window decoration
+				   Qt::Tool |					   // Discard display in a separate window
+				   Qt::WindowStaysOnTopHint);	   // Set on top of all windows
+	setAttribute(Qt::WA_TranslucentBackground);	 // Indicates that the background will be transparent
+	setAttribute(Qt::WA_ShowWithoutActivating);	 // At the show, the widget does not get the focus automatically
 
-	animation.setTargetObject(this);                // Set the target animation
-	animation.setPropertyName("popupOpacity");      //
+	animation.setTargetObject(this);				// Set the target animation
+	animation.setPropertyName("popupOpacity");	  //
 	connect(&animation, &QAbstractAnimation::finished, this, &PopUp::hide);
 
 	label.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
@@ -52,17 +52,17 @@ void PopUp::paintEvent(QPaintEvent *event)
 
 void PopUp::setPopupText(const QString &text)
 {
-	label.setText(text);    // Set the text in the Label
-	adjustSize();           // With the recalculation notice sizes
+	label.setText(text);	// Set the text in the Label
+	adjustSize();		   // With the recalculation notice sizes
 }
 
 void PopUp::show()
 {
 	setWindowOpacity(0.0);  // Set the transparency to zero
 
-	animation.setDuration(150);     // Configuring the duration of the animation
+	animation.setDuration(150);	 // Configuring the duration of the animation
 	animation.setStartValue(0.0);   // The start value is 0 (fully transparent widget)
-	animation.setEndValue(1.0);     // End - completely opaque widget
+	animation.setEndValue(1.0);	 // End - completely opaque widget
 
 	QRect rect = QGuiApplication::screens().first()->geometry();
 	int x = (rect.width() - width()) / 2;

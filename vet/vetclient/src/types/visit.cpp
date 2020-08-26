@@ -269,49 +269,49 @@ OwnerDynamic::OwnerDynamicEnum OwnerDynamic::getOwnerDynamic() const
 
 void OwnerDynamic::setOwnerDynamic(OwnerDynamic::OwnerDynamicEnum value)
 {
-    current = value;
+	current = value;
 }
 
 bool OwnerDynamic::fromString(QString dyn)
 {
-    OwnerDynamicEnum value;
-    bool is_ok = false;
-    if (dyn == RusOwnerDynamicsType::rus_owner_dynamics_stably)
-    {
-        value = OwnerDynamicEnum::Stably;
-        is_ok = true;
-    }
-    else if (dyn == RusOwnerDynamicsType::rus_owner_dynamics_better)
-    {
-        value = OwnerDynamicEnum::Better;
-        is_ok = true;
-    }
-    else if (dyn == RusOwnerDynamicsType::rus_owner_dynamics_worse)
-    {
-        value = OwnerDynamicEnum::Worse;
-        is_ok = true;
-    }
-    if (is_ok == true)
-    {
-        current = value;
-    }
-    return is_ok;
+	OwnerDynamicEnum value;
+	bool is_ok = false;
+	if (dyn == RusOwnerDynamicsType::rus_owner_dynamics_stably)
+	{
+		value = OwnerDynamicEnum::Stably;
+		is_ok = true;
+	}
+	else if (dyn == RusOwnerDynamicsType::rus_owner_dynamics_better)
+	{
+		value = OwnerDynamicEnum::Better;
+		is_ok = true;
+	}
+	else if (dyn == RusOwnerDynamicsType::rus_owner_dynamics_worse)
+	{
+		value = OwnerDynamicEnum::Worse;
+		is_ok = true;
+	}
+	if (is_ok == true)
+	{
+		current = value;
+	}
+	return is_ok;
 }
 
 QString OwnerDynamic::toString()
 {
-    QString value;
-    switch (current)
-    {
-        case OwnerDynamicEnum::Stably:
-            value = RusOwnerDynamicsType::rus_owner_dynamics_stably;
-            break;
-        case OwnerDynamicEnum::Worse:
-            value = RusOwnerDynamicsType::rus_owner_dynamics_worse;
-            break;
-        case OwnerDynamicEnum::Better:
-            value = RusOwnerDynamicsType::rus_owner_dynamics_better;
-            break;
-    }
-    return value;
+	QString value;
+	switch (current)
+	{
+		case OwnerDynamicEnum::Stably:
+			value = RusOwnerDynamicsType::rus_owner_dynamics_stably;
+			break;
+		case OwnerDynamicEnum::Worse:
+			value = RusOwnerDynamicsType::rus_owner_dynamics_worse;
+			break;
+		case OwnerDynamicEnum::Better:
+			value = RusOwnerDynamicsType::rus_owner_dynamics_better;
+			break;
+	}
+	return value;
 }

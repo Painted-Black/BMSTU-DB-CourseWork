@@ -69,32 +69,32 @@ EducationLevel::EducationLevelEnum EducationLevel::getEducationLevel() const
 
 void EducationLevel::setEducationLevel(const EducationLevelEnum &value)
 {
-    current = value;
+	current = value;
 }
 
 QString EducationLevel::toString()
 {
-    QString value;
-    switch (current)
-    {
-        case EducationLevelEnum::Resident:
-            value = RusEduLevelType::rus_edu_resident;
-            break;
-        case EducationLevelEnum::Middle:
-            value = RusEduLevelType::rus_edu_middle;
-            break;
-        case EducationLevelEnum::Postgraduate:
-            value = RusEduLevelType::rus_edu_postgraduate;
-            break;
-        case EducationLevelEnum::Specialist:
-            value = RusEduLevelType::rus_edu_specialist;
-            break;
-        case EducationLevelEnum::Bachelor:
-            value = RusEduLevelType::rus_edu_bachelor;
-            break;
-    }
+	QString value;
+	switch (current)
+	{
+		case EducationLevelEnum::Resident:
+			value = RusEduLevelType::rus_edu_resident;
+			break;
+		case EducationLevelEnum::Middle:
+			value = RusEduLevelType::rus_edu_middle;
+			break;
+		case EducationLevelEnum::Postgraduate:
+			value = RusEduLevelType::rus_edu_postgraduate;
+			break;
+		case EducationLevelEnum::Specialist:
+			value = RusEduLevelType::rus_edu_specialist;
+			break;
+		case EducationLevelEnum::Bachelor:
+			value = RusEduLevelType::rus_edu_bachelor;
+			break;
+	}
 
-    return value;
+	return value;
 }
 
 bool Staff::deserialize(const QJsonObject & json) noexcept
@@ -183,10 +183,10 @@ void Staff::setEmploy_date(const QDate &value)
 
 ScheduleList Staff::getShed_list() const
 {
-    return shed_list;
+	return shed_list;
 }
 
 void Staff::setShed_list(const ScheduleList &value)
 {
-    shed_list = value;
+	shed_list = value;
 }

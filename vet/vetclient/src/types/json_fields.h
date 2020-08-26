@@ -162,9 +162,9 @@ namespace GeneralStateType
 
 namespace RusGeneralStateType
 {
-    const QString rus_general_state_middle = "средне";
-    const QString rus_general_state_good = "хорошо";
-    const QString rus_general_state_bad = "плохо";
+	const QString rus_general_state_middle = "средне";
+	const QString rus_general_state_good = "хорошо";
+	const QString rus_general_state_bad = "плохо";
 }
 
 namespace GenderType
@@ -191,10 +191,10 @@ namespace InjectionTypes
 
 namespace RusInjectionTypes
 {
-    const QString rus_injection_subcutaneous = "подкожно";
-    const QString rus_injection_intravenous = "внутривенно";
-    const QString rus_injection_intramuscular = "внутримышечно";
-    const QString rus_injection_ingest = "внутрь";
+	const QString rus_injection_subcutaneous = "подкожно";
+	const QString rus_injection_intravenous = "внутривенно";
+	const QString rus_injection_intramuscular = "внутримышечно";
+	const QString rus_injection_ingest = "внутрь";
 }
 
 namespace PrescribingsJson
@@ -220,13 +220,13 @@ namespace DayOfWeekType
 
 namespace RussianDayOfWeekType
 {
-    const QString rus_day_of_week_sun = "Воскресенье";
-    const QString rus_day_of_week_mon = "Понедельник";
-    const QString rus_day_of_week_tue = "Вторник";
-    const QString rus_day_of_week_wed = "Среда";
-    const QString rus_day_of_week_thu = "Четверг";
-    const QString rus_day_of_week_fri = "Пятница";
-    const QString rus_day_of_week_sat = "Суббота";
+	const QString rus_day_of_week_sun = "Воскресенье";
+	const QString rus_day_of_week_mon = "Понедельник";
+	const QString rus_day_of_week_tue = "Вторник";
+	const QString rus_day_of_week_wed = "Среда";
+	const QString rus_day_of_week_thu = "Четверг";
+	const QString rus_day_of_week_fri = "Пятница";
+	const QString rus_day_of_week_sat = "Суббота";
 }
 
 namespace EduLevelType
@@ -240,11 +240,11 @@ namespace EduLevelType
 
 namespace RusEduLevelType
 {
-    const QString rus_edu_resident = "ординатор";
-    const QString rus_edu_middle = "среднее";
-    const QString rus_edu_postgraduate = "аспирант";
-    const QString rus_edu_specialist = "специалист";
-    const QString rus_edu_bachelor = "бакалавр";
+	const QString rus_edu_resident = "ординатор";
+	const QString rus_edu_middle = "среднее";
+	const QString rus_edu_postgraduate = "аспирант";
+	const QString rus_edu_specialist = "специалист";
+	const QString rus_edu_bachelor = "бакалавр";
 }
 
 namespace AccessLevelType
@@ -270,7 +270,7 @@ namespace OwnerDynamicsType
 
 namespace RusOwnerDynamicsType
 {
-    const QString rus_owner_dynamics_stably = "стабильно";
-    const QString rus_owner_dynamics_worse = "лучше";
-    const QString rus_owner_dynamics_better = "хуже";
+	const QString rus_owner_dynamics_stably = "стабильно";
+	const QString rus_owner_dynamics_worse = "лучше";
+	const QString rus_owner_dynamics_better = "хуже";
 }

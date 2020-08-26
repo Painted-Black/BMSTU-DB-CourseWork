@@ -196,49 +196,49 @@ GeneralState::GeneralStateEnum GeneralState::getAnimalState() const
 
 void GeneralState::setAnimalState(GeneralState::GeneralStateEnum value)
 {
-    current = value;
+	current = value;
 }
 
 QString GeneralState::toString()
 {
-    QString value;
-    switch (current)
-    {
-        case GeneralStateEnum::Middle:
-            value = RusGeneralStateType::rus_general_state_middle;
-            break;
-        case GeneralStateEnum::Good:
-            value = RusGeneralStateType::rus_general_state_good;
-            break;
-        case GeneralStateEnum::Bad:
-            value = RusGeneralStateType::rus_general_state_bad;
-            break;
-    }
-    return value;
+	QString value;
+	switch (current)
+	{
+		case GeneralStateEnum::Middle:
+			value = RusGeneralStateType::rus_general_state_middle;
+			break;
+		case GeneralStateEnum::Good:
+			value = RusGeneralStateType::rus_general_state_good;
+			break;
+		case GeneralStateEnum::Bad:
+			value = RusGeneralStateType::rus_general_state_bad;
+			break;
+	}
+	return value;
 }
 
 bool GeneralState::fromString(QString state)
 {
-    bool is_ok = false;
-    GeneralStateEnum value;
-    if (state == RusGeneralStateType::rus_general_state_middle)
-    {
-        value = GeneralStateEnum::Middle;
-        is_ok = true;
-    }
-    else if (state == RusGeneralStateType::rus_general_state_good)
-    {
-        value = GeneralStateEnum::Good;
-        is_ok = true;
-    }
-    else if (state == RusGeneralStateType::rus_general_state_bad)
-    {
-        value = GeneralStateEnum::Bad;
-        is_ok = true;
-    }
-    if (is_ok == true)
-    {
-        current = value;
-    }
-    return is_ok;
+	bool is_ok = false;
+	GeneralStateEnum value;
+	if (state == RusGeneralStateType::rus_general_state_middle)
+	{
+		value = GeneralStateEnum::Middle;
+		is_ok = true;
+	}
+	else if (state == RusGeneralStateType::rus_general_state_good)
+	{
+		value = GeneralStateEnum::Good;
+		is_ok = true;
+	}
+	else if (state == RusGeneralStateType::rus_general_state_bad)
+	{
+		value = GeneralStateEnum::Bad;
+		is_ok = true;
+	}
+	if (is_ok == true)
+	{
+		current = value;
+	}
+	return is_ok;
 }

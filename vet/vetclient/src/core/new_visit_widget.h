@@ -9,26 +9,26 @@
 
 namespace Ui
 {
-    class visit_widget;
+	class visit_widget;
 }
 
 class NewVisitWidget : public QWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    explicit NewVisitWidget(QWidget *parent = nullptr);
-    void update();
-    void setAccessData(const AccessData &value);
+	explicit NewVisitWidget(QWidget *parent = nullptr);
+	void update();
+	void setAccessData(const AccessData &value);
 private:
-    void handle_save_button();
-    void choseAnimal();
-    void add_prescr_btn();
-    void delete_prescr_btn();
+	void handle_save_button();
+	void choseAnimal();
+	void add_prescr_btn();
+	void delete_prescr_btn();
 private:
-    Ui::visit_widget* ui;
-    AccessData access_data;
-//    Prescribings pres;
-    AnimalMedicalRecord chosed_animal;
-    PrescribingsTableModel* model;
+	Ui::visit_widget* ui;
+	AccessData access_data;
+//	Prescribings pres;
+	AnimalMedicalRecord chosed_animal;
+	PrescribingsTableModel* model;
 };
 
