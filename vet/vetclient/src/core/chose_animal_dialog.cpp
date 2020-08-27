@@ -4,6 +4,8 @@
 #include "animal_edit_widget.h"
 #include "mainwindow.h"
 #include "chose_animal_full_dialog.h"
+#include "utils/singlenton.h"
+#include "config/config.h"
 #include <QBoxLayout>
 #include <QPushButton>
 
@@ -47,5 +49,6 @@ void ChoseAnimalDialog::setAccessData(const AccessData &value)
 
 void ChoseAnimalDialog::show()
 {
-    aiw->show(QUrl("http://127.0.0.1:4446/animals/all/short"), access_data.getPassword());
+	auto& cfg = Singlenton<Config>::getInstance();
+	aiw->show(QUrl("http://127.0.0.1:4446/animals/all/short"), cfg.getTimeout(), access_data.getPassword());
 }

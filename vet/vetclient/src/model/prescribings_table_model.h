@@ -8,27 +8,27 @@
 class PrescribingsTableModel : public QAbstractTableModel
 {
 public:
-    void setTableData(const Prescribings& p);
+	void setTableData(const Prescribings& p);
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-    void addMed(const Medicine& med);
-    void removeMed(const QString &med, int index);
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
-    Prescribings& getPresctibings();
+	int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+	int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+	void addMed(const Medicine& med);
+	void removeMed(const QString &med, int index);
+	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+	Prescribings& getPresctibings();
 private:
-    enum Column
-    {
-        NAME = 0,
-        DOSAGE,
-        TYPE,
-        FREQUENCY,
-        TERM,
-        NOTE
-    };
+	enum Column
+	{
+		NAME = 0,
+		DOSAGE,
+		TYPE,
+		FREQUENCY,
+		TERM,
+		NOTE
+	};
 
-    Prescribings m_data;
-    QStringList keys;
+	Prescribings m_data;
+	QStringList keys;
 };
 

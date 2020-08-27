@@ -16,14 +16,15 @@ AnimalListWidget::AnimalListWidget(QWidget * parent)
 	connect(view, &QListWidget::itemDoubleClicked, this, &AnimalListWidget::selectItemWidget);
 }
 
-bool AnimalListWidget::show(const QUrl& url, const QByteArray &data)
+bool AnimalListWidget::show(const QUrl& url,
+							std::chrono::milliseconds tout, const QByteArray &data)
 {
 	QNetworkRequest req;
 	req.setRawHeader("Authorization", QByteArray("Explicit: ").append(data));
 	req.setUrl(url);
 
 	NetworkFetcher fetcher;
-	auto reply = fetcher.httpGet(req, std::chrono::milliseconds(10000));
+	auto reply = fetcher.httpGet(req, tout);
 	if (std::get<0>(reply) != 200)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid data" << std::get<2>(reply);

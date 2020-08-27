@@ -16,20 +16,21 @@
 #include "animal_edit_widget.h"
 #include "new_visit_widget.h"
 #include "animal_list_item_widget.h"
+#include "config/config.h"
 
 enum TabType
 {
-	AccountWidget      = 1,
-	AnimalWidget        = 2,
+	AccountWidget	  = 1,
+	AnimalWidget		= 2,
 	EditAnimalWidget = 3,
-	VisitWidget            = 4
+	VisitWidget			= 4
 };
 
 enum TabFlags
 {
-	None           = 0b00,
+	None		   = 0b00,
 	Unclosable = 0b01,
-	Single          = 0b10
+	Single		  = 0b10
 };
 
 MainWindow::MainWindow(QWidget *parent)
@@ -40,9 +41,9 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui->exit_action, &QAction::triggered, this, &MainWindow::exit);
 	connect(ui->pet_reg, &QAction::triggered, this, &MainWindow::createWidgetNewAnimal);
 	connect(ui->pet_find, &QAction::triggered, this, &MainWindow::runAnimalEditor);
-	connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
-    addToolBarAction(QIcon(":/ui/icons/icons8-group-of-animals-48.png"), "Животные", &MainWindow::runAnimalEditor);
+	connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);    addToolBarAction(QIcon(":/ui/icons/icons8-group-of-animals-48.png"), "Животные", &MainWindow::runAnimalEditor);
     addToolBarAction(QIcon(":/ui/icons/treatment-80.png"), "Ветеринарный осмотр", &MainWindow::newVisit);
+
 }
 
 void MainWindow::runAnimalEditor()
@@ -99,6 +100,8 @@ std::tuple<bool, QWidget *> MainWindow::findTag(uint64_t searched) const
 
 void MainWindow::createWidgetAnimals(QWidget * w)
 {
+	auto& cfg = Singlenton<Config>::getInstance();
+
 	QBoxLayout* layout = new QVBoxLayout();
 	AnimalListWidget* aiw = new AnimalListWidget(w);
 	QPushButton* add_btn = new QPushButton(w);
@@ -107,7 +110,7 @@ void MainWindow::createWidgetAnimals(QWidget * w)
 	connect(add_btn, &QPushButton::released, this, &MainWindow::createWidgetNewAnimal);
 	connect(aiw, &AnimalListWidget::selectItem, this, &MainWindow::createWidgetAnimalInfo);
 
-	aiw->show(QUrl("http://127.0.0.1:4446/animals/all/short"), access_data.getPassword());
+	aiw->show(cfg.getUrlAnimalsShortInfo(), cfg.getTimeout(), access_data.getPassword());
 	layout->addWidget(aiw);
 	layout->addWidget(add_btn);
 	w->setLayout(layout);
@@ -115,16 +118,19 @@ void MainWindow::createWidgetAnimals(QWidget * w)
 
 void MainWindow::createWidgetAnimalInfo(uint64_t id)
 {
+	auto& cfg = Singlenton<Config>::getInstance();
+	QUrl url = cfg.getUrlAnimal();
+	url.setQuery(QString("id=%1").arg(static_cast<qulonglong>(id)));
+
 	QTabBar* bar = ui->tabWidget->tabBar();
 	QWidget* w = new QWidget(ui->tabWidget);
 	QVBoxLayout* layout = new QVBoxLayout();
 	AnimalEditWidget* aiw = new AnimalEditWidget(w);
-	QUrl url(QString("http://127.0.0.1:4446/animals?id=%1").arg(static_cast<qulonglong>(id)));
 	QPushButton* add_btn = new QPushButton(w);
 	add_btn->setText("Добавить запись");
 	connect(add_btn, &QPushButton::released, this, &MainWindow::addNewAnimal);
 
-	aiw->show(url, access_data.getPassword());
+	aiw->show(url, cfg.getTimeout(), access_data.getPassword());
 	layout->addWidget(aiw);
 	layout->addWidget(add_btn);
 	w->setLayout(layout);
@@ -142,7 +148,7 @@ void MainWindow::createWidgetAccountInfo(QWidget * w)
 	aiw->setAccessData(access_data);
 	aiw->show();
 	layout->addWidget(aiw);
-    w->setLayout(layout);
+	w->setLayout(layout);
 }
 
 void MainWindow::createWidgetNewVisit(QWidget *w)
@@ -158,12 +164,12 @@ void MainWindow::createWidgetNewVisit(QWidget *w)
 
 void MainWindow::newVisit()
 {
-    qDebug() << Q_FUNC_INFO << "New visit";
-    QWidget* w = addTab(QIcon(":/ui/icons/treatment-80.png"), "Ветеринарный осмотр",
-                {VisitWidget, Single}, &MainWindow::createWidgetNewVisit);
+	qDebug() << Q_FUNC_INFO << "New visit";
+	QWidget* w = addTab(QIcon(":/ui/icons/treatment-80.png"), "Ветеринарный осмотр",
+				{VisitWidget, Single}, &MainWindow::createWidgetNewVisit);
 
-    NewVisitWidget* nvw = w->findChild<NewVisitWidget*>("NewVisitWidget");
-    nvw->update();
+	NewVisitWidget* nvw = w->findChild<NewVisitWidget*>("NewVisitWidget");
+	nvw->update();
 }
 
 void MainWindow::createWidgetNewAnimal()

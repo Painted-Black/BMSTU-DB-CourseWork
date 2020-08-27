@@ -22,7 +22,7 @@ void AccountInfoWidget::update()
 	ui->input_access_label->setText(access_data.getLevel().toString());
 	const Staff& staff = access_data.getOwner();
 	const Passport& passport = staff.getPassport();
-    const Position& pos = staff.getPosition();
+	const Position& pos = staff.getPosition();
 	ui->input_surname_label->setText(passport.getName());
 	ui->input_name_label->setText(passport.getName());
 	ui->input_part_label->setText(passport.getPatronymic());

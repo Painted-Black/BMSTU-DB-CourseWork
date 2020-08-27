@@ -11,15 +11,15 @@ class AddMedDialog;
 
 class AddMedDialog : public QDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit AddMedDialog(QWidget *parent = nullptr);
-    void accept() override;
-    ~AddMedDialog();
-    Medicine getMed();
+	explicit AddMedDialog(QWidget *parent = nullptr);
+	void accept() override;
+	~AddMedDialog();
+	Medicine getMed();
 private:
-    Ui::AddMedDialog *ui;
-    Medicine med;
+	Ui::AddMedDialog *ui;
+	Medicine med;
 };
 

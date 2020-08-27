@@ -9,5 +9,6 @@
         <file>ui/icons/add_40.png</file>
         <file>ui/icons/icons8-group-of-animals-48.png</file>
         <file>ui/icons/treatment-80.png</file>
+        <file>config/config.ini</file>
     </qresource>
 </RCC>

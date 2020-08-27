@@ -20,8 +20,8 @@ public:
 
 	GeneralStateEnum getAnimalState() const;
 	void setAnimalState(GeneralStateEnum value);
-    QString toString();
-    bool fromString(QString state);
+	QString toString();
+	bool fromString(QString state);
 
 private:
 	GeneralStateEnum current;

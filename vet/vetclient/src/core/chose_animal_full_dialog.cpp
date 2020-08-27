@@ -1,6 +1,8 @@
 #include "chose_animal_full_dialog.h"
 #include "ui_chose_animal_full_dialog.h"
 #include "animal_edit_widget.h"
+#include "config/config.h"
+#include "utils/singlenton.h"
 
 ChoseAnimalFullDialog::ChoseAnimalFullDialog(QWidget *parent) :
     QDialog(parent),
@@ -20,8 +22,9 @@ ChoseAnimalFullDialog::~ChoseAnimalFullDialog()
 
 void ChoseAnimalFullDialog::show(uint64_t id)
 {
+	auto& cfg = Singlenton<Config>::getInstance();
     QUrl url(QString("http://127.0.0.1:4446/animals?id=%1").arg(static_cast<qulonglong>(id)));
-    aiw->show(url, access_data.getPassword());
+	aiw->show(url, cfg.getTimeout(), access_data.getPassword());
     ui->main_widget->show();
 }
 

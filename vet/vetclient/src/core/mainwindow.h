@@ -34,8 +34,8 @@ private:
 	void createWidgetNewAnimal();
 	void addNewAnimal();
 	void createWidgetAccountInfo(QWidget*);
-    void createWidgetNewVisit(QWidget*);
-    void newVisit();
+	void createWidgetNewVisit(QWidget*);
+	void newVisit();
 
 
 	void accInfo();

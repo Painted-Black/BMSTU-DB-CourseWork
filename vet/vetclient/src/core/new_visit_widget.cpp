@@ -14,39 +14,39 @@
 #include "core/network/network_fetcher.h"
 
 NewVisitWidget::NewVisitWidget(QWidget *parent)
-    : QWidget(parent), ui(new Ui::visit_widget()), model(new PrescribingsTableModel())
+	: QWidget(parent), ui(new Ui::visit_widget()), model(new PrescribingsTableModel())
 {
-    ui->setupUi(this);
-    connect(ui->save_pushButton, &QPushButton::released, this, &NewVisitWidget::handle_save_button);
-    connect(ui->chose_animal_pushButton, &QPushButton::released, this, &NewVisitWidget::choseAnimal);
-    connect(ui->save_pushButton, &QPushButton::released, this, &NewVisitWidget::handle_save_button);
-    connect(ui->add_prescr_toolButton, &QPushButton::released, this, &NewVisitWidget::add_prescr_btn);
-    connect(ui->delete_prescr_toolButton, &QPushButton::released, this, &NewVisitWidget::delete_prescr_btn);
+	ui->setupUi(this);
+	connect(ui->save_pushButton, &QPushButton::released, this, &NewVisitWidget::handle_save_button);
+	connect(ui->chose_animal_pushButton, &QPushButton::released, this, &NewVisitWidget::choseAnimal);
+	connect(ui->save_pushButton, &QPushButton::released, this, &NewVisitWidget::handle_save_button);
+	connect(ui->add_prescr_toolButton, &QPushButton::released, this, &NewVisitWidget::add_prescr_btn);
+	connect(ui->delete_prescr_toolButton, &QPushButton::released, this, &NewVisitWidget::delete_prescr_btn);
 
-    ui->owner_dynamics_comboBox->addItem(RusOwnerDynamicsType::rus_owner_dynamics_stably);
-    ui->owner_dynamics_comboBox->addItem(RusOwnerDynamicsType::rus_owner_dynamics_better);
-    ui->owner_dynamics_comboBox->addItem(RusOwnerDynamicsType::rus_owner_dynamics_worse);
+	ui->owner_dynamics_comboBox->addItem(RusOwnerDynamicsType::rus_owner_dynamics_stably);
+	ui->owner_dynamics_comboBox->addItem(RusOwnerDynamicsType::rus_owner_dynamics_better);
+	ui->owner_dynamics_comboBox->addItem(RusOwnerDynamicsType::rus_owner_dynamics_worse);
 
-    ui->general_state_comboBox->addItem(RusGeneralStateType::rus_general_state_good);
-    ui->general_state_comboBox->addItem(RusGeneralStateType::rus_general_state_middle);
-    ui->general_state_comboBox->addItem(RusGeneralStateType::rus_general_state_bad);
+	ui->general_state_comboBox->addItem(RusGeneralStateType::rus_general_state_good);
+	ui->general_state_comboBox->addItem(RusGeneralStateType::rus_general_state_middle);
+	ui->general_state_comboBox->addItem(RusGeneralStateType::rus_general_state_bad);
 }
 
 void NewVisitWidget::update()
 {
-    const Staff& staff = access_data.getOwner();
-    const Passport& pass = staff.getPassport();
-    const Position& staff_pos = staff.getPosition();
-    QString staff_snp = pass.getSurname() + " " + pass.getName() + " " + pass.getPatronymic();
-    ui->input_specialist_label->setText(staff_pos.getTitle());
-    ui->input_visit_by_label->setText(staff_snp);
-    ui->prescr_tableView->setModel(model);
+	const Staff& staff = access_data.getOwner();
+	const Passport& pass = staff.getPassport();
+	const Position& staff_pos = staff.getPosition();
+	QString staff_snp = pass.getSurname() + " " + pass.getName() + " " + pass.getPatronymic();
+	ui->input_specialist_label->setText(staff_pos.getTitle());
+	ui->input_visit_by_label->setText(staff_snp);
+	ui->prescr_tableView->setModel(model);
 
-    int model_col_count = model->columnCount();
-    for (int i = 0; i < model_col_count; ++i)
-    {
-        ui->prescr_tableView->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
-    }
+	int model_col_count = model->columnCount();
+	for (int i = 0; i < model_col_count; ++i)
+	{
+		ui->prescr_tableView->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
+	}
 }
 
 void NewVisitWidget::handle_save_button()
@@ -129,7 +129,7 @@ void NewVisitWidget::handle_save_button()
 
 void NewVisitWidget::setAccessData(const AccessData &value)
 {
-    access_data = value;
+	access_data = value;
 }
 
 void NewVisitWidget::choseAnimal()
@@ -148,30 +148,30 @@ void NewVisitWidget::choseAnimal()
     QString animal_species = chose_dialog.property("animal_species").toString();
 
     ui->name_lineEdit->setText(animal_name);
-    ui->species_lineEdit->setText(animal_species);
+	ui->species_lineEdit->setText(animal_species);
 }
 
 void NewVisitWidget::add_prescr_btn()
 {
-    qDebug() << Q_FUNC_INFO << "Add prescr...";
-    AddMedDialog add_med_dialog;
-    if (add_med_dialog.exec() == QDialog::Accepted)
-    {
-        Medicine med = add_med_dialog.getMed();
-        model->addMed(med);
-//        pres.append(med);
-    }
+	qDebug() << Q_FUNC_INFO << "Add prescr...";
+	AddMedDialog add_med_dialog;
+	if (add_med_dialog.exec() == QDialog::Accepted)
+	{
+		Medicine med = add_med_dialog.getMed();
+		model->addMed(med);
+//		pres.append(med);
+	}
 }
 
 void NewVisitWidget::delete_prescr_btn()
 {
-    qDebug() << Q_FUNC_INFO << "Delete prescr...";
-    QItemSelectionModel *select = ui->prescr_tableView->selectionModel();
-    QModelIndexList selected_rows = select->selectedRows();
-    int rows_selected = selected_rows.size();
-    for (int i = 0; i < rows_selected; ++i)
-    {
-        model->removeMed(selected_rows.at(i).data().toString(), i);
-    }
-//    Prescribings pr = model->getPresctibings();
+	qDebug() << Q_FUNC_INFO << "Delete prescr...";
+	QItemSelectionModel *select = ui->prescr_tableView->selectionModel();
+	QModelIndexList selected_rows = select->selectedRows();
+	int rows_selected = selected_rows.size();
+	for (int i = 0; i < rows_selected; ++i)
+	{
+		model->removeMed(selected_rows.at(i).data().toString(), i);
+	}
+//	Prescribings pr = model->getPresctibings();
 }

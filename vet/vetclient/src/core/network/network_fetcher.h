@@ -6,7 +6,17 @@
 #include <QVector>
 #include <QNetworkRequest>
 
-class NetworkFetcher
+class Multipart final
+{
+	void addPart(const QString&, const QByteArray&);
+	void addFilePart(const QString&, const QString&);
+
+private:
+	using Part = std::tuple<QByteArray, bool, QString>;
+	QMap<QString, Part> parts;
+};
+
+class NetworkFetcher final
 {
 	struct RequestInfo;
 	struct Info;
@@ -21,6 +31,7 @@ public:
 
 	Response httpGet(const QNetworkRequest&, std::chrono::milliseconds);
 	Response httpPost(const QNetworkRequest&, const QByteArray&, std::chrono::milliseconds);
+	Response httpPost(const QNetworkRequest&, Multipart&&, std::chrono::milliseconds);
 
 private:
 	Response performRequest(const QUrl&);

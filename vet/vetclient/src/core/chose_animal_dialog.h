@@ -26,6 +26,6 @@ private:
     QString animal_name;
     QString animal_species;
     AccessData access_data;
-    AnimalListWidget* aiw;
+	AnimalListWidget* aiw;
 };
 
