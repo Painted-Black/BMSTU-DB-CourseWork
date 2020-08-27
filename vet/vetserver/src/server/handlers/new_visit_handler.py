@@ -30,7 +30,7 @@ class NewVisitHandler(AbstractHandler):
         anim_state.deserialize(json_data)
         state, state_id = self.__insert_state_to_db(anim_state))
         if (not state):
-			res.status_code=500 #TODO
+			res.status_code=500
 			res.data = json.dumps({"error" : "insertion (animal_state) failed"})
 			return
         vis.set_cur_state(state_id)
