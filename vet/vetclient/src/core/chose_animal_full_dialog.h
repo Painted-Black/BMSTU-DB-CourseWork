@@ -2,6 +2,8 @@
 
 #include <QDialog>
 #include "types/user_data.h"
+#include "types/animal_medical_record.h"
+#include "animal_edit_widget.h"
 
 namespace Ui {
 class ChoseAnimalFullDialog;
@@ -16,9 +18,11 @@ public:
     ~ChoseAnimalFullDialog();
     void show(uint64_t id);
     void setAccess_data(const AccessData &value);
+    const AnimalMedicalRecord& getAnimalRecord() const;
 
 private:
     Ui::ChoseAnimalFullDialog *ui;
     AccessData access_data;
+    AnimalEditWidget* aiw;
 };
 

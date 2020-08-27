@@ -3,6 +3,7 @@
 #include <QDialog>
 #include "types/animal_medical_record.h"
 #include "types/user_data.h"
+#include "animal_list_item_widget.h"
 
 namespace Ui {
 class ChoseAnimalDialog;
@@ -16,9 +17,8 @@ public:
     explicit ChoseAnimalDialog(QWidget *parent = nullptr);
     ~ChoseAnimalDialog();
     void animalInfoWidget(uint64_t id);
-    void setAccess_data(const AccessData &value);
+    void setAccessData(const AccessData &value);
     void show();
-    uint64_t getAnimal_id() const;
 
 private:
     Ui::ChoseAnimalDialog *ui;
@@ -26,5 +26,6 @@ private:
     QString animal_name;
     QString animal_species;
     AccessData access_data;
+    AnimalListWidget* aiw;
 };
 

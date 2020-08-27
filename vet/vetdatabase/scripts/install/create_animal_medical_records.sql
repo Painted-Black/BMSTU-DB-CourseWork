@@ -8,9 +8,8 @@ CREATE TABLE animals_medical_records(
     birth DATE NOT NULL,
     other_data TEXT NOT NULL,
     color TEXT NOT NULL,
-    specil_signs TEXT NOT NULL,
+    special_signs TEXT NOT NULL,
     registr_date DATE NOT NULL,
-    last_visit DATE NOT NULL,
     chip_id INT NOT NULL,
     contract INT NOT NULL,
     rel_path_to_photo VARCHAR(255) NOT NULL

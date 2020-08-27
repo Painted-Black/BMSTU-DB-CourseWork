@@ -198,7 +198,7 @@ void MainWindow::addNewAnimal()
 		return;
 	}
 
-	auto record = widget->getAnimalMedicalRecort();
+	auto record = widget->getEditedAnimalRecord();
 	auto animal_widget = findTag(AnimalWidget);
 	if (std::get<0>(animal_widget) == true)
 	{

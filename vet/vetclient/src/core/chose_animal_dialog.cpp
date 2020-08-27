@@ -9,9 +9,14 @@
 
 ChoseAnimalDialog::ChoseAnimalDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ChoseAnimalDialog)
+    ui(new Ui::ChoseAnimalDialog),
+    aiw(new AnimalListWidget(this))
 {
-    ui->setupUi(this);
+    ui->setupUi(this);    
+    connect(aiw, &AnimalListWidget::selectItem, this, &ChoseAnimalDialog::animalInfoWidget);
+    QBoxLayout* layout = new QVBoxLayout();
+    layout->addWidget(aiw);
+    ui->main_widget->setLayout(layout);
 }
 
 ChoseAnimalDialog::~ChoseAnimalDialog()
@@ -28,28 +33,19 @@ void ChoseAnimalDialog::animalInfoWidget(uint64_t id)
     {
         return;
     }
-    animal_id = id;
+    const auto& anim_rec = full_dial.getAnimalRecord();
+    setProperty("animal_id", QVariant::fromValue(id));
+    setProperty("animal_name", anim_rec.getName());
+    setProperty("animal_species", anim_rec.getSpecies());
     accept();
 }
 
-void ChoseAnimalDialog::setAccess_data(const AccessData &value)
+void ChoseAnimalDialog::setAccessData(const AccessData &value)
 {
     access_data = value;
 }
 
 void ChoseAnimalDialog::show()
 {
-    QBoxLayout* layout = new QVBoxLayout();
-    AnimalListWidget* aiw = new AnimalListWidget(ui->main_widget);
-
-    connect(aiw, &AnimalListWidget::selectItem, this, &ChoseAnimalDialog::animalInfoWidget);
-
     aiw->show(QUrl("http://127.0.0.1:4446/animals/all/short"), access_data.getPassword());
-    layout->addWidget(aiw);
-    ui->main_widget->setLayout(layout);
-}
-
-uint64_t ChoseAnimalDialog::getAnimal_id() const
-{
-    return animal_id;
 }

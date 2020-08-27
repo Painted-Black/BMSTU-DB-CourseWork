@@ -1,8 +1,5 @@
-DROP TABLE vaccinations;
-ALTER TABLE public.schedule DROP COLUMN "type";
-
-ALTER TABLE public.schedule ALTER COLUMN "start" TYPE time USING "start"::time;
-ALTER TABLE public.schedule ALTER COLUMN "end" TYPE time USING "end"::time;
+--ALTER TABLE public.schedule ALTER COLUMN "start" TYPE time USING "start"::time;
+--ALTER TABLE public.schedule ALTER COLUMN "end" TYPE time USING "end"::time;
 
 INSERT INTO passports (surname, name, patronymic, sex, birth, num, issue_date, nationality) VALUES ('Администраторов', 'Администратор', 'Администратович', 'm', '1994-04-06', '4516943943', '2014-04-09', 'Русский');
 

@@ -129,7 +129,7 @@ bool AnimalEditWidget::isEdit() const
 	return false;
 }
 
-AnimalMedicalRecord AnimalEditWidget::getAnimalMedicalRecort()
+AnimalMedicalRecord AnimalEditWidget::getEditedAnimalRecord()
 {
 	AnimalMedicalRecord record;
 	record.setName(ui->name_le->text());
@@ -159,7 +159,12 @@ AnimalMedicalRecord AnimalEditWidget::getAnimalMedicalRecort()
 	chip_object.setImplDate(chip_ui->impl_de->date());
 	chip_object.setLocation(chip_ui->location_le->text());
 	record.setChip(chip_object);
-	return record;
+    return record;
+}
+
+const AnimalMedicalRecord &AnimalEditWidget::getAnimalRecord() const
+{
+    return animal_record;
 }
 
 void AnimalEditWidget::activeInfoDialog()

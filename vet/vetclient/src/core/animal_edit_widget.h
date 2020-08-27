@@ -25,7 +25,8 @@ public:
 	void show(const QUrl &, const QByteArray&);
 	bool isFills() const;
 	bool isEdit() const;
-	AnimalMedicalRecord getAnimalMedicalRecort();
+    AnimalMedicalRecord getEditedAnimalRecord();
+    const AnimalMedicalRecord& getAnimalRecord() const;
 private:
 	void activeInfoDialog();
 	void activeSignDialog();

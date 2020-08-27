@@ -11,6 +11,7 @@
 #include "types/prescribings.h"
 #include "add_med_dialog.h"
 #include "chose_animal_dialog.h"
+#include "core/network/network_fetcher.h"
 
 NewVisitWidget::NewVisitWidget(QWidget *parent)
     : QWidget(parent), ui(new Ui::visit_widget()), model(new PrescribingsTableModel())
@@ -102,6 +103,27 @@ void NewVisitWidget::handle_save_button()
         qDebug() << "Animal id is empty!";
     }
 
+    // метод с объектом
+
+    QNetworkRequest request(QUrl("http://127.0.0.1:4446/visits/new"));
+    request.setRawHeader("Authorization", QByteArray("Explicit: ").append(access_data.getPassword()));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    NetworkFetcher fetcher;
+    auto reply = fetcher.httpPost(request, NULL, std::chrono::milliseconds(20000));
+    int32_t code = std::get<0>(reply);
+    if (code == -1)
+    {
+        // нет соединения с интернетом или доступа к серверу
+    }
+    if (code != 201)
+    {
+        // какая-то ошибка
+    }
+    // все ок
+
+    #pragma message "TODO"
+
+
     qDebug() << Q_FUNC_INFO << "Saved";
 }
 
@@ -114,14 +136,19 @@ void NewVisitWidget::choseAnimal()
 {
     qDebug() << Q_FUNC_INFO << "Chose animal...";
     ChoseAnimalDialog chose_dialog(this);
-    chose_dialog.setAccess_data(access_data);
+    chose_dialog.setAccessData(access_data);
     chose_dialog.show();
     if (chose_dialog.exec() == QDialog::Rejected)
     {
         return;
     }
 
-    animal_id = chose_dialog.getAnimal_id();
+    animal_id = chose_dialog.property("animal_id").value<uint64_t>();
+    QString animal_name = chose_dialog.property("animal_name").toString();
+    QString animal_species = chose_dialog.property("animal_species").toString();
+
+    ui->name_lineEdit->setText(animal_name);
+    ui->species_lineEdit->setText(animal_species);
 }
 
 void NewVisitWidget::add_prescr_btn()
