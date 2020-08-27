@@ -61,7 +61,7 @@ uint64_t Client::getId() const
 	return id;
 }
 
-Passport Client::getPassport() const
+const Passport &Client::getPassport() const
 {
 	return passport;
 }
@@ -71,7 +71,7 @@ void Client::setPassport(const Passport &value)
 	passport = value;
 }
 
-Address Client::getAddress() const
+const Address &Client::getAddress() const
 {
 	return address;
 }
@@ -81,7 +81,7 @@ void Client::setAddress(const Address &value)
 	address = value;
 }
 
-QStringList Client::getPhones() const
+const QStringList &Client::getPhones() const
 {
 	return phones;
 }
@@ -91,7 +91,7 @@ void Client::setPhones(const QStringList &value)
 	phones = value;
 }
 
-QStringList Client::getEmails() const
+const QStringList &Client::getEmails() const
 {
 	return emails;
 }
@@ -101,7 +101,7 @@ void Client::setEmails(const QStringList &value)
 	emails = value;
 }
 
-QList<QUrl> Client::getSocial() const
+const QList<QUrl> &Client::getSocial() const
 {
 	return social;
 }

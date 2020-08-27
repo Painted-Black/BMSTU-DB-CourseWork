@@ -18,6 +18,7 @@ SOURCES += \
 	core/animal_info_widget.cpp \
 	core/animal_list_item_widget.cpp \
 	core/auth.cpp \
+	core/contacts.cpp \
 	core/mainwindow.cpp \
 	core/new_visit_widget.cpp \
 	core/network/network_fetcher.cpp \
@@ -52,6 +53,7 @@ HEADERS += \
 	core/animal_info_widget.h \
 	core/animal_list_item_widget.h \
 	core/auth.h \
+	core/contacts.h \
 	core/new_visit_widget.h \
 	core/iserializable.h \
 	core/mainwindow.h \

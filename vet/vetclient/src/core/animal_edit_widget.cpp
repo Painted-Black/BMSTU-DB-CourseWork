@@ -23,15 +23,21 @@ AnimalEditWidget::AnimalEditWidget(QWidget *parent)
 	  client_dlg_ui(new Ui::client()),
 	  address_dlg_ui(new Ui::address_widget()),
 	  passport_dlg_ui(new Ui::passport_widget()),
-	  contact_dlg_ui(new Ui::contacts_widget()),
 	  info_dlg(new QDialog(this)),
-	  client_dlg(new QDialog(this))
+	  client_dlg(new QDialog(this)),
+	  contract(new QWidget(this)),
+	  contact(new Contacts(this))
 {
 	ui->setupUi(this);
 	client_dlg_ui->setupUi(client_dlg);
+
+	QLayout* lay = new QHBoxLayout(client_dlg_ui->contact);
+	lay->setMargin(0);
+	lay->addWidget(contact);
+	client_dlg_ui->contact->setLayout(lay);
+
 	address_dlg_ui->setupUi(client_dlg_ui->address);
 	passport_dlg_ui->setupUi(client_dlg_ui->passport);
-	contact_dlg_ui->setupUi(client_dlg_ui->contact);
 
 	ui->sex_cb->addItem(GenderRussianType::gender_female, static_cast<uint32_t>(Gender::GenderEnum::Female));
 	ui->sex_cb->addItem(GenderRussianType::gender_male, static_cast<uint32_t>(Gender::GenderEnum::Male));
@@ -40,7 +46,7 @@ AnimalEditWidget::AnimalEditWidget(QWidget *parent)
 	contract = new QWidget(ui->contract);
 	contract_ui->setupUi(contract);
 
-	QLayout* lay = ui->contract->layout();
+	lay = ui->contract->layout();
 	contract->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	lay->addWidget(contract);
 
@@ -54,7 +60,7 @@ AnimalEditWidget::AnimalEditWidget(QWidget *parent)
 	info_dlg_ui->setupUi(info_dlg);
 	info_dlg->setModal(true);
 
-	connect(ui->Info_client, &QPushButton::released, this, &AnimalEditWidget::active);
+	connect(ui->Info_client, &QPushButton::released, this, &AnimalEditWidget::activeClientDialog);
 	connect(ui->sign_tb, &QToolButton::released, this, &AnimalEditWidget::activeSignDialog);
 	connect(ui->info_tb, &QToolButton::released, this, &AnimalEditWidget::activeInfoDialog);
 }
@@ -98,6 +104,28 @@ void AnimalEditWidget::show(const QUrl& url, std::chrono::milliseconds tout, con
 	chip_ui->country_le->setText(chip_object.getCountry());
 	chip_ui->impl_de->setDate(chip_object.getImplDate());
 	chip_ui->location_le->setText(chip_object.getLocation());
+
+	const Client& client_object = contract_object.getClient();
+	const Address& address_object = client_object.getAddress();
+	address_dlg_ui->city_lineEdit->setText(address_object.getCity());
+	address_dlg_ui->flat_lineEdit->setText(address_object.getFlat());
+	address_dlg_ui->house_lineEdit->setText(address_object.getHouse());
+	address_dlg_ui->street_lineEdit->setText(address_object.getStreet());
+	address_dlg_ui->country_lineEdit->setText(address_object.getCountry());
+
+	const Passport& passport_object = client_object.getPassport();
+	passport_dlg_ui->num_lineEdit->setText(passport_object.getPassportNum());
+	passport_dlg_ui->name_lineEdit->setText(passport_object.getName());
+	passport_dlg_ui->patr_lineEdit->setText(passport_object.getPatronymic());
+	passport_dlg_ui->issue_date->setDate(passport_object.getIssueDate());
+	passport_dlg_ui->surname_lineEdit->setText(passport_object.getSurname());
+	passport_dlg_ui->nationality_lineEdit->setText(passport_object.getNationality());
+	passport_dlg_ui->birth_dateEdit->setDate(passport_object.getBirthday());
+	QRadioButton* btn =
+			(passport_object.getGender().getGenderType() == Gender::GenderEnum::Male)
+			? passport_dlg_ui->male_radioButton
+			: passport_dlg_ui->female_radioButton;
+	btn->setDown(true);
 }
 
 bool AnimalEditWidget::isFills() const
@@ -174,9 +202,9 @@ void AnimalEditWidget::activeSignDialog()
 	ui->sign_le->setText(showInfoDialog(ui->sign_le->text()));
 }
 
-void AnimalEditWidget::active()
+void AnimalEditWidget::activeClientDialog()
 {
-
+	client_dlg->exec();
 }
 
 QString AnimalEditWidget::showInfoDialog(const QString & txt)

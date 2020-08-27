@@ -17,7 +17,7 @@ public:
 	QDate getConclusionDate() const;
 	QDate getLastUpdateDate() const;
 	QDate getValidUntil() const;
-	Client getClient() const;
+	const Client &getClient() const;
 	QString getCode() const;
 
 	void setConclusionDate(const QDate &value);

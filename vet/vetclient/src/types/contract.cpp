@@ -90,7 +90,7 @@ void Contract::setValidUntil(const QDate &value)
 	valid_until = value;
 }
 
-Client Contract::getClient() const
+const Client& Contract::getClient() const
 {
 	return client;
 }

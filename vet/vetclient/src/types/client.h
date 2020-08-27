@@ -15,11 +15,11 @@ public:
 	QJsonObject serialize() const override;
 
 	uint64_t getId() const;
-	Passport getPassport() const;
-	Address getAddress() const;
-	QStringList getPhones() const;
-	QStringList getEmails() const;
-	QList<QUrl> getSocial() const;
+	const Passport& getPassport() const;
+	const Address& getAddress() const;
+	const QStringList& getPhones() const;
+	const QStringList& getEmails() const;
+	const QList<QUrl>& getSocial() const;
 
 	void setPassport(const Passport &value);
 	void setAddress(const Address &value);

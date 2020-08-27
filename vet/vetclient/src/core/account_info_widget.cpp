@@ -28,8 +28,8 @@ void AccountInfoWidget::update()
 	ui->input_part_label->setText(passport.getPatronymic());
 	ui->input_sex_label->setText(passport.getGender().toString());
 	ui->input_num_label->setText(passport.getPassportNum());
-	ui->input_birth_label->setText(passport.getBirthday().toString(Qt::RFC2822Date));
-	ui->input_issue_date_label->setText(passport.getIssueDate().toString(Qt::RFC2822Date));
+	ui->input_birth_label->setText(passport.getBirthday().toString(Qt::LocalDate));
+	ui->input_issue_date_label->setText(passport.getIssueDate().toString(Qt::LocalDate));
 	ui->input_nation_label->setText(passport.getNationality());
 	ui->input_edu_level_label->setText(staff.getEdu_level().toString());
 	ui->input_emloy_date_label->setText(staff.getEmploy_date().toString());
@@ -38,7 +38,7 @@ void AccountInfoWidget::update()
 	const ScheduleList shed = staff.getShed_list();
 	int shed_size = shed.size();
 	QFormLayout* lay = new QFormLayout(ui->sched_groupBox);
-	for (int i = 0; i < shed_size; ++i)
+	for (decltype (shed_size) i = 0; i < shed_size; ++i)
 	{
 		const Schedule& cur = shed.at(i);
 		QLabel* day_label = new QLabel(ui->sched_groupBox);
