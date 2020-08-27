@@ -42,6 +42,7 @@ SOURCES += \
 	types/vaccination.cpp \
 	types/visit.cpp \
 	core/add_med_dialog.cpp \
+	ui/main_tab_widget.cpp \
 	utils/utils.cpp \
 	model/prescribings_table_model.cpp
 
@@ -82,6 +83,7 @@ HEADERS += \
 	core/add_med_dialog.h \
 	model/prescribings_table_model.h \
 	types/visit.h \
+	ui/main_tab_widget.h \
 	utils/utils.h \
 	utils/singlenton.h
 
@@ -99,6 +101,7 @@ FORMS += \
 	ui/chip.ui \
 	ui/client.ui \
 	ui/contacts.ui \
+    ui/main_tab_widget.ui \
 	ui/mainwindow.ui \
 	ui/passport.ui \
 	ui/prescribings_widget.ui \

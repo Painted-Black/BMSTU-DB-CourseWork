@@ -17,13 +17,15 @@
 #include "new_visit_widget.h"
 #include "animal_list_item_widget.h"
 #include "config/config.h"
+#include "ui/main_tab_widget.h"
 
 enum TabType
 {
 	AccountWidget	  = 1,
 	AnimalWidget		= 2,
 	EditAnimalWidget = 3,
-	VisitWidget			= 4
+	VisitWidget			= 4,
+	MainWidget		= 5
 };
 
 enum TabFlags
@@ -37,13 +39,18 @@ MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow())
 {
 	ui->setupUi(this);
+
+	QWidget* w = addTab(QIcon(":/ui/icons/logo_green_80.png"), "Главная страница",
+						{MainWidget, Unclosable}, &MainWindow::showMainTab);
+	w->show();
+
 	connect(ui->acc_action, &QAction::triggered, this, &MainWindow::accInfo);
 	connect(ui->exit_action, &QAction::triggered, this, &MainWindow::exit);
 	connect(ui->pet_reg, &QAction::triggered, this, &MainWindow::createWidgetNewAnimal);
 	connect(ui->pet_find, &QAction::triggered, this, &MainWindow::runAnimalEditor);
-	connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);    addToolBarAction(QIcon(":/ui/icons/icons8-group-of-animals-48.png"), "Животные", &MainWindow::runAnimalEditor);
+	connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
+	addToolBarAction(QIcon(":/ui/icons/icons8-group-of-animals-48.png"), "Животные", &MainWindow::runAnimalEditor);
     addToolBarAction(QIcon(":/ui/icons/treatment-80.png"), "Ветеринарный осмотр", &MainWindow::newVisit);
-
 }
 
 void MainWindow::runAnimalEditor()
@@ -52,6 +59,17 @@ void MainWindow::runAnimalEditor()
     QWidget* w = addTab(QIcon(":/ui/icons/icons8-group-of-animals-48.png"), "Животные",
 				{AnimalWidget, Single}, &MainWindow::createWidgetAnimals);
 	w->show();
+}
+
+void MainWindow::showMainTab(QWidget *w)
+{
+	qDebug() << Q_FUNC_INFO;
+
+	QBoxLayout* layout = new QVBoxLayout();
+	MainTabWidget* aiw = new MainTabWidget(w);
+	layout->addWidget(aiw);
+	w->setLayout(layout);
+	connect(aiw, SIGNAL(new_visit()), this, SLOT(newVisit()));
 }
 
 QWidget* MainWindow::addTab(
