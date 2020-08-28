@@ -36,13 +36,14 @@ SOURCES += \
 	types/position.cpp \
 	types/prescribings.cpp \
 	types/schedule.cpp \
+    types/sheduled_visits.cpp \
 	types/short_animal_info.cpp \
 	types/staff.cpp \
 	types/user_data.cpp \
 	types/vaccination.cpp \
 	types/visit.cpp \
 	core/add_med_dialog.cpp \
-	ui/main_tab_widget.cpp \
+        core/main_tab_widget.cpp \
 	utils/utils.cpp \
 	model/prescribings_table_model.cpp
 
@@ -76,6 +77,7 @@ HEADERS += \
 	types/prescribings.h \
 	types/proxy_auth.h \
 	types/schedule.h \
+    types/sheduled_visits.h \
 	types/short_animal_info.h \
 	types/staff.h \
 	types/user_data.h \
@@ -83,12 +85,12 @@ HEADERS += \
 	core/add_med_dialog.h \
 	model/prescribings_table_model.h \
 	types/visit.h \
-	ui/main_tab_widget.h \
+        core/main_tab_widget.h \
 	utils/utils.h \
 	utils/singlenton.h
 
 FORMS += \
-    core/chose_animal_full_dialog.ui \
+        ui/chose_animal_full_dialog.ui \
         ui/chose_animal_dialog.ui \
 	ui/acc_info.ui \
 	ui/add_contract.ui \
@@ -101,7 +103,7 @@ FORMS += \
 	ui/chip.ui \
 	ui/client.ui \
 	ui/contacts.ui \
-    ui/main_tab_widget.ui \
+        ui/main_tab_widget.ui \
 	ui/mainwindow.ui \
 	ui/passport.ui \
 	ui/prescribings_widget.ui \

@@ -20,3 +20,8 @@ INSERT INTO clients (contacts, address, passport) VALUES ('{"phone" : "899934528
 INSERT INTO contract (code, conclusion_date, last_update_date, owner, valid_until) VALUES ('32332-2020', '2019-01-02', '2019-01-02',  1, '2021-01-02');
 INSERT INTO microchips (chip_num, impl_date, country, location) VALUES ('49434-2020', '2018-01-02', 'RUS' , 'Холка');
 INSERT INTO animals_medical_records (name, breed, species, sex, castrated, birth, other_data, color, special_signs, registr_date, chip_id, contract, rel_path_to_photo) VALUES ('Голливуд', 'Донская', 'Конь', 'm', 'f', '1994-02-15', '', 'Рыжий', 'Вредный', '2018-02-01', 1, 1, '');
+
+INSERT INTO position (title, salary) VALUES ('Ветеринарный врач', 40000);
+INSERT INTO staff (passport, position, edu_level, fire_date, employ_date) VALUES (2, 2, 'specialist', NULL, '2018-01-1');
+
+INSERT INTO visits (doctor, animal, ambulatury, visit_date, owner_dynamics, history_disease, cur_state, diagnosis, recommendations, next_visit, prescribings, "initial", note) VALUES (2, 1, 't', '2020-02-04', 'stably', 'Кашель', 1, 'Простуда', 'Не гулять', '2020-02-02', NULL, 't', NULL);

@@ -34,6 +34,9 @@ class Config(object):
 	def get_routes_visit_new(self):
 		return [str(self.__parser["ROUTES"]["new_visit"])]
 
+	def get_routes_current_visits(self):
+		return [str(self.__parser["ROUTES"]["current_visits"])]
+
 	def get_conn_info(self):
 		driver=self.__parser["DATABASE"]["driver"]
 		server=self.__parser["DATABASE"]["server"]

@@ -19,7 +19,6 @@ class DBQuery(object):
 		print(query)
 		if query != "":
 			self.query_buffer=query
-
 		try:
 			cursor = self.conn.conn.cursor()
 			cursor.execute(self.query_buffer)

@@ -37,6 +37,11 @@ QUrl Config::getUrlAnimalsShortInfo() const noexcept
 	return getUrl("ROUTES/animals_short_info");
 }
 
+QUrl Config::getUrlCurrentvisits() const noexcept
+{
+	return getUrl("ROUTES/current_visits");
+}
+
 QUrl Config::getUrl(const QString & path) const
 {
 	QUrl url;

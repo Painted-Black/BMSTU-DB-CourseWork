@@ -17,15 +17,15 @@
 #include "new_visit_widget.h"
 #include "animal_list_item_widget.h"
 #include "config/config.h"
-#include "ui/main_tab_widget.h"
+#include "core/main_tab_widget.h"
 
 enum TabType
 {
-	AccountWidget	  = 1,
+	AccountWidget		= 1,
 	AnimalWidget		= 2,
-	EditAnimalWidget = 3,
+	EditAnimalWidget	= 3,
 	VisitWidget			= 4,
-	MainWidget		= 5
+	MainWidget			= 5
 };
 
 enum TabFlags
@@ -65,10 +65,15 @@ void MainWindow::showMainTab(QWidget *w)
 {
 	qDebug() << Q_FUNC_INFO;
 
+	auto& cfg = Singlenton<Config>::getInstance();
+	QUrl url = cfg.getUrlAnimal();
+//	url.setQuery(QString("date=%1").arg(static_cast<qulonglong>()));
+
 	QBoxLayout* layout = new QVBoxLayout();
 	MainTabWidget* aiw = new MainTabWidget(w);
 	layout->addWidget(aiw);
 	w->setLayout(layout);
+	aiw->show(cfg.getUrlCurrentvisits(), cfg.getTimeout(), access_data.getPassword());
 	connect(aiw, SIGNAL(new_visit()), this, SLOT(newVisit()));
 }
 

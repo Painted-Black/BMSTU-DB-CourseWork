@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>493</width>
+    <width>505</width>
     <height>137</height>
    </rect>
   </property>
@@ -31,9 +31,6 @@
       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
      </property>
     </widget>
-   </item>
-   <item row="1" column="3">
-    <widget class="QWidget" name="widget" native="true"/>
    </item>
    <item row="0" column="3">
     <widget class="QLabel" name="plans_label">
@@ -539,6 +536,23 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="1" column="3" rowspan="2">
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>302</width>
+        <height>68</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
    </item>
   </layout>
  </widget>

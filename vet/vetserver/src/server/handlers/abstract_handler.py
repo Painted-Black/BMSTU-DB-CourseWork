@@ -20,3 +20,13 @@ class AbstractHandler(ABC):
 
     def endpoint_names(self):
         return [self.routes, self.methods]
+    
+    def _to_json(self, rows, column_names):
+        arr = []
+        l = len(column_names)
+        for i in rows:
+            d = {}
+            for j in range (l):
+                d[column_names[j]] = str(i[j])
+            arr.append(d)
+        return arr
