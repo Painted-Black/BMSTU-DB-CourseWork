@@ -53,55 +53,8 @@ void NewVisitWidget::handle_save_button()
 {
     qDebug() << Q_FUNC_INFO << "Saving...";
 
-    bool is_ambulatoty = ui->ambularory_checkBox->isChecked();
-    QDate visit_date = QDate::fromString(ui->visit_date_dateEdit->text());
-    QString histoty_disease = ui->anamnesis_lineEdit->text();
-    QString owner_dynamics = ui->owner_dynamics_comboBox->currentText();
-    OwnerDynamic dynamics;
-    if (dynamics.fromString(owner_dynamics) == false)
-    {
-        qDebug() << Q_FUNC_INFO << "Unable to read owner dynamics type";
-    }
-
-    QString gen_state_str = ui->general_state_comboBox->currentText();
-    GeneralState gen_state;
-    if (gen_state.fromString(gen_state_str) == false)
-    {
-        qDebug() << Q_FUNC_INFO << "Unable to read general state type";
-    }
-
-    uint32_t pulse = ui->pulse_spinBox->value();
-    float weight = ui->weight_doubleSpinBox->value();
-    uint32_t AP_1 = ui->ap_1_spinBox->value();
-    uint32_t AP_2 = ui->ap_2_spinBox->value();
-    QString AP = QVariant(AP_1).toString() + " / " + QVariant(AP_2).toString();
-    float temperature = ui->temperature_doubleSpinBox->value();
-    uint32_t cfr = ui->cfr_spinBox->value();
-    uint32_t resp_rate = ui->resp_rate_spinBox->value();
-    QString diagnosis = ui->diagnosis_lineEdit->text();
-    bool next_visit = ui->next_visit_checkBox->isChecked();
-    QDate next_visit_date = QDate::fromString(ui->next_visit_dateEdit->text());
-    QString notes = ui->note_lineEdit->text();
-    QString rec = ui->recommendations_lineEdit->text();
-
-    Prescribings pr;
-
-    if (histoty_disease.isEmpty())
-    {
-        qDebug() << "Disease history is empty!";
-    }
-    if (diagnosis.isEmpty())
-    {
-        qDebug() << "Diagnosis is empty!";
-    }
-    if (rec.isEmpty())
-    {
-        qDebug() << "Recommendations is empty!";
-    }
-    if (animal_id == -1)
-    {
-        qDebug() << "Animal id is empty!";
-    }
+	bool is_ok = false;
+	Visit vis = getVisit(&is_ok);
 
     // метод с объектом
 
@@ -125,6 +78,62 @@ void NewVisitWidget::handle_save_button()
 
 
     qDebug() << Q_FUNC_INFO << "Saved";
+}
+
+Visit &NewVisitWidget::getVisit(bool *is_ok)
+{
+	Visit vis;
+
+
+	bool is_ambulatoty = ui->ambularory_checkBox->isChecked();
+	QDate visit_date = QDate::fromString(ui->visit_date_dateEdit->text());
+	QString histoty_disease = ui->anamnesis_lineEdit->text();
+	QString owner_dynamics = ui->owner_dynamics_comboBox->currentText();
+	OwnerDynamic dynamics;
+	if (dynamics.fromString(owner_dynamics) == false)
+	{
+		qDebug() << Q_FUNC_INFO << "Unable to read owner dynamics type";
+	}
+
+	QString gen_state_str = ui->general_state_comboBox->currentText();
+	GeneralState gen_state;
+	if (gen_state.fromString(gen_state_str) == false)
+	{
+		qDebug() << Q_FUNC_INFO << "Unable to read general state type";
+	}
+
+	uint32_t pulse = ui->pulse_spinBox->value();
+	float weight = ui->weight_doubleSpinBox->value();
+	uint32_t AP_1 = ui->ap_1_spinBox->value();
+	uint32_t AP_2 = ui->ap_2_spinBox->value();
+	QString AP = QVariant(AP_1).toString() + " / " + QVariant(AP_2).toString();
+	float temperature = ui->temperature_doubleSpinBox->value();
+	uint32_t cfr = ui->cfr_spinBox->value();
+	uint32_t resp_rate = ui->resp_rate_spinBox->value();
+	QString diagnosis = ui->diagnosis_lineEdit->text();
+	bool next_visit = ui->next_visit_checkBox->isChecked();
+	QDate next_visit_date = QDate::fromString(ui->next_visit_dateEdit->text());
+	QString notes = ui->note_lineEdit->text();
+	QString rec = ui->recommendations_lineEdit->text();
+
+	Prescribings pr;
+
+	if (histoty_disease.isEmpty())
+	{
+		qDebug() << "Disease history is empty!";
+	}
+	if (diagnosis.isEmpty())
+	{
+		qDebug() << "Diagnosis is empty!";
+	}
+	if (rec.isEmpty())
+	{
+		qDebug() << "Recommendations is empty!";
+	}
+	if (animal_id == -1)
+	{
+		qDebug() << "Animal id is empty!";
+	}
 }
 
 void NewVisitWidget::setAccessData(const AccessData &value)
@@ -173,5 +182,5 @@ void NewVisitWidget::delete_prescr_btn()
 	{
 		model->removeMed(selected_rows.at(i).data().toString(), i);
 	}
-//	Prescribings pr = model->getPresctibings();
+	//	Prescribings pr = model->getPresctibings();
 }

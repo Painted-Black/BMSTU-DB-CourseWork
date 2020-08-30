@@ -26,7 +26,7 @@ MainTabWidget::~MainTabWidget()
 
 void MainTabWidget::new_visit_btn_pressed()
 {
-	emit new_visit();
+	emit newVisit();
 }
 
 void MainTabWidget::setAccessData(const AccessData &acc_data)
@@ -57,6 +57,9 @@ bool MainTabWidget::show(const QUrl &url, std::chrono::milliseconds tout, const 
 	if (visits_info.isEmpty() == true)
 	{
 		QLabel* label = new QLabel("Запланированных осмотров нет");
+		QFont font = label->font();
+		font.setPointSize(16);
+		label->setFont(font);
 		lay->addWidget(label);
 	}
 	else
@@ -74,14 +77,17 @@ bool MainTabWidget::show(const QUrl &url, std::chrono::milliseconds tout, const 
 			lay->addRow(name, spec);
 		}
 	}
-	ui->scrollArea->setLayout(lay);
+	QWidget* widget = new QWidget(this);
+	widget->setLayout(lay);
+	ui->scrollArea->setWidget(widget);
 	return true;
 }
 
 QByteArray MainTabWidget::serializeCurrentDate()
 {
-	QString current_date = QDate::currentDate().toString();
+	QDate current = QDate::currentDate();
+	QString current_date = current.toString(Qt::ISODate);
 	QJsonObject obj;
-	obj.insert("date", "2020-02-02");
+	obj.insert("date", current_date);
 	return QJsonDocument(obj).toJson();
 }

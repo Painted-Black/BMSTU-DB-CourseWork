@@ -8,6 +8,7 @@
 #include <QScreen>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QVariant>
 #include "utils/singlenton.h"
 #include "popup.h"
 #include "ui_mainwindow.h"
@@ -74,7 +75,7 @@ void MainWindow::showMainTab(QWidget *w)
 	layout->addWidget(aiw);
 	w->setLayout(layout);
 	aiw->show(cfg.getUrlCurrentvisits(), cfg.getTimeout(), access_data.getPassword());
-	connect(aiw, SIGNAL(new_visit()), this, SLOT(newVisit()));
+	connect(aiw, &MainTabWidget::newVisit, this, &MainWindow::newVisit);
 }
 
 QWidget* MainWindow::addTab(
@@ -95,6 +96,7 @@ QWidget* MainWindow::addTab(
 			return std::get<1>(find);
 		}
 	}
+
 
 	QWidget* widget = new QWidget(ui->tabWidget);
 	(this->*init_cb)(widget);
@@ -246,7 +248,7 @@ void MainWindow::addToolBarAction(const QIcon& icon, const QString& text, const 
 void MainWindow::closeTab(int idx)
 {
 	qDebug() << Q_FUNC_INFO;
-	auto flags = ui->tabWidget->tabBar()->tabData(idx).value<uint8_t>();
+	auto flags = ui->tabWidget->tabBar()->tabData(idx).toList().at(1).value<uint8_t>();
 	if (flags & Unclosable)
 	{
 		return;

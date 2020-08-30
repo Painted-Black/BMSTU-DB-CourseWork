@@ -19,7 +19,7 @@ public:
 	void setAccessData(const AccessData& acc_data);
 	bool show(const QUrl& url, std::chrono::milliseconds tout, const QByteArray& pass);
 signals:
-	void new_visit();
+	void newVisit();
 private:
 	QByteArray serializeCurrentDate();
 
