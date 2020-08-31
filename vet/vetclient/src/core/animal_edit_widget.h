@@ -2,6 +2,7 @@
 
 #include <QWidget>
 #include <QDialog>
+#include "contacts.h"
 #include "types/animal_medical_record.h"
 
 namespace Ui
@@ -25,12 +26,12 @@ public:
 	void show(const QUrl &, std::chrono::milliseconds, const QByteArray&);
 	bool isFills() const;
 	bool isEdit() const;
-    AnimalMedicalRecord getEditedAnimalRecord();
-    const AnimalMedicalRecord& getAnimalRecord() const;
+	AnimalMedicalRecord getEditedAnimalMedicalRecord();
+	const AnimalMedicalRecord& getAnimalMedicalRecord();
 private:
 	void activeInfoDialog();
 	void activeSignDialog();
-	void active();
+	void activeClientDialog();
 	QString showInfoDialog(const QString&);
 	void showContract();
 
@@ -42,11 +43,11 @@ private:
 	Ui::client* client_dlg_ui;
 	Ui::address_widget* address_dlg_ui;
 	Ui::passport_widget* passport_dlg_ui;
-	Ui::contacts_widget* contact_dlg_ui;
 	QDialog* info_dlg;
 	QDialog* client_dlg;
 	QWidget* contract;
 	QWidget* chip;
+	Contacts* contact;
 	AnimalMedicalRecord animal_record;
 };
 

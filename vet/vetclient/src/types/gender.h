@@ -20,6 +20,8 @@ public:
 	void setGenderType(GenderEnum value);
 	QString toString();
 
+	bool operator==(const Gender&) const;
+
 private:
 	GenderEnum current;
 };

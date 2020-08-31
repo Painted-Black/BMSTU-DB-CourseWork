@@ -31,6 +31,8 @@ public:
 	const QString& getPassportNum() const;
 	Gender getGender() const;
 
+	bool operator==(const Passport&) const;
+
 private:
 	uint64_t id;
 	QString surname;

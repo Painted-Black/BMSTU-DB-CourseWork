@@ -31,8 +31,10 @@ class Config(object):
 	def get_routes_full_animal_info(self):
 		return [str(self.__parser["ROUTES"]["animal_full_info"])]
 
+	def get_routes_animal_upsert(self):
+    	return [str(self.__parser["ROUTES"]["animal_upsert_data"])]
 	def get_routes_visit_new(self):
-		return [str(self.__parser["ROUTES"]["new_visit"])]
+    		return [str(self.__parser["ROUTES"]["new_visit"])]
 
 	def get_routes_current_visits(self):
 		return [str(self.__parser["ROUTES"]["current_visits"])]

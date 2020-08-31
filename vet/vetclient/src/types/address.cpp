@@ -87,3 +87,15 @@ void Address::setFlat(const QString &value)
 {
 	flat = value;
 }
+
+bool Address::operator==(const Address &v ) const
+{
+	bool is_equal = true;
+	is_equal &= (country == v.country);
+	is_equal &= (city == v.city);
+	is_equal &= (street == v.street);
+	is_equal &= (house == v.house);
+	is_equal &= (flat == v.flat);
+
+	return is_equal;
+}

@@ -12,6 +12,7 @@ class Microchip final : public ISerializable<QJsonObject>
 public:
 	bool deserialize(const QJsonObject &json) noexcept override;
 	QJsonObject serialize() const override;
+	void setId(uint64_t);
 	uint64_t getId() const;
 
 	QString getChipNum() const;
@@ -23,6 +24,8 @@ public:
 	void setImplDate(const QDate &value);
 	void setCountry(const QString &value);
 	void setLocation(const QString &value);
+
+	bool operator==(const Microchip&) const;
 private:
 	uint64_t id;
 	QString chip_num;
