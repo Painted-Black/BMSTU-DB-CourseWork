@@ -8,12 +8,12 @@ from config.config import Config
 from config.config_args import ConfigArgs
 
 def main():
-    cfg_args = ConfigArgs.fromArgs()
-    cfg = Config()
-    cfg.read_from_file(cfg_args.getConfigFile())
-    
-    d = Daemon(cfg)
-    d.start()
+	cfg_args = ConfigArgs.fromArgs()
+	cfg = Config()
+	cfg.read_from_file(cfg_args.getConfigFile())
+	
+	d = Daemon(cfg)
+	d.start()
 
 if __name__ == "__main__":
-    main()
+	main()

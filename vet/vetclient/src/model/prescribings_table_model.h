@@ -9,14 +9,13 @@ class PrescribingsTableModel : public QAbstractTableModel
 {
 public:
 	void setTableData(const Prescribings& p);
-
 	int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 	int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 	void addMed(const Medicine& med);
 	void removeMed(const QString &med, int index);
 	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
-	Prescribings& getPresctibings();
+	Prescribings& getPresctibings(); 
 private:
 	enum Column
 	{

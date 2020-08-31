@@ -30,7 +30,7 @@ class CurrentVisitsHandler(AbstractHandler):
 		#if staff_id == -1:
 		#	res.status_code=401
 		#	return
-        # TODO check
+		# TODO check
 
 		if not data.__contains__('date'):
 			res.status_code=403

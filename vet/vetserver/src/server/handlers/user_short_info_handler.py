@@ -8,16 +8,69 @@ import uuid
 
 class UserShortInfoHandler(AbstractHandler):
 	def request(self, req, res):
-        key = str(req.headers.get("Authorization"))
+		#key = str(req.headers.get("Authorization"))
 		# Authorization: Explicit Key
-		explicit_key="Explicit: "
-		idx = key.find(explicit_key) 
-		if idx == -1:
-			res.status_code=401
-			return
+		#explicit_key="Explicit: "
+		#idx = key.find(explicit_key) 
+		#if idx == -1:
+		#	res.status_code=401
+		#	return
 		
-		key = key[len(explicit_key):]
-		staff_id = valid_key_checker.get_owner(key)
-		if staff_id == -1:
-			res.status_code=401
+		#key = key[len(explicit_key):]
+		#staff_id = valid_key_checker.get_owner(key)
+		#if staff_id == -1:
+		#	res.status_code=401
+		#	return
+
+		status, data = self.__queryDb()
+		if not status:
+			res.status_code=500
 			return
+
+		res.data = json.dumps(data)
+		res.status_code=200
+
+	def __queryDb(self):
+		conn_name = str(uuid.uuid4())
+		conn = access_manager.connect(conn_name)
+		str_query = '''SELECT acc_id, login, surname, name,
+		patronymic, access_level, title, employ_date, fire_date 
+		FROM access a JOIN staff s ON a.employee=s.staff_id 
+		JOIN position p ON s.position=p.pos_id 
+		JOIN passports pas ON s.passport=pas.pass_id;
+		'''
+		query = DBQuery(conn, str_query)
+		if not query.execQuery():
+			return False, ""
+		else:
+			result = query.get_values()
+
+		access_manager.disconnect(conn_name)
+		return True, self.__construct_json(result, query.get_column_names())
+
+	def __construct_json(self, result : list, column_names : list):
+		res_json = []
+		for i in range(len(result)):
+			access = {}
+			passport = {}
+			position = {}
+			staff = {}
+			for j in range(2, 5):
+				passport[column_names[j]] = str(result[i][j])
+			
+			for j in range(0, 2):
+				access[column_names[j]] = str(result[i][j])
+
+			access[column_names[5]] = str(result[i][5])
+			position[column_names[6]] = str(result[i][6])
+
+			for j in range(7, 9):
+				staff[column_names[j]] = str(result[i][j])
+
+			staff['position'] = position
+			staff['passport'] = passport
+			access['employee'] = staff
+			
+			res_json.append(access)
+		
+		return res_json

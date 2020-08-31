@@ -12,6 +12,7 @@ AdminPannel::AdminPannel(QWidget *parent) :
 	model(new UsersTableModel())
 {
 	ui->setupUi(this);
+	connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &AdminPannel::tableViewDoubleClicked);
 }
 
 bool AdminPannel::show(const QUrl &url, std::chrono::milliseconds tout, const QByteArray &pass)
@@ -47,4 +48,11 @@ AdminPannel::~AdminPannel()
 {
 	delete ui;
 	delete model;
+}
+
+void AdminPannel::tableViewDoubleClicked(const QModelIndex &index)
+{
+	qDebug() << Q_FUNC_INFO << "Double click";
+	ShortUserInfo info = model->dataAt(index);
+	qDebug() << info.getUid();
 }

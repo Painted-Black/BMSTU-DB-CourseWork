@@ -19,6 +19,8 @@ public:
 	~AdminPannel();
 
 private:
+	void tableViewDoubleClicked(const QModelIndex &index);
+
 	Ui::AdminPannel *ui;
 	UsersTableModel* model;
 };

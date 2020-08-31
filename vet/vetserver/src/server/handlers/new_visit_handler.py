@@ -45,7 +45,7 @@ class NewVisitHandler(AbstractHandler):
 			return
 
 		res.status_code=201
-    
+	
 	def __insert_visit_to_json(self, json):
 		animal_state = json['cur_state']
 		vis = json
@@ -93,20 +93,20 @@ class NewVisitHandler(AbstractHandler):
 
 	def check_json(self, json_data : dict):
 		state = True
-		fields = [  'doctor',         
-					'animal',          
-					'visit_date',     
+		fields = [  'doctor',		 
+					'animal',		  
+					'visit_date',	 
 					'owner_dynamics', 
 					'history_disease',
-					'cur_state',      
-					'diagnosis',      
+					'cur_state',	  
+					'diagnosis',	  
 					'recommendations',
-					'next_visit',     
-					'prescribings',       
+					'next_visit',	 
+					'prescribings',	   
 					'note']
 
 		for field in fields:
 			state = state and json_data.__contains__(field)
 
 		return state
-        
+		

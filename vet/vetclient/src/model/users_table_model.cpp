@@ -4,7 +4,7 @@ void UsersTableModel::setTableData(QVector<ShortUserInfo> data)
 {
 	removeRows(0, mData.size());
 	int new_data_size = data.size();
-	beginInsertRows(QModelIndex(), 0, new_data_size);
+	beginInsertRows(QModelIndex(), 0, new_data_size-1);
 	mData = data;
 	endInsertRows();
 }
@@ -71,4 +71,10 @@ QVariant UsersTableModel::headerData(int section, Qt::Orientation orientation, i
 			return QString(" Уволен ");
 	}
 	return QVariant();
+}
+
+ShortUserInfo UsersTableModel::dataAt(const QModelIndex &index)
+{
+	int row = index.row();
+	return mData.at(row);
 }

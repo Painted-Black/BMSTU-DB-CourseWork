@@ -67,7 +67,7 @@ class AuthHandler(AbstractHandler):
 
 		positions_json={}
 		for pos in range(8,11):
-    			positions_json[column_names[pos]] = str(row[pos])
+				positions_json[column_names[pos]] = str(row[pos])
 
 		staff_json={}
 		for staff in range(2, 8):
@@ -92,7 +92,7 @@ class AuthHandler(AbstractHandler):
 		access_manager.disconnect(conn_name)
 		return True, self.__to_json_schedule(schedule, query.get_column_names())
 
-    		
+			
 
 	def __query_staff_data_from_db(self, login, passw):
 		conn_name = str(uuid.uuid4())
