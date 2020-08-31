@@ -26,7 +26,7 @@ SOURCES += \
 	core/network/network_fetcher.cpp \
 	core/popup.cpp \
 	main.cpp \
-    model/users_table_model.cpp \
+	model/users_table_model.cpp \
 	types/address.cpp \
 	types/animal_medical_record.cpp \
 	types/animalstate.cpp \
@@ -38,16 +38,16 @@ SOURCES += \
 	types/position.cpp \
 	types/prescribings.cpp \
 	types/schedule.cpp \
-        types/sheduled_visits.cpp \
+		types/sheduled_visits.cpp \
 	types/short_animal_info.cpp \
-    types/short_user_info.cpp \
+	types/short_user_info.cpp \
 	types/staff.cpp \
 	types/user_data.cpp \
 	types/vaccination.cpp \
 	types/visit.cpp \
 	core/add_med_dialog.cpp \
-        core/main_tab_widget.cpp \
-        core/admin_pannel.cpp \
+		core/main_tab_widget.cpp \
+		core/admin_pannel.cpp \
 	utils/utils.cpp \
 	model/prescribings_table_model.cpp
 
@@ -60,15 +60,15 @@ HEADERS += \
 	core/animal_info_widget.h \
 	core/animal_list_item_widget.h \
 	core/auth.h \
-        core/contacts.h \
+	core/contacts.h \
 	core/chose_animal_dialog.h \
-        core/chose_animal_full_dialog.h \
+	core/chose_animal_full_dialog.h \
 	core/new_visit_widget.h \
 	core/iserializable.h \
 	core/mainwindow.h \
 	core/network/network_fetcher.h \
 	core/popup.h \
-    model/users_table_model.h \
+	model/users_table_model.h \
 	types/QJsonHeaders.h \
 	types/address.h \
 	types/animal_medical_record.h \
@@ -83,27 +83,27 @@ HEADERS += \
 	types/prescribings.h \
 	types/proxy_auth.h \
 	types/schedule.h \
-        types/sheduled_visits.h \
+		types/sheduled_visits.h \
 	types/short_animal_info.h \
-    types/short_user_info.h \
+	types/short_user_info.h \
 	types/staff.h \
 	types/user_data.h \
 	types/vaccination.h \
 	core/add_med_dialog.h \
 	model/prescribings_table_model.h \
 	types/visit.h \
-        core/main_tab_widget.h \
-        core/admin_pannel.h \
+		core/main_tab_widget.h \
+		core/admin_pannel.h \
 	utils/utils.h \
 	utils/singlenton.h
 
 FORMS += \
-        ui/admin_pannel.ui \
-        ui/chose_animal_full_dialog.ui \
-        ui/chose_animal_dialog.ui \
+		ui/admin_pannel.ui \
+		ui/chose_animal_full_dialog.ui \
+		ui/chose_animal_dialog.ui \
 	ui/acc_info.ui \
 	ui/add_contract.ui \
-        ui/add_med_dialog.ui \
+		ui/add_med_dialog.ui \
 	ui/address.ui \
 	ui/animal.ui \
 	ui/animal_list_item_widget.ui \
@@ -111,7 +111,7 @@ FORMS += \
 	ui/chip.ui \
 	ui/client.ui \
 	ui/contacts.ui \
-        ui/main_tab_widget.ui \
+		ui/main_tab_widget.ui \
 	ui/mainwindow.ui \
 	ui/passport.ui \
 	ui/prescribings_widget.ui \
