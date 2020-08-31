@@ -30,7 +30,6 @@ class ScheduleHandler(AbstractHandler):
 		res.data = json.dumps(data)
 		res.status_code=200
 
-
 	def __to_json(self, rows, column_names):
 		arr = []
 		l = len(column_names)

@@ -3,6 +3,8 @@ from server.handlers.test_handler import TestHandler
 from server.handlers.auth_handler import AuthHandler
 from server.handlers.animal_handler import AnimalHandler
 from server.handlers.schedule_handler import ScheduleHandler
+from server.handlers.new_visit_handler import NewVisitHandler
+from server.handlers.current_visits_handler import CurrentVisitsHandler
 from server.handlers.animal_info_handler import AnimalInfoHandler
 from server.key_data_checker import KeyDataChecker
 from server.key_data_checker import valid_key_checker
@@ -27,9 +29,14 @@ class Daemon(object):
 		schedule_=self.__config.get_routes_schedule()
 		animal_=self.__config.get_routes_short_animal_info()
 		animal_full_=self.__config.get_routes_full_animal_info()
+		new_visit_=self.__config.get_routes_visit_new()
+		current_visit_=self.__config.get_routes_current_visits()
 
 		self.__server.add_endpoint(AuthHandler(auth_, ["POST"]))
 		self.__server.add_endpoint(ScheduleHandler(schedule_, ["POST"]))
 		self.__server.add_endpoint(AnimalHandler(animal_, ["GET"]))
 		self.__server.add_endpoint(AnimalInfoHandler(animal_full_, ["GET"]))
+		self.__server.add_endpoint(NewVisitHandler(new_visit_, ["POST"]))
+		self.__server.add_endpoint(CurrentVisitsHandler(current_visit_, ["POST"]))
+
 		self.__server.start(port=self.__config.get_server_port())

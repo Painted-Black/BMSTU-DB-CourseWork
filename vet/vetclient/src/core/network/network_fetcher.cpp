@@ -74,49 +74,6 @@ NetworkFetcher::Response NetworkFetcher::httpPost(const QNetworkRequest & req,
 	return performRequest(req.url());
 }
 
-//NetworkFetcher::Response NetworkFetcher::httpPost(const QNetworkRequest & req,
-//												  Multipart && mp, std::chrono::milliseconds ms)
-//{
-//	struct curl_httppost* post = nullptr;
-//	struct curl_httppost* last = nullptr;
-
-//	auto add_field = [&](const Multipart::Part& part)
-//	{
-//		QVector<curl_forms> forms;
-
-//		if (!part.contentType.empty())
-//		{
-//			curl_forms form;
-//			form.option = CURLFORM_CONTENTTYPE;
-//			form.value = part.contentType.c_str();
-//			forms.push_back(form);
-//		}
-
-//		curl_forms form;
-//		form.option = part.isFile
-//				? CURLFORM_FILE
-//				: CURLFORM_PTRCONTENTS;
-//		form.value = part.value.data();
-//		forms.push_back(form);
-
-//		curl_forms end;
-//		end.option = CURLFORM_END;
-//		forms.push_back(end);
-//		curl_formadd(&post, &last, CURLFORM_PTRNAME, part.name.data(),
-//					 CURLFORM_ARRAY, forms.data(), CURLFORM_END);
-//	};
-
-//	const auto& parts = data.parts;
-//	std::for_each(parts.cbegin(), parts.cend(), add_field);
-
-//	setopt(curlHandle, CURLOPT_HTTPPOST, post);
-
-//	const RestClient::Response& resp = performCurlRequest(uri);
-//	curl_formfree(post);
-
-//	return resp;
-//}
-
 extern "C"
 {
 	size_t writeCallback(void *data, size_t size, size_t nmemb, void *userdata)

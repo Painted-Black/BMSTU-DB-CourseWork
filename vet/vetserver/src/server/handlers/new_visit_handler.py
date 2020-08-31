@@ -10,82 +10,103 @@ from flask import request
 from server.utils.visit import Visit
 
 class NewVisitHandler(AbstractHandler):
-    def request(self, req, res):
-		res.content_type = "Application/Json"
-        try:
+	def request(self, req, res):
+		res.content_type = "application/json"
+		try:
 			json_data = json.loads(req.data)
 		except json.decoder.JSONDecodeError:
 			res.status_code=403
 			res.data = json.dumps({"error" : "Empty json"})
 			return
+		
+		key = str(req.headers.get("Authorization"))
+		# Authorization: Explicit Key
+		explicit_key="Explicit: "
+		idx = key.find(explicit_key) 
+		if idx == -1:
+			res.status_code=401
+			return
+		
+		key = key[len(explicit_key):]
+		staff_id = valid_key_checker.get_owner(key)
+		if staff_id == -1:
+			res.status_code=401
+			return
 
-        if not self.check_json(json_data):
-            res.status_code=403
+		if not self.check_json(json_data):
+			res.status_code=403
 			res.data = json.dumps({"error" : "Expected values was not received"})
 			return
 
-        anim_st = self.__get_state_from_json(json_data)
-        visit = self.__get_visit_from_json(json_data)
-        state, data = self.__insert_state_to_db(anim_st)
+		state = self.__insert_visit_to_json(json_data)
+		if not state:
+			res.status_code=500 #TODO
+			res.data = json.dumps({"error" : "insertion failed"})
+			return
 
-    def __get_state_from_json(self, json):
-        state = AnimalState()
-        state.set_general(json['general'])
-        state.set_pulse(json['pulse'])
-        state.set_weight(json['weight'])
-        state.set_ap(json['ap'])
-        state.set_temperature(json['temperature'])
-        state.set_cfr(json['cfr'])
-        state.set_resp_rate(json['resp_rate'])
-        return state
-
-    def __get_visit_from_json(self, json):
-        vis = Visit()
-        vis.set_doctor(json['doctor'])
-        vis.set_animal(json['animal'])
-        vis.set_ambulatory(json['ambulatury'])
-        vis.set_visit_date(json['visit_date'])
-        vis.set_owner_dynamics(json['owner_dynamics']
-        vis.set_history_disease(json['history_disease'])
-        vis.set_cur_state(json['cur_state'])
-        vis.set_diagnosis(json['diagnosis'])
-        vis.set_recommendations(json['recommendations'])
-        vis.set_next_visit(json['next_visit'])
-        vis.set_prescribings(json['prescribings'])
-        vis.set_initial(json['initial'])
-        vis.set_note(json['note'])
-        return vis
-
-    def __insert_state_to_db(self, animal_state : AnimalState):
-        conn_name = str(uuid.uuid4())
+		res.status_code=201
+    
+	def __insert_visit_to_json(self, json):
+		animal_state = json['cur_state']
+		vis = json
+		conn_name = str(uuid.uuid4())
 		conn = access_manager.connect(conn_name)
 
-        if access_manager.is_valid() == False:
-            return False, None
+		str_query_state = \
+			'''INSERT INTO animal_states (general, pulse, weight, ap, temperature, cfr, resp_rate) VALUES ('{}', {}, {}, '{}', {}, {}, {}) RETURNING state_id;'''.format(animal_state['general'], animal_state['pulse'], animal_state['weight'], animal_state['ap'],
+			animal_state['temperature'], animal_state['cfr'], animal_state['resp_rate'])
 
-        str_query = \
-            '''INSERT INTO animal_states (general, pulse, weight, ap, temperature, cfr, resp_rate) VALUES ({}, {}, {}, {}, {}, {}, {}) RETURNING state_id'''.format(animal_state.get_general, animal_state.get_pulse(), animal_state.get_weight(), animal_state.get_ap(),
-            animal_state.get_temperature(), animal_state.get_cfr(), animal_state.get_resp_rate())
-
-        query = DBQuery(conn, str_query)
+		query = DBQuery(conn, str_query_state)
 		if not query.execQuery():
+			print(query.get_error())
 			return False, None
 		else:
 			result = query.get_values()
-        if len(result) == 0:
-			return False, None
+		
+		state_id = str(result[0][0])
+
+		if vis['next_visit'] == None:
+			next_date = 'NULL'
+		else:
+			next_date = "'" + vis['next_visit'] + "'"
+		str_query_visit = \
+			'''INSERT INTO visits (doctor, animal, visit_date, owner_dynamics, history_disease, cur_state, diagnosis, recommendations, next_visit, prescribings, note) VALUES ({}, {}, '{}', '{}', '{}', '{}', '{}', '{}', {}, '{}', '{}');'''.format(
+				vis['doctor']['staff_id'],
+				vis['animal']['anim_id'],
+				vis['visit_date'], 
+				vis['owner_dynamics'],
+				vis['history_disease'], 
+				state_id, 
+				vis['diagnosis'], 
+				vis['recommendations'], 
+				next_date, 
+				str(vis['prescribings']).replace("'", '"'), 
+				vis['note'])
+
+		query = DBQuery(conn, str_query_visit)
+		if not query.execQuery():
+			print(query.get_error())
+			return False
 
 		access_manager.disconnect(conn_name)
+		return True
 
-        return True, str(result[0][0])
-        #self.__to_json_state_id(result, query.get_column_names())
-    
-    #def __to_json_state_id(self, rows, column_names):
-    #    out_json = {}
-	#	row = rows[0]
-    #    out_json[column_names[0]] = str(row[0])
-    #    return
+	def check_json(self, json_data : dict):
+		state = True
+		fields = [  'doctor',         
+					'animal',          
+					'visit_date',     
+					'owner_dynamics', 
+					'history_disease',
+					'cur_state',      
+					'diagnosis',      
+					'recommendations',
+					'next_visit',     
+					'prescribings',       
+					'note']
 
-    def check_json(self, json_data):
-        return True
-        # TODO
+		for field in fields:
+			state = state and json_data.__contains__(field)
+
+		return state
+        

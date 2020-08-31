@@ -4,5 +4,5 @@ CREATE TABLE addresses(
 	city VARCHAR(255) NOT NULL,
 	street VARCHAR(255) NOT NULL,
 	house VARCHAR(10) NOT NULL,
-	flat VARCHAR(10) NOT NULL
+	flat VARCHAR(10)
 );

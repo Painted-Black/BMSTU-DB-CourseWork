@@ -11,5 +11,4 @@
 \i ../install/create_position.sql
 \i ../install/create_schedule.sql
 \i ../install/create_staff.sql
-\i ../install/create_vaccinations.sql
 \i ../install/create_visits.sql

@@ -9,6 +9,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include "network/network_fetcher.h"
+#include <QVariant>
 #include "utils/singlenton.h"
 #include "popup.h"
 #include "ui_mainwindow.h"
@@ -19,13 +20,16 @@
 #include "animal_list_item_widget.h"
 #include "config/config.h"
 #include "utils/utils.h"
+#include "core/main_tab_widget.h"
+#include "core/admin_pannel.h"
 
 enum TabType
 {
-	AccountWidget	  = 1,
+	AccountWidget		= 1,
 	AnimalWidget		= 2,
-	EditAnimalWidget = 3,
-	VisitWidget			= 4
+	EditAnimalWidget	= 3,
+	VisitWidget			= 4,
+	MainWidget			= 5
 };
 
 enum TabFlags
@@ -39,21 +43,56 @@ MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow())
 {
 	ui->setupUi(this);
+
+	QWidget* w = addTab(QIcon(":/ui/icons/logo_green_80.png"), "Главная страница",
+						{MainWidget, Unclosable}, &MainWindow::showMainTab);
+	w->show();
+
+	QWidget* admin_w = addTab(QIcon(":/ui/icons/system.png"), "Настройки системы",
+								{MainWidget, Unclosable}, &MainWindow::showAdminPannel);
+	admin_w->show();
+
 	connect(ui->acc_action, &QAction::triggered, this, &MainWindow::accInfo);
 	connect(ui->exit_action, &QAction::triggered, this, &MainWindow::exit);
 	connect(ui->pet_reg, &QAction::triggered, this, &MainWindow::createWidgetNewAnimal);
 	connect(ui->pet_find, &QAction::triggered, this, &MainWindow::runAnimalEditor);
 	connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
-	addToolBarAction(QIcon(":/ui/icons/add_40.png"), "Животные", &MainWindow::runAnimalEditor);
-	addToolBarAction(QIcon(":/ui/icons/treatment-80.png"), "Ветеринарный осмотр", &MainWindow::newVisit);
+	addToolBarAction(QIcon(":/ui/icons/icons8-group-of-animals-48.png"), "Животные", &MainWindow::runAnimalEditor);
+    addToolBarAction(QIcon(":/ui/icons/treatment-80.png"), "Ветеринарный осмотр", &MainWindow::newVisit);
 }
 
 void MainWindow::runAnimalEditor()
 {
 	qDebug() << Q_FUNC_INFO;
-	QWidget* w = addTab(QIcon(":/ui/icons/add_user_80.png"), "Животные",
+    QWidget* w = addTab(QIcon(":/ui/icons/icons8-group-of-animals-48.png"), "Животные",
 				{AnimalWidget, Single}, &MainWindow::createWidgetAnimals);
 	w->show();
+}
+
+void MainWindow::showMainTab(QWidget *w)
+{
+	qDebug() << Q_FUNC_INFO;
+
+	auto& cfg = Singlenton<Config>::getInstance();
+	QUrl url = cfg.getUrlAnimal();
+
+	QBoxLayout* layout = new QVBoxLayout();
+	MainTabWidget* aiw = new MainTabWidget(w);
+	layout->addWidget(aiw);
+	w->setLayout(layout);
+	aiw->show(cfg.getUrlCurrentvisits(), cfg.getTimeout(), access_data.getPassword());
+	connect(aiw, &MainTabWidget::newVisit, this, &MainWindow::newVisit);
+}
+
+void MainWindow::showAdminPannel(QWidget *w)
+{
+	qDebug() << Q_FUNC_INFO << "Admin`s pannel";
+	auto& cfg = Singlenton<Config>::getInstance();
+	QBoxLayout* layout = new QVBoxLayout();
+	AdminPannel* pannel = new AdminPannel(w);
+	layout->addWidget(pannel);
+	w->setLayout(layout);
+	pannel->show(cfg.getUrlSystemUsersList(), cfg.getTimeout(), access_data.getPassword());
 }
 
 QWidget* MainWindow::addTab(
@@ -74,6 +113,7 @@ QWidget* MainWindow::addTab(
 			return std::get<1>(find);
 		}
 	}
+
 
 	QWidget* widget = new QWidget(ui->tabWidget);
 	(this->*init_cb)(widget);
@@ -248,7 +288,7 @@ void MainWindow::addToolBarAction(const QIcon& icon, const QString& text, const 
 void MainWindow::closeTab(int idx)
 {
 	qDebug() << Q_FUNC_INFO;
-	auto flags = ui->tabWidget->tabBar()->tabData(idx).value<uint8_t>();
+	auto flags = ui->tabWidget->tabBar()->tabData(idx).toList().at(1).value<uint8_t>();
 	if (flags & Unclosable)
 	{
 		return;

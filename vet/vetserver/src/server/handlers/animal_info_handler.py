@@ -63,7 +63,7 @@ class AnimalInfoHandler(AbstractHandler):
 		str_query = '''SELECT * FROM clients c 
 						LEFT JOIN passports ON passport=pass_id 
 						LEFT JOIN addresses ON address=addr_id 
-							WHERE cli_id={}'''.format(id)
+							WHERE cli_id={};'''.format(id)
 		query = DBQuery(conn, str_query)
 		if not query.execQuery():
 			return False, ""

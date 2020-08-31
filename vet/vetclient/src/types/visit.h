@@ -41,7 +41,7 @@ public:
 	uint64_t getVis_id() const;
 	Staff getDoctor() const;
 	AnimalMedicalRecord getAnimal() const;
-	bool getAmbulatury() const;
+//	bool getAmbulatury() const;
 	QDate getVisit_date() const;
 	OwnerDynamic getOwner_dynamics() const;
 	QString getHistory_disease() const;
@@ -50,12 +50,12 @@ public:
 	QString getRecommendations() const;
 	QDate getNext_visit() const;
 	Prescribings getPrescribings() const;
-	bool getInitial() const;
+//	bool getInitial() const;
 	QString getNote() const;
 
 	void setDoctor(const Staff &value);
 	void setAnimal(const AnimalMedicalRecord &value);
-	void setAmbulatury(bool value);
+//	void setAmbulatury(bool value);
 	void setVisit_date(const QDate &value);
 	void setOwner_dynamics(const OwnerDynamic &value);
 	void setHistory_disease(const QString &value);
@@ -64,14 +64,14 @@ public:
 	void setRecommendations(const QString &value);
 	void setNext_visit(const QDate &value);
 	void setPrescribings(const Prescribings &value);
-	void setInitial(bool value);
+//	void setInitial(bool value);
 	void setNote(const QString &value);
 
 private:
 	uint64_t vis_id;
 	Staff doctor;
 	AnimalMedicalRecord animal;
-	bool ambulatury;
+//	bool ambulatury;
 	QDate visit_date;
 	OwnerDynamic owner_dynamics;
 	QString history_disease;
@@ -79,8 +79,9 @@ private:
 	QString diagnosis;
 	QString recommendations;
 	QDate next_visit;
+	bool next = false;
 	Prescribings prescribings;
-	bool initial;
+//	bool initial;
 	QString note;
 };
 
