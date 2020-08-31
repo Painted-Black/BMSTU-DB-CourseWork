@@ -24,6 +24,8 @@ public:
 	void setHouse(const QString &value);
 	void setFlat(const QString &value);
 
+	bool operator==(const Address&) const;
+
 private:
 	uint64_t id;
 	QString country;

@@ -18,6 +18,7 @@ SOURCES += \
 	core/animal_info_widget.cpp \
 	core/animal_list_item_widget.cpp \
 	core/auth.cpp \
+	core/contacts.cpp \
 	core/chose_animal_dialog.cpp \
 	core/chose_animal_full_dialog.cpp \
 	core/mainwindow.cpp \
@@ -59,8 +60,12 @@ HEADERS += \
 	core/animal_info_widget.h \
 	core/animal_list_item_widget.h \
 	core/auth.h \
+<<<<<<< HEAD
+	core/contacts.h \
+=======
 	core/chose_animal_dialog.h \
 	core/chose_animal_full_dialog.h \
+>>>>>>> 8a3be44c5b00250b01b3a07622546f5629863239
 	core/new_visit_widget.h \
 	core/iserializable.h \
 	core/mainwindow.h \

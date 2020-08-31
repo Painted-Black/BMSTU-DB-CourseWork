@@ -61,27 +61,17 @@ uint64_t Client::getId() const
 	return id;
 }
 
-Passport Client::getPassport() const
+const Passport &Client::getPassport() const
 {
 	return passport;
 }
 
-void Client::setPassport(const Passport &value)
-{
-	passport = value;
-}
-
-Address Client::getAddress() const
+const Address &Client::getAddress() const
 {
 	return address;
 }
 
-void Client::setAddress(const Address &value)
-{
-	address = value;
-}
-
-QStringList Client::getPhones() const
+const QStringList &Client::getPhones() const
 {
 	return phones;
 }
@@ -91,7 +81,7 @@ void Client::setPhones(const QStringList &value)
 	phones = value;
 }
 
-QStringList Client::getEmails() const
+const QStringList &Client::getEmails() const
 {
 	return emails;
 }
@@ -101,7 +91,7 @@ void Client::setEmails(const QStringList &value)
 	emails = value;
 }
 
-QList<QUrl> Client::getSocial() const
+const QList<QUrl> &Client::getSocial() const
 {
 	return social;
 }
@@ -109,4 +99,16 @@ QList<QUrl> Client::getSocial() const
 void Client::setSocial(const QList<QUrl> &value)
 {
 	social = value;
+}
+
+bool Client::operator ==(const Client & v) const
+{
+	bool is_equal = true;
+	is_equal &= (passport == v.passport);
+	is_equal &= (address == v.address);
+	is_equal &= (phones == v.phones);
+	is_equal &= (emails == v.emails);
+	is_equal &= (social == v.social);
+
+	return is_equal;
 }

@@ -23,15 +23,21 @@ AnimalEditWidget::AnimalEditWidget(QWidget *parent)
 	  client_dlg_ui(new Ui::client()),
 	  address_dlg_ui(new Ui::address_widget()),
 	  passport_dlg_ui(new Ui::passport_widget()),
-	  contact_dlg_ui(new Ui::contacts_widget()),
 	  info_dlg(new QDialog(this)),
-	  client_dlg(new QDialog(this))
+	  client_dlg(new QDialog(this)),
+	  contract(new QWidget(this)),
+	  contact(new Contacts(this))
 {
 	ui->setupUi(this);
 	client_dlg_ui->setupUi(client_dlg);
+
+	QLayout* lay = new QHBoxLayout(client_dlg_ui->contact);
+	lay->setMargin(0);
+	lay->addWidget(contact);
+	client_dlg_ui->contact->setLayout(lay);
+
 	address_dlg_ui->setupUi(client_dlg_ui->address);
 	passport_dlg_ui->setupUi(client_dlg_ui->passport);
-	contact_dlg_ui->setupUi(client_dlg_ui->contact);
 
 	ui->sex_cb->addItem(GenderRussianType::gender_female, static_cast<uint32_t>(Gender::GenderEnum::Female));
 	ui->sex_cb->addItem(GenderRussianType::gender_male, static_cast<uint32_t>(Gender::GenderEnum::Male));
@@ -40,7 +46,7 @@ AnimalEditWidget::AnimalEditWidget(QWidget *parent)
 	contract = new QWidget(ui->contract);
 	contract_ui->setupUi(contract);
 
-	QLayout* lay = ui->contract->layout();
+	lay = ui->contract->layout();
 	contract->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	lay->addWidget(contract);
 
@@ -54,7 +60,7 @@ AnimalEditWidget::AnimalEditWidget(QWidget *parent)
 	info_dlg_ui->setupUi(info_dlg);
 	info_dlg->setModal(true);
 
-	connect(ui->Info_client, &QPushButton::released, this, &AnimalEditWidget::active);
+	connect(ui->Info_client, &QPushButton::released, this, &AnimalEditWidget::activeClientDialog);
 	connect(ui->sign_tb, &QToolButton::released, this, &AnimalEditWidget::activeSignDialog);
 	connect(ui->info_tb, &QToolButton::released, this, &AnimalEditWidget::activeInfoDialog);
 }
@@ -98,6 +104,47 @@ void AnimalEditWidget::show(const QUrl& url, std::chrono::milliseconds tout, con
 	chip_ui->country_le->setText(chip_object.getCountry());
 	chip_ui->impl_de->setDate(chip_object.getImplDate());
 	chip_ui->location_le->setText(chip_object.getLocation());
+
+	const Client& client_object = contract_object.getClient();
+	const auto& phones = client_object.getPhones();
+	const auto& emails = client_object.getEmails();
+	const auto& socials = client_object.getSocial();
+
+	for (const auto& phone : phones)
+	{
+		contact->addNewPhone(phone);
+	}
+
+	for (const auto& email : emails)
+	{
+		contact->addNewEmail(email);
+	}
+
+	for (const auto& social : socials)
+	{
+		contact->addNewSocialSite(social);
+	}
+
+	const Address& address_object = client_object.getAddress();
+	address_dlg_ui->city_lineEdit->setText(address_object.getCity());
+	address_dlg_ui->flat_lineEdit->setText(address_object.getFlat());
+	address_dlg_ui->house_lineEdit->setText(address_object.getHouse());
+	address_dlg_ui->street_lineEdit->setText(address_object.getStreet());
+	address_dlg_ui->country_lineEdit->setText(address_object.getCountry());
+
+	const Passport& passport_object = client_object.getPassport();
+	passport_dlg_ui->num_lineEdit->setText(passport_object.getPassportNum());
+	passport_dlg_ui->name_lineEdit->setText(passport_object.getName());
+	passport_dlg_ui->patr_lineEdit->setText(passport_object.getPatronymic());
+	passport_dlg_ui->issue_date->setDate(passport_object.getIssueDate());
+	passport_dlg_ui->surname_lineEdit->setText(passport_object.getSurname());
+	passport_dlg_ui->nationality_lineEdit->setText(passport_object.getNationality());
+	passport_dlg_ui->birth_dateEdit->setDate(passport_object.getBirthday());
+	QRadioButton* btn =
+			(passport_object.getGender().getGenderType() == Gender::GenderEnum::Male)
+			? passport_dlg_ui->male_radioButton
+			: passport_dlg_ui->female_radioButton;
+	btn->setChecked(true);
 }
 
 bool AnimalEditWidget::isFills() const
@@ -121,6 +168,12 @@ bool AnimalEditWidget::isFills() const
 		is_empty |= child->text().isEmpty();
 	}
 
+	children = client_dlg->findChildren<QLineEdit*>();
+	for (auto child : children)
+	{
+		is_empty |= child->text().isEmpty();
+	}
+
 	return is_empty == false;
 }
 
@@ -129,7 +182,7 @@ bool AnimalEditWidget::isEdit() const
 	return false;
 }
 
-AnimalMedicalRecord AnimalEditWidget::getEditedAnimalRecord()
+AnimalMedicalRecord AnimalEditWidget::getEditedAnimalMedicalRecord()
 {
 	AnimalMedicalRecord record;
 	record.setName(ui->name_le->text());
@@ -151,20 +204,55 @@ AnimalMedicalRecord AnimalEditWidget::getEditedAnimalRecord()
 	contract_object.setCode(contract_ui->num_le->text());
 	contract_object.setValidUntil(contract_ui->valid_to_de->date());
 	contract_object.setConclusionDate(contract_ui->conclusion_de->date());
-	record.setContract(contract_object);
+
+	Client client_object;
+	client_object.setPhones(contact->getPhones());
+	client_object.setEmails(contact->getEmails());
+	client_object.setSocial(contact->getSocialSites());
+
+	Address address_object;
+	address_object.setCity(address_dlg_ui->city_lineEdit->text());
+	address_object.setFlat(address_dlg_ui->flat_lineEdit->text());
+	address_object.setHouse(address_dlg_ui->house_lineEdit->text());
+	address_object.setStreet(address_dlg_ui->street_lineEdit->text());
+	address_object.setCountry(address_dlg_ui->country_lineEdit->text());
+	client_object.setAddress(std::move(address_object));
+
+	Passport passport_object;
+	passport_object.setPassportNum(passport_dlg_ui->num_lineEdit->text());
+	passport_object.setName(passport_dlg_ui->name_lineEdit->text());
+	passport_object.setPatronymic(passport_dlg_ui->patr_lineEdit->text());
+	passport_object.setIssueDate(passport_dlg_ui->issue_date->date());
+	passport_object.setSurname(passport_dlg_ui->surname_lineEdit->text());
+	passport_object.setNationality(passport_dlg_ui->nationality_lineEdit->text());
+	passport_object.setBirthday(passport_dlg_ui->birth_dateEdit->date());
+
+	Gender gender;
+	auto g_type = passport_dlg_ui->male_radioButton->isChecked()
+			? Gender::GenderEnum::Male
+			: Gender::GenderEnum::Female;
+	gender.setGenderType(g_type);
+	passport_object.setGender(gender);
+	client_object.setPassport(std::move(passport_object));
+	record.setContract(std::move(contract_object));
 
 	Microchip chip_object;
 	chip_object.setChipNum(chip_ui->num_le->text());
 	chip_object.setCountry(chip_ui->country_le->text());
 	chip_object.setImplDate(chip_ui->impl_de->date());
 	chip_object.setLocation(chip_ui->location_le->text());
-	record.setChip(chip_object);
-    return record;
+	record.setChip(std::move(chip_object));
+	return record;
 }
 
 const AnimalMedicalRecord &AnimalEditWidget::getAnimalRecord() const
 {
     return animal_record;
+}
+
+const AnimalMedicalRecord &AnimalEditWidget::getAnimalMedicalRecord()
+{
+	return animal_record;
 }
 
 void AnimalEditWidget::activeInfoDialog()
@@ -179,9 +267,9 @@ void AnimalEditWidget::activeSignDialog()
 	ui->sign_le->setText(showInfoDialog(ui->sign_le->text()));
 }
 
-void AnimalEditWidget::active()
+void AnimalEditWidget::activeClientDialog()
 {
-
+	client_dlg->exec();
 }
 
 QString AnimalEditWidget::showInfoDialog(const QString & txt)

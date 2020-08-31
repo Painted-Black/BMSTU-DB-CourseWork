@@ -30,8 +30,6 @@ bool AnimalMedicalRecord::deserialize(const QJsonObject &json) noexcept
 	cast &= birth.isValid();
 	cast &= last_visit.isValid();
 
-	init_soft = cast;
-
 	if (sex.deserialize(json.value(AnimalMedicalRecordJson::field_anim_sex)) == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalMedicalRecordJson::field_anim_sex << "' field";
@@ -48,8 +46,6 @@ bool AnimalMedicalRecord::deserialize(const QJsonObject &json) noexcept
 	{
 		qCritical() << Q_FUNC_INFO << "invalid cast '" << AnimalMedicalRecordJson::field_anim_contract << "' field";
 	}
-
-	init_full = cast;
 
 	return cast;
 }
@@ -73,16 +69,6 @@ QJsonObject AnimalMedicalRecord::serialize() const
 	root_obj.insert(AnimalMedicalRecordJson::field_anim_contract, QVariant(contract.serialize()).toJsonValue());
 	root_obj.insert(AnimalMedicalRecordJson::field_anim_rel_path_to_photo, QJsonValue(rel_path_to_photo));
 	return root_obj;
-}
-
-bool AnimalMedicalRecord::isSoftInit() const
-{
-	return init_soft;
-}
-
-bool AnimalMedicalRecord::isInit() const
-{
-	return init_full;
 }
 
 uint64_t AnimalMedicalRecord::getAnimId() const
@@ -200,29 +186,45 @@ void AnimalMedicalRecord::setLastVisit(const QDate &value)
 	last_visit = value;
 }
 
-const Microchip &AnimalMedicalRecord::getChip() const
+Microchip &AnimalMedicalRecord::getChip()
 {
 	return chip;
 }
 
-void AnimalMedicalRecord::setChip(const Microchip &value)
-{
-	chip = value;
-}
-
-const Contract &AnimalMedicalRecord::getContract() const
+Contract &AnimalMedicalRecord::getContract()
 {
 	return contract;
-}
-
-void AnimalMedicalRecord::setContract(const Contract &value)
-{
-	contract = value;
 }
 
 const QString &AnimalMedicalRecord::getRelPathToPhoto() const
 {
 	return rel_path_to_photo;
+}
+
+bool AnimalMedicalRecord::operator==(const AnimalMedicalRecord & v) const
+{
+	bool is_equal = true;
+	is_equal &= (name == v.name);
+	is_equal &= (breed == v.breed);
+	is_equal &= (species == v.species);
+	is_equal &= (sex == v.sex);
+	is_equal &= (birth == v.birth);
+	is_equal &= (other_data == v.other_data);
+	is_equal &= (color == v.color);
+	is_equal &= (special_signs == v.special_signs);
+	is_equal &= (registr_date == v.registr_date);
+	is_equal &= (last_visit == v.last_visit);
+	is_equal &= (chip == v.chip);
+	is_equal &= (contract == v.contract);
+	is_equal &= (rel_path_to_photo == v.rel_path_to_photo);
+	is_equal &= (castrated == v.castrated);
+
+	return is_equal;
+}
+
+void AnimalMedicalRecord::setAnimId(uint64_t id)
+{
+	anim_id = id;
 }
 
 void AnimalMedicalRecord::setRelPathToPhoto(const QString &value)

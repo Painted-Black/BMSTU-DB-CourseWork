@@ -8,6 +8,7 @@
 #include <QScreen>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include "network/network_fetcher.h"
 #include <QVariant>
 #include "utils/singlenton.h"
 #include "popup.h"
@@ -18,6 +19,7 @@
 #include "new_visit_widget.h"
 #include "animal_list_item_widget.h"
 #include "config/config.h"
+#include "utils/utils.h"
 #include "core/main_tab_widget.h"
 #include "core/admin_pannel.h"
 
@@ -168,7 +170,7 @@ void MainWindow::createWidgetAnimalInfo(uint64_t id)
 	AnimalEditWidget* aiw = new AnimalEditWidget(w);
 	QPushButton* add_btn = new QPushButton(w);
 	add_btn->setText("Добавить запись");
-	connect(add_btn, &QPushButton::released, this, &MainWindow::addNewAnimal);
+	connect(add_btn, &QPushButton::released, this, &MainWindow::updateAnimal);
 
 	aiw->show(url, cfg.getTimeout(), access_data.getPassword());
 	layout->addWidget(aiw);
@@ -225,15 +227,17 @@ void MainWindow::createWidgetNewAnimal()
 	layout->addWidget(add_btn);
 	w->setLayout(layout);
 	w->show();
-	connect(add_btn, &QPushButton::released, this, &MainWindow::addNewAnimal);
+	connect(add_btn, &QPushButton::released, this, &MainWindow::updateAnimal);
 
 	int idx = ui->tabWidget->addTab(w, QIcon(":/ui/icons/user_green_80.png"), "Добавить");
 	bar->setTabData(idx, QVariant::fromValue<uint8_t>(None));
 	ui->tabWidget->setCurrentIndex(idx);
 }
 
-void MainWindow::addNewAnimal()
+void MainWindow::updateAnimal()
 {
+	auto& cfg = Singlenton<Config>::getInstance();
+
 	AnimalEditWidget* widget = sender()->parent()->findChild<AnimalEditWidget*>();
 	bool is_fill = widget->isFills();
 	if (is_fill == false)
@@ -244,12 +248,33 @@ void MainWindow::addNewAnimal()
 		return;
 	}
 
-	auto record = widget->getEditedAnimalRecord();
-	auto animal_widget = findTag(AnimalWidget);
-	if (std::get<0>(animal_widget) == true)
+	auto record = widget->getEditedAnimalMedicalRecord();
+	if (record == widget->getAnimalMedicalRecord())
 	{
-		AnimalListWidget* lst = std::get<1>(animal_widget)->findChild<AnimalListWidget*>();
-		lst->addAnimal();
+		qDebug() << Q_FUNC_INFO << "Data was not changed";
+		return;
+	}
+	else
+	{
+		NetworkFetcher fetcher;
+		QNetworkRequest request(cfg.getUrlAddAnimal());
+		request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+		request.setRawHeader("Authorization", QByteArray("Explicit").append(access_data.getPassword()));
+		auto reply = fetcher.httpPost(request, toJson(record.serialize()), cfg.getTimeout());
+		auto code = std::get<0>(reply);
+		auto& popup = Singlenton<PopUp>::getInstance();
+		if (code == -1)
+		{
+			popup.setPopupText("Отсутствует подключение к интернету или нет доступа к серверу.");
+			return popup.show();
+		}
+
+		const auto& reply_text = std::get<2>(reply);
+		if (code != 201 || reply_text.isEmpty())
+		{
+			popup.setPopupText("Произошла ошибка, проверьте данные");
+			return popup.show();
+		}
 	}
 }
 

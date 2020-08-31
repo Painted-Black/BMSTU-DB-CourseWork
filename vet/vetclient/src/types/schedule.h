@@ -62,7 +62,7 @@ public:
 	bool deserialize(const QJsonArray &jarray) noexcept override;
 	QJsonArray serialize() const override;
 	void add_shedule_item(Schedule& shed);
-	const Schedule& at(size_t idx) const;
+	const Schedule& at(int idx) const;
 	int size() const;
 	QVector<Schedule> getShedule_list() const;
 

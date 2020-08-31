@@ -15,9 +15,6 @@ public:
 	bool deserialize(const QJsonObject &json) noexcept override;
 	QJsonObject serialize() const override;
 
-	bool isSoftInit() const;
-	bool isInit() const;
-
 	uint64_t getAnimId() const;
 	const QString& getName() const;
 	const QString& getBreed() const;
@@ -30,10 +27,13 @@ public:
 	const QString& getSpecialSigns() const;
 	const QDate& getRegistrDate() const;
 	const QDate& getLastVisit() const;
-	const Microchip& getChip() const;
-	const Contract& getContract() const;
+	Microchip& getChip();
+	Contract& getContract();
 	const QString& getRelPathToPhoto() const;
 
+	bool operator== (const AnimalMedicalRecord&) const;
+
+	void setAnimId(uint64_t);
 	void setName(const QString &value);
 	void setBreed(const QString &value);
 	void setSpecies(const QString &value);
@@ -45,12 +45,19 @@ public:
 	void setSpecialSigns(const QString &value);
 	void setRegistrDate(const QDate &value);
 	void setLastVisit(const QDate &value);
-	void setChip(const Microchip &value);
-	void setContract(const Contract &value);
 	void setRelPathToPhoto(const QString &value);
-private:
 
+	template<typename T>
+	void setChip(T &&value)
+	{
+		chip = std::forward<decltype (chip)>(value);
+	}
 
+	template<typename T>
+	void setContract(T&&value)
+	{
+		contract = std::forward<decltype (contract)>(value);
+	}
 private:
 	uint64_t anim_id;
 	QString name;
@@ -67,7 +74,5 @@ private:
 	Contract contract;
 	QString rel_path_to_photo;
 	bool castrated;
-	bool init_soft;
-	bool init_full;
 };
 
