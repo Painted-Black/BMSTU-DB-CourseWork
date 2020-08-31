@@ -35,5 +35,5 @@ void ChoseAnimalFullDialog::setAccess_data(const AccessData &value)
 
 const AnimalMedicalRecord &ChoseAnimalFullDialog::getAnimalRecord() const
 {
-    return aiw->getAnimalRecord();
+	return aiw->getAnimalMedicalRecord();
 }

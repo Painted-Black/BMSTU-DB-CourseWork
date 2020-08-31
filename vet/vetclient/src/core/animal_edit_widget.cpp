@@ -245,14 +245,9 @@ AnimalMedicalRecord AnimalEditWidget::getEditedAnimalMedicalRecord()
 	return record;
 }
 
-const AnimalMedicalRecord &AnimalEditWidget::getAnimalRecord() const
-{
-    return animal_record;
-}
-
 const AnimalMedicalRecord &AnimalEditWidget::getAnimalMedicalRecord()
 {
-	return animal_record;
+    return animal_record;
 }
 
 void AnimalEditWidget::activeInfoDialog()
