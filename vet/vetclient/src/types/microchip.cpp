@@ -36,6 +36,11 @@ QJsonObject Microchip::serialize() const
 	return root_obj;
 }
 
+void Microchip::setId(uint64_t id)
+{
+	this->id = id;
+}
+
 uint64_t Microchip::getId() const
 {
 	return id;
@@ -79,4 +84,14 @@ QString Microchip::getLocation() const
 void Microchip::setLocation(const QString &value)
 {
 	location = value;
+}
+
+bool Microchip::operator==(const Microchip & m) const
+{
+	bool is_equal = true;
+	is_equal &= (chip_num == m.chip_num);
+	is_equal &= (impl_date == m.impl_date);
+	is_equal &= (country == m.country);
+	is_equal &= (location == m.location);
+	return is_equal;
 }

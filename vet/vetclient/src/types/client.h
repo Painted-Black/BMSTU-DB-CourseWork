@@ -21,11 +21,23 @@ public:
 	const QStringList& getEmails() const;
 	const QList<QUrl>& getSocial() const;
 
-	void setPassport(const Passport &value);
-	void setAddress(const Address &value);
 	void setPhones(const QStringList &value);
 	void setEmails(const QStringList &value);
 	void setSocial(const QList<QUrl> &value);
+
+	template<typename T>
+	void setAddress(T&& value)
+	{
+		address = std::forward<Address>(value);
+	}
+
+	template<typename T>
+	void setPassport(T&& value)
+	{
+		passport = std::forward<Passport>(value);
+	}
+
+	bool operator ==(const Client&) const;
 
 private:
 	uint64_t id;

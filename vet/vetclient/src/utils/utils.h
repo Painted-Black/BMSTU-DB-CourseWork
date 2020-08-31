@@ -1,12 +1,15 @@
 #pragma once
 
 #include <QByteArray>
+#include <QMap>
 #include "types/QJsonHeaders.h"
 
 QByteArray toJson(const QJsonObject&) noexcept;
 
 QJsonObject fromJson(const QByteArray&) noexcept;
 QJsonArray fromJsonArray(const QByteArray&) noexcept;
+
+QMap<QString, QString> fromSimpleJson(const QByteArray&) noexcept;
 
 template<typename Class>
 QVector<Class> deserializeArray(const QByteArray& data)

@@ -66,19 +66,9 @@ const Passport &Client::getPassport() const
 	return passport;
 }
 
-void Client::setPassport(const Passport &value)
-{
-	passport = value;
-}
-
 const Address &Client::getAddress() const
 {
 	return address;
-}
-
-void Client::setAddress(const Address &value)
-{
-	address = value;
 }
 
 const QStringList &Client::getPhones() const
@@ -109,4 +99,16 @@ const QList<QUrl> &Client::getSocial() const
 void Client::setSocial(const QList<QUrl> &value)
 {
 	social = value;
+}
+
+bool Client::operator ==(const Client & v) const
+{
+	bool is_equal = true;
+	is_equal &= (passport == v.passport);
+	is_equal &= (address == v.address);
+	is_equal &= (phones == v.phones);
+	is_equal &= (emails == v.emails);
+	is_equal &= (social == v.social);
+
+	return is_equal;
 }

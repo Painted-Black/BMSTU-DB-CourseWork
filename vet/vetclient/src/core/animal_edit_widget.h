@@ -26,7 +26,8 @@ public:
 	void show(const QUrl &, std::chrono::milliseconds, const QByteArray&);
 	bool isFills() const;
 	bool isEdit() const;
-	AnimalMedicalRecord getAnimalMedicalRecort();
+	AnimalMedicalRecord getEditedAnimalMedicalRecord();
+	const AnimalMedicalRecord& getAnimalMedicalRecord();
 private:
 	void activeInfoDialog();
 	void activeSignDialog();

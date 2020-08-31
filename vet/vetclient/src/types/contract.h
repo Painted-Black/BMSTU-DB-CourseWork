@@ -26,6 +26,8 @@ public:
 	void setClient(const Client &value);
 	void setCode(const QString &value);
 
+	bool operator==(const Contract&) const;
+
 private:
 	uint64_t contr_id;
 	QString code;

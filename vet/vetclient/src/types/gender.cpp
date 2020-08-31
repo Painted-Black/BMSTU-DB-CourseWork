@@ -70,3 +70,8 @@ QString Gender::toString()
 	}
 	return value;
 }
+
+bool Gender::operator==(const Gender & v) const
+{
+	return current == v.current;
+}

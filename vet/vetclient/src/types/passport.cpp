@@ -139,6 +139,21 @@ Gender Passport::getGender() const
 	return gender;
 }
 
+bool Passport::operator==(const Passport & v) const
+{
+	bool is_equal = true;
+	is_equal &= (surname == v.surname);
+	is_equal &= (name == v.name);
+	is_equal &= (patronymic == v.patronymic);
+	is_equal &= (birthday == v.birthday);
+	is_equal &= (issue_date == v.issue_date);
+	is_equal &= (nationality == v.nationality);
+	is_equal &= (passport_num == v.passport_num);
+	is_equal &= (gender == v.gender);
+
+	return is_equal;
+}
+
 void Passport::setGender(const Gender &value)
 {
 	gender = value;

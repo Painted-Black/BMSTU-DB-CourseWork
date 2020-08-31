@@ -109,3 +109,14 @@ void Contract::setCode(const QString &value)
 {
 	code = value;
 }
+
+bool Contract::operator==(const Contract & v) const
+{
+	bool is_equal = true;
+	is_equal &= (code == v.code);
+	is_equal &= (conclusion_date == v.conclusion_date);
+	is_equal &= (last_update_date == v.last_update_date);
+	is_equal &= (valid_until == v.valid_until);
+	is_equal &= (client == v.client);
+	return is_equal;
+}

@@ -32,7 +32,7 @@ private:
 	void createWidgetAnimals(QWidget*);
 	void createWidgetAnimalInfo(uint64_t);
 	void createWidgetNewAnimal();
-	void addNewAnimal();
+	void updateAnimal();
 	void createWidgetAccountInfo(QWidget*);
 	void createWidgetNewVisit(QWidget*);
 	void newVisit();

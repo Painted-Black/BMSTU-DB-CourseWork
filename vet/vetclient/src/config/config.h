@@ -14,6 +14,7 @@ public:
 	QUrl getUrlAuthication() const noexcept;
 	QUrl getUrlAnimal() const noexcept;
 	QUrl getUrlAnimalsShortInfo() const noexcept;
+	QUrl getUrlAddAnimal() const noexcept;
 
 private:
 	QUrl getUrl(const QString&) const;
