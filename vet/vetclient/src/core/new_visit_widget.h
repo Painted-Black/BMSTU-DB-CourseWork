@@ -25,7 +25,7 @@ private:
 	void choseAnimal();
 	void add_prescr_btn();
 	void delete_prescr_btn();
-	Visit& getVisit(bool *is_ok);
+	Visit getVisit(bool *is_ok);
 private:
 	Ui::visit_widget* ui;
 	AccessData access_data;

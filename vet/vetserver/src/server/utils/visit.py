@@ -20,7 +20,6 @@ class Visit():
     def deserialize(self, json):
         self.__doctor = json['doctor']
         self.__animal = json['animal']
-        self.__ambulatory = json['ambulatury']
         self.__visit_date = json['visit_date']
         self.__owner_dynamics = json['owner_dynamics']
         self.__history_disease = json['history_disease']
@@ -29,7 +28,6 @@ class Visit():
         self.__recommendations = json['recommendations']
         self.__next_visit = json['next_visit']
         self.__prescribings = json['prescribings']
-        self.__initial = json['initial']
         self.__note = json['note']
 
     def is_valid(self):

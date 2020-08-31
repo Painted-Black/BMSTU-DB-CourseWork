@@ -10,6 +10,9 @@ class DBQuery(object):
 		# not impl
 		#pass
 
+	def get_error(self):
+		return self.str_error
+
 	def get_column_names(self):
 		l = [ i[0] for i in self.column_names]
 		return l
@@ -22,9 +25,14 @@ class DBQuery(object):
 		try:
 			cursor = self.conn.conn.cursor()
 			cursor.execute(self.query_buffer)
-			self.values = cursor.fetchall()
+			cursor.commit()
+			try:
+				self.values = cursor.fetchall()
+			except:
+				pass
 			self.column_names = cursor.description
-		except:
+		except Exception as e:
+			self.str_error=e
 			return False
 		finally:
 			cursor.close()

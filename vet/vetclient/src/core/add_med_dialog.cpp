@@ -21,6 +21,7 @@ void AddMedDialog::accept()
 	QString type = ui->type_comboBox->currentText();
 	QString term = ui->term_lineEdit->text();
 	QString freq = ui->freq_lineEdit->text();
+	QString note = ui->note_lineEdit->text();
 	med.setName(name);
 	med.setDosage(dose);
 	InjectionType _type;
@@ -28,6 +29,7 @@ void AddMedDialog::accept()
 	med.setType(_type);
 	med.setTerm_of_taking(term);
 	med.setFrequency_of_medication(freq);
+	med.setNotes(note);
 	QDialog::accept();
 }
 

@@ -23,8 +23,8 @@ bool Visit::deserialize(const QJsonObject &json) noexcept
 		return false;
 	}
 
-	ambulatury = json.value(VisitJson::field_vis_ambulatury).toVariant().toBool();
-	initial = json.value(VisitJson::field_vis_initial).toVariant().toBool();
+//	ambulatury = json.value(VisitJson::field_vis_ambulatury).toVariant().toBool();
+//	initial = json.value(VisitJson::field_vis_initial).toVariant().toBool();
 
 	visit_date = QDate::fromString(json.value(VisitJson::field_vis_visit_date).toString(), Qt::ISODate);
 	if (visit_date.isValid() == false)
@@ -53,7 +53,9 @@ bool Visit::deserialize(const QJsonObject &json) noexcept
 
 	recommendations = json.value(VisitJson::field_vis_recommendations).toString();
 
+
 	next_visit = QDate::fromString(json.value(VisitJson::field_vis_next_visit).toString(), Qt::ISODate);
+	next = next_visit.isValid();
 
 	cast = prescribings.deserialize(json.value(VisitJson::field_vis_prescribings).toArray());
 	if (cast == false)
@@ -72,8 +74,8 @@ QJsonObject Visit::serialize() const
 	root_obj.insert(VisitJson::field_vis_id, QJsonValue::fromVariant(QVariant::fromValue(vis_id)));
 	root_obj.insert(VisitJson::field_vis_doctor, doctor.serialize());
 	root_obj.insert(VisitJson::field_vis_animal, animal.serialize());
-	root_obj.insert(VisitJson::field_vis_ambulatury, QJsonValue::fromVariant(QVariant::fromValue(ambulatury)));
-	root_obj.insert(VisitJson::field_vis_initial, QJsonValue::fromVariant(QVariant::fromValue(initial)));
+//	root_obj.insert(VisitJson::field_vis_ambulatury, QJsonValue::fromVariant(QVariant::fromValue(ambulatury)));
+//	root_obj.insert(VisitJson::field_vis_initial, QJsonValue::fromVariant(QVariant::fromValue(initial)));
 	root_obj.insert(VisitJson::field_vis_visit_date, QJsonValue(visit_date.toString(Qt::ISODate)));
 	root_obj.insert(VisitJson::field_vis_owner_dynamics, owner_dynamics.serialize());
 	root_obj.insert(VisitJson::field_vis_history_disease, QJsonValue(history_disease));
@@ -81,7 +83,14 @@ QJsonObject Visit::serialize() const
 	root_obj.insert(VisitJson::field_vis_history_disease, QJsonValue(history_disease));
 	root_obj.insert(VisitJson::field_vis_diagnosis, QJsonValue(diagnosis));
 	root_obj.insert(VisitJson::field_vis_recommendations, QJsonValue(recommendations));
-	root_obj.insert(VisitJson::field_vis_next_visit, QJsonValue(next_visit.toString(Qt::ISODate)));
+	if (next == true)
+	{
+		root_obj.insert(VisitJson::field_vis_next_visit, QJsonValue(next_visit.toString(Qt::ISODate)));
+	}
+	else
+	{
+		root_obj.insert(VisitJson::field_vis_next_visit, QJsonValue());
+	}
 	root_obj.insert(VisitJson::field_vis_prescribings, prescribings.serialize());
 	root_obj.insert(VisitJson::field_vis_note, QJsonValue(note));
 	return root_obj;
@@ -112,15 +121,15 @@ void Visit::setAnimal(const AnimalMedicalRecord &value)
 	animal = value;
 }
 
-bool Visit::getAmbulatury() const
-{
-	return ambulatury;
-}
+//bool Visit::getAmbulatury() const
+//{
+//	return ambulatury;
+//}
 
-void Visit::setAmbulatury(bool value)
-{
-	ambulatury = value;
-}
+//void Visit::setAmbulatury(bool value)
+//{
+//	ambulatury = value;
+//}
 
 QDate Visit::getVisit_date() const
 {
@@ -190,6 +199,7 @@ QDate Visit::getNext_visit() const
 void Visit::setNext_visit(const QDate &value)
 {
 	next_visit = value;
+	next = value.isValid();
 }
 
 Prescribings Visit::getPrescribings() const
@@ -202,15 +212,15 @@ void Visit::setPrescribings(const Prescribings &value)
 	prescribings = value;
 }
 
-bool Visit::getInitial() const
-{
-	return initial;
-}
+//bool Visit::getInitial() const
+//{
+//	return initial;
+//}
 
-void Visit::setInitial(bool value)
-{
-	initial = value;
-}
+//void Visit::setInitial(bool value)
+//{
+//	initial = value;
+//}
 
 QString Visit::getNote() const
 {

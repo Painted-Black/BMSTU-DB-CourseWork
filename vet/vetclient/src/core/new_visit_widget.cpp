@@ -1,6 +1,7 @@
 #include <QPushButton>
 #include <QDebug>
 #include <QDate>
+
 #include "new_visit_widget.h"
 #include "ui_visit.h"
 #include "types/staff.h"
@@ -12,6 +13,10 @@
 #include "add_med_dialog.h"
 #include "chose_animal_dialog.h"
 #include "core/network/network_fetcher.h"
+#include "utils/singlenton.h"
+#include "core/popup.h"
+#include "config/config.h"
+#include "utils/utils.h"
 
 NewVisitWidget::NewVisitWidget(QWidget *parent)
 	: QWidget(parent), ui(new Ui::visit_widget()), model(new PrescribingsTableModel())
@@ -19,7 +24,6 @@ NewVisitWidget::NewVisitWidget(QWidget *parent)
 	ui->setupUi(this);
 	connect(ui->save_pushButton, &QPushButton::released, this, &NewVisitWidget::handle_save_button);
 	connect(ui->chose_animal_pushButton, &QPushButton::released, this, &NewVisitWidget::choseAnimal);
-	connect(ui->save_pushButton, &QPushButton::released, this, &NewVisitWidget::handle_save_button);
 	connect(ui->add_prescr_toolButton, &QPushButton::released, this, &NewVisitWidget::add_prescr_btn);
 	connect(ui->delete_prescr_toolButton, &QPushButton::released, this, &NewVisitWidget::delete_prescr_btn);
 
@@ -51,89 +55,167 @@ void NewVisitWidget::update()
 
 void NewVisitWidget::handle_save_button()
 {
-    qDebug() << Q_FUNC_INFO << "Saving...";
+	qDebug() << Q_FUNC_INFO << "Saving...";
 
 	bool is_ok = false;
 	Visit vis = getVisit(&is_ok);
 
-    // метод с объектом
+	if (is_ok == false)
+	{
+		auto& popup = Singlenton<PopUp>::getInstance();
+		popup.setPopupText("Не все поля заполненны корректно.");
+		popup.show();
+		return;
+	}
 
-    QNetworkRequest request(QUrl("http://127.0.0.1:4446/visits/new"));
+	auto& cfg = Singlenton<Config>::getInstance();
+	QNetworkRequest request(cfg.getUrlNewVisit());
     request.setRawHeader("Authorization", QByteArray("Explicit: ").append(access_data.getPassword()));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     NetworkFetcher fetcher;
-    auto reply = fetcher.httpPost(request, NULL, std::chrono::milliseconds(20000));
+	QByteArray raw_data = visitSerialize(vis, animal_id);
+	auto reply = fetcher.httpPost(request, raw_data, cfg.getTimeout());
     int32_t code = std::get<0>(reply);
+	auto& popup = Singlenton<PopUp>::getInstance();
     if (code == -1)
     {
-        // нет соединения с интернетом или доступа к серверу
+		popup.setPopupText("Нет соединения с интернетом или доступа к серверу.");
+		popup.show();
+		return;
     }
     if (code != 201)
     {
-        // какая-то ошибка
+		popup.setPopupText("Возникла ошибка.");
+		popup.show();
+		return;
     }
-    // все ок
-
-    #pragma message "TODO"
-
-
+	// ok
     qDebug() << Q_FUNC_INFO << "Saved";
 }
 
-Visit &NewVisitWidget::getVisit(bool *is_ok)
+Visit NewVisitWidget::getVisit(bool *is_ok)
 {
 	Visit vis;
-
-
-	bool is_ambulatoty = ui->ambularory_checkBox->isChecked();
-	QDate visit_date = QDate::fromString(ui->visit_date_dateEdit->text());
-	QString histoty_disease = ui->anamnesis_lineEdit->text();
-	QString owner_dynamics = ui->owner_dynamics_comboBox->currentText();
-	OwnerDynamic dynamics;
-	if (dynamics.fromString(owner_dynamics) == false)
-	{
-		qDebug() << Q_FUNC_INFO << "Unable to read owner dynamics type";
-	}
+	AnimalState state;
+	*is_ok = false;
 
 	QString gen_state_str = ui->general_state_comboBox->currentText();
 	GeneralState gen_state;
 	if (gen_state.fromString(gen_state_str) == false)
 	{
 		qDebug() << Q_FUNC_INFO << "Unable to read general state type";
+		return vis;
+	}
+	int32_t pulse = ui->pulse_spinBox->value();
+	if (pulse <= 0)
+	{
+		qDebug() << Q_FUNC_INFO << "Unable to read pulse";
+		return vis;
 	}
 
-	uint32_t pulse = ui->pulse_spinBox->value();
 	float weight = ui->weight_doubleSpinBox->value();
-	uint32_t AP_1 = ui->ap_1_spinBox->value();
-	uint32_t AP_2 = ui->ap_2_spinBox->value();
-	QString AP = QVariant(AP_1).toString() + " / " + QVariant(AP_2).toString();
+	if (weight <= 0)
+	{
+		qDebug() << Q_FUNC_INFO << "Unable to read weight";
+		return vis;
+	}
+
+	int32_t AP_1 = ui->ap_1_spinBox->value();
+	int32_t AP_2 = ui->ap_2_spinBox->value();
+	if (AP_1 <= 0 || AP_2 <= 0)
+	{
+		qDebug() << Q_FUNC_INFO << "Unable to read ap";
+		return vis;
+	}
+	QString AP = QVariant(AP_1).toString() + "/" + QVariant(AP_2).toString();
+
 	float temperature = ui->temperature_doubleSpinBox->value();
-	uint32_t cfr = ui->cfr_spinBox->value();
-	uint32_t resp_rate = ui->resp_rate_spinBox->value();
-	QString diagnosis = ui->diagnosis_lineEdit->text();
-	bool next_visit = ui->next_visit_checkBox->isChecked();
-	QDate next_visit_date = QDate::fromString(ui->next_visit_dateEdit->text());
-	QString notes = ui->note_lineEdit->text();
-	QString rec = ui->recommendations_lineEdit->text();
+	if (temperature <= 0)
+	{
+		qDebug() << Q_FUNC_INFO << "Unable to read temperature";
+		return vis;
+	}
 
-	Prescribings pr;
+	int32_t cfr = ui->cfr_spinBox->value();
+	if (cfr <= 0)
+	{
+		qDebug() << Q_FUNC_INFO << "Unable to read cfr";
+		return vis;
+	}
 
+	int32_t resp_rate = ui->resp_rate_spinBox->value();
+	if (resp_rate <= 0)
+	{
+		qDebug() << Q_FUNC_INFO << "Unable to read resp rate";
+		return vis;
+	}
+
+	state.setGeneral(gen_state);
+	state.setPulse(pulse);
+	state.setWeight(weight);
+	state.setAP(AP);
+	state.setTemperature(temperature);
+	state.setResp_rate(resp_rate);
+
+	Staff doctor = access_data.getOwner();
+//	bool is_ambulatoty = ui->ambularory_checkBox->isChecked();
+	QDate visit_date = QDate::fromString(ui->visit_date_dateEdit->text(), "dd.MM.yyyy");
+
+	QString owner_dynamics = ui->owner_dynamics_comboBox->currentText();
+	OwnerDynamic dynamics;
+	if (dynamics.fromString(owner_dynamics) == false)
+	{
+		qDebug() << Q_FUNC_INFO << "Unable to read owner dynamics type";
+		return vis;
+	}
+	QString histoty_disease = ui->anamnesis_lineEdit->text();
 	if (histoty_disease.isEmpty())
 	{
-		qDebug() << "Disease history is empty!";
+		qDebug() << Q_FUNC_INFO << "Unable to read anamnesis";
+		return vis;
 	}
+	QString diagnosis = ui->diagnosis_lineEdit->text();
 	if (diagnosis.isEmpty())
 	{
-		qDebug() << "Diagnosis is empty!";
+		qDebug() << Q_FUNC_INFO << "Unable to read diagnosis";
+		return vis;
 	}
+
+	QString rec = ui->recommendations_lineEdit->text();
 	if (rec.isEmpty())
 	{
-		qDebug() << "Recommendations is empty!";
+		qDebug() << Q_FUNC_INFO << "Unable to read recommendations";
+		return vis;
 	}
+
+	bool next_visit = ui->next_visit_checkBox->isChecked();
+	if (next_visit == true)
+	{
+		QDate next_visit_date = QDate::fromString(ui->next_visit_dateEdit->text(), "dd.MM.yyyy");
+		vis.setNext_visit(next_visit_date);
+	}
+
+	QString notes = ui->note_lineEdit->text();
+
 	if (animal_id == -1)
 	{
-		qDebug() << "Animal id is empty!";
+		qDebug() << Q_FUNC_INFO << "Animal id is empty!";
+		return vis;
 	}
+	Prescribings pr = model->getPresctibings();
+
+	vis.setDoctor(doctor);
+//	vis.setAmbulatury(is_ambulatoty);
+	vis.setVisit_date(visit_date);
+	vis.setOwner_dynamics(dynamics);
+	vis.setHistory_disease(histoty_disease);
+	vis.setCur_state(state);
+	vis.setDiagnosis(diagnosis);
+	vis.setRecommendations(rec);
+	vis.setNote(notes);
+	vis.setPrescribings(pr);
+	*is_ok = true;
+	return vis;
 }
 
 void NewVisitWidget::setAccessData(const AccessData &value)

@@ -42,6 +42,11 @@ QUrl Config::getUrlCurrentvisits() const noexcept
 	return getUrl("ROUTES/current_visits");
 }
 
+QUrl Config::getUrlNewVisit() const noexcept
+{
+	return getUrl("ROUTES/new_visit");
+}
+
 QUrl Config::getUrl(const QString & path) const
 {
 	QUrl url;

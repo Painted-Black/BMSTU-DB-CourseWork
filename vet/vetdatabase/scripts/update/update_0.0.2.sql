@@ -24,4 +24,4 @@ INSERT INTO animals_medical_records (name, breed, species, sex, castrated, birth
 INSERT INTO position (title, salary) VALUES ('Ветеринарный врач', 40000);
 INSERT INTO staff (passport, position, edu_level, fire_date, employ_date) VALUES (2, 2, 'specialist', NULL, '2018-01-1');
 
-INSERT INTO visits (doctor, animal, ambulatury, visit_date, owner_dynamics, history_disease, cur_state, diagnosis, recommendations, next_visit, prescribings, "initial", note) VALUES (2, 1, 't', '2020-02-04', 'stably', 'Кашель', 1, 'Простуда', 'Не гулять', '2020-02-02', NULL, 't', NULL);
+INSERT INTO visits (doctor, animal, ambulatury, visit_date, owner_dynamics, history_disease, cur_state, diagnosis, recommendations, next_visit, prescribings, note) VALUES (2, 1, '2020-02-04', 'stably', 'Кашель', 1, 'Простуда', 'Не гулять', '2020-02-02', NULL, NULL);

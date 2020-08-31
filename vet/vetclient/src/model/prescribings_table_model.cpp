@@ -28,12 +28,12 @@ QVariant PrescribingsTableModel::data(const QModelIndex &index, int role) const
 	{
 		switch (column)
 		{
-			case 0: return med.getName();
-			case 1: return med.getDosage();
-			case 2: return med.getType().toString();
-			case 3: return med.getFrequency_of_medication();
-			case 4: return med.getTerm_of_taking();
-			case 5: return med.getNotes();
+			case NAME: return med.getName();
+			case DOSAGE: return med.getDosage();
+			case TYPE: return med.getType().toString();
+			case FREQUENCY: return med.getFrequency_of_medication();
+			case TERM: return med.getTerm_of_taking();
+			case NOTE: return med.getNotes();
 			default: return QVariant();
 		}
 	}
