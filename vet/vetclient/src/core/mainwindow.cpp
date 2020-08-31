@@ -19,6 +19,7 @@
 #include "animal_list_item_widget.h"
 #include "config/config.h"
 #include "core/main_tab_widget.h"
+#include "core/admin_pannel.h"
 
 enum TabType
 {
@@ -45,6 +46,10 @@ MainWindow::MainWindow(QWidget *parent)
 						{MainWidget, Unclosable}, &MainWindow::showMainTab);
 	w->show();
 
+	QWidget* admin_w = addTab(QIcon(":/ui/icons/system.png"), "Настройки системы",
+								{MainWidget, Unclosable}, &MainWindow::showAdminPannel);
+	admin_w->show();
+
 	connect(ui->acc_action, &QAction::triggered, this, &MainWindow::accInfo);
 	connect(ui->exit_action, &QAction::triggered, this, &MainWindow::exit);
 	connect(ui->pet_reg, &QAction::triggered, this, &MainWindow::createWidgetNewAnimal);
@@ -68,7 +73,6 @@ void MainWindow::showMainTab(QWidget *w)
 
 	auto& cfg = Singlenton<Config>::getInstance();
 	QUrl url = cfg.getUrlAnimal();
-//	url.setQuery(QString("date=%1").arg(static_cast<qulonglong>()));
 
 	QBoxLayout* layout = new QVBoxLayout();
 	MainTabWidget* aiw = new MainTabWidget(w);
@@ -76,6 +80,17 @@ void MainWindow::showMainTab(QWidget *w)
 	w->setLayout(layout);
 	aiw->show(cfg.getUrlCurrentvisits(), cfg.getTimeout(), access_data.getPassword());
 	connect(aiw, &MainTabWidget::newVisit, this, &MainWindow::newVisit);
+}
+
+void MainWindow::showAdminPannel(QWidget *w)
+{
+	qDebug() << Q_FUNC_INFO << "Admin`s pannel";
+	auto& cfg = Singlenton<Config>::getInstance();
+	QBoxLayout* layout = new QVBoxLayout();
+	AdminPannel* pannel = new AdminPannel(w);
+	layout->addWidget(pannel);
+	w->setLayout(layout);
+	pannel->show(cfg.getUrlSystemUsersList(), cfg.getTimeout(), access_data.getPassword());
 }
 
 QWidget* MainWindow::addTab(

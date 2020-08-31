@@ -18,13 +18,27 @@ class NewVisitHandler(AbstractHandler):
 			res.status_code=403
 			res.data = json.dumps({"error" : "Empty json"})
 			return
+		
+		key = str(req.headers.get("Authorization"))
+		# Authorization: Explicit Key
+		explicit_key="Explicit: "
+		idx = key.find(explicit_key) 
+		if idx == -1:
+			res.status_code=401
+			return
+		
+		key = key[len(explicit_key):]
+		staff_id = valid_key_checker.get_owner(key)
+		if staff_id == -1:
+			res.status_code=401
+			return
 
 		if not self.check_json(json_data):
 			res.status_code=403
 			res.data = json.dumps({"error" : "Expected values was not received"})
 			return
 
-		state = self.__insert_visit_to_json(json_data, state_id)
+		state = self.__insert_visit_to_json(json_data)
 		if not state:
 			res.status_code=500 #TODO
 			res.data = json.dumps({"error" : "insertion failed"})
@@ -32,7 +46,9 @@ class NewVisitHandler(AbstractHandler):
 
 		res.status_code=201
     
-	def __insert_visit_to_json(self, vis):
+	def __insert_visit_to_json(self, json):
+		animal_state = json['cur_state']
+		vis = json
 		conn_name = str(uuid.uuid4())
 		conn = access_manager.connect(conn_name)
 
@@ -49,8 +65,12 @@ class NewVisitHandler(AbstractHandler):
 		
 		state_id = str(result[0][0])
 
+		if vis['next_visit'] == None:
+			next_date = 'NULL'
+		else:
+			next_date = "'" + vis['next_visit'] + "'"
 		str_query_visit = \
-			'''INSERT INTO visits (doctor, animal, visit_date, owner_dynamics, history_disease, cur_state, diagnosis, recommendations, next_visit, prescribings, note) VALUES ({}, {}, '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}');'''.format(
+			'''INSERT INTO visits (doctor, animal, visit_date, owner_dynamics, history_disease, cur_state, diagnosis, recommendations, next_visit, prescribings, note) VALUES ({}, {}, '{}', '{}', '{}', '{}', '{}', '{}', {}, '{}', '{}');'''.format(
 				vis['doctor']['staff_id'],
 				vis['animal']['anim_id'],
 				vis['visit_date'], 
@@ -59,7 +79,7 @@ class NewVisitHandler(AbstractHandler):
 				state_id, 
 				vis['diagnosis'], 
 				vis['recommendations'], 
-				vis['next_visit'], 
+				next_date, 
 				str(vis['prescribings']).replace("'", '"'), 
 				vis['note'])
 

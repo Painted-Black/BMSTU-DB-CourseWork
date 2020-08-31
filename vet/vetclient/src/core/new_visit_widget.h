@@ -20,6 +20,7 @@ public:
 	explicit NewVisitWidget(QWidget *parent = nullptr);
 	void update();
 	void setAccessData(const AccessData &value);
+	void readOnly();
 private:
 	void handle_save_button();
 	void choseAnimal();

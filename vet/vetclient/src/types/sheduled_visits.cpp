@@ -1,4 +1,4 @@
-#include "sheduled_visits.h""
+#include "sheduled_visits.h"
 #include "json_fields.h"
 
 QJsonObject SheduledVisits::serialize() const

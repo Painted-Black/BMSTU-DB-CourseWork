@@ -47,6 +47,11 @@ QUrl Config::getUrlNewVisit() const noexcept
 	return getUrl("ROUTES/new_visit");
 }
 
+QUrl Config::getUrlSystemUsersList() const noexcept
+{
+	return getUrl("ROUTES/system_users_list");
+}
+
 QUrl Config::getUrl(const QString & path) const
 {
 	QUrl url;

@@ -18,6 +18,7 @@ public:
 	virtual bool deserialize(const QJsonValue &value) noexcept override;
 	virtual QJsonValue serialize() const override;
 	QString toString();
+	bool fromString(QString lvl);
 
 private:
 	AccessLevelEnum current;

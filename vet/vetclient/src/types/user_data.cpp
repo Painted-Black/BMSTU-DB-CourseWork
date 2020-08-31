@@ -74,6 +74,37 @@ QString AccessLevel::toString()
 	return value;
 }
 
+bool AccessLevel::fromString(QString lvl)
+{
+	AccessLevelEnum level;
+	bool is_ok = false;
+	if (lvl == AccessLevelType::access_main)
+	{
+		level = AccessLevelEnum::Main;
+		is_ok = true;
+	}
+	else if (lvl == AccessLevelType::access_vet)
+	{
+		level = AccessLevelEnum::Vet;
+		is_ok = true;
+	}
+	else if (lvl == AccessLevelType::access_admin)
+	{
+		level = AccessLevelEnum::Admin;
+		is_ok = true;
+	}
+	else if (lvl == AccessLevelType::access_registry)
+	{
+		level = AccessLevelEnum::Registry;
+		is_ok = true;
+	}
+	if (is_ok == true)
+	{
+		current = level;
+	}
+	return is_ok;
+}
+
 bool AccessData::deserialize(const QJsonObject &document) noexcept
 {
 	bool ok = true;
