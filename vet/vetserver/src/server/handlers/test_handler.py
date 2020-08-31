@@ -8,7 +8,7 @@ class TestHandler(AbstractHandler):
 		res.status_code = 200
 		out = req.args.get('user')
 		res.data = json.dumps({"Successful": out})
-		res.content_type = "Application/Json"
+		res.content_type = "application/json"
 		print(req.data)
 
 	def endpoint_names(self):

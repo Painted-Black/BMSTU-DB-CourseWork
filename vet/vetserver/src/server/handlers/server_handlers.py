@@ -16,7 +16,7 @@ class TableHandler(AbstractHandler):
 			res.status_code = 500
 			return
 		else:
-			res.content_type = "Application/Json"
+			res.content_type = "application/json"
 			res.data = self.__to_json(data, colunm_names)
 	
 	def __to_json(self, rows, column_names):

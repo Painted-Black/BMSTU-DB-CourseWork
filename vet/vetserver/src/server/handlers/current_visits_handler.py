@@ -8,7 +8,7 @@ import uuid
 
 class CurrentVisitsHandler(AbstractHandler):
 	def request(self, req, res):
-		res.content_type = "Application/Json"
+		res.content_type = "application/json"
 
 		try:
 			data = json.loads(req.data)

@@ -8,8 +8,7 @@ import uuid
 
 class AuthHandler(AbstractHandler):
 	def request(self, req, res):
-		res.content_type = "Application/Json"
-
+		res.content_type = "application/json"
 		try:
 			auth_data = json.loads(req.data)
 		except json.decoder.JSONDecodeError:

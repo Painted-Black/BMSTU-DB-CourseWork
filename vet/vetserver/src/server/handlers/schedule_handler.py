@@ -8,6 +8,7 @@ import uuid
 
 class ScheduleHandler(AbstractHandler):
 	def request(self, req, res):
+		print("SHEDULE")
 		key = str(req.headers.get("Authorization"))
 		# Authorization: Explicit Key
 		explicit_key="Explicit: "

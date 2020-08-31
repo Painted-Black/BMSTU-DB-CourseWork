@@ -21,26 +21,34 @@
 #include "core/main_tab_widget.h"
 #include "core/admin_pannel.h"
 
+
 enum TabType
 {
 	AccountWidget		= 1,
 	AnimalWidget		= 2,
 	EditAnimalWidget	= 3,
 	VisitWidget			= 4,
-	MainWidget			= 5
+	MainWidget			= 5,
+	AddAnimalWidget		= 6
 };
 
 enum TabFlags
 {
 	None		   = 0b00,
-	Unclosable = 0b01,
-	Single		  = 0b10
+	Unclosable     = 0b01,
+	Single		   = 0b10
 };
+
+Q_DECLARE_METATYPE(TabType)
+Q_DECLARE_METATYPE(TabFlags)
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow())
 {
 	ui->setupUi(this);
+
+	qRegisterMetaType<TabType>();
+	qRegisterMetaType<TabFlags>();
 
 	QWidget* w = addTab(QIcon(":/ui/icons/logo_green_80.png"), "Главная страница",
 						{MainWidget, Unclosable}, &MainWindow::showMainTab);
@@ -176,7 +184,8 @@ void MainWindow::createWidgetAnimalInfo(uint64_t id)
 	w->setLayout(layout);
 
 	int idx = ui->tabWidget->addTab(w, QIcon(":/ui/icons/user_green_80.png"), "Добавить");
-	bar->setTabData(idx, QVariant::fromValue<uint8_t>(None));
+	QVariantList data = { AddAnimalWidget, None };
+	bar->setTabData(idx, data);
 	ui->tabWidget->setCurrentIndex(idx);
 }
 
@@ -263,7 +272,8 @@ void MainWindow::addToolBarAction(const QIcon& icon, const QString& text, const 
 void MainWindow::closeTab(int idx)
 {
 	qDebug() << Q_FUNC_INFO;
-	auto flags = ui->tabWidget->tabBar()->tabData(idx).toList().at(1).value<uint8_t>();
+	auto data = ui->tabWidget->tabBar()->tabData(idx);
+	auto flags = data.toList().at(1).value<uint8_t>();
 	if (flags & Unclosable)
 	{
 		return;
