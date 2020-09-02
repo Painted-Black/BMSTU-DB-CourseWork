@@ -296,10 +296,14 @@ void NewVisitWidget::delete_prescr_btn()
 	qDebug() << Q_FUNC_INFO << "Delete prescr...";
 	QItemSelectionModel *select = ui->prescr_tableView->selectionModel();
 	QModelIndexList selected_rows = select->selectedRows();
-	int rows_selected = selected_rows.size();
-	for (int i = 0; i < rows_selected; ++i)
+	if (selected_rows.size() != 0)
 	{
-		model->removeMed(selected_rows.at(i).data().toString(), i);
+		int i = selected_rows.begin()->row();
+		model->removeMed(selected_rows.at(0).data().toString(), i);
 	}
+//	for (int i = 0; i < rows_selected; ++i)
+//	{
+//		model->removeMed(selected_rows.at(i).data().toString(), i);
+//	}
 	//	Prescribings pr = model->getPresctibings();
 }

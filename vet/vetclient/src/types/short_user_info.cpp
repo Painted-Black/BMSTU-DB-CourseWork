@@ -13,19 +13,6 @@ QJsonObject ShortUserInfo::serialize() const
 
 bool ShortUserInfo::deserialize(const QJsonObject &json) noexcept
 {
-//	uint64_t uid;
-//	QString login;
-//	QString surname;
-//	QString name;
-//	QString patronymic;
-//	QString access_level;
-//	QString position_title;
-//	QDate employed;
-//	QDate fired;
-
-//	QString fio;
-//	AccessLevel acc_level;
-
 	bool is_ok = true;
 	uid = json.value(AccessJson::field_acc_id).toVariant().value<uint64_t>();
 	login = json.value(AccessJson::field_acc_login).toString();
@@ -36,6 +23,7 @@ bool ShortUserInfo::deserialize(const QJsonObject &json) noexcept
 	name = passport.value(PassportJson::field_pass_name).toString();
 	surname = passport.value(PassportJson::field_pass_surname).toString();
 	patronymic = passport.value(PassportJson::field_pass_patronymic).toString();
+	password = json.value(AccessJson::field_acc_password).toVariant().toByteArray();
 
 	fio = surname;
 	if (name.size() >= 1)
@@ -126,6 +114,16 @@ AccessLevel ShortUserInfo::getAccessLevelType() const
 void ShortUserInfo::setAccessLevelType(const AccessLevel &value)
 {
 	acc_level = value;
+}
+
+QByteArray ShortUserInfo::getPassword() const
+{
+	return password;
+}
+
+void ShortUserInfo::setPassword(const QByteArray &value)
+{
+	password = value;
 }
 
 QDate ShortUserInfo::getFireDate() const

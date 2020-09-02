@@ -17,6 +17,7 @@ MainTabWidget::MainTabWidget(QWidget *parent) :
 {
 	ui->setupUi(this);
 	connect(ui->new_visit_pushButton, &QPushButton::released, this, &MainTabWidget::new_visit_btn_pressed);
+	connect(ui->patients_pushButton, &QPushButton::released, this, &MainTabWidget::patientsBtnPressed);
 }
 
 MainTabWidget::~MainTabWidget()
@@ -27,6 +28,11 @@ MainTabWidget::~MainTabWidget()
 void MainTabWidget::new_visit_btn_pressed()
 {
 	emit newVisit();
+}
+
+void MainTabWidget::patientsBtnPressed()
+{
+	emit patients();
 }
 
 void MainTabWidget::setAccessData(const AccessData &acc_data)
