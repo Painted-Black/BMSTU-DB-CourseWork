@@ -269,7 +269,7 @@ void MainWindow::updateAnimal()
 		NetworkFetcher fetcher;
 		QNetworkRequest request(cfg.getUrlAddAnimal());
 		request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-		request.setRawHeader("Authorization", QByteArray("Explicit").append(access_data.getPassword()));
+		request.setRawHeader("Authorization", QByteArray("Explicit: ").append(access_data.getPassword()));
 		auto reply = fetcher.httpPost(request, toJson(record.serialize()), cfg.getTimeout());
 		auto code = std::get<0>(reply);
 		auto& popup = Singlenton<PopUp>::getInstance();
