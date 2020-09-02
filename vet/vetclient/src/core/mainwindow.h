@@ -19,11 +19,16 @@ private:
 	using InitFunc = void(MainWindow::*)(T);
 	using  Callback = void(MainWindow::*)();
 public:
-	explicit MainWindow(QWidget *parent = nullptr);
+	explicit MainWindow(AccessLevel level, QWidget *parent = nullptr);
 	void setAccessData(const AccessData &value);
 	void show();
 
 private:
+	void constructAdmin();
+	void constructVet();
+	void constructReistry();
+	void constructMain();
+
 	void runAnimalEditor();
 	void showMainTab(QWidget* w);
 	void showAdminPannel(QWidget* w);
@@ -41,6 +46,7 @@ private:
 	void exit();
 public slots:
 	void newVisit();
+	void patients();
 private:
 	Ui::MainWindow* ui;
 	Staff staff;

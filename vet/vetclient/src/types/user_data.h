@@ -19,6 +19,10 @@ public:
 	virtual QJsonValue serialize() const override;
 	QString toString();
 	bool fromString(QString lvl);
+	bool isAdmin() const;
+	bool isMain() const;
+	bool isRegistry() const;
+	bool isVet() const;
 
 private:
 	AccessLevelEnum current;

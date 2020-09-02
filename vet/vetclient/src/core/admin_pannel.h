@@ -20,6 +20,10 @@ public:
 
 private:
 	void tableViewDoubleClicked(const QModelIndex &index);
+	void addUserBtnClicked();
+	void deleteUserBtnClicked();
+	bool deleteUserQuery(uint64_t id);
+	bool deleteUser(uint64_t id);
 
 	Ui::AdminPannel *ui;
 	UsersTableModel* model;

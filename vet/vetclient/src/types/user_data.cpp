@@ -105,6 +105,26 @@ bool AccessLevel::fromString(QString lvl)
 	return is_ok;
 }
 
+bool AccessLevel::isAdmin() const
+{
+	return (current == AccessLevelEnum::Admin);
+}
+
+bool AccessLevel::isMain() const
+{
+	return (current == AccessLevelEnum::Main);
+}
+
+bool AccessLevel::isRegistry() const
+{
+	return (current == AccessLevelEnum::Registry);
+}
+
+bool AccessLevel::isVet() const
+{
+	return (current == AccessLevelEnum::Vet);
+}
+
 bool AccessData::deserialize(const QJsonObject &document) noexcept
 {
 	bool ok = true;

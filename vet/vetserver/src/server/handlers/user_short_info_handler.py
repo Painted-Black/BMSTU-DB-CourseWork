@@ -33,7 +33,7 @@ class UserShortInfoHandler(AbstractHandler):
 	def __queryDb(self):
 		conn_name = str(uuid.uuid4())
 		conn = access_manager.connect(conn_name)
-		str_query = '''SELECT acc_id, login, surname, name,
+		str_query = '''SELECT acc_id, login, password, surname, name,
 		patronymic, access_level, title, employ_date, fire_date 
 		FROM access a JOIN staff s ON a.employee=s.staff_id 
 		JOIN position p ON s.position=p.pos_id 
@@ -50,21 +50,24 @@ class UserShortInfoHandler(AbstractHandler):
 
 	def __construct_json(self, result : list, column_names : list):
 		res_json = []
+		print(result, column_names)
 		for i in range(len(result)):
 			access = {}
 			passport = {}
 			position = {}
 			staff = {}
-			for j in range(2, 5):
+			for j in range(3, 6):
 				passport[column_names[j]] = str(result[i][j])
 			
 			for j in range(0, 2):
 				access[column_names[j]] = str(result[i][j])
+			
+			access[column_names[2]] = result[i][2].decode('utf-8')
 
-			access[column_names[5]] = str(result[i][5])
-			position[column_names[6]] = str(result[i][6])
+			access[column_names[6]] = str(result[i][6])
+			position[column_names[7]] = str(result[i][7])
 
-			for j in range(7, 9):
+			for j in range(8, 10):
 				staff[column_names[j]] = str(result[i][j])
 
 			staff['position'] = position

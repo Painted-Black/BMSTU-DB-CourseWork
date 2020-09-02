@@ -44,7 +44,7 @@ enum TabFlags
 Q_DECLARE_METATYPE(TabType)
 Q_DECLARE_METATYPE(TabFlags)
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(AccessLevel level, QWidget *parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow())
 {
 	ui->setupUi(this);
@@ -52,21 +52,65 @@ MainWindow::MainWindow(QWidget *parent)
 	qRegisterMetaType<TabType>();
 	qRegisterMetaType<TabFlags>();
 
-	QWidget* w = addTab(QIcon(":/ui/icons/logo_green_80.png"), "Главная страница",
-						{MainWidget, Unclosable}, &MainWindow::showMainTab);
-	w->show();
+	if (level.isVet() == true)
+	{
+		qDebug() << "Vet";
+		constructVet();
+	}
+	else if (level.isAdmin() == true)
+	{
+		qDebug() << "Admin";
+		constructAdmin();
+	}
+	else if (level.isMain() == true)
+	{
+		qDebug() << "Main";
+		constructVet();
+		constructMain();
+	}
+	else if (level.isRegistry() == true)
+	{
+		qDebug() << "Registry";
+		constructReistry();
+	}
+	else
+	{
+		qDebug() << "Unknown access level";
+	}
+	// common
+	connect(ui->acc_action, &QAction::triggered, this, &MainWindow::accInfo);
+	connect(ui->exit_action, &QAction::triggered, this, &MainWindow::exit);
+	connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
+}
 
+void MainWindow::constructAdmin()
+{
 	QWidget* admin_w = addTab(QIcon(":/ui/icons/system.png"), "Настройки системы",
 								{MainWidget, Unclosable}, &MainWindow::showAdminPannel);
 	admin_w->show();
+	ui->menu_2->menuAction()->setVisible(false);
+//	ui->menu_2->setDisabled(true);
+}
 
-	connect(ui->acc_action, &QAction::triggered, this, &MainWindow::accInfo);
-	connect(ui->exit_action, &QAction::triggered, this, &MainWindow::exit);
+void MainWindow::constructVet()
+{
+	QWidget* w = addTab(QIcon(":/ui/icons/logo_green_80.png"), "Главная страница",
+						{MainWidget, Unclosable}, &MainWindow::showMainTab);
+	w->show();
 	connect(ui->pet_reg, &QAction::triggered, this, &MainWindow::createWidgetNewAnimal);
 	connect(ui->pet_find, &QAction::triggered, this, &MainWindow::runAnimalEditor);
-	connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
 	addToolBarAction(QIcon(":/ui/icons/icons8-group-of-animals-48.png"), "Животные", &MainWindow::runAnimalEditor);
-    addToolBarAction(QIcon(":/ui/icons/treatment-80.png"), "Ветеринарный осмотр", &MainWindow::newVisit);
+	addToolBarAction(QIcon(":/ui/icons/treatment-80.png"), "Ветеринарный осмотр", &MainWindow::newVisit);
+}
+
+void MainWindow::constructReistry()
+{
+
+}
+
+void MainWindow::constructMain()
+{
+
 }
 
 void MainWindow::runAnimalEditor()
@@ -90,6 +134,7 @@ void MainWindow::showMainTab(QWidget *w)
 	w->setLayout(layout);
 	aiw->show(cfg.getUrlCurrentvisits(), cfg.getTimeout(), access_data.getPassword());
 	connect(aiw, &MainTabWidget::newVisit, this, &MainWindow::newVisit);
+	connect(aiw, &MainTabWidget::patients, this, &MainWindow::patients);
 }
 
 void MainWindow::showAdminPannel(QWidget *w)
@@ -121,7 +166,6 @@ QWidget* MainWindow::addTab(
 			return std::get<1>(find);
 		}
 	}
-
 
 	QWidget* widget = new QWidget(ui->tabWidget);
 	(this->*init_cb)(widget);
@@ -221,6 +265,12 @@ void MainWindow::newVisit()
 
 	NewVisitWidget* nvw = w->findChild<NewVisitWidget*>("NewVisitWidget");
 	nvw->update();
+}
+
+void MainWindow::patients()
+{
+	qDebug() << "Patients";
+	runAnimalEditor();
 }
 
 void MainWindow::createWidgetNewAnimal()
@@ -323,6 +373,7 @@ void MainWindow::show()
 	setGeometry(x, y, width(), height());
 	QMainWindow::show();
 }
+
 void MainWindow::accInfo()
 {
 	qDebug() << Q_FUNC_INFO << "Acc Info menu action";

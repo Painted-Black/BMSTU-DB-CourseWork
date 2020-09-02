@@ -42,6 +42,9 @@ public:
 	AccessLevel getAccessLevelType() const;
 	void setAccessLevelType(const AccessLevel &value);
 
+	QByteArray getPassword() const;
+	void setPassword(const QByteArray &value);
+
 private:
 	uint64_t uid;
 	QString login;
@@ -52,6 +55,7 @@ private:
 	QString position_title;
 	QDate employed;
 	QDate fired;
+	QByteArray password;
 
 	QString fio;
 	AccessLevel acc_level;

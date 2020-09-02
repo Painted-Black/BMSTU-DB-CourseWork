@@ -73,8 +73,8 @@ QVariant UsersTableModel::headerData(int section, Qt::Orientation orientation, i
 	return QVariant();
 }
 
-ShortUserInfo UsersTableModel::dataAt(const QModelIndex &index)
+ShortUserInfo UsersTableModel::dataAt(int row)
 {
-	int row = index.row();
 	return mData.at(row);
 }
+

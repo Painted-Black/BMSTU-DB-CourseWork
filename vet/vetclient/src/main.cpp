@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 						  .arg(auth_data.getOwner().getPassport().getName()));
 	notifier.show();
 
-	MainWindow mw;
+	MainWindow mw(auth_data.getLevel());
 	mw.setAccessData(auth_data);
 	mw.show();
 

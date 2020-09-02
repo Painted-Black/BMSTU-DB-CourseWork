@@ -11,5 +11,7 @@
         <file>ui/icons/treatment-80.png</file>
         <file>config/config.ini</file>
         <file>ui/icons/system.png</file>
+        <file>ui/icons/eyeOn.png</file>
+        <file>ui/icons/eyeOff.png</file>
     </qresource>
 </RCC>

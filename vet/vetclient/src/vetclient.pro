@@ -24,6 +24,7 @@ SOURCES += \
 	core/mainwindow.cpp \
 	core/new_visit_widget.cpp \
 	core/network/network_fetcher.cpp \
+    core/password_line_edit.cpp \
 	core/popup.cpp \
 	main.cpp \
     model/users_table_model.cpp \
@@ -40,7 +41,7 @@ SOURCES += \
 	types/schedule.cpp \
         types/sheduled_visits.cpp \
 	types/short_animal_info.cpp \
-    types/short_user_info.cpp \
+        types/short_user_info.cpp \
 	types/staff.cpp \
 	types/user_data.cpp \
 	types/vaccination.cpp \
@@ -48,6 +49,12 @@ SOURCES += \
 	core/add_med_dialog.cpp \
         core/main_tab_widget.cpp \
         core/admin_pannel.cpp \
+        core/user_info.cpp \
+        core/user_info_dialog.cpp \
+        core/question_dialog.cpp \
+        core/change_login_dialog.cpp \
+        core/change_password_dialog.cpp \
+        core/chose_access_leveldialog.cpp \
 	utils/utils.cpp \
 	model/prescribings_table_model.cpp
 
@@ -67,8 +74,9 @@ HEADERS += \
 	core/iserializable.h \
 	core/mainwindow.h \
 	core/network/network_fetcher.h \
+        core/password_line_edit.h \
 	core/popup.h \
-    model/users_table_model.h \
+        model/users_table_model.h \
 	types/QJsonHeaders.h \
 	types/address.h \
 	types/animal_medical_record.h \
@@ -85,7 +93,7 @@ HEADERS += \
 	types/schedule.h \
         types/sheduled_visits.h \
 	types/short_animal_info.h \
-    types/short_user_info.h \
+        types/short_user_info.h \
 	types/staff.h \
 	types/user_data.h \
 	types/vaccination.h \
@@ -94,11 +102,20 @@ HEADERS += \
 	types/visit.h \
         core/main_tab_widget.h \
         core/admin_pannel.h \
+        core/user_info.h \
+        core/user_info_dialog.h \
+        core/question_dialog.h \
+        core/change_login_dialog.h \
+        core/change_password_dialog.h \
+        core/chose_access_leveldialog.h \
 	utils/utils.h \
 	utils/singlenton.h
 
 FORMS += \
         ui/admin_pannel.ui \
+        ui/change_login_dialog.ui \
+        ui/change_password_dialog.ui \
+        ui/chose_access_leveldialog.ui \
         ui/chose_animal_full_dialog.ui \
         ui/chose_animal_dialog.ui \
 	ui/acc_info.ui \
@@ -115,9 +132,12 @@ FORMS += \
 	ui/mainwindow.ui \
 	ui/passport.ui \
 	ui/prescribings_widget.ui \
+    ui/question_dialog.ui \
 	ui/shedule.ui \
 	ui/staff.ui \
 	ui/text_dialog.ui \
+        ui/user_info.ui \
+    ui/user_info_dialog.ui \
 	ui/visit.ui
 
 LIBS += -lcurl
