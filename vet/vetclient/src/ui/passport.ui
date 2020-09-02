@@ -48,8 +48,46 @@
       <property name="horizontalSpacing">
        <number>6</number>
       </property>
-      <item row="1" column="0">
-       <widget class="QLabel" name="name_label">
+      <item row="9" column="0">
+       <widget class="QLabel" name="num_label">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Серия, номер</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QRadioButton" name="male_radioButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>М</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="surname_label">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -64,7 +102,87 @@
          </font>
         </property>
         <property name="text">
-         <string>Имя</string>
+         <string>Фамилия</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1" colspan="2">
+       <widget class="QLineEdit" name="surname_lineEdit">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"> QLineEdit {
+	  border-width: 1px;
+	  border-style: solid;
+	  border-radius: 0px;
+  }</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="sex_label">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Пол</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="0">
+       <widget class="QLabel" name="nationality_label">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Национальность</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1" colspan="2">
+       <widget class="QDateEdit" name="issue_date">
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"> QDateEdit {
+	  border-width: 1px;
+	  border-style: solid;
+	  border-radius: 0px;
+  }</string>
         </property>
        </widget>
       </item>
@@ -92,8 +210,8 @@
         </property>
        </widget>
       </item>
-      <item row="9" column="0">
-       <widget class="QLabel" name="nationality_label">
+      <item row="6" column="0">
+       <widget class="QLabel" name="issue_label">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -107,12 +225,12 @@
          </font>
         </property>
         <property name="text">
-         <string>Национальность</string>
+         <string>Дата выдачи</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="sex_label">
+      <item row="3" column="0">
+       <widget class="QLabel" name="patr_label">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -121,12 +239,57 @@
         </property>
         <property name="font">
          <font>
+          <pointsize>16</pointsize>
           <weight>50</weight>
           <bold>false</bold>
          </font>
         </property>
         <property name="text">
-         <string>Пол</string>
+         <string>Отчество</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="name_label">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Имя</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" colspan="2">
+       <widget class="QLineEdit" name="name_lineEdit">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"> QLineEdit {
+	  border-width: 1px;
+	  border-style: solid;
+	  border-radius: 0px;
+  }</string>
         </property>
        </widget>
       </item>
@@ -173,25 +336,6 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="0">
-       <widget class="QLabel" name="issue_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Дата выдачи</string>
-        </property>
-       </widget>
-      </item>
       <item row="5" column="0">
        <widget class="QLabel" name="birth_label">
         <property name="minimumSize">
@@ -211,31 +355,8 @@
         </property>
        </widget>
       </item>
-      <item row="8" column="1" colspan="2">
-       <widget class="QLineEdit" name="num_lineEdit">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"> QLineEdit {
-	  border-width: 1px;
-	  border-style: solid;
-	  border-radius: 0px;
-  }</string>
-        </property>
-       </widget>
-      </item>
       <item row="9" column="1" colspan="2">
-       <widget class="QLineEdit" name="nationality_lineEdit">
+       <widget class="QLineEdit" name="num_lineEdit">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -260,8 +381,8 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1" colspan="2">
-       <widget class="QLineEdit" name="surname_lineEdit">
+      <item row="10" column="1" colspan="2">
+       <widget class="QLineEdit" name="nationality_lineEdit">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -270,133 +391,12 @@
         </property>
         <property name="font">
          <font>
-          <pointsize>16</pointsize>
           <weight>50</weight>
           <bold>false</bold>
          </font>
         </property>
         <property name="styleSheet">
          <string notr="true"> QLineEdit {
-	  border-width: 1px;
-	  border-style: solid;
-	  border-radius: 0px;
-  }</string>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="0">
-       <widget class="QLabel" name="num_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Серия, номер</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1" colspan="2">
-       <widget class="QLineEdit" name="name_lineEdit">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>16</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"> QLineEdit {
-	  border-width: 1px;
-	  border-style: solid;
-	  border-radius: 0px;
-  }</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="patr_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>16</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Отчество</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QRadioButton" name="male_radioButton">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>М</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="surname_label">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>16</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Фамилия</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="1" colspan="2">
-       <widget class="QDateEdit" name="issue_date">
-        <property name="font">
-         <font>
-          <pointsize>16</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"> QDateEdit {
 	  border-width: 1px;
 	  border-style: solid;
 	  border-radius: 0px;
@@ -416,8 +416,6 @@
   <tabstop>male_radioButton</tabstop>
   <tabstop>female_radioButton</tabstop>
   <tabstop>birth_dateEdit</tabstop>
-  <tabstop>num_lineEdit</tabstop>
-  <tabstop>nationality_lineEdit</tabstop>
  </tabstops>
  <resources/>
  <connections/>

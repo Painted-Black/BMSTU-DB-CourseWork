@@ -238,8 +238,9 @@ void MainWindow::createWidgetNewAnimal()
 	w->show();
 	connect(add_btn, &QPushButton::released, this, &MainWindow::updateAnimal);
 
+	QVariantList data = { AddAnimalWidget, None } ;
 	int idx = ui->tabWidget->addTab(w, QIcon(":/ui/icons/user_green_80.png"), "Добавить");
-	bar->setTabData(idx, QVariant::fromValue<uint8_t>(None));
+	bar->setTabData(idx, data);
 	ui->tabWidget->setCurrentIndex(idx);
 }
 
@@ -297,8 +298,9 @@ void MainWindow::addToolBarAction(const QIcon& icon, const QString& text, const 
 void MainWindow::closeTab(int idx)
 {
 	qDebug() << Q_FUNC_INFO;
-	auto data = ui->tabWidget->tabBar()->tabData(idx);
-	auto flags = data.toList().at(1).value<uint8_t>();
+	auto* tab = ui->tabWidget->tabBar();
+	auto data = tab->tabData(idx).toList();
+	auto flags = data.at(1).value<uint8_t>();
 	if (flags & Unclosable)
 	{
 		return;

@@ -32,7 +32,7 @@ class Config(object):
 		return [str(self.__parser["ROUTES"]["animal_full_info"])]
 
 	def get_routes_animal_upsert(self):
-    	return [str(self.__parser["ROUTES"]["animal_upsert_data"])]
+		return [str(self.__parser["ROUTES"]["animal_upsert_data"])]
 	def get_routes_visit_new(self):
     		return [str(self.__parser["ROUTES"]["new_visit"])]
 

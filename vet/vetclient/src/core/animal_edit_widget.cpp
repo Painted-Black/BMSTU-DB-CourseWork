@@ -151,10 +151,10 @@ bool AnimalEditWidget::isFills() const
 {
 	bool is_empty = false;
 	QList<QLineEdit*> children = findChildren<QLineEdit*>();
-	for (auto child : children)
+	std::for_each(children.begin() + 3, children.end(), [&](const auto& child)
 	{
 		is_empty |= child->text().isEmpty();
-	}
+	});
 
 	children = contract->findChildren<QLineEdit*>();
 	for (auto child : children)
@@ -163,12 +163,6 @@ bool AnimalEditWidget::isFills() const
 	}
 
 	children = chip->findChildren<QLineEdit*>();
-	for (auto child : children)
-	{
-		is_empty |= child->text().isEmpty();
-	}
-
-	children = client_dlg->findChildren<QLineEdit*>();
 	for (auto child : children)
 	{
 		is_empty |= child->text().isEmpty();

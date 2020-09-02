@@ -55,7 +55,6 @@ HEADERS += \
 	config/config.h \
 	config/consoleparser.h \
 	core/account_info_widget.h \
-	core/add_contract_widget.h \
 	core/animal_edit_widget.h \
 	core/animal_info_widget.h \
 	core/animal_list_item_widget.h \
