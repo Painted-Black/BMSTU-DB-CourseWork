@@ -24,7 +24,7 @@ SOURCES += \
 	core/mainwindow.cpp \
 	core/new_visit_widget.cpp \
 	core/network/network_fetcher.cpp \
-    core/password_line_edit.cpp \
+        core/password_line_edit.cpp \
 	core/popup.cpp \
 	main.cpp \
 	model/users_table_model.cpp \
@@ -55,6 +55,7 @@ SOURCES += \
     core/change_login_dialog.cpp \
     core/change_password_dialog.cpp \
     core/chose_access_leveldialog.cpp \
+    core/add_user_dialog.cpp \
 	utils/utils.cpp \
 	model/prescribings_table_model.cpp
 
@@ -107,10 +108,12 @@ HEADERS += \
     core/change_login_dialog.h \
     core/change_password_dialog.h \
     core/chose_access_leveldialog.h \
+    core/add_user_dialog.h \
 	utils/utils.h \
 	utils/singlenton.h
 
 FORMS += \
+    ui/add_user_dialog.ui \
 	ui/admin_pannel.ui \
 	ui/change_login_dialog.ui \
 	ui/change_password_dialog.ui \

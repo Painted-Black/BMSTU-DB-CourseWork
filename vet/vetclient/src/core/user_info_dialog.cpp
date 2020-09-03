@@ -68,7 +68,8 @@ void UserInfoDialog::changeLoginBtn()
 		newLogin = dia->getNewLogin();
 		changed = true;
 		mData.setLogin(newLogin);
-		qDebug() << newLogin;
+		ui->login_lineEdit->setText(newLogin);
+//		qDebug() << newLogin;
 	}
 }
 
@@ -83,7 +84,8 @@ void UserInfoDialog::changePasswordBtn()
 		newPassword = dia->getNewPassword();
 		changed = true;
 		mData.setPassword(newPassword);
-		qDebug() << newPassword;
+		ui->pass_lineEdit->setText(newPassword);
+//		qDebug() << newPassword;
 	}
 }
 
@@ -98,7 +100,9 @@ void UserInfoDialog::changeAccessLevel()
 		newAccessLevel = dia->getAccessLevel();
 		changed = true;
 		mData.setAccessLevel(newAccessLevel);
-		qDebug() << newAccessLevel;
+		ui->access_level_comboBox->clear();
+		ui->access_level_comboBox->addItem(newAccessLevel);
+//		qDebug() << newAccessLevel;
 	}
 }
 

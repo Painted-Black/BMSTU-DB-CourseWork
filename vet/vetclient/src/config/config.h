@@ -18,6 +18,7 @@ public:
 	QUrl getUrlCurrentvisits() const noexcept;
 	QUrl getUrlNewVisit() const noexcept;
 	QUrl getUrlSystemUsersList() const noexcept;
+	QUrl getUrlDeleteUser() const noexcept;
 
 private:
 	QUrl getUrl(const QString&) const;

@@ -49,7 +49,6 @@ bool MainTabWidget::show(const QUrl &url, std::chrono::milliseconds tout, const 
 	QByteArray data = serializeCurrentDate();
 	NetworkFetcher fetcher;
 	auto reply = fetcher.httpPost(request, data, tout);
-//	auto reply = fetcher.httpGet(request, tout);
 	const auto& code = std::get<0>(reply);
 	const auto& body = std::get<2>(reply);
 	if (code != 200)

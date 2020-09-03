@@ -42,6 +42,9 @@ class Config(object):
 	def get_routes_short_users_list(self):
 		return [str(self.__parser["ROUTES"]["system_users_list"])]
 
+	def get_routes_delete_user(self):
+		return [str(self.__parser["ROUTES"]["delete_user"])]
+
 	def get_conn_info(self):
 		driver=self.__parser["DATABASE"]["driver"]
 		server=self.__parser["DATABASE"]["server"]

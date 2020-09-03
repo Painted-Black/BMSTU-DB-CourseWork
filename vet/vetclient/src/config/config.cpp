@@ -57,6 +57,11 @@ QUrl Config::getUrlSystemUsersList() const noexcept
 	return getUrl("ROUTES/system_users_list");
 }
 
+QUrl Config::getUrlDeleteUser() const noexcept
+{
+	return getUrl("ROUTES/delete_user");
+}
+
 QUrl Config::getUrl(const QString & path) const
 {
 	QUrl url;

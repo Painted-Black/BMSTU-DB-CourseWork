@@ -78,3 +78,10 @@ ShortUserInfo UsersTableModel::dataAt(int row)
 	return mData.at(row);
 }
 
+void UsersTableModel::deleteAt(int row)
+{
+	beginRemoveRows(QModelIndex(), row, row);
+	mData.remove(row);
+	endRemoveRows();
+}
+

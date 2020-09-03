@@ -44,13 +44,16 @@ enum TabFlags
 Q_DECLARE_METATYPE(TabType)
 Q_DECLARE_METATYPE(TabFlags)
 
-MainWindow::MainWindow(AccessLevel level, QWidget *parent)
+MainWindow::MainWindow(const AccessData &value,  QWidget *parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow())
 {
 	ui->setupUi(this);
 
 	qRegisterMetaType<TabType>();
 	qRegisterMetaType<TabFlags>();
+
+	access_data = value;
+	AccessLevel level = access_data.getLevel();
 
 	if (level.isVet() == true)
 	{
@@ -143,9 +146,10 @@ void MainWindow::showAdminPannel(QWidget *w)
 	auto& cfg = Singlenton<Config>::getInstance();
 	QBoxLayout* layout = new QVBoxLayout();
 	AdminPannel* pannel = new AdminPannel(w);
+	pannel->setPassword(access_data.getPassword());
 	layout->addWidget(pannel);
 	w->setLayout(layout);
-	pannel->show(cfg.getUrlSystemUsersList(), cfg.getTimeout(), access_data.getPassword());
+	pannel->show(cfg.getUrlSystemUsersList(), cfg.getTimeout());
 }
 
 QWidget* MainWindow::addTab(

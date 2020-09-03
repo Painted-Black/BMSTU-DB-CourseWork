@@ -19,7 +19,7 @@ private:
 	using InitFunc = void(MainWindow::*)(T);
 	using  Callback = void(MainWindow::*)();
 public:
-	explicit MainWindow(AccessLevel level, QWidget *parent = nullptr);
+	explicit MainWindow(const AccessData &value, QWidget *parent = nullptr);
 	void setAccessData(const AccessData &value);
 	void show();
 

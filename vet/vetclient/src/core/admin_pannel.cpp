@@ -12,6 +12,8 @@
 #include "question_dialog.h"
 #include "utils/singlenton.h"
 #include "popup.h"
+#include "config/config.h"
+#include "core/add_user_dialog.h"
 
 AdminPannel::AdminPannel(QWidget *parent) :
 	QWidget(parent),
@@ -24,7 +26,7 @@ AdminPannel::AdminPannel(QWidget *parent) :
 	connect(ui->delete_toolButton, &QPushButton::released, this, &AdminPannel::deleteUserBtnClicked);
 }
 
-bool AdminPannel::show(const QUrl &url, std::chrono::milliseconds tout, const QByteArray &pass)
+bool AdminPannel::show(const QUrl &url, std::chrono::milliseconds tout)
 {
 	ui->tableView->setModel(model);
 	int model_col_count = model->columnCount();
@@ -34,7 +36,8 @@ bool AdminPannel::show(const QUrl &url, std::chrono::milliseconds tout, const QB
 	}
 
 	QNetworkRequest req;
-	req.setRawHeader("Authorization", QByteArray("Explicit: ").append(pass));
+	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+	req.setRawHeader("Authorization", QByteArray("Explicit: ").append(password));
 	req.setUrl(url);
 
 	NetworkFetcher fetcher;
@@ -59,6 +62,11 @@ AdminPannel::~AdminPannel()
 	delete model;
 }
 
+void AdminPannel::setPassword(QByteArray pass)
+{
+	password = pass;
+}
+
 void AdminPannel::tableViewDoubleClicked(const QModelIndex &index)
 {
 	qDebug() << Q_FUNC_INFO << "Double click";
@@ -68,6 +76,10 @@ void AdminPannel::tableViewDoubleClicked(const QModelIndex &index)
 	if (dialog->exec() == QDialog::Accepted)
 	{
 		qDebug() << "Saving...";
+		if (dialog->isChanged())
+		{
+			qDebug() << "Saving changes";
+		}
 		ShortUserInfo new_info = dialog->getShortUserInfo();
 
 #pragma message "TODO"
@@ -78,6 +90,13 @@ void AdminPannel::tableViewDoubleClicked(const QModelIndex &index)
 void AdminPannel::addUserBtnClicked()
 {
 	qDebug() << "Adding user";
+
+	AddUserDialog* dialog = new AddUserDialog(this);
+	dialog->setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+	if (dialog->exec() == QDialog::Accepted)
+	{
+#pragma message "TODO"
+	}
 }
 
 void AdminPannel::deleteUserBtnClicked()
@@ -88,14 +107,35 @@ void AdminPannel::deleteUserBtnClicked()
 	QModelIndexList selected_rows = select->selectedRows();
 	if (selected_rows.size() != 0)
 	{
-		int i = selected_rows.begin()->row();
-		deleteUser(model->dataAt(i).getUid());
+		int row = selected_rows.begin()->row();
+		bool is_ok = deleteUser(model->dataAt(row).getUid());
+		if (is_ok == true)
+		{
+			model->deleteAt(row);
+		}
 	}
 }
 
 bool AdminPannel::deleteUserQuery(uint64_t id)
 {
 	qDebug() << "Deleting user " << id;
+	auto& cfg = Singlenton<Config>::getInstance();
+
+	QNetworkRequest req;
+	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+	req.setRawHeader("Authorization", QByteArray("Explicit: ").append(password));
+	req.setUrl(cfg.getUrlDeleteUser());
+	QByteArray data = serializeAccId(id);
+	NetworkFetcher fetcher;
+	auto reply = fetcher.httpPost(req, data, cfg.getTimeout());
+	const auto& code = std::get<0>(reply);
+	const auto& body = std::get<2>(reply);
+	if (code != 204)
+	{
+		qCritical() << Q_FUNC_INFO << "Failed request. Http code:" << code << body;
+		return false;
+	}
+	return true;
 }
 
 bool AdminPannel::deleteUser(uint64_t id)
@@ -121,4 +161,11 @@ bool AdminPannel::deleteUser(uint64_t id)
 		}
 	}
 	return is_ok;
+}
+
+QByteArray AdminPannel::serializeAccId(uint64_t id)
+{
+	QJsonObject obj;
+	obj.insert("acc_id", QVariant::fromValue(id).toString());
+	return QJsonDocument(obj).toJson();
 }
