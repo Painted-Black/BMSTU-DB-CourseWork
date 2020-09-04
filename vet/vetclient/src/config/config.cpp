@@ -62,6 +62,11 @@ QUrl Config::getUrlDeleteUser() const noexcept
 	return getUrl("ROUTES/delete_user");
 }
 
+QUrl Config::getUrlStaffShortInfo() const noexcept
+{
+	return getUrl("ROUTES/staff_short");
+}
+
 QUrl Config::getUrl(const QString & path) const
 {
 	QUrl url;

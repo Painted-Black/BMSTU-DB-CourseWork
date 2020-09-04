@@ -7,7 +7,7 @@ QJsonObject ShortUserInfo::serialize() const
 	QJsonObject root_obj;
 
 //	root_obj.insert()
-
+//	unused
 	return root_obj;
 }
 

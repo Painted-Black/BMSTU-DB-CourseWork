@@ -10,6 +10,8 @@ from server.handlers.delete_user_handler import DeleteUserHandler
 from server.handlers.animal_info_handler import AnimalInfoHandler
 from server.key_data_checker import KeyDataChecker
 from server.key_data_checker import valid_key_checker
+from server.handlers.short_staff_info_handler import  ShortStaffInfo
+
 from database.dbaccess_manager import DBAccessManager, access_manager
 
 class Daemon(object):
@@ -35,6 +37,7 @@ class Daemon(object):
 		current_visit_=self.__config.get_routes_current_visits()
 		users_short_=self.__config.get_routes_short_users_list()
 		delete_user_=self.__config.get_routes_delete_user()
+		staff_short_=self.__config.get_routes_staff_short_info()
 
 		self.__server.add_endpoint(AuthHandler(auth_, ["POST"]))
 		self.__server.add_endpoint(ScheduleHandler(schedule_, ["POST"]))
@@ -44,5 +47,6 @@ class Daemon(object):
 		self.__server.add_endpoint(CurrentVisitsHandler(current_visit_, ["POST"]))
 		self.__server.add_endpoint(UserShortInfoHandler(users_short_, ["GET"]))
 		self.__server.add_endpoint(DeleteUserHandler( delete_user_, ["POST"]))
+		self.__server.add_endpoint(ShortStaffInfo(staff_short_, ["GET"]))
 
 		self.__server.start(port=self.__config.get_server_port())

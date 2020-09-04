@@ -92,6 +92,7 @@ void AdminPannel::addUserBtnClicked()
 	qDebug() << "Adding user";
 
 	AddUserDialog* dialog = new AddUserDialog(this);
+	dialog->setAccessData(password);
 	dialog->setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
 	if (dialog->exec() == QDialog::Accepted)
 	{

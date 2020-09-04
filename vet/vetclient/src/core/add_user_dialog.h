@@ -2,6 +2,11 @@
 
 #include <QDialog>
 
+#include "utils/singlenton.h"
+#include "popup.h"
+#include "types/user_data.h"
+#include "types/short_staff_info.h"
+
 namespace Ui {
 class AddUserDialog;
 }
@@ -14,7 +19,24 @@ public:
 	explicit AddUserDialog(QWidget *parent = nullptr);
 	~AddUserDialog();
 
+	AccessData getAccessData() const;
+
+	void setAccessData(const QByteArray &value);
+
 private:
+	void accept() override;
+	void hideErrorMessages();
+	void choseStaff();
+
 	Ui::AddUserDialog *ui;
+	int64_t staff_id = -1;
+	QString login;
+	QString acc_lvl;
+	QByteArray password;
+	PopUp popup;
+	AccessData data;
+	ShortStaffInfo info;
+
+	QByteArray access_data;
 };
 

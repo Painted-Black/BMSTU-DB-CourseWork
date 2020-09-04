@@ -2,9 +2,11 @@
 
 #include <QByteArray>
 #include <QMap>
+
 #include "types/QJsonHeaders.h"
 #include "types/visit.h"
 #include "types/json_fields.h"
+#include "types/short_user_info.h"
 
 QByteArray toJson(const QJsonObject&) noexcept;
 
