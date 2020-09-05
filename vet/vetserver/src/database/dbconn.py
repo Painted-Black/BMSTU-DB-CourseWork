@@ -7,6 +7,7 @@ class DBConn(object):
 	def __init__(self, dbconn_info):
 		self.conn_info=dbconn_info
 		self.conn_state=False
+		self.queries = []
 
 	def try_connect(self):
 		conn_str='DRIVER={driver};SERVER={server};PORT={port};DATABASE={db};UID={user};PWD={pwd}'.format(
@@ -25,3 +26,11 @@ class DBConn(object):
 
 	def is_connected(self):
 		return self.conn_state
+
+	def close_connection(self):
+		for i in self.queries:
+			del i
+
+	def new_query(self, query):
+		self.queries.append(query)
+		return self.conn.cursor()

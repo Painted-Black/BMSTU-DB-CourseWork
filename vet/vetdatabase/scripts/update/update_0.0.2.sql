@@ -18,4 +18,4 @@ INSERT INTO addresses (country, city, street, house, flat) VALUES ('Russia', 'Mo
 INSERT INTO position (title, salary) VALUES ('Ветеринарный врач', 40000);
 INSERT INTO passports (surname, name, patronymic, sex, birth, num, issue_date, nationality) VALUES ('Ветеринаров', 'Ветеринар', 'Ветеринарович', 'm', '1993-02-06', '9546943943', '2014-02-09', 'Русский');
 INSERT INTO staff (passport, position, edu_level, fire_date, employ_date) VALUES (3, 2, 'specialist', NULL, '2016-01-02');
-INSERT INTO access (employee, login, password, access_level) VALUES (3, 'vet', 'vet', 'vet');
+INSERT INTO access (employee, login, password, access_level) VALUES (2, 'vet', 'vet', 'vet');

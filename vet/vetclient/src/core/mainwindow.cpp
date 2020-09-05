@@ -221,7 +221,7 @@ void MainWindow::createWidgetAnimalInfo(uint64_t id)
 	QVBoxLayout* layout = new QVBoxLayout();
 	AnimalEditWidget* aiw = new AnimalEditWidget(w);
 	QPushButton* add_btn = new QPushButton(w);
-	add_btn->setText("Добавить запись");
+	add_btn->setText("Редактировать запись");
 	connect(add_btn, &QPushButton::released, this, &MainWindow::updateAnimal);
 
 	aiw->show(url, cfg.getTimeout(), access_data.getPassword());
@@ -229,7 +229,7 @@ void MainWindow::createWidgetAnimalInfo(uint64_t id)
 	layout->addWidget(add_btn);
 	w->setLayout(layout);
 
-	int idx = ui->tabWidget->addTab(w, QIcon(":/ui/icons/user_green_80.png"), "Добавить");
+	int idx = ui->tabWidget->addTab(w, QIcon(":/ui/icons/user_green_80.png"), "Редактировать");
 	QVariantList data = { AddAnimalWidget, None };
 	bar->setTabData(idx, data);
 	ui->tabWidget->setCurrentIndex(idx);
