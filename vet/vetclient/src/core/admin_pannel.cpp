@@ -79,7 +79,7 @@ void AdminPannel::tableViewDoubleClicked(const QModelIndex &index)
 		if (dialog->isChanged())
 		{
 			ShortUserInfo new_data = dialog->getNewAccessData();
-			model->uptadeDataAt(index.row(), new_data);
+			model->setDataAt(index.row(), new_data);
 		}
 		qDebug() << "Updating table";
 	}
@@ -126,7 +126,7 @@ void AdminPannel::deleteUserBtnClicked()
 		bool is_ok = deleteUser(model->dataAt(row).getUid());
 		if (is_ok == true)
 		{
-			model->deleteAt(row);
+			model->removeAt(row);
 		}
 	}
 }

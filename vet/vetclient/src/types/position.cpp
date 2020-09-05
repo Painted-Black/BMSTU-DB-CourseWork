@@ -34,6 +34,11 @@ QJsonObject Position::serialize() const
 	return root_obj;
 }
 
+bool Position::operator==(const Position &p) const
+{
+	return (p.id == id && p.title == title && p.salary == salary);
+}
+
 QString Position::getTitle() const
 {
 	return title;
@@ -54,7 +59,12 @@ void Position::setSalary(const uint32_t &value)
 	salary = value;
 }
 
+void Position::setId(const uint64_t &value)
+{
+    id = value;
+}
+
 uint64_t Position::getId() const
 {
-	return id;
+    return id;
 }
