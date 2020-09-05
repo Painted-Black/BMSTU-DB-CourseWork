@@ -59,6 +59,11 @@ ShortStaffInfo UserListItemWidget::findById(uint64_t id)
 	return  cur;
 }
 
+ShortStaffInfo UserListItemWidget::dataAt(int i)
+{
+	return mData.at(i);
+}
+
 QWidget *UserListItemWidget::addWidget(const ShortStaffInfo &info)
 {
 	QWidget* form = new QWidget();

@@ -39,7 +39,7 @@ class ShortStaffInfo(AbstractHandler):
 		FROM staff s JOIN passports pas ON pas.pass_id=s.staff_id
     		JOIN position pos ON s.position=pos.pos_id
 			WHERE s.staff_id NOT IN 
-			(SELECT acc_id FROM access);
+			(SELECT employee FROM access);
 		'''
 		query = DBQuery(conn, str_query)
 		if not query.execQuery():

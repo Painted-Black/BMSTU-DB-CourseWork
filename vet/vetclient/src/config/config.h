@@ -20,6 +20,7 @@ public:
 	QUrl getUrlSystemUsersList() const noexcept;
 	QUrl getUrlDeleteUser() const noexcept;
 	QUrl getUrlStaffShortInfo() const noexcept;
+	QUrl getUrlAddUser() const noexcept;
 
 private:
 	QUrl getUrl(const QString&) const;

@@ -3,6 +3,12 @@
 #include "types/json_fields.h"
 #include "types/user_data.h"
 #include "chose_staff_dialog.h"
+#include "utils/singlenton.h"
+#include "config/config.h"
+#include "utils/utils.h"
+#include "network/network_fetcher.h"
+
+#include <QNetworkAccessManager>
 
 AddUserDialog::AddUserDialog(QWidget *parent) :
 	QDialog(parent),
@@ -30,6 +36,7 @@ void AddUserDialog::accept()
 		ui->staff_label->show();
 		return;
 	}
+	login = ui->login_lineEdit->text();
 	if (login.isEmpty() == true)
 	{
 		ui->incorrect_login_label->show();
@@ -50,15 +57,30 @@ void AddUserDialog::accept()
 	}
 
 	data.setLogin(login);
+
+	acc_lvl = ui->access_level_comboBox->currentText();
 	AccessLevel level;
 	level.fromString(acc_lvl);
 	data.setLevel(level);
+
 	Staff s;
 	s.setId(staff_id);
 	data.setOwner(s);
 	password = QVariant(pass1).toByteArray();
 	data.setPassword(password);
-	QDialog::accept();
+
+	bool is_ok = queryToServer();
+	if (is_ok == true)
+	{
+		QDialog::accept();
+	}
+	else
+	{
+		auto& popup = Singlenton<PopUp>::getInstance();
+		popup.setPopupText("Произошла ошибка, попробуйте еще раз.");
+		popup.show();
+	}
+
 }
 
 void AddUserDialog::hideErrorMessages()
@@ -84,6 +106,51 @@ void AddUserDialog::choseStaff()
 	ui->surname_lineEdit->setText(info.getFio());
 	ui->pos_lineEdit->setText(info.getPosition());
 	qDebug() << "Id: " << staff_id;
+}
+
+bool AddUserDialog::queryToServer()
+{
+	qDebug() << Q_FUNC_INFO << "Query";
+
+	auto& cfg = Singlenton<Config>::getInstance();
+	QNetworkRequest request(cfg.getUrlAddUser());
+	request.setRawHeader("Authorization", QByteArray("Explicit: ").append(access_data));
+	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+	NetworkFetcher fetcher;
+
+	QByteArray raw_data = accessSerialize(data);
+
+	auto reply = fetcher.httpPost(request, raw_data, cfg.getTimeout());
+	int32_t code = std::get<0>(reply);
+	auto& popup = Singlenton<PopUp>::getInstance();
+	if (code == -1)
+	{
+		popup.setPopupText("Нет соединения с интернетом или доступа к серверу.");
+		popup.show();
+		return false;
+	}
+	if (code != 201)
+	{
+		popup.setPopupText("Возникла ошибка.");
+		popup.show();
+		return false;
+	}
+	// ok
+	qDebug() << Q_FUNC_INFO << "Saved";
+	popup.setPopupText("Данные осмотра успешно сохранены.");
+	popup.show();
+
+	return true;
+}
+
+AccessData AddUserDialog::getNewAccountData() const
+{
+	return data;
+}
+
+bool AddUserDialog::getIsSuccess() const
+{
+	return isSuccess;
 }
 
 void AddUserDialog::setAccessData(const QByteArray &value)

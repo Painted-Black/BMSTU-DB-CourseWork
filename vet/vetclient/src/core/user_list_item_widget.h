@@ -17,6 +17,7 @@ public:
 	explicit UserListItemWidget(QWidget *parent = nullptr);
 	bool show(const QUrl& url, std::chrono::milliseconds tout, const QByteArray&pass);
 	ShortStaffInfo findById(uint64_t id);
+	ShortStaffInfo dataAt(int i);
 Q_SIGNALS:
 	void selectItem(uint64_t);
 private:

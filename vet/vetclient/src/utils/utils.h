@@ -13,6 +13,7 @@ QByteArray toJson(const QJsonObject&) noexcept;
 QJsonObject fromJson(const QByteArray&) noexcept;
 QJsonArray fromJsonArray(const QByteArray&) noexcept;
 QByteArray visitSerialize(const Visit &vis, uint32_t anim_id); // withot full animal med record
+QByteArray accessSerialize(const AccessData& acc); // without full staff data
 
 QMap<QString, QString> fromSimpleJson(const QByteArray&) noexcept;
 

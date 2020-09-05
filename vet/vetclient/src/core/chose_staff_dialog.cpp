@@ -28,7 +28,7 @@ void ChoseStaffDialog::userInfoWidget(uint64_t id)
 {
 	ChoseStaffFullDialog * dia = new ChoseStaffFullDialog(this);
 	dia->setPassword(access_data);
-	ShortStaffInfo staff = uiw->findById(id);
+	ShortStaffInfo staff = uiw->dataAt(id);
 	dia->show(staff);
 	if (dia->exec() == QDialog::Rejected)
 	{

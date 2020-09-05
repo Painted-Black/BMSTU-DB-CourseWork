@@ -6,6 +6,7 @@ from server.handlers.schedule_handler import ScheduleHandler
 from server.handlers.new_visit_handler import NewVisitHandler
 from server.handlers.current_visits_handler import CurrentVisitsHandler
 from server.handlers.user_short_info_handler import UserShortInfoHandler
+from server.handlers.add_user_handler import AddUserHandler
 from server.handlers.delete_user_handler import DeleteUserHandler
 from server.handlers.animal_info_handler import AnimalInfoHandler
 from server.key_data_checker import KeyDataChecker
@@ -38,6 +39,7 @@ class Daemon(object):
 		users_short_=self.__config.get_routes_short_users_list()
 		delete_user_=self.__config.get_routes_delete_user()
 		staff_short_=self.__config.get_routes_staff_short_info()
+		add_user_=self.__config.get_routes_add_user()
 
 		self.__server.add_endpoint(AuthHandler(auth_, ["POST"]))
 		self.__server.add_endpoint(ScheduleHandler(schedule_, ["POST"]))
@@ -48,5 +50,6 @@ class Daemon(object):
 		self.__server.add_endpoint(UserShortInfoHandler(users_short_, ["GET"]))
 		self.__server.add_endpoint(DeleteUserHandler( delete_user_, ["POST"]))
 		self.__server.add_endpoint(ShortStaffInfo(staff_short_, ["GET"]))
+		self.__server.add_endpoint(AddUserHandler(add_user_, ["POST"]))
 
 		self.__server.start(port=self.__config.get_server_port())

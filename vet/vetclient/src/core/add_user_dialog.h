@@ -19,14 +19,17 @@ public:
 	explicit AddUserDialog(QWidget *parent = nullptr);
 	~AddUserDialog();
 
-	AccessData getAccessData() const;
-
 	void setAccessData(const QByteArray &value);
+
+	bool getIsSuccess() const;
+
+	AccessData getNewAccountData() const;
 
 private:
 	void accept() override;
 	void hideErrorMessages();
 	void choseStaff();
+	bool queryToServer();
 
 	Ui::AddUserDialog *ui;
 	int64_t staff_id = -1;
@@ -38,5 +41,7 @@ private:
 	ShortStaffInfo info;
 
 	QByteArray access_data;
+
+	bool isSuccess;
 };
 

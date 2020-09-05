@@ -16,11 +16,11 @@ QJsonObject ShortStaffInfo::serialize() const
 bool ShortStaffInfo::deserialize(const QJsonObject &json) noexcept
 {
 	bool is_ok = true;
-	uid = json.value(AccessJson::field_acc_id).toVariant().value<uint64_t>();
+	uid = json.value(StaffJson::field_staff_id).toVariant().value<uint64_t>();
 	QJsonObject passport_json = json.value(StaffJson::field_staff_passport).toObject();
 	QJsonObject position_json = json.value(StaffJson::field_staff_position).toObject();
-	empl = QDate::fromString(json.value(StaffJson::field_staff_employ_date).toString());
-	fire = QDate::fromString(json.value(StaffJson::field_staff_fire_date).toString());
+	empl = QDate::fromString(json.value(StaffJson::field_staff_employ_date).toString(), Qt::ISODate);
+	fire = QDate::fromString(json.value(StaffJson::field_staff_fire_date).toString(), Qt::ISODate);
 	name = passport_json.value(PassportJson::field_pass_name).toString();
 	surname = passport_json.value(PassportJson::field_pass_surname).toString();
 	patr = passport_json.value(PassportJson::field_pass_patronymic).toString();

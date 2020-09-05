@@ -67,6 +67,11 @@ QUrl Config::getUrlStaffShortInfo() const noexcept
 	return getUrl("ROUTES/staff_short");
 }
 
+QUrl Config::getUrlAddUser() const noexcept
+{
+	return getUrl("ROUTES/add_user");
+}
+
 QUrl Config::getUrl(const QString & path) const
 {
 	QUrl url;
