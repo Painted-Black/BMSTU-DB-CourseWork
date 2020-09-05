@@ -1,44 +1,40 @@
+from .dbconn import DBConn
+
 class DBQuery(object):
-	def __init__(self, dbconn, query=""):
-		self.query_buffer=query
+	def __init__(self, dbconn : DBConn):
 		self.conn = dbconn
+		self.is_transaction=False
+		self.cursor = dbconn.new_query(self)
 
-	#def prepare(self, query):
-		#self.query_buffer = query
-
-	#def add_bind_value(self, arg, val):
-		# not impl
-		#pass
+	def __del__(self):
+		self.cursor.close()
+		del self.cursor
 
 	def get_error(self):
 		return self.str_error
 
 	def get_column_names(self):
-		l = [ i[0] for i in self.column_names]
+		l = [ i[0] for i in self.cursor.description]
 		return l
 
-	def execQuery(self, query = ""):
-		print("QUERY:")
-		print(query)
-		if query != "":
-			self.query_buffer=query
+	def begin_transaction(self):
+		self.is_transaction=True
+
+	def commit_transaction(self):
+		if self.is_transaction:
+			self.cursor.commit()
+
+
+	def exec_query(self, query : str):
+		print("Query:\n{}".format(query))
 		try:
-			cursor = self.conn.conn.cursor()
-			cursor.execute(self.query_buffer)
-			cursor.commit()
-			try:
-				self.values = cursor.fetchall()
-			except:
-				pass
-			self.column_names = cursor.description
+			self.cursor.execute(query)
+			if self.is_transaction == False:
+				self.cursor.commit()
 		except Exception as e:
 			self.str_error=e
 			return False
-		finally:
-			cursor.close()
-			del cursor
-		
 		return True
 
 	def get_values(self):
-		return self.values
+		return self.cursor.fetchall()

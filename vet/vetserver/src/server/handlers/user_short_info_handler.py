@@ -39,8 +39,8 @@ class UserShortInfoHandler(AbstractHandler):
 		JOIN position p ON s.position=p.pos_id 
 		JOIN passports pas ON s.passport=pas.pass_id;
 		'''
-		query = DBQuery(conn, str_query)
-		if not query.execQuery():
+		query = DBQuery(conn)
+		if not query.exec_query(str_query):
 			return False, ""
 		else:
 			result = query.get_values()

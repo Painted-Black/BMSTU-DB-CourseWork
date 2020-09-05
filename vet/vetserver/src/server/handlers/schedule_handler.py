@@ -45,8 +45,8 @@ class ScheduleHandler(AbstractHandler):
 		conn_name = str(uuid.uuid4())
 		conn = access_manager.connect(conn_name)
 		str_query = 'SELECT day_of_week, start, "end", cabinet FROM schedule s WHERE s.employee_id={};'.format(id)
-		query = DBQuery(conn, str_query)
-		if not query.execQuery():
+		query = DBQuery(conn)
+		if not query.exec_query(str_query):
 			return False, ""
 		else:
 			result = query.get_values()

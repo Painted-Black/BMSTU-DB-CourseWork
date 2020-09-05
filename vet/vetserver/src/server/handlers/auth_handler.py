@@ -84,8 +84,8 @@ class AuthHandler(AbstractHandler):
 
 		str_query = \
 			"""SELECT * FROM schedule WHERE employee_id={}""".format(uid)
-		query = DBQuery(conn, str_query)
-		if not query.execQuery():
+		query = DBQuery(conn)
+		if not query.exec_query(str_query):
 			return False, None
 		else:
 			schedule = query.get_values()
@@ -103,8 +103,8 @@ class AuthHandler(AbstractHandler):
 					JOIN position p ON position=p.pos_id 
 					JOIN passports ps ON s.passport=ps.pass_id 
 						WHERE a.login='{}' AND a.password='{}';""".format(login, passw)
-		query = DBQuery(conn, str_query)
-		if not query.execQuery():
+		query = DBQuery(conn)
+		if not query.exec_query(str_query):
 			return False, None
 		else:
 			result = query.get_values()

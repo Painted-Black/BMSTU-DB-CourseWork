@@ -22,6 +22,7 @@ class DBAccessManager(object):
 		return self.connections[c_name]
 	
 	def disconnect(self, c_name):
+		self.connections[c_name].close_connection()
 		self.connections.pop(c_name)
 
 access_manager = DBAccessManager()
