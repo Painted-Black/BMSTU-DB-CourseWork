@@ -1,8 +1,7 @@
 from .dbconn import DBConn
 
 class DBQuery(object):
-	def __init__(self, dbconn : DBConn, query=""):
-		self.query_buffer=query
+	def __init__(self, dbconn : DBConn):
 		self.conn = dbconn
 		self.is_transaction=False
 		self.cursor = dbconn.new_query(self)
@@ -26,13 +25,10 @@ class DBQuery(object):
 			self.cursor.commit()
 
 
-	def execQuery(self, query = ""):
-		print("QUERY:")
-		print(query)
-		if query != "":
-			self.query_buffer=query
+	def exec_query(self, query : str):
+		print("Query:\n{}".format(query))
 		try:
-			self.cursor.execute(self.query_buffer)
+			self.cursor.execute(query)
 			if self.is_transaction == False:
 				self.cursor.commit()
 		except Exception as e:

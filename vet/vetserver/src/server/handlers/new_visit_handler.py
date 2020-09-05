@@ -56,8 +56,8 @@ class NewVisitHandler(AbstractHandler):
 			'''INSERT INTO animal_states (general, pulse, weight, ap, temperature, cfr, resp_rate) VALUES ('{}', {}, {}, '{}', {}, {}, {}) RETURNING state_id;'''.format(animal_state['general'], animal_state['pulse'], animal_state['weight'], animal_state['ap'],
 			animal_state['temperature'], animal_state['cfr'], animal_state['resp_rate'])
 
-		query = DBQuery(conn, str_query_state)
-		if not query.execQuery():
+		query = DBQuery(conn)
+		if not query.exec_query(str_query_state):
 			print(query.get_error())
 			return False, None
 		else:
@@ -83,8 +83,8 @@ class NewVisitHandler(AbstractHandler):
 				str(vis['prescribings']).replace("'", '"'), 
 				vis['note'])
 
-		query = DBQuery(conn, str_query_visit)
-		if not query.execQuery():
+		query = DBQuery(conn)
+		if not query.exec_query(str_query_visit):
 			print(query.get_error())
 			return False
 

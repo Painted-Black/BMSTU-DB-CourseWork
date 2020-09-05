@@ -35,8 +35,8 @@ class TableHandler(AbstractHandler):
 		conn_name = str(uuid.uuid4())
 		conn = access_manager.connect(conn_name)
 		str_query = 'SELECT * FROM {}'.format(tablename)
-		query = DBQuery(conn, str_query)
-		if not query.execQuery():
+		query = DBQuery(conn)
+		if not query.exec_query(str_query):
 			return False, None
 		else:
 			result = query.get_values()

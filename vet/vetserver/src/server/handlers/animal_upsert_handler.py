@@ -49,8 +49,8 @@ class AnimalInfoHandler(AbstractHandler):
 							LEFT JOIN contract ON contract=contr_id 
 							LEFT JOIN microchips m ON a.chip_id=m.chip_id 
 								WHERE anim_id={};'''.format(id)
-		query = DBQuery(conn, str_query)
-		if not query.execQuery():
+		query = DBQuery(conn)
+		if not query.exec_query(str_query):
 			return False, ""
 		else:
 			result = query.get_values()
@@ -65,8 +65,8 @@ class AnimalInfoHandler(AbstractHandler):
 						LEFT JOIN passports ON passport=pass_id 
 						LEFT JOIN addresses ON address=addr_id 
 							WHERE cli_id={}'''.format(id)
-		query = DBQuery(conn, str_query)
-		if not query.execQuery():
+		query = DBQuery(conn)
+		if not query.exec_query(str_query):
 			return False, ""
 		else:
 			result = query.get_values()

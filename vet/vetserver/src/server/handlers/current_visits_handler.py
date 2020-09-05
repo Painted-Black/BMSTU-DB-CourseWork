@@ -48,8 +48,8 @@ class CurrentVisitsHandler(AbstractHandler):
 		conn_name = str(uuid.uuid4())
 		conn = access_manager.connect(conn_name)
 		str_query = """SELECT a.name, a.species FROM visits v JOIN animals_medical_records a ON v.animal = a.anim_id WHERE v.next_visit = '{}';""".format(date)
-		query = DBQuery(conn, str_query)
-		if not query.execQuery(str_query):
+		query = DBQuery(conn)
+		if not query.exec_query(str_query):
 			return False, ""
 		else:
 			result = query.get_values()
