@@ -72,6 +72,11 @@ QUrl Config::getUrlAddUser() const noexcept
 	return getUrl("ROUTES/add_user");
 }
 
+QUrl Config::getUrlUpdateUser() const noexcept
+{
+	return getUrl("ROUTES/update_user");
+}
+
 QUrl Config::getUrl(const QString & path) const
 {
 	QUrl url;

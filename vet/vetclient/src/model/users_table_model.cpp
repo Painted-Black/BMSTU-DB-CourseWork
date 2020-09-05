@@ -85,3 +85,19 @@ void UsersTableModel::deleteAt(int row)
 	endRemoveRows();
 }
 
+void UsersTableModel::uptadeDataAt(int row, ShortUserInfo new_data)
+{
+	beginResetModel();
+	mData.remove(row);
+	mData.insert(row, new_data);
+	endResetModel();
+}
+
+void UsersTableModel::addData(ShortUserInfo info)
+{
+	int data_size = mData.size();
+	beginInsertRows(QModelIndex(), data_size, data_size);
+	mData.append(info);
+	endInsertRows();
+}
+

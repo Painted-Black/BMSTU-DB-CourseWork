@@ -23,7 +23,9 @@ public:
 
 	bool getIsSuccess() const;
 
-	AccessData getNewAccountData() const;
+	ShortStaffInfo getNewStaffAccountData() const;
+
+	AccessData getNewAccessData() const;
 
 private:
 	void accept() override;

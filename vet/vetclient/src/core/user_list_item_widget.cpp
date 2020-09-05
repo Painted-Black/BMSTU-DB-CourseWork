@@ -20,9 +20,9 @@ UserListItemWidget::UserListItemWidget(QWidget *parent) :
 bool UserListItemWidget::show(const QUrl &url, std::chrono::milliseconds tout, const QByteArray &pass)
 {
 	QNetworkRequest req;
+	req.setUrl(url);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 	req.setRawHeader("Authorization", QByteArray("Explicit: ").append(pass));
-	req.setUrl(url);
 
 	NetworkFetcher fetcher;
 	auto reply = fetcher.httpGet(req, tout);

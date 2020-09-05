@@ -71,19 +71,17 @@ void AdminPannel::tableViewDoubleClicked(const QModelIndex &index)
 {
 	qDebug() << Q_FUNC_INFO << "Double click";
 	UserInfoDialog* dialog = new UserInfoDialog(this);
+	dialog->setPassword(password);
 	dialog->setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
 	dialog->show(model->dataAt(index.row()));
 	if (dialog->exec() == QDialog::Accepted)
 	{
-		qDebug() << "Saving...";
 		if (dialog->isChanged())
 		{
-			qDebug() << "Saving changes";
+			ShortUserInfo new_data = dialog->getNewAccessData();
+			model->uptadeDataAt(index.row(), new_data);
 		}
-		ShortUserInfo new_info = dialog->getShortUserInfo();
-
-#pragma message "TODO"
-		qDebug() << "Saved";
+		qDebug() << "Updating table";
 	}
 }
 
@@ -96,7 +94,23 @@ void AdminPannel::addUserBtnClicked()
 	dialog->setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
 	if (dialog->exec() == QDialog::Accepted)
 	{
-#pragma message "TODO"
+		ShortStaffInfo new_acc = dialog->getNewStaffAccountData();
+		AccessData new_access = dialog->getNewAccessData();
+		ShortUserInfo new_user;
+		new_user.setName(new_acc.getName());
+		new_user.setSurname(new_acc.getSurname());
+		new_user.setPatronymic(new_acc.getPatr());
+		new_user.setUid(new_acc.getUid());
+		new_user.setLogin(new_access.getLogin());
+		new_user.setAccessLevel(new_access.getLevel().toString());
+		new_user.setAccessLevelType(new_access.getLevel());
+		new_user.setPositionTitle(new_acc.getPosition());
+		new_user.setEmployDate(new_acc.getEmpl());
+		new_user.setFireDate(new_acc.getFire());
+		new_user.setPassword(new_access.getPassword());
+		new_user.setFio(new_acc.getFio());
+
+		model->addData(new_user);
 	}
 }
 

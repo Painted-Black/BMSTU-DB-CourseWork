@@ -13,5 +13,7 @@
         <file>ui/icons/system.png</file>
         <file>ui/icons/eyeOn.png</file>
         <file>ui/icons/eyeOff.png</file>
+        <file>ui/icons/team.png</file>
+        <file>ui/icons/add-user-group.png</file>
     </qresource>
 </RCC>

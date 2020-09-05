@@ -105,7 +105,6 @@ void AddUserDialog::choseStaff()
 	staff_id = info.getUid();
 	ui->surname_lineEdit->setText(info.getFio());
 	ui->pos_lineEdit->setText(info.getPosition());
-	qDebug() << "Id: " << staff_id;
 }
 
 bool AddUserDialog::queryToServer()
@@ -143,9 +142,15 @@ bool AddUserDialog::queryToServer()
 	return true;
 }
 
-AccessData AddUserDialog::getNewAccountData() const
+AccessData AddUserDialog::getNewAccessData() const
 {
 	return data;
+}
+
+ShortStaffInfo AddUserDialog::getNewStaffAccountData() const
+{
+	int a = 0;
+	return info;
 }
 
 bool AddUserDialog::getIsSuccess() const

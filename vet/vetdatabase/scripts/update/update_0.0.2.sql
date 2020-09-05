@@ -24,3 +24,12 @@ INSERT INTO access (employee, login, password, access_level) VALUES (3, 'vet', '
 INSERT INTO addresses (country, city, street, house, flat) VALUES ('Russia', 'Moscow', 'Lenina', '6', NULL);
 INSERT INTO passports (surname, name, patronymic, sex, birth, num, issue_date, nationality) VALUES ('Ветеринарова', 'Ветеринара', 'Ветеринаровна', 'f', '1993-05-02', '9746943943', '2014-02-09', 'Русский');
 INSERT INTO staff (passport, position, edu_level, fire_date, employ_date) VALUES (4, 2, 'specialist', NULL, '2015-01-02');
+
+
+INSERT INTO addresses (country, city, street, house, flat) VALUES ('Russia', 'Moscow', 'Prospect_mira', '1', '1');
+
+INSERT INTO passports (surname, name, patronymic, sex, birth, num, issue_date, nationality) VALUES ('Главврачев', 'Главврач', 'Главврачич', 'm', '1991-05-02', '9126943943', '2011-02-01', 'Русский');
+INSERT INTO position (title, salary) VALUES ('Главврач', 100000);
+INSERT INTO staff (passport, position, edu_level, fire_date, employ_date) VALUES (5, 4, 'specialist', NULL, '2010-01-02');
+
+INSERT INTO access (employee, login, password, access_level) VALUES (5, 'mail', 'main', 'main');

@@ -126,9 +126,14 @@ void ShortUserInfo::setPassword(const QByteArray &value)
 	password = value;
 }
 
+void ShortUserInfo::setUid(const uint64_t &value)
+{
+    uid = value;
+}
+
 QDate ShortUserInfo::getFireDate() const
 {
-	return fired;
+    return fired;
 }
 
 void ShortUserInfo::setFireDate(const QDate &value)

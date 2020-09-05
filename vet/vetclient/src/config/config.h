@@ -21,6 +21,7 @@ public:
 	QUrl getUrlDeleteUser() const noexcept;
 	QUrl getUrlStaffShortInfo() const noexcept;
 	QUrl getUrlAddUser() const noexcept;
+	QUrl getUrlUpdateUser() const noexcept;
 
 private:
 	QUrl getUrl(const QString&) const;

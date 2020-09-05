@@ -35,14 +35,14 @@ class ShortStaffInfo(AbstractHandler):
 	def __queryDb(self):
 		conn_name = str(uuid.uuid4())
 		conn = access_manager.connect(conn_name)
-		str_query = '''SELECT pas.name, pas.surname, pas.patronymic, pos.title, s.fire_date, s.employ_date 
+		str_query = '''SELECT pas.name, pas.surname, pas.patronymic, pos.title, s.fire_date, s.employ_date, s.staff_id
 		FROM staff s JOIN passports pas ON pas.pass_id=s.staff_id
     		JOIN position pos ON s.position=pos.pos_id
 			WHERE s.staff_id NOT IN 
 			(SELECT employee FROM access);
 		'''
-		query = DBQuery(conn, str_query)
-		if not query.execQuery():
+		query = DBQuery(conn)
+		if not query.exec_query(str_query):
 			return False, ""
 		else:
 			result = query.get_values()
@@ -61,7 +61,7 @@ class ShortStaffInfo(AbstractHandler):
 			
 			position[column_names[3]] = result[i][3]
 
-			for j in range(4, 6):
+			for j in range(4, 7):
 				staff[column_names[j]] = str(result[i][j])
 
 			staff['passport'] = passport

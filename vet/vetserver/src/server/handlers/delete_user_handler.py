@@ -47,8 +47,8 @@ class DeleteUserHandler(AbstractHandler):
 		conn = access_manager.connect(conn_name)
 		str_query = '''DELETE FROM access WHERE acc_id = {id}
 		'''.format(id=acc_id)
-		query = DBQuery(conn, str_query)
-		if not query.execQuery():
+		query = DBQuery(conn)
+		if not query.exec_query(str_query):
 			print(query.get_error())
 			return False
 

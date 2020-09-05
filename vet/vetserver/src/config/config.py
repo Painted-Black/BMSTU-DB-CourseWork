@@ -51,6 +51,9 @@ class Config(object):
 	def get_routes_add_user(self):
 		return [str(self.__parser["ROUTES"]["add_user"])]
 
+	def get_routes_update_user(self):
+		return [str(self.__parser["ROUTES"]["update_user"])]
+
 	def get_conn_info(self):
 		driver=self.__parser["DATABASE"]["driver"]
 		server=self.__parser["DATABASE"]["server"]

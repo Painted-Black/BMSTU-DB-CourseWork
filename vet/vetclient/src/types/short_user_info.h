@@ -45,6 +45,8 @@ public:
 	QByteArray getPassword() const;
 	void setPassword(const QByteArray &value);
 
+	void setUid(const uint64_t &value);
+
 private:
 	uint64_t uid;
 	QString login;
