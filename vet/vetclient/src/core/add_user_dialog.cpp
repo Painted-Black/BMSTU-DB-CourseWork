@@ -149,7 +149,6 @@ AccessData AddUserDialog::getNewAccessData() const
 
 ShortStaffInfo AddUserDialog::getNewStaffAccountData() const
 {
-	int a = 0;
 	return info;
 }
 

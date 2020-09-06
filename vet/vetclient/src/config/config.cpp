@@ -92,6 +92,11 @@ QUrl Config::getUrlAddPosition() const noexcept
 	return getUrl("ROUTES/add_position");
 }
 
+QUrl Config::getUrlStaffFullInfo() const noexcept
+{
+	return getUrl("ROUTES/full_staff_info");
+}
+
 QUrl Config::getUrl(const QString & path) const
 {
 	QUrl url;

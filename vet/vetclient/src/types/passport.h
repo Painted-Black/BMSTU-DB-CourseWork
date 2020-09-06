@@ -30,6 +30,7 @@ public:
 	const QString& getNationality() const;
 	const QString& getPassportNum() const;
 	Gender getGender() const;
+	QString getFio() const;
 
 	bool operator==(const Passport&) const;
 

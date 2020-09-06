@@ -23,6 +23,7 @@
 #include "core/main_tab_widget.h"
 #include "core/admin_pannel.h"
 #include "core/main_vet_pannel.h"
+#include "core/staff_tab_widget.h"
 
 
 enum TabType
@@ -132,7 +133,14 @@ void MainWindow::showStaffList(QWidget *w)
 {
 	qDebug() << Q_FUNC_INFO << "Staff list";
 
-
+	QHBoxLayout* layout = new QHBoxLayout();
+	StaffTabWidget* stw = new StaffTabWidget(w);
+	stw->setObjectName("MainVetPannel");
+	stw->setPassword(access_data.getPassword());
+	stw->show();
+	layout->addWidget(stw);
+	w->setLayout(layout);
+	stw->update();
 }
 
 void MainWindow::showPositionsList(QWidget *w)

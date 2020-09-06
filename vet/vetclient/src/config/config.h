@@ -25,6 +25,7 @@ public:
 	QUrl getUrlAllPositions() const noexcept;
 	QUrl getUrlUpdatePosition() const noexcept;
 	QUrl getUrlAddPosition() const noexcept;
+	QUrl getUrlStaffFullInfo() const noexcept;
 
 private:
 	QUrl getUrl(const QString&) const;

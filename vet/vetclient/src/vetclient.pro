@@ -29,6 +29,7 @@ SOURCES += \
 	core/popup.cpp \
 	main.cpp \
     model/positions_table_model.cpp \
+    model/staff_table_model.cpp \
 	model/users_table_model.cpp \
 	types/address.cpp \
 	types/animal_medical_record.cpp \
@@ -63,6 +64,7 @@ SOURCES += \
     core/user_list_item_widget.cpp \
     core/main_vet_pannel.cpp \
     core/position_info_dialog.cpp \
+    core/staff_tab_widget.cpp \
 	utils/utils.cpp \
 	model/prescribings_table_model.cpp
 
@@ -85,6 +87,7 @@ HEADERS += \
     core/password_line_edit.h \
 	core/popup.h \
     model/positions_table_model.h \
+    model/staff_table_model.h \
 	model/users_table_model.h \
 	types/QJsonHeaders.h \
 	types/address.h \
@@ -123,6 +126,7 @@ HEADERS += \
     core/user_list_item_widget.h \
     core/main_vet_pannel.h \
     core/position_info_dialog.h \
+    core/staff_tab_widget.h \
 	utils/utils.h \
 	utils/singlenton.h
 
@@ -154,6 +158,7 @@ FORMS += \
 	ui/prescribings_widget.ui \
     ui/question_dialog.ui \
 	ui/shedule.ui \
+    ui/staff_tab_widget.ui \
 	ui/text_dialog.ui \
 	ui/user_info.ui \
     ui/user_info_dialog.ui \
