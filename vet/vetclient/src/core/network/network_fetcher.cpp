@@ -36,6 +36,57 @@ struct NetworkFetcher::Info
 	RequestInfo lastRequest;
 };
 
+
+extern "C"
+{
+	size_t writeCallback(void *data, size_t size, size_t nmemb, void *userdata)
+	{
+		NetworkFetcher::Response* r;
+		r = static_cast<NetworkFetcher::Response*>(userdata);
+		size_t sz = size * nmemb;
+		std::get<2>(*r).append(QByteArray(static_cast<char*>(data), static_cast<int>(sz)));
+		return (sz);
+	}
+
+	size_t readCallback(void *data, size_t size, size_t nmemb, void *userdata)
+	{
+		std::tuple<const char*, size_t>* u;
+		u = reinterpret_cast<std::tuple<const char*, size_t>*>(userdata);
+		size_t curl_size = size * nmemb;
+		size_t copy_size = qMin(std::get<1>(*u), curl_size);
+		memcpy(data, std::get<0>(*u), copy_size);
+		std::get<1>(*u) -= copy_size;
+		std::get<0>(*u) += copy_size;
+		return copy_size;
+	}
+
+	size_t headerCallback(void *data, size_t size, size_t nmemb, void *userdata)
+	{
+		NetworkFetcher::Response* r;
+		r = reinterpret_cast<NetworkFetcher::Response*>(userdata);
+		size_t _sz = size*nmemb;
+		QByteArray header(static_cast<char*>(data), static_cast<int>(_sz));
+		int idx = header.indexOf(':');
+		if ( idx == -1)
+		{
+			header = header.trimmed();
+			if (header.isEmpty())
+			{
+				return _sz;
+			}
+			std::get<3>(*r).append({header, "present"});
+		}
+		else
+		{
+			QByteArray key = header.left(idx).trimmed();
+			QByteArray value = header.mid(idx + 1).trimmed();
+			std::get<3>(*r).append({key, value});
+		}
+		return _sz;
+	}
+}
+
+
 NetworkFetcher::NetworkFetcher():
 	req_info(std::make_unique<RequestInfo>()),
 	info(std::make_unique<Info>())
@@ -74,41 +125,45 @@ NetworkFetcher::Response NetworkFetcher::httpPost(const QNetworkRequest & req,
 	return performRequest(req.url());
 }
 
-extern "C"
+NetworkFetcher::Response NetworkFetcher::httpPut(const QNetworkRequest& req,
+												 const QByteArray& body, std::chrono::milliseconds tout)
 {
-	size_t writeCallback(void *data, size_t size, size_t nmemb, void *userdata)
-	{
-		NetworkFetcher::Response* r;
-		r = static_cast<NetworkFetcher::Response*>(userdata);
-		size_t sz = size * nmemb;
-		std::get<2>(*r).append(QByteArray(static_cast<char*>(data), static_cast<int>(sz)));
-		return (sz);
-	}
+	size_t size = static_cast<size_t>(body.size());
+	setRequest(req, tout, true);
+	appendContentLenght(req, size);
 
-	size_t headerCallback(void *data, size_t size, size_t nmemb, void *userdata)
-	{
-		NetworkFetcher::Response* r;
-		r = reinterpret_cast<NetworkFetcher::Response*>(userdata);
-		size_t _sz = size*nmemb;
-		QByteArray header(static_cast<char*>(data), static_cast<int>(_sz));
-		int idx = header.indexOf(':');
-		if ( idx == -1)
-		{
-			header = header.trimmed();
-			if (header.isEmpty())
-			{
-				return _sz;
-			}
-			std::get<3>(*r).append({header, "present"});
-		}
-		else
-		{
-			QByteArray key = header.left(idx).trimmed();
-			QByteArray value = header.mid(idx + 1).trimmed();
-			std::get<3>(*r).append({key, value});
-		}
-		return _sz;
-	}
+	const char * data = body.data();
+	auto up_obj = std::tuple<const char*, size_t>(data, body.size());
+	setopt(curl, CURLOPT_PUT, 1L);
+	setopt(curl, CURLOPT_UPLOAD, 1L);
+	setopt(curl, CURLOPT_READFUNCTION, readCallback);
+	setopt(curl, CURLOPT_READDATA, &up_obj);
+	setopt(curl, CURLOPT_INFILESIZE, static_cast<int64_t>(std::get<1>(up_obj)));
+	return this->performRequest(req.url());
+}
+
+NetworkFetcher::Response NetworkFetcher::httpDelete(const QNetworkRequest & req,
+													const QByteArray& body,
+													std::chrono::milliseconds tout)
+{
+	const char* http_delete = "DELETE";
+	setRequest(req, tout, true);
+	setopt(curl, CURLOPT_CUSTOMREQUEST, http_delete);
+
+	const char* __data = body.data();
+	setopt(curl, CURLOPT_POSTFIELDS, __data);
+	setopt(curl, CURLOPT_POSTFIELDSIZE, body.size());
+
+	return this->performRequest(req.url());
+}
+
+NetworkFetcher::Response NetworkFetcher::httpDelete(const QNetworkRequest& req, std::chrono::milliseconds tout)
+{
+	const char* http_delete = "DELETE";
+	setRequest(req, tout, true);
+	setopt(curl, CURLOPT_CUSTOMREQUEST, http_delete);
+
+	return this->performRequest(req.url());
 }
 
 NetworkFetcher::Response NetworkFetcher::performRequest(const QUrl &url)
