@@ -440,11 +440,10 @@ void MainWindow::updateAnimal()
 			NetworkFetcher fetcher;
 			QNetworkRequest request(cfg.getUrlAddAnimal());
 			request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-			request.setRawHeader("request-type", "put");
 			request.setRawHeader("Authorization", QByteArray("Explicit: ").append(access_data.getPassword()));
 			QJsonObject record_json = record.serialize();
 			removeClientInfoFromAnimalRecord(record_json);
-			auto reply = fetcher.httpPost(request, toJson(record_json), cfg.getTimeout());
+			auto reply = fetcher.httpPut(request, toJson(record_json), cfg.getTimeout());
 			auto code = std::get<0>(reply);
 			auto& popup = Singlenton<PopUp>::getInstance();
 			if (code == -1)
@@ -477,7 +476,6 @@ void MainWindow::createAnimal()
 		NetworkFetcher fetcher;
 		QNetworkRequest request(url);
 		request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-		request.setRawHeader("request-type", "post");
 		request.setRawHeader("Authorization", QByteArray("Explicit: ").append(access_data.getPassword()));
 		QJsonObject record_json = record.serialize();
 		removeClientInfoFromAnimalRecord(record_json);

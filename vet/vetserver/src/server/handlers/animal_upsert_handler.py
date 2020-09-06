@@ -12,7 +12,6 @@ import uuid
 class AnimalUpsertHandler(AbstractHandler):
 	def request(self, req, res):
 		key = str(req.headers.get("Authorization"))
-		type = str(req.headers.get("request-type"))
 		# Authorization: Explicit Key
 		explicit_key="Explicit: "
 		idx = key.find(explicit_key) 
@@ -28,7 +27,7 @@ class AnimalUpsertHandler(AbstractHandler):
 
 		status : bool
 		data = json.loads(req.data)
-		if type == 'put':
+		if req.method == 'PUT':
 			status = self.__queryUpdateDb(data)
 		else:
 			status, out_index = self.__queryInsertDb(data, req.args.get("owner", default=None, type=None))
