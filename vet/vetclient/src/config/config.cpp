@@ -67,6 +67,46 @@ QUrl Config::getUrlSystemUsersList() const noexcept
 	return getUrl("ROUTES/system_users_list");
 }
 
+QUrl Config::getUrlDeleteUser() const noexcept
+{
+	return getUrl("ROUTES/delete_user");
+}
+
+QUrl Config::getUrlStaffShortInfo() const noexcept
+{
+	return getUrl("ROUTES/staff_short");
+}
+
+QUrl Config::getUrlAddUser() const noexcept
+{
+	return getUrl("ROUTES/add_user");
+}
+
+QUrl Config::getUrlUpdateUser() const noexcept
+{
+	return getUrl("ROUTES/update_user");
+}
+
+QUrl Config::getUrlAllPositions() const noexcept
+{
+	return getUrl("ROUTES/all_positions");
+}
+
+QUrl Config::getUrlUpdatePosition() const noexcept
+{
+	return getUrl("ROUTES/update_position");
+}
+
+QUrl Config::getUrlAddPosition() const noexcept
+{
+	return getUrl("ROUTES/add_position");
+}
+
+QUrl Config::getUrlStaffFullInfo() const noexcept
+{
+	return getUrl("ROUTES/full_staff_info");
+}
+
 QUrl Config::getUrl(const QString & path) const
 {
 	QUrl url;

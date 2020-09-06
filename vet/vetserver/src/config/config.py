@@ -49,6 +49,30 @@ class Config(object):
 	def get_routes_short_users_list(self):
 		return [str(self.__parser["ROUTES"]["system_users_list"])]
 
+	def get_routes_delete_user(self):
+		return [str(self.__parser["ROUTES"]["delete_user"])]
+
+	def get_routes_staff_short_info(self):
+		return [str(self.__parser["ROUTES"]["staff_short"])]
+
+	def get_routes_add_user(self):
+		return [str(self.__parser["ROUTES"]["add_user"])]
+
+	def get_routes_update_user(self):
+		return [str(self.__parser["ROUTES"]["update_user"])]
+	
+	def get_routes_all_positions(self):
+		return [str(self.__parser["ROUTES"]["all_positions"])]
+
+	def get_routes_update_position(self):
+		return [str(self.__parser["ROUTES"]["update_position"])]
+	
+	def get_routes_add_position(self):
+		return [str(self.__parser["ROUTES"]["add_position"])]
+
+	def get_routes_staff_full_info(self):
+		return [str(self.__parser["ROUTES"]["full_staff_info"])]
+
 	def get_conn_info(self):
 		driver=self.__parser["DATABASE"]["driver"]
 		server=self.__parser["DATABASE"]["server"]

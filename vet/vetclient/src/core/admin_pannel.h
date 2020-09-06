@@ -15,8 +15,9 @@ class AdminPannel : public QWidget
 
 public:
 	explicit AdminPannel(QWidget *parent = nullptr);
-	bool show(const QUrl &url, std::chrono::milliseconds tout, const QByteArray &pass);
+	bool show(const QUrl &url, std::chrono::milliseconds tout);
 	~AdminPannel();
+	void setPassword(QByteArray pass);
 
 private:
 	void tableViewDoubleClicked(const QModelIndex &index);
@@ -24,8 +25,10 @@ private:
 	void deleteUserBtnClicked();
 	bool deleteUserQuery(uint64_t id);
 	bool deleteUser(uint64_t id);
+	QByteArray serializeAccId(uint64_t id);
 
 	Ui::AdminPannel *ui;
 	UsersTableModel* model;
+	QByteArray password;
 };
 

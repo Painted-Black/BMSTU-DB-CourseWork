@@ -19,7 +19,7 @@ private:
 	using InitFunc = void(MainWindow::*)(T);
 	using  Callback = void(MainWindow::*)();
 public:
-	explicit MainWindow(AccessLevel level, QWidget *parent = nullptr);
+	explicit MainWindow(const AccessData &value, QWidget *parent = nullptr);
 	void setAccessData(const AccessData &value);
 	void show();
 
@@ -30,8 +30,12 @@ private:
 	void constructMain();
 
 	void runAnimalEditor();
+	void showStaffList(QWidget *w);
+	void showPositionsList(QWidget *w);
 	void showMainTab(QWidget* w);
 	void showAdminPannel(QWidget* w);
+	void showStaff();
+	void showPositions();
 	QWidget *addTab(const QIcon&, const QString&, std::tuple<uint64_t,  uint8_t> , InitFunc<QWidget*>);
 	std::tuple<bool, QWidget*> findTag(uint64_t) const;
 	void addToolBarAction(const QIcon&, const QString&, const Callback& cb);

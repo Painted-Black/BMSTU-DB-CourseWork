@@ -127,7 +127,9 @@ NetworkFetcher::Response NetworkFetcher::performRequest(const QUrl &url)
 
 	for (const auto& header : info->headers)
 	{
-		char* hdr_str = std::get<0>(header).toLatin1().append(": ").append(std::get<1>(header)).data();
+		auto header_str = std::get<0>(header).toLatin1();
+		header_str.append(": ").append(std::get<1>(header));
+		char* hdr_str = header_str.data();
 		headerList = curl_slist_append(headerList, hdr_str);
 	}
 

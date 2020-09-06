@@ -52,6 +52,7 @@ public:
 	void setFire_date(const QDate &value);
 	void setEmploy_date(const QDate &value);
 	void setShed_list(const ScheduleList &value);
+	void setId(const uint64_t &value);
 
 private:
 	uint64_t id;

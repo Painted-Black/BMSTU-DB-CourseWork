@@ -18,6 +18,7 @@ SOURCES += \
 	core/animal_list_item_widget.cpp \
 	core/auth.cpp \
 	core/client_list_widget.cpp \
+    core/chose_staff_full_dialog.cpp \
 	core/contacts.cpp \
 	core/chose_animal_dialog.cpp \
 	core/chose_animal_full_dialog.cpp \
@@ -27,6 +28,8 @@ SOURCES += \
     core/password_line_edit.cpp \
 	core/popup.cpp \
 	main.cpp \
+    model/positions_table_model.cpp \
+    model/staff_table_model.cpp \
 	model/users_table_model.cpp \
 	types/address.cpp \
 	types/animal_medical_record.cpp \
@@ -41,6 +44,7 @@ SOURCES += \
 	types/schedule.cpp \
 	types/sheduled_visits.cpp \
 	types/short_animal_info.cpp \
+    types/short_staff_info.cpp \
 	types/short_user_info.cpp \
 	types/staff.cpp \
 	types/user_data.cpp \
@@ -55,6 +59,12 @@ SOURCES += \
     core/change_login_dialog.cpp \
     core/change_password_dialog.cpp \
     core/chose_access_leveldialog.cpp \
+    core/add_user_dialog.cpp \
+    core/chose_staff_dialog.cpp \
+    core/user_list_item_widget.cpp \
+    core/main_vet_pannel.cpp \
+    core/position_info_dialog.cpp \
+    core/staff_tab_widget.cpp \
 	utils/utils.cpp \
 	model/prescribings_table_model.cpp
 
@@ -66,6 +76,7 @@ HEADERS += \
 	core/animal_list_item_widget.h \
 	core/auth.h \
 	core/client_list_widget.h \
+    core/chose_staff_full_dialog.h \
 	core/contacts.h \
 	core/chose_animal_dialog.h \
 	core/chose_animal_full_dialog.h \
@@ -75,6 +86,8 @@ HEADERS += \
 	core/network/network_fetcher.h \
     core/password_line_edit.h \
 	core/popup.h \
+    model/positions_table_model.h \
+    model/staff_table_model.h \
 	model/users_table_model.h \
 	types/QJsonHeaders.h \
 	types/address.h \
@@ -92,6 +105,7 @@ HEADERS += \
 	types/schedule.h \
 	types/sheduled_visits.h \
 	types/short_animal_info.h \
+    types/short_staff_info.h \
     types/short_user_info.h \
 	types/staff.h \
 	types/user_data.h \
@@ -107,10 +121,18 @@ HEADERS += \
     core/change_login_dialog.h \
     core/change_password_dialog.h \
     core/chose_access_leveldialog.h \
+    core/add_user_dialog.h \
+    core/chose_staff_dialog.h \
+    core/user_list_item_widget.h \
+    core/main_vet_pannel.h \
+    core/position_info_dialog.h \
+    core/staff_tab_widget.h \
 	utils/utils.h \
 	utils/singlenton.h
 
 FORMS += \
+    ui/chose_staff_full_dialog.ui \
+    ui/add_user_dialog.ui \
 	ui/admin_pannel.ui \
 	ui/change_login_dialog.ui \
 	ui/change_password_dialog.ui \
@@ -126,19 +148,23 @@ FORMS += \
 	ui/auth_dialog.ui \
 	ui/chip.ui \
 	ui/clent_list_item.ui \
+    ui/chose_staff_dialog.ui \
 	ui/client.ui \
 	ui/client_item_widget.ui \
 	ui/contacts.ui \
 	ui/main_tab_widget.ui \
+    ui/main_vet_pannel.ui \
 	ui/mainwindow.ui \
 	ui/passport.ui \
+    ui/position_info_dialog.ui \
 	ui/prescribings_widget.ui \
     ui/question_dialog.ui \
 	ui/shedule.ui \
-	ui/staff.ui \
+    ui/staff_tab_widget.ui \
 	ui/text_dialog.ui \
 	ui/user_info.ui \
     ui/user_info_dialog.ui \
+    ui/user_list_item_widget.ui \
 	ui/visit.ui
 
 LIBS += -lcurl

@@ -24,6 +24,9 @@ public:
 	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 	ShortUserInfo dataAt(int row);
+	void removeAt(int row);
+	void setDataAt(int row, const ShortUserInfo &new_data);
+	void addData(const ShortUserInfo& info);
 private:
 	int mColumnCount = 7;
 	QVector<ShortUserInfo> mData;

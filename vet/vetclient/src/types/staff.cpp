@@ -190,3 +190,8 @@ void Staff::setShed_list(const ScheduleList &value)
 {
 	shed_list = value;
 }
+
+void Staff::setId(const uint64_t &value)
+{
+    id = value;
+}

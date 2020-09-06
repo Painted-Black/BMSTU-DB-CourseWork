@@ -16,17 +16,32 @@ public:
 	explicit UserInfoDialog(QWidget *parent = nullptr);
 	~UserInfoDialog();
 	void show(ShortUserInfo info);
-	bool isChanged();
 	ShortUserInfo getShortUserInfo();
 
+	void setPassword(const QByteArray &value);
+	bool getLoginChanged() const;
+	bool getPassChanged() const;
+	bool getLvlChanged() const;
+	bool isChanged() const;
+
+	ShortUserInfo getNewAccessData() const;
+	QString getNewLogin() const;
+	QByteArray getNewPassword() const;
+	QString getNewAccessLevel() const;
+
 private:
+	QByteArray serializeAccessData();
+
 	Ui::UserInfoDialog *ui;
 	ShortUserInfo mData;
+	QByteArray password;
 
 	QString newLogin;
-	bool changed = false;
+	bool loginChanged = false;
 	QByteArray newPassword;
+	bool passChanged = false;
 	QString newAccessLevel;
+	bool lvlChanged = false;
 
 	void changeLoginBtn();
 	void changePasswordBtn();

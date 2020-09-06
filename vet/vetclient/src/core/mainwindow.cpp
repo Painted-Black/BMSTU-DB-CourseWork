@@ -23,6 +23,8 @@
 #include "core/main_tab_widget.h"
 #include "core/admin_pannel.h"
 #include "core/client_list_widget.h"
+#include "core/main_vet_pannel.h"
+#include "core/staff_tab_widget.h"
 
 
 enum TabType
@@ -32,7 +34,9 @@ enum TabType
 	EditAnimalWidget	= 3,
 	VisitWidget			= 4,
 	MainWidget			= 5,
-	AddAnimalWidget		= 6
+	AddAnimalWidget		= 6,
+	StaffWidget			= 7,
+	PositionsWidget		= 8
 };
 
 enum TabFlags
@@ -63,13 +67,16 @@ void checkAnimalWidget(QObject* sender, QTabWidget* tab, Func f)
 	}
 }
 
-MainWindow::MainWindow(AccessLevel level, QWidget *parent)
+MainWindow::MainWindow(const AccessData& value, QWidget *parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow())
 {
 	ui->setupUi(this);
 
 	qRegisterMetaType<TabType>();
 	qRegisterMetaType<TabFlags>();
+
+	access_data = value;
+	AccessLevel level = access_data.getLevel();
 
 	if (level.isVet() == true)
 	{
@@ -124,20 +131,48 @@ void MainWindow::constructVet()
 
 void MainWindow::constructReistry()
 {
-
 }
 
 void MainWindow::constructMain()
 {
-
+	addToolBarAction(QIcon(":/ui/icons/team.png"), "Сотрудники", &MainWindow::showStaff);
+	addToolBarAction(QIcon(":/ui/icons/name-tag.png"), "Должности", &MainWindow::showPositions);
 }
 
 void MainWindow::runAnimalEditor()
 {
 	qDebug() << Q_FUNC_INFO;
-    QWidget* w = addTab(QIcon(":/ui/icons/icons8-group-of-animals-48.png"), "Животные",
+
+	QWidget* w = addTab(QIcon(":/ui/icons/icons8-group-of-animals-48.png"), "Животные",
 				{AnimalWidget, Single}, &MainWindow::createWidgetAnimals);
 	w->show();
+}
+
+void MainWindow::showStaffList(QWidget *w)
+{
+	qDebug() << Q_FUNC_INFO << "Staff list";
+
+	QHBoxLayout* layout = new QHBoxLayout();
+	StaffTabWidget* stw = new StaffTabWidget(w);
+	stw->setObjectName("MainVetPannel");
+	stw->setPassword(access_data.getPassword());
+	stw->show();
+	layout->addWidget(stw);
+	w->setLayout(layout);
+	stw->update();
+}
+
+void MainWindow::showPositionsList(QWidget *w)
+{
+	qDebug() << Q_FUNC_INFO << "Positions list";
+	QHBoxLayout* layout = new QHBoxLayout();
+	MainVetPannel* mvp = new MainVetPannel(w);
+	mvp->setObjectName("MainVetPannel");
+	mvp->setPassword(access_data.getPassword());
+	mvp->show();
+	layout->addWidget(mvp);
+	w->setLayout(layout);
+	mvp->update();
 }
 
 void MainWindow::showMainTab(QWidget *w)
@@ -162,9 +197,26 @@ void MainWindow::showAdminPannel(QWidget *w)
 	auto& cfg = Singlenton<Config>::getInstance();
 	QBoxLayout* layout = new QVBoxLayout();
 	AdminPannel* pannel = new AdminPannel(w);
+	pannel->setPassword(access_data.getPassword());
 	layout->addWidget(pannel);
 	w->setLayout(layout);
-	pannel->show(cfg.getUrlSystemUsersList(), cfg.getTimeout(), access_data.getPassword());
+	pannel->show(cfg.getUrlSystemUsersList(), cfg.getTimeout());
+}
+
+void MainWindow::showStaff()
+{
+	qDebug() << Q_FUNC_INFO << "Show staff";
+	QWidget* w = addTab(QIcon(":/ui/icons/team.png"), "Сотрудники",
+				{StaffWidget, Single}, &MainWindow::showStaffList);
+	w->show();
+}
+
+void MainWindow::showPositions()
+{
+	qDebug() << Q_FUNC_INFO << "Show Positions";
+	QWidget* w = addTab(QIcon(":/ui/icons/name-tag.png"), "Должности",
+				{PositionsWidget, Single}, &MainWindow::showPositionsList);
+	w->show();
 }
 
 QWidget* MainWindow::addTab(
@@ -200,7 +252,13 @@ std::tuple<bool, QWidget *> MainWindow::findTag(uint64_t searched) const
 	auto count = bar->count();
 	for (decltype (count) i = 0; i < count; ++i)
 	{
-		auto data = bar->tabData(i).value<uint8_t>();
+		auto tab_data = bar->tabData(i).toList();
+		if (tab_data.size() != 2)
+		{
+			continue;
+		}
+
+		auto data = tab_data.at(0).value<uint64_t>();
 		if (searched == data)
 		{
 			bar->setCurrentIndex(i);
@@ -280,7 +338,7 @@ void MainWindow::newVisit()
 {
 	qDebug() << Q_FUNC_INFO << "New visit";
 	QWidget* w = addTab(QIcon(":/ui/icons/treatment-80.png"), "Ветеринарный осмотр",
-				{VisitWidget, Single}, &MainWindow::createWidgetNewVisit);
+				{VisitWidget, None}, &MainWindow::createWidgetNewVisit);
 
 	NewVisitWidget* nvw = w->findChild<NewVisitWidget*>("NewVisitWidget");
 	nvw->update();

@@ -139,6 +139,25 @@ Gender Passport::getGender() const
 	return gender;
 }
 
+QString Passport::getFio() const
+{
+	QString res;
+	res = surname;
+	if (name.size() >= 1)
+	{
+		res += " ";
+		res += name.at(0);
+		res += ".";
+	}
+	if (patronymic.size() >= 1)
+	{
+		res += " ";
+		res += patronymic.at(0);
+		res += ".";
+	}
+	return res;
+}
+
 bool Passport::operator==(const Passport & v) const
 {
 	bool is_equal = true;

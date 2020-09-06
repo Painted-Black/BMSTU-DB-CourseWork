@@ -105,3 +105,15 @@ void centredWidget(QWidget * widget, const QRect& screen)
 
 	widget->setGeometry(x, y, width, height);
 }
+
+QByteArray accessSerialize(const AccessData &acc)
+{
+	QJsonObject root_obj;
+	QJsonObject staff_incomplete_obj;
+	staff_incomplete_obj.insert(StaffJson::field_staff_id, QJsonValue::fromVariant(QVariant::fromValue(acc.getOwner().getId())));
+	root_obj.insert(AccessJson::field_acc_employee, staff_incomplete_obj);
+	root_obj.insert(AccessJson::field_acc_login, QJsonValue(acc.getLogin()));
+	root_obj.insert(AccessJson::field_acc_password, QJsonValue::fromVariant((QVariant(acc.getPassword()))));
+	root_obj.insert(AccessJson::field_acc_access_level, QJsonValue(acc.getLevel().toString()));
+	return QJsonDocument(root_obj).toJson();
+}

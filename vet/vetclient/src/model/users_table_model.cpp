@@ -78,3 +78,25 @@ ShortUserInfo UsersTableModel::dataAt(int row)
 	return mData.at(row);
 }
 
+void UsersTableModel::removeAt(int row)
+{
+	beginRemoveRows(QModelIndex(), row, row);
+	mData.remove(row);
+	endRemoveRows();
+}
+
+void UsersTableModel::setDataAt(int row, const ShortUserInfo& new_data)
+{
+	beginResetModel();
+	mData[row] = new_data;
+	endResetModel();
+}
+
+void UsersTableModel::addData(const ShortUserInfo &info)
+{
+	int data_size = mData.size();
+	beginInsertRows(QModelIndex(), data_size, data_size);
+	mData.append(info);
+	endInsertRows();
+}
+
