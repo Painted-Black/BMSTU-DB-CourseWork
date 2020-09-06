@@ -8,19 +8,19 @@ import uuid
 
 class UserShortInfoHandler(AbstractHandler):
 	def request(self, req, res):
-		#key = str(req.headers.get("Authorization"))
+		key = str(req.headers.get("Authorization"))
 		# Authorization: Explicit Key
-		#explicit_key="Explicit: "
-		#idx = key.find(explicit_key) 
-		#if idx == -1:
-		#	res.status_code=401
-		#	return
+		explicit_key="Explicit: "
+		idx = key.find(explicit_key) 
+		if idx == -1:
+			res.status_code=401
+			return
 		
-		#key = key[len(explicit_key):]
-		#staff_id = valid_key_checker.get_owner(key)
-		#if staff_id == -1:
-		#	res.status_code=401
-		#	return
+		key = key[len(explicit_key):]
+		staff_id = valid_key_checker.get_owner(key)
+		if staff_id == -1:
+			res.status_code=401
+			return
 
 		status, data = self.__queryDb()
 		if not status:

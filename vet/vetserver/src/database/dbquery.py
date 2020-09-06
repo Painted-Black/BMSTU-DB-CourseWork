@@ -7,6 +7,10 @@ class DBQuery(object):
 		self.cursor = dbconn.new_query(self)
 
 	def __del__(self):
+		if self.is_transaction:
+			print("Transaction was not commit. Rollback")
+			self.rollback_transaction()
+
 		self.cursor.close()
 		del self.cursor
 
@@ -19,6 +23,9 @@ class DBQuery(object):
 
 	def begin_transaction(self):
 		self.is_transaction=True
+
+	def rollback_transaction(self):
+		self.cursor.rollback()
 
 	def commit_transaction(self):
 		if self.is_transaction:

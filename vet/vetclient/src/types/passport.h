@@ -12,6 +12,7 @@ public:
 	bool deserialize(const QJsonObject&) noexcept override;
 	QJsonObject serialize() const override;
 
+	void setId(uint64_t value);
 	void setSurname(const QString &value);
 	void setName(const QString &value);
 	void setPatronymic(const QString &value);
@@ -32,6 +33,7 @@ public:
 	Gender getGender() const;
 
 	bool operator==(const Passport&) const;
+
 
 private:
 	uint64_t id;

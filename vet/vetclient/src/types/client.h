@@ -8,6 +8,16 @@
 #include "passport.h"
 #include "address.h"
 
+struct ShortInfoClient final : public ISerializable<QJsonObject>
+{
+	bool deserialize(const QJsonObject &) noexcept override;
+	uint64_t uid;
+	QString surname;
+	QString name;
+	QString patronymic;
+	QDate birthday;
+};
+
 class Client final : public ISerializable<QJsonObject>
 {
 public:

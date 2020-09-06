@@ -35,31 +35,32 @@ bool AnimalListWidget::show(const QUrl& url,
 		auto animals_info = deserializeArray<ShortAnimalInfo>(std::get<2>(reply));
 		for (const auto& v : animals_info)
 		{
-			QListWidgetItem* item = new QListWidgetItem(view);
-			view->addItem(item);
-			QWidget* inserted_widget = addWidget(v);
-			inserted_widget->setProperty("UID", QVariant::fromValue(v.getUid()));
-			item->setSizeHint(inserted_widget->sizeHint());
-			view->setItemWidget(item, inserted_widget);
+			addAnimal(v);
 		}
 	}
 	return true;
 }
 
-void AnimalListWidget::addAnimal()
+void AnimalListWidget::addAnimal(const ShortAnimalInfo &info)
 {
-
+	addWidget(info);
 }
 
-QWidget* AnimalListWidget::addWidget(const ShortAnimalInfo & info)
+void AnimalListWidget::addWidget(const ShortAnimalInfo & info)
 {
-	QWidget* form = new QWidget();
+	QListWidgetItem* item = new QListWidgetItem(view);
+	view->addItem(item);
+
+	QWidget* inserted_widget = new QWidget();
 	Ui::Form* ui = new Ui::Form();
-	ui->setupUi(form);
+	ui->setupUi(inserted_widget);
 	ui->input_name->setText(info.getName());
 	ui->input_spec->setText(info.getSpec());
 	ui->input_birth->setText(info.getBirth().toString(Qt::SystemLocaleLongDate));
-	return form;
+
+	inserted_widget->setProperty("UID", QVariant::fromValue(info.getUid()));
+	item->setSizeHint(inserted_widget->sizeHint());
+	view->setItemWidget(item, inserted_widget);
 }
 
 void AnimalListWidget::selectItemWidget(QListWidgetItem * item)

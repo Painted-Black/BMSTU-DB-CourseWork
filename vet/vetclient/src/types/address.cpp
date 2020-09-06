@@ -99,3 +99,8 @@ bool Address::operator==(const Address &v ) const
 
 	return is_equal;
 }
+
+void Address::setId(uint64_t value)
+{
+    id = value;
+}

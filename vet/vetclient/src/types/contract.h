@@ -20,6 +20,7 @@ public:
 	const Client &getClient() const;
 	QString getCode() const;
 
+	void setContrId(uint64_t);
 	void setConclusionDate(const QDate &value);
 	void setLastUpdateDate(const QDate &value);
 	void setValidUntil(const QDate &value);
@@ -27,6 +28,7 @@ public:
 	void setCode(const QString &value);
 
 	bool operator==(const Contract&) const;
+
 
 private:
 	uint64_t contr_id;

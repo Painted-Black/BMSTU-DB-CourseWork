@@ -9,9 +9,10 @@ from server.key_data_checker import valid_key_checker
 import json
 import uuid
 
-class AnimalInfoHandler(AbstractHandler):
+class AnimalUpsertHandler(AbstractHandler):
 	def request(self, req, res):
 		key = str(req.headers.get("Authorization"))
+		type = str(req.headers.get("request-type"))
 		# Authorization: Explicit Key
 		explicit_key="Explicit: "
 		idx = key.find(explicit_key) 
@@ -25,71 +26,138 @@ class AnimalInfoHandler(AbstractHandler):
 			res.status_code=401
 			return
 
-		animal_record_data=json.loads(req.data())
+		status : bool
+		data = json.loads(req.data)
+		if type == 'put':
+			status = self.__queryUpdateDb(data)
+		else:
+			status, out_index = self.__queryInsertDb(data, req.args.get("owner", default=None, type=None))
+			data = {"anim_id": out_index}
+			res.data = json.dumps(data)
 
-		status, data = self.__queryDb(id)
 		if not status:
 			res.status_code=500
 			return
 
-		status, client_data = self.__query_client(int(data["contract"]["owner"]))
-		if not status:
-			res.status_code=500
-			return
+		res.status_code=201
 
-		data["contract"]["owner"] = client_data
-
-		res.data = json.dumps(data)
-		res.status_code=200
-
-	def __queryDb(self, data : dict):
+	def __queryInsertDb(self, data : dict, owner : int):
 		conn_name = str(uuid.uuid4())
 		conn = access_manager.connect(conn_name)
-		str_query = '''SELECT * FROM animals_medical_records a 
-							LEFT JOIN contract ON contract=contr_id 
-							LEFT JOIN microchips m ON a.chip_id=m.chip_id 
-								WHERE anim_id={};'''.format(id)
 		query = DBQuery(conn)
-		if not query.exec_query(str_query):
-			return False, ""
+		chip = data["chip_id"]
+
+
+		query.begin_transaction()
+		contract = data["contract"]
+		chip = data["chip_id"]
+
+		last_update_str=contract['last_update_date']
+		if len(last_update_str) == 0:
+			last_update_str='NULL'
 		else:
-			result = query.get_values()
+			last_update_str="'{}'::date".format(last_update_str)
 
+		str_query = '''INSERT INTO contract (code, conclusion_date, last_update_date, owner, valid_until) VALUES('{code}', '{conclusion_date}'::date,
+			  {last_update_date}, '{owner}', '{valid_until}'::date) RETURNING contr_id;'''.format(
+				  code=contract['code'], conclusion_date=contract['conclusion_date'], 
+				  last_update_date=last_update_str, valid_until=contract['valid_until'],
+				  owner=owner
+			)
+
+		contr_id : int
+		if not query.exec_query(str_query):
+			query.rollback_transaction()
+			print(query.get_error())
+			return False
+		else:
+			contr_id = query.get_values()[0][0]
+
+		str_query = '''INSERT INTO microchips (chip_num, impl_date, country, location) 
+						  VALUES('{chip_num}', '{impl_date}'::date, '{country}', '{location}') RETURNING chip_id;'''\
+							  .format(chip_num=chip["chip_num"], impl_date=chip["impl_date"], country=chip["country"], location=chip["location"])
+
+		chip_id : int
+		if not query.exec_query(str_query):
+			query.rollback_transaction()
+			print(query.get_error())
+			return False
+		else:
+			chip_id = query.get_values()[0][0]
+
+		str_query = '''INSERT INTO animals_medical_records (name, breed, species, sex, castrated, birth, other_data, 
+					      color, special_signs, registr_date, chip_id, contract, rel_path_to_photo) 
+							VALUES ('{name}', '{breed}', '{species}', '{sex}', '{castrated}', '{birth}'::date, '{other}', '{color}', '{special_signs}', 
+							'{registr_date}'::date, {chip_id}, {contract}, '{rel_path_to_photo}') RETURNING anim_id;'''\
+								.format(name=data["name"], breed=data["breed"], species=data["species"], 
+									sex=data["sex"], castrated=data["castrated"], birth=data["birth"], 
+									other=data["other_data"], color=data["color"], special_signs=data["special_signs"], 
+									registr_date=data["registr_date"], contract=contr_id, 
+									chip_id=chip_id, rel_path_to_photo=data["rel_path_to_photo"])
+
+		anim_id : int
+		if not query.exec_query(str_query):
+			query.rollback_transaction()
+			print(query.get_error())
+			return False, 0
+		else:
+			anim_id = query.get_values()[0][0]
+
+		query.commit_transaction()
 		access_manager.disconnect(conn_name)
-		return True, self.__to_json(result, query.get_column_names())
+		return True, anim_id
 
-	def __query_client(self, id : int):
+	def __queryUpdateDb(self, data : dict):
 		conn_name = str(uuid.uuid4())
 		conn = access_manager.connect(conn_name)
-		str_query = '''SELECT * FROM clients c 
-						LEFT JOIN passports ON passport=pass_id 
-						LEFT JOIN addresses ON address=addr_id 
-							WHERE cli_id={}'''.format(id)
 		query = DBQuery(conn)
-		if not query.exec_query(str_query):
-			return False, ""
+		chip = data["chip_id"]
+
+
+		query.begin_transaction()
+		contract = data["contract"]
+		chip = data["chip_id"]
+
+		str_queries = []
+
+		last_update_str=contract['last_update_date']
+		if len(last_update_str) == 0:
+			last_update_str='NULL'
 		else:
-			result = query.get_values()
+			last_update_str="'{}'::date".format(last_update_str)
 
+
+		str_queries.append('''UPDATE animals_medical_records 
+						    SET name='{name}',
+						      breed='{breed}',species='{species}', sex='{sex}', castrated='{castrated}', birth='{birth}'::date,
+						  	  other_data='{other}', color='{color}', special_signs='{special_signs}', 
+							  registr_date='{registr_date}'::date, chip_id={chip_id}, contract={contract}, 
+							  rel_path_to_photo='{rel_path_to_photo}' WHERE anim_id={anim_id};'''.format(
+						anim_id=data["anim_id"], name=data["name"], breed=data["breed"], 
+						species=data["species"], sex=data["sex"], castrated=data["castrated"],
+						birth=data["birth"], other=data["other_data"], color=data["color"],
+						special_signs=data["special_signs"], registr_date=data["registr_date"], contract=contract["contr_id"],
+						chip_id=chip["chip_id"], rel_path_to_photo=data["rel_path_to_photo"]))
+
+		str_queries.append('''UPDATE contract 
+			SET code='{code}', conclusion_date='{conclusion_date}'::date,
+			  last_update_date={last_update_date}, valid_until='{valid_until}'::date WHERE contr_id={contr_id};'''.format(
+				  code=contract['code'], conclusion_date=contract['conclusion_date'], last_update_date=last_update_str, 
+				  valid_until=contract['valid_until'], contr_id=contract['contr_id']
+			  ))
+
+		str_queries.append('''UPDATE microchips 
+			SET chip_num='{chip_num}', impl_date='{impl_date}'::date,
+			  country='{country}', location='{location}' WHERE chip_id={chip_id}'''.format(
+				  chip_num=chip["chip_num"], impl_date=chip["impl_date"], country=chip["country"], location=chip["location"], chip_id=chip["chip_id"]
+			  ))
+
+		for str_query in str_queries:
+			if not query.exec_query(str_query):
+				query.rollback_transaction()
+				print(query.get_error())
+				return False
+
+		query.commit_transaction()
 		access_manager.disconnect(conn_name)
-		return True, self.__to_json_client(result, query.get_column_names())
-
-
-	def __to_json(self, rows : list, column_names : list):
-		row = rows[0]
-		animal_info = {}
-		for i in range(0, 14):
-			animal_info[column_names[i]]=str(row[i])
-
-		contract = {}
-		for i in range(14, 20):
-			contract[column_names[i]] = str(row[i])
-
-		chips = {}
-		for i in range(20, len(row)):
-			chips[column_names[i]] = str(row[i])
-
-		animal_info["contract"] = contract
-		animal_info["chip_id"] = chips
-		
-		return animal_info
+		return True

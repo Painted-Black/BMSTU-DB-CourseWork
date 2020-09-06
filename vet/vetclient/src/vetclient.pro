@@ -15,9 +15,9 @@ SOURCES += \
 	config/consoleparser.cpp \
 	core/account_info_widget.cpp \
 	core/animal_edit_widget.cpp \
-	core/animal_info_widget.cpp \
 	core/animal_list_item_widget.cpp \
 	core/auth.cpp \
+	core/client_list_widget.cpp \
 	core/contacts.cpp \
 	core/chose_animal_dialog.cpp \
 	core/chose_animal_full_dialog.cpp \
@@ -63,9 +63,9 @@ HEADERS += \
 	config/consoleparser.h \
 	core/account_info_widget.h \
 	core/animal_edit_widget.h \
-	core/animal_info_widget.h \
 	core/animal_list_item_widget.h \
 	core/auth.h \
+	core/client_list_widget.h \
 	core/contacts.h \
 	core/chose_animal_dialog.h \
 	core/chose_animal_full_dialog.h \
@@ -125,7 +125,9 @@ FORMS += \
 	ui/animal_list_item_widget.ui \
 	ui/auth_dialog.ui \
 	ui/chip.ui \
+	ui/clent_list_item.ui \
 	ui/client.ui \
+	ui/client_item_widget.ui \
 	ui/contacts.ui \
 	ui/main_tab_widget.ui \
 	ui/mainwindow.ui \

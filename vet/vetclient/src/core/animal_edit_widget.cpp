@@ -14,6 +14,15 @@
 #include "core/network/network_fetcher.h"
 #include "utils/utils.h"
 
+namespace ID_FIELDS
+{
+	constexpr char animal[] = "anim_id";
+	constexpr char contract[] = "contr_id";
+	constexpr char microchip[] = "chip_id";;
+	constexpr char address[] = "addr_id";
+	constexpr char passport[] = "pass_id";
+}
+
 AnimalEditWidget::AnimalEditWidget(QWidget *parent)
 	: QWidget(parent),
 	  ui(new Ui::animal_widget()),
@@ -82,6 +91,7 @@ void AnimalEditWidget::show(const QUrl& url, std::chrono::milliseconds tout, con
 	}
 
 	animal_record.deserialize(fromJson(body));
+	setProperty(ID_FIELDS::animal, QVariant::fromValue(animal_record.getAnimId()));
 	ui->name_le->setText(animal_record.getName());
 	ui->species_le->setText(animal_record.getSpecies());
 	ui->breed_le->setText(animal_record.getBreed());
@@ -95,66 +105,30 @@ void AnimalEditWidget::show(const QUrl& url, std::chrono::milliseconds tout, con
 	ui->last_visit_de->setDate(animal_record.getLastVisit());
 
 	const Contract& contract_object = animal_record.getContract();
+	setProperty(ID_FIELDS::contract, QVariant::fromValue(contract_object.getContrId()));
 	contract_ui->num_le->setText(contract_object.getCode());
 	contract_ui->valid_to_de->setDate(contract_object.getValidUntil());
 	contract_ui->conclusion_de->setDate(contract_object.getConclusionDate());
 
 	const Microchip& chip_object = animal_record.getChip();
+	setProperty(ID_FIELDS::microchip, QVariant::fromValue(chip_object.getId()));
 	chip_ui->num_le->setText(chip_object.getChipNum());
 	chip_ui->country_le->setText(chip_object.getCountry());
 	chip_ui->impl_de->setDate(chip_object.getImplDate());
 	chip_ui->location_le->setText(chip_object.getLocation());
 
-	const Client& client_object = contract_object.getClient();
-	const auto& phones = client_object.getPhones();
-	const auto& emails = client_object.getEmails();
-	const auto& socials = client_object.getSocial();
-
-	for (const auto& phone : phones)
-	{
-		contact->addNewPhone(phone);
-	}
-
-	for (const auto& email : emails)
-	{
-		contact->addNewEmail(email);
-	}
-
-	for (const auto& social : socials)
-	{
-		contact->addNewSocialSite(social);
-	}
-
-	const Address& address_object = client_object.getAddress();
-	address_dlg_ui->city_lineEdit->setText(address_object.getCity());
-	address_dlg_ui->flat_lineEdit->setText(address_object.getFlat());
-	address_dlg_ui->house_lineEdit->setText(address_object.getHouse());
-	address_dlg_ui->street_lineEdit->setText(address_object.getStreet());
-	address_dlg_ui->country_lineEdit->setText(address_object.getCountry());
-
-	const Passport& passport_object = client_object.getPassport();
-	passport_dlg_ui->num_lineEdit->setText(passport_object.getPassportNum());
-	passport_dlg_ui->name_lineEdit->setText(passport_object.getName());
-	passport_dlg_ui->patr_lineEdit->setText(passport_object.getPatronymic());
-	passport_dlg_ui->issue_date->setDate(passport_object.getIssueDate());
-	passport_dlg_ui->surname_lineEdit->setText(passport_object.getSurname());
-	passport_dlg_ui->nationality_lineEdit->setText(passport_object.getNationality());
-	passport_dlg_ui->birth_dateEdit->setDate(passport_object.getBirthday());
-	QRadioButton* btn =
-			(passport_object.getGender().getGenderType() == Gender::GenderEnum::Male)
-			? passport_dlg_ui->male_radioButton
-			: passport_dlg_ui->female_radioButton;
-	btn->setChecked(true);
+	updateClientData();
 }
 
 bool AnimalEditWidget::isFills() const
 {
 	bool is_empty = false;
+	QSet<QLineEdit*> ignorable = { ui->info_le, ui->sign_le };
 	QList<QLineEdit*> children = findChildren<QLineEdit*>();
-	std::for_each(children.begin() + 3, children.end(), [&](const auto& child)
-	{
-		is_empty |= child->text().isEmpty();
-	});
+	is_empty |= ui->name_le->text().isEmpty();
+	is_empty |= ui->breed_le->text().isEmpty();
+	is_empty |= ui->color_le->text().isEmpty();
+	is_empty |= ui->species_le->text().isEmpty();
 
 	children = contract->findChildren<QLineEdit*>();
 	for (auto child : children)
@@ -179,6 +153,7 @@ bool AnimalEditWidget::isEdit() const
 AnimalMedicalRecord AnimalEditWidget::getEditedAnimalMedicalRecord()
 {
 	AnimalMedicalRecord record;
+	record.setAnimId(property(ID_FIELDS::animal).toULongLong());
 	record.setName(ui->name_le->text());
 	record.setSpecies(ui->species_le->text());
 	record.setBreed(ui->breed_le->text());
@@ -195,42 +170,14 @@ AnimalMedicalRecord AnimalEditWidget::getEditedAnimalMedicalRecord()
 	record.setLastVisit(ui->last_visit_de->date());
 
 	Contract contract_object;
+	contract_object.setContrId(property(ID_FIELDS::contract).toULongLong());
 	contract_object.setCode(contract_ui->num_le->text());
 	contract_object.setValidUntil(contract_ui->valid_to_de->date());
 	contract_object.setConclusionDate(contract_ui->conclusion_de->date());
-
-	Client client_object;
-	client_object.setPhones(contact->getPhones());
-	client_object.setEmails(contact->getEmails());
-	client_object.setSocial(contact->getSocialSites());
-
-	Address address_object;
-	address_object.setCity(address_dlg_ui->city_lineEdit->text());
-	address_object.setFlat(address_dlg_ui->flat_lineEdit->text());
-	address_object.setHouse(address_dlg_ui->house_lineEdit->text());
-	address_object.setStreet(address_dlg_ui->street_lineEdit->text());
-	address_object.setCountry(address_dlg_ui->country_lineEdit->text());
-	client_object.setAddress(std::move(address_object));
-
-	Passport passport_object;
-	passport_object.setPassportNum(passport_dlg_ui->num_lineEdit->text());
-	passport_object.setName(passport_dlg_ui->name_lineEdit->text());
-	passport_object.setPatronymic(passport_dlg_ui->patr_lineEdit->text());
-	passport_object.setIssueDate(passport_dlg_ui->issue_date->date());
-	passport_object.setSurname(passport_dlg_ui->surname_lineEdit->text());
-	passport_object.setNationality(passport_dlg_ui->nationality_lineEdit->text());
-	passport_object.setBirthday(passport_dlg_ui->birth_dateEdit->date());
-
-	Gender gender;
-	auto g_type = passport_dlg_ui->male_radioButton->isChecked()
-			? Gender::GenderEnum::Male
-			: Gender::GenderEnum::Female;
-	gender.setGenderType(g_type);
-	passport_object.setGender(gender);
-	client_object.setPassport(std::move(passport_object));
 	record.setContract(std::move(contract_object));
 
 	Microchip chip_object;
+	chip_object.setId(property(ID_FIELDS::microchip).toULongLong());
 	chip_object.setChipNum(chip_ui->num_le->text());
 	chip_object.setCountry(chip_ui->country_le->text());
 	chip_object.setImplDate(chip_ui->impl_de->date());
@@ -239,9 +186,65 @@ AnimalMedicalRecord AnimalEditWidget::getEditedAnimalMedicalRecord()
 	return record;
 }
 
-const AnimalMedicalRecord &AnimalEditWidget::getAnimalMedicalRecord()
+const AnimalMedicalRecord &AnimalEditWidget::getAnimalMedicalRecord() const
 {
-    return animal_record;
+	return animal_record;
+}
+
+void AnimalEditWidget::updateClientData()
+{
+	const Client& client_object = animal_record.getContract().getClient();
+	const auto& phones = client_object.getPhones();
+	const auto& emails = client_object.getEmails();
+	const auto& socials = client_object.getSocial();
+
+	for (const auto& phone : phones)
+	{
+		contact->addNewPhone(phone);
+	}
+
+	for (const auto& email : emails)
+	{
+		contact->addNewEmail(email);
+	}
+
+	for (const auto& social : socials)
+	{
+		contact->addNewSocialSite(social);
+	}
+
+	const Address& address_object = client_object.getAddress();
+	setProperty(ID_FIELDS::address, QVariant::fromValue(address_object.getId()));
+	address_dlg_ui->city_lineEdit->setText(address_object.getCity());
+	address_dlg_ui->flat_lineEdit->setText(address_object.getFlat());
+	address_dlg_ui->house_lineEdit->setText(address_object.getHouse());
+	address_dlg_ui->street_lineEdit->setText(address_object.getStreet());
+	address_dlg_ui->country_lineEdit->setText(address_object.getCountry());
+
+	const Passport& passport_object = client_object.getPassport();
+	setProperty(ID_FIELDS::passport, QVariant::fromValue(passport_object.getId()));
+	passport_dlg_ui->num_lineEdit->setText(passport_object.getPassportNum());
+	passport_dlg_ui->name_lineEdit->setText(passport_object.getName());
+	passport_dlg_ui->patr_lineEdit->setText(passport_object.getPatronymic());
+	passport_dlg_ui->issue_date->setDate(passport_object.getIssueDate());
+	passport_dlg_ui->surname_lineEdit->setText(passport_object.getSurname());
+	passport_dlg_ui->nationality_lineEdit->setText(passport_object.getNationality());
+	passport_dlg_ui->birth_dateEdit->setDate(passport_object.getBirthday());
+	QRadioButton* btn =
+			(passport_object.getGender().getGenderType() == Gender::GenderEnum::Male)
+			? passport_dlg_ui->male_radioButton
+			: passport_dlg_ui->female_radioButton;
+	btn->setChecked(true);
+
+	client_dlg_ui->contact->setEnabled(false);
+	client_dlg_ui->passport->setEnabled(false);
+	client_dlg_ui->address->setEnabled(false);
+	client_dlg_ui->buttonBox->setStandardButtons(QDialogButtonBox::Ok);
+}
+
+void AnimalEditWidget::setClientData(const Client& client)
+{
+	animal_record.getContract().setClient(client);
 }
 
 void AnimalEditWidget::activeInfoDialog()

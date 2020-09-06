@@ -84,7 +84,7 @@ namespace AnimalMedicalRecordJson
 	const QString field_anim_birth = "birth";
 	const QString field_anim_other_data = "other_data";
 	const QString field_anim_color = "color";
-	const QString field_anim_specil_signs = "specil_signs";
+	const QString field_anim_specil_signs = "special_signs";
 	const QString field_anim_registr_date = "registr_date";
 	const QString field_anim_last_visit = "last_visit";
 	const QString field_anim_chip_id = "chip_id";

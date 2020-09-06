@@ -2,6 +2,7 @@
 
 #include <QByteArray>
 #include <QMap>
+#include "types/animal_medical_record.h"
 #include "types/QJsonHeaders.h"
 #include "types/visit.h"
 #include "types/json_fields.h"
@@ -28,3 +29,9 @@ QVector<Class> deserializeArray(const QByteArray& data)
 	return data_arr;
 }
 
+bool compareAnimalRecordsWithoutClientInfo(const AnimalMedicalRecord&,
+										  const AnimalMedicalRecord&);
+
+void removeClientInfoFromAnimalRecord(QJsonObject &);
+
+void centredWidget(QWidget*, const QRect&);
