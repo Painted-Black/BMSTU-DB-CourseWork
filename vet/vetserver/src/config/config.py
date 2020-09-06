@@ -59,6 +59,9 @@ class Config(object):
 
 	def get_routes_update_position(self):
 		return [str(self.__parser["ROUTES"]["update_position"])]
+	
+	def get_routes_add_position(self):
+		return [str(self.__parser["ROUTES"]["add_position"])]
 
 	def get_conn_info(self):
 		driver=self.__parser["DATABASE"]["driver"]

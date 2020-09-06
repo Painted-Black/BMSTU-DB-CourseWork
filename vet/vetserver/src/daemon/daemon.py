@@ -15,6 +15,7 @@ from server.handlers.short_staff_info_handler import  ShortStaffInfo
 from server.handlers.update_user_handler import UpdateUserHandler
 from server.handlers.all_positions_handler import AllPositionsHandler
 from server.handlers.update_position_handler import UpdatePositionHandler
+from server.handlers.add_position_handler import AddPositionHandler
 
 from database.dbaccess_manager import DBAccessManager, access_manager
 
@@ -47,6 +48,7 @@ class Daemon(object):
 		update_user_=self.__config.get_routes_update_user()
 		all_positions_=self.__config.get_routes_all_positions()
 		update_position_=self.__config.get_routes_update_position()
+		add_position_=self.__config.get_routes_add_position()
 
 		self.__server.add_endpoint(AuthHandler(auth_, ["POST"]))
 		self.__server.add_endpoint(ScheduleHandler(schedule_, ["POST"]))
@@ -61,5 +63,6 @@ class Daemon(object):
 		self.__server.add_endpoint(UpdateUserHandler(update_user_, ["POST"]))
 		self.__server.add_endpoint(AllPositionsHandler(all_positions_, ["GET"]))
 		self.__server.add_endpoint(UpdatePositionHandler(update_position_, ["POST"]))
+		self.__server.add_endpoint(AddPositionHandler(add_position_, ["POST"]))
 
 		self.__server.start(port=self.__config.get_server_port())

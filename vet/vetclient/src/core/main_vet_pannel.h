@@ -20,6 +20,7 @@ public:
 
 private:
 	void tableViewDoubleClicked(const QModelIndex &index);
+	void addPosition();
 
 	Ui::MainVetPannel *ui;
 	PositionsTableModel* model;

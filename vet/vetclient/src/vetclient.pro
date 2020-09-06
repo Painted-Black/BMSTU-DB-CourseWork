@@ -154,7 +154,6 @@ FORMS += \
 	ui/prescribings_widget.ui \
     ui/question_dialog.ui \
 	ui/shedule.ui \
-	ui/staff.ui \
 	ui/text_dialog.ui \
 	ui/user_info.ui \
     ui/user_info_dialog.ui \

@@ -9,6 +9,7 @@
 
 #include <QNetworkRequest>
 #include <QDebug>
+#include <QPushButton>
 
 MainVetPannel::MainVetPannel(QWidget *parent) :
 	QWidget(parent),
@@ -17,6 +18,7 @@ MainVetPannel::MainVetPannel(QWidget *parent) :
 {
 	ui->setupUi(this);
 	connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &MainVetPannel::tableViewDoubleClicked);
+	connect(ui->add_pos_toolButton, &QPushButton::released, this, &MainVetPannel::addPosition);
 }
 
 MainVetPannel::~MainVetPannel()
@@ -61,8 +63,7 @@ void MainVetPannel::tableViewDoubleClicked(const QModelIndex &index)
 {
 	qDebug() << "Position double clicked" << " row: " << index.row();
 
-	qDebug() << Q_FUNC_INFO << "Double click";
-	PositionInfoDialog* dialog = new PositionInfoDialog(this);
+	PositionInfoDialog* dialog = new PositionInfoDialog(PositionInfoDialog::EDIT, this);
 	dialog->setPassword(password);
 	dialog->setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
 	dialog->show(model->dataAt(index.row()));
@@ -76,4 +77,19 @@ void MainVetPannel::tableViewDoubleClicked(const QModelIndex &index)
 		qDebug() << "Updating table";
 	}
 
+}
+
+void MainVetPannel::addPosition()
+{
+	qDebug() << Q_FUNC_INFO << "Adding position";
+
+	PositionInfoDialog* dialog = new PositionInfoDialog(PositionInfoDialog::ADD, this);
+	dialog->setPassword(password);
+	dialog->setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+
+	if (dialog->exec() == QDialog::Accepted)
+	{
+		Position added_position = dialog->getAddedPosition();
+		model->addData(added_position);
+	}
 }

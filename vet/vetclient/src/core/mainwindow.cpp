@@ -131,6 +131,8 @@ void MainWindow::runAnimalEditor()
 void MainWindow::showStaffList(QWidget *w)
 {
 	qDebug() << Q_FUNC_INFO << "Staff list";
+
+
 }
 
 void MainWindow::showPositionsList(QWidget *w)
