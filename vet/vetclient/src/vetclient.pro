@@ -65,6 +65,7 @@ SOURCES += \
     core/main_vet_pannel.cpp \
     core/position_info_dialog.cpp \
     core/staff_tab_widget.cpp \
+    core/fire_dialog.cpp \
 	utils/utils.cpp \
 	model/prescribings_table_model.cpp
 
@@ -127,6 +128,7 @@ HEADERS += \
     core/main_vet_pannel.h \
     core/position_info_dialog.h \
     core/staff_tab_widget.h \
+    core/fire_dialog.h \
 	utils/utils.h \
 	utils/singlenton.h
 
@@ -150,6 +152,7 @@ FORMS += \
     ui/chose_staff_dialog.ui \
 	ui/client.ui \
 	ui/contacts.ui \
+    ui/fire_dialog.ui \
 	ui/main_tab_widget.ui \
     ui/main_vet_pannel.ui \
 	ui/mainwindow.ui \

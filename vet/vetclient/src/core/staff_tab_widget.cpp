@@ -5,6 +5,7 @@
 #include "network/network_fetcher.h"
 #include "config/config.h"
 #include "utils/utils.h"
+#include "core/fire_dialog.h"
 
 #include <QNetworkAccessManager>
 #include <QDebug>
@@ -19,6 +20,9 @@ StaffTabWidget::StaffTabWidget(QWidget *parent) :
 
 	connect(ui->add_staff_toolButton, &QPushButton::released, this, &StaffTabWidget::addStaffBtn);
 	connect(ui->delete_staff_toolButton, &QPushButton::released, this, &StaffTabWidget::removeStaffBtn);
+	connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &StaffTabWidget::tableViewDoubleClicked);
+	ui->show_fired_checkBox->setChecked(true);
+	connect(ui->show_fired_checkBox, &QCheckBox::stateChanged, this, &StaffTabWidget::checked);
 }
 
 StaffTabWidget::~StaffTabWidget()
@@ -61,6 +65,11 @@ void StaffTabWidget::update()
 	}
 }
 
+void StaffTabWidget::tableViewDoubleClicked(const QModelIndex &index)
+{
+	qDebug() << "Position double clicked" << " row: " << index.row();
+}
+
 void StaffTabWidget::addStaffBtn()
 {
 	qDebug() << Q_FUNC_INFO << "Add staff";
@@ -69,4 +78,78 @@ void StaffTabWidget::addStaffBtn()
 void StaffTabWidget::removeStaffBtn()
 {
 	qDebug() << Q_FUNC_INFO << "Remove staff";
+
+	QItemSelectionModel *select = ui->tableView->selectionModel();
+	QModelIndexList selected_rows = select->selectedRows();
+	if (selected_rows.size() != 0)
+	{
+		int row = selected_rows.begin()->row();
+		if (model->dataAt(row).getFire_date().isValid() == true)
+		{
+			auto& popup = Singlenton<PopUp>::getInstance();
+			popup.setPopupText("Сотрудник уже уволен");
+			popup.show();
+			return;
+		}
+
+		FireDialog* dialog = new FireDialog(this);
+		if (dialog->exec() == QDialog::Accepted)
+		{
+			QDate fire_date = dialog->getFireDate();
+			Staff fired_staff = model->dataAt(row);
+			fired_staff.setFire_date(fire_date);
+			bool is_ok = fireQueryToServer(fired_staff);
+			if (is_ok == true)
+			{
+				model->setDataAt(row, fired_staff);
+			}
+		}
+	}
+}
+
+bool StaffTabWidget::fireQueryToServer(Staff fired_staff)
+{
+	auto& cfg = Singlenton<Config>::getInstance();
+	QNetworkRequest request(cfg.getUrlFireStaff());
+	request.setRawHeader("Authorization", QByteArray("Explicit: ").append(mPassword));
+	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+	NetworkFetcher fetcher;
+
+	QByteArray raw_data = toJson(fired_staff.serialize());
+
+	auto reply = fetcher.httpPost(request, raw_data, cfg.getTimeout());
+	int32_t code = std::get<0>(reply);
+	auto& popup = Singlenton<PopUp>::getInstance();
+	if (code == -1)
+	{
+		popup.setPopupText("Нет соединения с интернетом или доступа к серверу.");
+		popup.show();
+		return false;
+	}
+	if (code != 201)
+	{
+		popup.setPopupText("Возникла ошибка.");
+		popup.show();
+		return false;
+	}
+	// ok
+	qDebug() << Q_FUNC_INFO << "Saved";
+	popup.setPopupText("Данные успешно сохранены.");
+	popup.show();
+
+	return true;
+}
+
+void StaffTabWidget::checked()
+{
+	qDebug() << "Checked";
+
+	if (ui->show_fired_checkBox->isChecked() == true)
+	{
+		model->showAll();
+	}
+	else
+	{
+		model->showOnlyEmployed();
+	}
 }

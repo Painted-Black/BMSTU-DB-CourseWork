@@ -65,6 +65,9 @@ class Config(object):
 
 	def get_routes_staff_full_info(self):
 		return [str(self.__parser["ROUTES"]["full_staff_info"])]
+	
+	def get_routes_fire_staff(self):
+		return [str(self.__parser["ROUTES"]["fire_staff"])]
 
 	def get_conn_info(self):
 		driver=self.__parser["DATABASE"]["driver"]

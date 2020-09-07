@@ -24,8 +24,13 @@ public:
 	const Staff& dataAt(int row);
 	void setDataAt(int row, const Staff& new_data);
 	void addData(const Staff& info);
+	void showOnlyEmployed();
+	void showAll();
 private:
-	QVector<Staff> mData;
+	QVector<Staff>* mData;
+	QVector<Staff> mOnlyEmployedData;
+	QVector<Staff> mAllData;
 	int mColumnCount = 4;
+	bool mShowAll = true;
 };
 

@@ -35,12 +35,9 @@ class FullStaffInfo(AbstractHandler):
 	def __queryDb(self):
 		conn_name = str(uuid.uuid4())
 		conn = access_manager.connect(conn_name)
-		str_query = '''SELECT pas.name, pas.surname, pas.patronymic, pos.title, s.fire_date, s.employ_date, s.staff_id
-		FROM staff s JOIN passports pas ON pas.pass_id=s.staff_id
-    		JOIN position pos ON s.position=pos.pos_id
-			WHERE s.staff_id NOT IN 
-			(SELECT employee FROM access);
-		'''
+		str_query = '''SELECT * FROM staff st
+						JOIN position pos ON st.position=pos.pos_id
+						JOIN passports pas ON st.passport=pas.pass_id;'''
 		query = DBQuery(conn)
 		if not query.exec_query(str_query):
 			return False, ""
@@ -52,18 +49,23 @@ class FullStaffInfo(AbstractHandler):
 
 	def __construct_json(self, result : list, column_names : list):
 		res_json = []
-		return
 		for i in range(len(result)):
 			staff = {}
 			passport = {}
 			position = {}
-			for j in range(0, 3):
-				passport[column_names[j]] = str(result[i][j])
-			
-			position[column_names[3]] = result[i][3]
 
-			for j in range(4, 7):
+			staff[column_names[0]] = str(result[i][0])
+
+			for j in range(3, 6):
 				staff[column_names[j]] = str(result[i][j])
+			
+			for j in range(6, 9):
+				position[column_names[j]] = str(result[i][j])
+
+			for j in range(9, 18):
+				passport[column_names[j]] = str(result[i][j])
+
+			position[column_names[3]] = result[i][3]
 
 			staff['passport'] = passport
 			staff['position'] = position

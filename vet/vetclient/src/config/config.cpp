@@ -97,6 +97,11 @@ QUrl Config::getUrlStaffFullInfo() const noexcept
 	return getUrl("ROUTES/full_staff_info");
 }
 
+QUrl Config::getUrlFireStaff() const noexcept
+{
+	return getUrl("ROUTES/fire_staff");
+}
+
 QUrl Config::getUrl(const QString & path) const
 {
 	QUrl url;

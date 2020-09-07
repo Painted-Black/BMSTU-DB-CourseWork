@@ -2,12 +2,21 @@
 
 void StaffTableModel::setTableData(QVector<Staff> &data)
 {
-	mData = data;
+	mAllData = data;
+	mData = &mAllData;
+	for (int i = 0; i < mAllData.size(); ++i)
+	{
+		if (mAllData.at(i).getFire_date().isValid() == false)
+		{
+			mOnlyEmployedData.push_back(mAllData.at(i));
+		}
+	}
+//	mData = data;
 }
 
 int StaffTableModel::rowCount(const QModelIndex &) const
 {
-	return mData.size();
+	return mData->size();
 }
 
 int StaffTableModel::columnCount(const QModelIndex &) const
@@ -19,7 +28,7 @@ QVariant StaffTableModel::data(const QModelIndex &index, int role) const
 {
 	int row = index.row();
 	int column = index.column();
-	Staff info = mData.at(row);
+	Staff info = mData->at(row);
 	const Passport& pass = info.getPassport();
 	const Position& pos = info.getPosition();
 
@@ -60,20 +69,60 @@ QVariant StaffTableModel::headerData(int section, Qt::Orientation orientation, i
 
 const Staff &StaffTableModel::dataAt(int row)
 {
-	return mData.at(row);
+	return mData->at(row);
 }
 
 void StaffTableModel::setDataAt(int row, const Staff &new_data)
 {
 	beginResetModel();
-	mData[row] = new_data;
+	if (mShowAll == true)
+	{
+		mAllData[row] = new_data;
+		for (int i = 0; i < mOnlyEmployedData.size(); ++i)
+		{
+			if (mOnlyEmployedData[i].getId() == new_data.getId())
+			{
+				mOnlyEmployedData.remove(i);
+				break;
+			}
+		}
+	}
+	else
+	{
+		mOnlyEmployedData[row]=new_data;
+		for (int i = 0; i < mAllData.size(); ++i)
+		{
+			if (mOnlyEmployedData[i].getId() == new_data.getId())
+			{
+				mOnlyEmployedData.remove(i);
+				break;
+			}
+		}
+
+	}
 	endResetModel();
 }
 
 void StaffTableModel::addData(const Staff &info)
 {
-	int data_size = mData.size();
+	int data_size = mData->size();
 	beginInsertRows(QModelIndex(), data_size, data_size);
-	mData.append(info);
+	mData->append(info);
 	endInsertRows();
+}
+
+void StaffTableModel::showAll()
+{
+	mShowAll = true;
+	beginResetModel();
+	mData = &mAllData;
+	endResetModel();
+}
+
+void StaffTableModel::showOnlyEmployed()
+{
+	mShowAll = false;
+	beginResetModel();
+	mData = &mOnlyEmployedData;
+	endResetModel();
 }
