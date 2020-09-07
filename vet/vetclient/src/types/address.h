@@ -18,6 +18,7 @@ public:
 	QString getHouse() const;
 	QString getFlat() const;
 
+	void setId(uint64_t value);
 	void setCountry(const QString &value);
 	void setCity(const QString &value);
 	void setStreet(const QString &value);
@@ -25,6 +26,7 @@ public:
 	void setFlat(const QString &value);
 
 	bool operator==(const Address&) const;
+
 
 private:
 	uint64_t id;

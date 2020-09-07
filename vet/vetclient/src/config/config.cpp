@@ -32,9 +32,19 @@ QUrl Config::getUrlAnimal() const noexcept
 	return getUrl("ROUTES/animals");
 }
 
+QUrl Config::getUrlClient() const noexcept
+{
+	return getUrl("ROUTES/client_data");
+}
+
 QUrl Config::getUrlAnimalsShortInfo() const noexcept
 {
 	return getUrl("ROUTES/animals_short_info");
+}
+
+QUrl Config::getUrlClientsShortInfo() const noexcept
+{
+	return getUrl("ROUTES/clients_short_info");
 }
 
 QUrl Config::getUrlAddAnimal() const noexcept

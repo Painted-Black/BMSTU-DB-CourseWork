@@ -173,7 +173,12 @@ bool Passport::operator==(const Passport & v) const
 	return is_equal;
 }
 
+void Passport::setId(uint64_t value)
+{
+    id = value;
+}
+
 void Passport::setGender(const Gender &value)
 {
-	gender = value;
+    gender = value;
 }

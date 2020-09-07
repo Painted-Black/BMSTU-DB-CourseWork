@@ -27,6 +27,8 @@ public:
 	const QString& getSpecialSigns() const;
 	const QDate& getRegistrDate() const;
 	const QDate& getLastVisit() const;
+	const Microchip& getChip() const;
+	const Contract& getContract() const;
 	Microchip& getChip();
 	Contract& getContract();
 	const QString& getRelPathToPhoto() const;

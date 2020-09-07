@@ -15,9 +15,9 @@ SOURCES += \
 	config/consoleparser.cpp \
 	core/account_info_widget.cpp \
 	core/animal_edit_widget.cpp \
-	core/animal_info_widget.cpp \
 	core/animal_list_item_widget.cpp \
 	core/auth.cpp \
+	core/client_list_widget.cpp \
     core/chose_staff_full_dialog.cpp \
 	core/contacts.cpp \
 	core/chose_animal_dialog.cpp \
@@ -25,7 +25,7 @@ SOURCES += \
 	core/mainwindow.cpp \
 	core/new_visit_widget.cpp \
 	core/network/network_fetcher.cpp \
-        core/password_line_edit.cpp \
+    core/password_line_edit.cpp \
 	core/popup.cpp \
 	main.cpp \
     model/positions_table_model.cpp \
@@ -74,9 +74,9 @@ HEADERS += \
 	config/consoleparser.h \
 	core/account_info_widget.h \
 	core/animal_edit_widget.h \
-	core/animal_info_widget.h \
 	core/animal_list_item_widget.h \
 	core/auth.h \
+	core/client_list_widget.h \
     core/chose_staff_full_dialog.h \
 	core/contacts.h \
 	core/chose_animal_dialog.h \
@@ -149,8 +149,10 @@ FORMS += \
 	ui/animal_list_item_widget.ui \
 	ui/auth_dialog.ui \
 	ui/chip.ui \
+	ui/clent_list_item.ui \
     ui/chose_staff_dialog.ui \
 	ui/client.ui \
+	ui/client_item_widget.ui \
 	ui/contacts.ui \
     ui/fire_dialog.ui \
 	ui/main_tab_widget.ui \

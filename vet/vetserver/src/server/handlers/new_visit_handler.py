@@ -57,6 +57,7 @@ class NewVisitHandler(AbstractHandler):
 			animal_state['temperature'], animal_state['cfr'], animal_state['resp_rate'])
 
 		query = DBQuery(conn)
+		query.begin_transaction()
 		if not query.exec_query(str_query_state):
 			print(query.get_error())
 			return False, None
@@ -83,10 +84,12 @@ class NewVisitHandler(AbstractHandler):
 				str(vis['prescribings']).replace("'", '"'), 
 				vis['note'])
 
-		query = DBQuery(conn)
 		if not query.exec_query(str_query_visit):
 			print(query.get_error())
+			query.rollback()
 			return False
+
+		query.commit_transaction()
 
 		access_manager.disconnect(conn_name)
 		return True

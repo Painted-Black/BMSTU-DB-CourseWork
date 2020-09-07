@@ -112,3 +112,13 @@ bool Client::operator ==(const Client & v) const
 
 	return is_equal;
 }
+
+bool ShortInfoClient::deserialize(const QJsonObject & object) noexcept
+{
+	uid = object.value(ClientJson::field_cli_id).toVariant().toULongLong();
+	surname = object.value(PassportJson::field_pass_surname).toVariant().toString();
+	name = object.value(PassportJson::field_pass_name).toVariant().toString();
+	patronymic = object.value(PassportJson::field_pass_patronymic).toVariant().toString();
+	birthday = QDate::fromString(object.value(PassportJson::field_pass_birth).toVariant().toString(), Qt::ISODate);
+	return true;
+}

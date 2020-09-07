@@ -13,7 +13,9 @@ public:
 	std::chrono::milliseconds getTimeout() const noexcept;
 	QUrl getUrlAuthication() const noexcept;
 	QUrl getUrlAnimal() const noexcept;
+	QUrl getUrlClient() const noexcept;
 	QUrl getUrlAnimalsShortInfo() const noexcept;
+	QUrl getUrlClientsShortInfo() const noexcept;
 	QUrl getUrlAddAnimal() const noexcept;
 	QUrl getUrlCurrentvisits() const noexcept;
 	QUrl getUrlNewVisit() const noexcept;

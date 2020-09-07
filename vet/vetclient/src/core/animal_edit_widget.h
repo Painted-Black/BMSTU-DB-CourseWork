@@ -27,7 +27,9 @@ public:
 	bool isFills() const;
 	bool isEdit() const;
 	AnimalMedicalRecord getEditedAnimalMedicalRecord();
-	const AnimalMedicalRecord& getAnimalMedicalRecord();
+	const AnimalMedicalRecord& getAnimalMedicalRecord() const;
+	void updateClientData();
+	void setClientData(const Client &);
 private:
 	void activeInfoDialog();
 	void activeSignDialog();

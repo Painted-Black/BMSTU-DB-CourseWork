@@ -181,6 +181,16 @@ const QDate &AnimalMedicalRecord::getLastVisit() const
 	return last_visit;
 }
 
+const Microchip &AnimalMedicalRecord::getChip() const
+{
+	return chip;
+}
+
+const Contract &AnimalMedicalRecord::getContract() const
+{
+	return contract;
+}
+
 void AnimalMedicalRecord::setLastVisit(const QDate &value)
 {
 	last_visit = value;

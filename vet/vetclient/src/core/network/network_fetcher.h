@@ -32,6 +32,9 @@ public:
 	Response httpGet(const QNetworkRequest&, std::chrono::milliseconds);
 	Response httpPost(const QNetworkRequest&, const QByteArray&, std::chrono::milliseconds);
 	Response httpPost(const QNetworkRequest&, Multipart&&, std::chrono::milliseconds);
+	Response httpPut(const QNetworkRequest&, const QByteArray&, std::chrono::milliseconds);
+	Response httpDelete(const QNetworkRequest&, const QByteArray&, std::chrono::milliseconds);
+	Response httpDelete(const QNetworkRequest&, std::chrono::milliseconds);
 
 private:
 	Response performRequest(const QUrl&);

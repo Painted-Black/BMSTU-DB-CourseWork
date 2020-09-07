@@ -120,3 +120,8 @@ bool Contract::operator==(const Contract & v) const
 	is_equal &= (client == v.client);
 	return is_equal;
 }
+
+void Contract::setContrId(uint64_t value)
+{
+	contr_id = value;
+}

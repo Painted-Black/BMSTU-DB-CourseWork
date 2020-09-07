@@ -22,6 +22,7 @@
 #include "utils/utils.h"
 #include "core/main_tab_widget.h"
 #include "core/admin_pannel.h"
+#include "core/client_list_widget.h"
 #include "core/main_vet_pannel.h"
 #include "core/staff_tab_widget.h"
 
@@ -48,7 +49,25 @@ enum TabFlags
 Q_DECLARE_METATYPE(TabType)
 Q_DECLARE_METATYPE(TabFlags)
 
-MainWindow::MainWindow(const AccessData &value,  QWidget *parent)
+template <typename Func>
+void checkAnimalWidget(QObject* sender, QTabWidget* tab, Func f)
+{
+	AnimalEditWidget* widget = sender->parent()->findChild<AnimalEditWidget*>();
+	bool is_fill = widget->isFills();
+	if (is_fill == false)
+	{
+		PopUp& notifier = Singlenton<PopUp>::getInstance();
+		notifier.setPopupText("Не все поля были заполнены");
+		notifier.show();
+	}
+
+	if (f(widget) == true)
+	{
+		tab->removeTab(tab->currentIndex());
+	}
+}
+
+MainWindow::MainWindow(const AccessData& value, QWidget *parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow())
 {
 	ui->setupUi(this);
@@ -333,6 +352,57 @@ void MainWindow::patients()
 
 void MainWindow::createWidgetNewAnimal()
 {
+	auto& cfg = Singlenton<Config>::getInstance();
+	auto& popup = Singlenton<PopUp>::getInstance();
+	auto timeout = cfg.getTimeout();
+
+	NetworkFetcher fetcher;
+	QNetworkRequest request(cfg.getUrlClientsShortInfo());
+	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+	request.setRawHeader("Authorization", QByteArray("Explicit: ").append(access_data.getPassword()));
+
+	auto answer = fetcher.httpGet(request, timeout);
+	auto code = std::get<0>(answer);
+	if (code == -1)
+	{
+		popup.setPopupText("Отсутствует подключение к интернету или нет доступа к серверу.");
+		return popup.show();
+	}
+	else if (code != 200)
+	{
+		popup.setPopupText("Произошла ошибка, проверьте данные");
+		return popup.show();
+	}
+
+	auto clients = deserializeArray<ShortInfoClient>(std::get<2>(answer));
+	ClientListWidget clients_widget;
+	clients_widget.setData(std::move(clients));
+	clients_widget.update();
+	if (clients_widget.exec() != QDialog::Accepted)
+	{
+		return;
+	}
+
+	QUrl client_url = cfg.getUrlClient();
+	client_url.setQuery(QString("id=%1").arg(clients_widget.getSelectedClient().uid));
+	request.setUrl(client_url);
+
+	answer = fetcher.httpGet(request, timeout);
+	code = std::get<0>(answer);
+	if (code == -1)
+	{
+		popup.setPopupText("Отсутствует подключение к интернету или нет доступа к серверу.");
+		return popup.show();
+	}
+	else if (code != 200)
+	{
+		popup.setPopupText("Произошла ошибка, проверьте данные");
+		return popup.show();
+	}
+
+	Client client;
+	client.deserialize(fromJson(std::get<2>(answer)));
+
 	QTabBar* bar = ui->tabWidget->tabBar();
 	QWidget* w = new QWidget(ui->tabWidget);
 	QVBoxLayout* layout = new QVBoxLayout();
@@ -344,7 +414,10 @@ void MainWindow::createWidgetNewAnimal()
 	layout->addWidget(add_btn);
 	w->setLayout(layout);
 	w->show();
-	connect(add_btn, &QPushButton::released, this, &MainWindow::updateAnimal);
+	connect(add_btn, &QPushButton::released, this, &MainWindow::createAnimal);
+
+	aiw->setClientData(client);
+	aiw->updateClientData();
 
 	QVariantList data = { AddAnimalWidget, None } ;
 	int idx = ui->tabWidget->addTab(w, QIcon(":/ui/icons/user_green_80.png"), "Добавить");
@@ -354,46 +427,92 @@ void MainWindow::createWidgetNewAnimal()
 
 void MainWindow::updateAnimal()
 {
+	checkAnimalWidget(sender(), ui->tabWidget, [&](AnimalEditWidget* widget) -> bool
+	{
+		auto& cfg = Singlenton<Config>::getInstance();
+		auto record = widget->getEditedAnimalMedicalRecord();
+		if (compareAnimalRecordsWithoutClientInfo(record, widget->getAnimalMedicalRecord()))
+		{
+			return true;
+		}
+		else
+		{
+			NetworkFetcher fetcher;
+			QNetworkRequest request(cfg.getUrlAddAnimal());
+			request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+			request.setRawHeader("request-type", "put");
+			request.setRawHeader("Authorization", QByteArray("Explicit: ").append(access_data.getPassword()));
+			QJsonObject record_json = record.serialize();
+			removeClientInfoFromAnimalRecord(record_json);
+			auto reply = fetcher.httpPost(request, toJson(record_json), cfg.getTimeout());
+			auto code = std::get<0>(reply);
+			auto& popup = Singlenton<PopUp>::getInstance();
+			if (code == -1)
+			{
+				popup.setPopupText("Отсутствует подключение к интернету или нет доступа к серверу.");
+				popup.show();
+			}
+			else if (code != 201)
+			{
+				popup.setPopupText("Произошла ошибка, проверьте данные");
+				popup.show();
+			}
+			else
+			{
+				return true;
+			}
+			return false;
+		}
+	});
+}
+
+void MainWindow::createAnimal()
+{
 	auto& cfg = Singlenton<Config>::getInstance();
-
-	AnimalEditWidget* widget = sender()->parent()->findChild<AnimalEditWidget*>();
-	bool is_fill = widget->isFills();
-	if (is_fill == false)
+	checkAnimalWidget(sender(), ui->tabWidget, [&](AnimalEditWidget* widget) -> bool
 	{
-		PopUp& notifier = Singlenton<PopUp>::getInstance();
-		notifier.setPopupText("Не все поля были заполнены");
-		notifier.show();
-		return;
-	}
-
-	auto record = widget->getEditedAnimalMedicalRecord();
-	if (record == widget->getAnimalMedicalRecord())
-	{
-		qDebug() << Q_FUNC_INFO << "Data was not changed";
-		return;
-	}
-	else
-	{
+		auto record = widget->getEditedAnimalMedicalRecord();
+		QUrl url = cfg.getUrlAddAnimal();
+		url.setQuery(QString("owner=%1").arg(widget->getAnimalMedicalRecord().getContract().getClient().getId()));
 		NetworkFetcher fetcher;
-		QNetworkRequest request(cfg.getUrlAddAnimal());
+		QNetworkRequest request(url);
 		request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+		request.setRawHeader("request-type", "post");
 		request.setRawHeader("Authorization", QByteArray("Explicit: ").append(access_data.getPassword()));
-		auto reply = fetcher.httpPost(request, toJson(record.serialize()), cfg.getTimeout());
+		QJsonObject record_json = record.serialize();
+		removeClientInfoFromAnimalRecord(record_json);
+		auto reply = fetcher.httpPost(request, toJson(record_json), cfg.getTimeout());
 		auto code = std::get<0>(reply);
 		auto& popup = Singlenton<PopUp>::getInstance();
 		if (code == -1)
 		{
 			popup.setPopupText("Отсутствует подключение к интернету или нет доступа к серверу.");
-			return popup.show();
+			popup.show();
 		}
-
-		const auto& reply_text = std::get<2>(reply);
-		if (code != 201 || reply_text.isEmpty())
+		else if (code != 201)
 		{
 			popup.setPopupText("Произошла ошибка, проверьте данные");
-			return popup.show();
+			popup.show();
 		}
-	}
+		else
+		{
+			auto data = findTag(AnimalWidget);
+			if (std::get<0>(data) == true)
+			{
+				auto index = fromSimpleJson(std::get<2>(reply));
+				auto wgt = std::get<1>(data)->findChild<AnimalListWidget*>();
+				ShortAnimalInfo animal_info;
+				animal_info.setUid(index["anim_id"].toULongLong());
+				animal_info.setName(record.getName());
+				animal_info.setSpec(record.getSpecies());
+				animal_info.setBirth(record.getBirth());
+				wgt->addAnimal(animal_info);
+				wgt->update();
+			}
+			return true;
+		}
+		return false;
+	});
 }
 
 void MainWindow::addToolBarAction(const QIcon& icon, const QString& text, const Callback &cb)
@@ -427,10 +546,7 @@ void MainWindow::setAccessData(const AccessData &value)
 void MainWindow::show()
 {
 	QRect rect = QGuiApplication::screens().first()->geometry();
-	int x = (rect.width() - width()) / 2;
-	int y = (rect.height() - height()) / 2;
-
-	setGeometry(x, y, width(), height());
+	centredWidget(this, rect);
 	QMainWindow::show();
 }
 
