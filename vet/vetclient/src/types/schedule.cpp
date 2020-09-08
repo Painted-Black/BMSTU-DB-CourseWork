@@ -116,6 +116,46 @@ QString DayOfWeek::toString()
 	return value;
 }
 
+bool DayOfWeek::fromString(QString day)
+{
+	if (day == DayOfWeekType::day_of_week_sun || day == RussianDayOfWeekType::rus_day_of_week_sun)
+	{
+		current = DayOfWeekEnum::Sun;
+		return true;
+	}
+	if (day == DayOfWeekType::day_of_week_mon || day == RussianDayOfWeekType::rus_day_of_week_mon)
+	{
+		current = DayOfWeekEnum::Mon;
+		return true;
+	}
+	if (day == DayOfWeekType::day_of_week_tue || day == RussianDayOfWeekType::rus_day_of_week_tue)
+	{
+		current = DayOfWeekEnum::Tue;
+		return true;
+	}
+	if (day == DayOfWeekType::day_of_week_wed || day == RussianDayOfWeekType::rus_day_of_week_wed)
+	{
+		current = DayOfWeekEnum::Wed;
+		return true;
+	}
+	if (day == DayOfWeekType::day_of_week_thu || day == RussianDayOfWeekType::rus_day_of_week_thu)
+	{
+		current = DayOfWeekEnum::Thu;
+		return true;
+	}
+	if (day == DayOfWeekType::day_of_week_fri || day == RussianDayOfWeekType::rus_day_of_week_fri)
+	{
+		current = DayOfWeekEnum::Fri;
+		return true;
+	}
+	if (day == DayOfWeekType::day_of_week_sat || day == RussianDayOfWeekType::rus_day_of_week_sat)
+	{
+		current = DayOfWeekEnum::Sat;
+		return true;
+	}
+	return false;
+}
+
 bool Schedule::deserialize(const QJsonObject &json) noexcept
 {
 	bool cast = true;
@@ -186,6 +226,15 @@ void Schedule::setCabinet(const QString &value)
 	cabinet = value;
 }
 
+ScheduleList::ScheduleList(const QVector<Schedule> &vector)
+{
+	int vec_size = vector.size();
+	for (int i = 0; i < vec_size; ++i)
+	{
+		shedule_list.append(vector.at(i));
+	}
+}
+
 bool ScheduleList::deserialize(const QJsonArray &jarray) noexcept
 {
 	bool is_ok = true;
@@ -220,6 +269,16 @@ void ScheduleList::add_shedule_item(Schedule &shed)
 const Schedule& ScheduleList::at(int idx) const
 {
 	return shedule_list.at(idx);
+}
+
+bool ScheduleList::removeAt(int idx)
+{
+	if (idx < 0 || idx >= shedule_list.size())
+	{
+		return false;
+	}
+	shedule_list.remove(idx);
+	return true;
 }
 
 int ScheduleList::size() const

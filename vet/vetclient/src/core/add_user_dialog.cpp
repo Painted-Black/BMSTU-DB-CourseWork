@@ -113,8 +113,8 @@ bool AddUserDialog::queryToServer()
 
 	auto& cfg = Singlenton<Config>::getInstance();
 	QNetworkRequest request(cfg.getUrlAddUser());
-	request.setRawHeader("Authorization", QByteArray("Explicit: ").append(access_data));
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+	request.setRawHeader("Authorization", QByteArray("Explicit: ").append(access_data));
 	NetworkFetcher fetcher;
 
 	QByteArray raw_data = accessSerialize(data);

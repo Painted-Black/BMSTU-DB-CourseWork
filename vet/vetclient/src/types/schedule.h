@@ -27,6 +27,7 @@ public:
 	DayOfWeekEnum getDayOfkWeek() const;
 	void setDayOfkWeek(DayOfWeekEnum value);
 	QString toString();
+	bool fromString(QString day);
 private:
 	DayOfWeekEnum current;
 };
@@ -59,10 +60,13 @@ private:
 class ScheduleList final : public ISerializable<QJsonArray>
 {
 public:
+	ScheduleList() {};
+	ScheduleList(const QVector<Schedule>& vector);
 	bool deserialize(const QJsonArray &jarray) noexcept override;
 	QJsonArray serialize() const override;
 	void add_shedule_item(Schedule& shed);
 	const Schedule& at(int idx) const;
+	bool removeAt(int idx);
 	int size() const;
 	QVector<Schedule> getShedule_list() const;
 

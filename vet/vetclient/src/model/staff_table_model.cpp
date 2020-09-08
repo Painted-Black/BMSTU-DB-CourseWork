@@ -2,6 +2,7 @@
 
 void StaffTableModel::setTableData(QVector<Staff> &data)
 {
+	beginResetModel();
 	mAllData = data;
 	mData = &mAllData;
 	for (int i = 0; i < mAllData.size(); ++i)
@@ -11,6 +12,7 @@ void StaffTableModel::setTableData(QVector<Staff> &data)
 			mOnlyEmployedData.push_back(mAllData.at(i));
 		}
 	}
+	endResetModel();
 //	mData = data;
 }
 

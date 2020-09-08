@@ -27,6 +27,7 @@ public:
 	void setEducationLevel(const EducationLevelEnum &value);
 
 	QString toString();
+	bool fromString(const QString& lvl);
 
 private:
 	EducationLevelEnum current;

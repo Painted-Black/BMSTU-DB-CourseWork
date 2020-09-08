@@ -159,7 +159,7 @@ void MainWindow::showStaffList(QWidget *w)
 	stw->show();
 	layout->addWidget(stw);
 	w->setLayout(layout);
-	stw->update();
+	stw->init();
 }
 
 void MainWindow::showPositionsList(QWidget *w)

@@ -76,6 +76,12 @@ class Config(object):
 	def get_routes_fire_staff(self):
 		return [str(self.__parser["ROUTES"]["fire_staff"])]
 
+	def get_routes_add_staff(self):
+		return [str(self.__parser["ROUTES"]["add_staff"])]
+	
+	def get_routes_update_staff(self):
+		return [str(self.__parser["ROUTES"]["update_staff"])]
+
 	def get_conn_info(self):
 		driver=self.__parser["DATABASE"]["driver"]
 		server=self.__parser["DATABASE"]["server"]

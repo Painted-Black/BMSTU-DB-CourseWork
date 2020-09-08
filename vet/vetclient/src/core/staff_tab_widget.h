@@ -17,14 +17,15 @@ public:
 	~StaffTabWidget();
 
 	void setPassword(const QByteArray &password);
-	void update();
-
+	void init();
 private:
+	void update();
 	void tableViewDoubleClicked(const QModelIndex &index);
 	void addStaffBtn();
 	void removeStaffBtn();
 	bool fireQueryToServer(Staff fired_staff);
 	void checked();
+	bool getPositionsList(QVector<Position> *positions);
 
 	Ui::StaffTabWidget *ui;
 	QByteArray mPassword;

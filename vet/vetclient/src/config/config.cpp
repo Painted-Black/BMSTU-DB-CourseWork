@@ -112,6 +112,16 @@ QUrl Config::getUrlFireStaff() const noexcept
 	return getUrl("ROUTES/fire_staff");
 }
 
+QUrl Config::getUrlAddStaff() const noexcept
+{
+	return getUrl("ROUTES/add_staff");
+}
+
+QUrl Config::getUrlUpdateStaff() const noexcept
+{
+	return getUrl("ROUTES/update_staff");
+}
+
 QUrl Config::getUrl(const QString & path) const
 {
 	QUrl url;

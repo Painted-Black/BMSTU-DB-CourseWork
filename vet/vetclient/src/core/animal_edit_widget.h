@@ -11,7 +11,7 @@ namespace Ui
 	class chip_widget;
 	class add_constract_widget;
 	class address_widget;
-	class passport_widget;
+	class PassportWidget;
 	class contacts_widget;
 	class TextEditor;
 	class client;
@@ -44,7 +44,7 @@ private:
 	Ui::TextEditor *info_dlg_ui;
 	Ui::client* client_dlg_ui;
 	Ui::address_widget* address_dlg_ui;
-	Ui::passport_widget* passport_dlg_ui;
+	Ui::PassportWidget* passport_dlg_ui;
 	QDialog* info_dlg;
 	QDialog* client_dlg;
 	QWidget* contract;

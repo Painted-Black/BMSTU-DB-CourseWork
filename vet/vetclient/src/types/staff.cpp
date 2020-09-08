@@ -97,6 +97,36 @@ QString EducationLevel::toString()
 	return value;
 }
 
+bool EducationLevel::fromString(const QString &lvl)
+{
+	if (lvl == EduLevelType::edu_middle || lvl == RusEduLevelType::rus_edu_middle)
+	{
+		current = EducationLevelEnum::Middle;
+		return true;
+	}
+	if (lvl == EduLevelType::edu_bachelor || lvl == RusEduLevelType::rus_edu_bachelor)
+	{
+		current = EducationLevelEnum::Bachelor;
+		return  true;
+	}
+	if (lvl == EduLevelType::edu_resident || lvl == RusEduLevelType::rus_edu_resident)
+	{
+		current = EducationLevelEnum::Resident;
+		return true;
+	}
+	if (lvl == EduLevelType::edu_specialist || lvl == RusEduLevelType::rus_edu_specialist)
+	{
+		current = EducationLevelEnum::Specialist;
+		return true;
+	}
+	if (lvl == EduLevelType::edu_postgraduate || lvl == RusEduLevelType::rus_edu_postgraduate)
+	{
+		current = EducationLevelEnum::Postgraduate;
+		return true;
+	}
+	return false;
+}
+
 bool Staff::deserialize(const QJsonObject & json) noexcept
 {
 	bool cast = true;

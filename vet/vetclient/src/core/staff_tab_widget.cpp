@@ -6,6 +6,7 @@
 #include "config/config.h"
 #include "utils/utils.h"
 #include "core/fire_dialog.h"
+#include "core/add_staff_dialog.h"
 
 #include <QNetworkAccessManager>
 #include <QDebug>
@@ -35,6 +36,17 @@ void StaffTabWidget::setPassword(const QByteArray &password)
 	mPassword = password;
 }
 
+void StaffTabWidget::init()
+{
+	update();
+	ui->tableView->setModel(model);
+	int model_col_count = model->columnCount();
+	for (int i = 0; i < model_col_count; ++i)
+	{
+		ui->tableView->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
+	}
+}
+
 void StaffTabWidget::update()
 {
 	auto& cfg = Singlenton<Config>::getInstance();
@@ -56,13 +68,6 @@ void StaffTabWidget::update()
 		QVector<Staff> staff_info = deserializeArray<Staff>(body);
 		model->setTableData(staff_info);
 	}
-
-	ui->tableView->setModel(model);
-	int model_col_count = model->columnCount();
-	for (int i = 0; i < model_col_count; ++i)
-	{
-		ui->tableView->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
-	}
 }
 
 void StaffTabWidget::tableViewDoubleClicked(const QModelIndex &index)
@@ -73,6 +78,23 @@ void StaffTabWidget::tableViewDoubleClicked(const QModelIndex &index)
 void StaffTabWidget::addStaffBtn()
 {
 	qDebug() << Q_FUNC_INFO << "Add staff";
+	QVector<Position> positions_list;
+	bool is_ok = getPositionsList(&positions_list);
+	if (is_ok == false)
+	{
+		auto& popup = Singlenton<PopUp>::getInstance();
+		popup.setPopupText("Возникла ошибка, попробуйте еще раз");
+		popup.show();
+		return;
+	}
+	AddStaffDialog dialog;
+	dialog.setPassword(mPassword);
+	dialog.setPositionsList(positions_list);
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		qDebug() << "Updating staff table with new staff";
+		this->update();
+	}
 }
 
 void StaffTabWidget::removeStaffBtn()
@@ -152,4 +174,26 @@ void StaffTabWidget::checked()
 	{
 		model->showOnlyEmployed();
 	}
+}
+
+bool StaffTabWidget::getPositionsList(QVector<Position>* positions)
+{
+	auto& cfg = Singlenton<Config>::getInstance();
+	QNetworkRequest req;
+	req.setRawHeader("Authorization", QByteArray("Explicit: ").append(mPassword));
+	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+	req.setUrl(cfg.getUrlAllPositions());
+
+	NetworkFetcher fetcher;
+	auto reply = fetcher.httpGet(req, cfg.getTimeout());
+	if (std::get<0>(reply) != 200)
+	{
+		qCritical() << Q_FUNC_INFO << "Invalid data" << std::get<2>(reply);
+		return false;
+	}
+	else
+	{
+		*positions = deserializeArray<Position>(std::get<2>(reply));
+	}
+	return true;
 }
