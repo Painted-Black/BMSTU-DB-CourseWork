@@ -107,6 +107,11 @@ QUrl Config::getUrlStaffFullInfo() const noexcept
 	return getUrl("ROUTES/full_staff_info");
 }
 
+QUrl Config::getUrlPhotoData() const noexcept
+{
+	return getUrl("ROUTES/image_data");
+}
+
 QUrl Config::getUrl(const QString & path) const
 {
 	QUrl url;

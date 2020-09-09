@@ -37,6 +37,7 @@ SOURCES += \
 	types/client.cpp \
 	types/contract.cpp \
 	types/gender.cpp \
+	types/image_loader.cpp \
 	types/microchip.cpp \
 	types/passport.cpp \
 	types/position.cpp \
@@ -96,6 +97,7 @@ HEADERS += \
 	types/client.h \
 	types/contract.h \
 	types/gender.h \
+	types/image_loader.h \
 	types/json_fields.h \
 	types/microchip.h \
 	types/passport.h \

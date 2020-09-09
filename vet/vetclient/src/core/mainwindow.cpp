@@ -504,7 +504,7 @@ void MainWindow::createAnimal()
 				animal_info.setName(record.getName());
 				animal_info.setSpec(record.getSpecies());
 				animal_info.setBirth(record.getBirth());
-				wgt->addAnimal(animal_info);
+				wgt->addAnimal(animal_info, access_data.getPassword());
 				wgt->update();
 			}
 			return true;

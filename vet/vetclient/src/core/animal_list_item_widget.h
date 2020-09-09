@@ -15,9 +15,9 @@ class AnimalListWidget : public QWidget
 public:
 	AnimalListWidget(QWidget* = nullptr);
 	bool show(const QUrl&, std::chrono::milliseconds tout, const QByteArray&);
-	void addAnimal(const ShortAnimalInfo&);
+	void addAnimal(const ShortAnimalInfo&, const QByteArray &);
 private:
-	void addWidget(const ShortAnimalInfo&);
+	void addWidget(const ShortAnimalInfo&, const QByteArray &);
 	void selectItemWidget(QListWidgetItem*);
 
 Q_SIGNALS:

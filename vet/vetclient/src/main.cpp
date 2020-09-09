@@ -5,8 +5,7 @@
 #include "core/popup.h"
 #include "config/config.h"
 #include "config/consoleparser.h"
-
-#include "core/network/network_fetcher.h"
+#include "types/image_loader.h"
 
 int main(int argc, char *argv[])
 {
@@ -23,7 +22,6 @@ int main(int argc, char *argv[])
 	auto& config = Singlenton<Config>::getInstance();
 	Q_ASSERT(config.loadConfig(path_to_config));
 
-	auto& notifier = Singlenton<PopUp>::getInstance();
 
 	Auth a_d;
 	if (a_d.exec() == QDialog::Rejected)
@@ -32,6 +30,8 @@ int main(int argc, char *argv[])
 	}
 
 	auto auth_data = a_d.getAuthData();
+	auto& notifier = Singlenton<PopUp>::getInstance();
+	ImageLoader::init(config.getUrlPhotoData(), config.getTimeout(), "images", QDir::current());
 
 	notifier.setPopupText(QString("Вы успешно вошли как пользователь %1")
 						  .arg(auth_data.getOwner().getPassport().getName()));

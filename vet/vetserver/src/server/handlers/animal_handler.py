@@ -36,7 +36,7 @@ class AnimalHandler(AbstractHandler):
 	def __queryDb(self, id : int):
 		conn_name = str(uuid.uuid4())
 		conn = access_manager.connect(conn_name)
-		str_query = 'SELECT anim_id, name, species, birth FROM animals_medical_records;'
+		str_query = 'SELECT anim_id, name, species, birth, rel_path_to_photo FROM animals_medical_records;'
 		query = DBQuery(conn)
 		if not query.exec_query(str_query):
 			return False, ""

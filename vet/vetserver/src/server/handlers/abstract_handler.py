@@ -5,17 +5,21 @@ from flask import Response
 from flask import request
 
 class AbstractHandler(ABC):
-	def __init__(self, routes : list, methods : list):
+	def __init__(self, routes : list, methods : list, is_file=False):
 		self.routes=routes
 		self.methods=methods
+		self.is_file=is_file
 
 	def __call__(self):
 		response = Response()
-		self.request(request, response)
-		return response
+		if self.is_file == False:
+			self.request(req=request, res=response)
+			return response
+		else:
+			return self.request(req=request)
 
 	@abstractmethod
-	def request(self, req, res):
+	def request(self, **kwargs):
 		pass
 
 	def endpoint_names(self):

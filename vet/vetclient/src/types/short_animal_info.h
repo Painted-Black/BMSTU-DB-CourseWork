@@ -14,16 +14,19 @@ public:
 	const QString& getName() const;
 	const QString& getSpec() const;
 	const QDate& getBirth() const;
+	const QString& getRelativeToFilePath() const;
 
 	void setUid(uint64_t);
 	void setName(const QString &value);
 	void setSpec(const QString &value);
 	void setBirth(const QDate &value);
+	void setRelativeToFilePath(const QString &value);
 
 private:
 	uint64_t uid;
 	QString name;
 	QString spec;
 	QDate birth;
+	QString relative_to_file_path;
 };
 
