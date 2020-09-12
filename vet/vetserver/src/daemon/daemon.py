@@ -78,6 +78,6 @@ class Daemon(object):
 		self.__server.add_endpoint(UpdatePositionHandler(update_position_, ["POST"]))
 		self.__server.add_endpoint(AddPositionHandler(add_position_, ["POST"]))
 		self.__server.add_endpoint(FullStaffInfo(staff_full_, ["GET"]))
-		self.__server.add_endpoint(PhotoHandler(photo_path, ["GET"], True))
+		self.__server.add_endpoint(PhotoHandler(photo_path, ["GET", "POST"], True))
 
 		self.__server.start(port=self.__config.get_server_port())

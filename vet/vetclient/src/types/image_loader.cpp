@@ -2,16 +2,14 @@
 #include "image_loader.h"
 #include "core/network/network_fetcher.h"
 
-static std::unique_ptr<ImageLoader> loader;
-
 void ImageLoader::init(const QUrl& u, std::chrono::milliseconds t, const QString& r, const QDir& d)
 {
-	loader.reset(new ImageLoader(u, t, r, d));
+	Singlenton<ImageLoader>().Init(u, t, r, d);
 }
 
 ImageLoader &ImageLoader::getInstance()
 {
-	return *loader;
+	return Singlenton<ImageLoader>::getInstance();
 }
 
 ImageLoader::ImageLoader(const QUrl& u, std::chrono::milliseconds t, const QString &root_dir, const QDir & directory)

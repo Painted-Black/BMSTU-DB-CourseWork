@@ -1,6 +1,7 @@
 #include <QNetworkReply>
 #include <QTextEdit>
 #include <QScrollArea>
+#include <QFileDialog>
 #include "ui_animal.h"
 #include "ui_text_dialog.h"
 #include "ui_add_contract.h"
@@ -9,6 +10,7 @@
 #include "ui_contacts.h"
 #include "ui_address.h"
 #include "ui_passport.h"
+#include "types/image_loader.h"
 #include "types/json_fields.h"
 #include "animal_edit_widget.h"
 #include "core/network/network_fetcher.h"
@@ -22,6 +24,10 @@ namespace ID_FIELDS
 	constexpr char address[] = "addr_id";
 	constexpr char passport[] = "pass_id";
 }
+
+constexpr char IMG_PROPERTY[] ="image";
+const QSize IMG_SIZE(256	, 256);
+
 
 AnimalEditWidget::AnimalEditWidget(QWidget *parent)
 	: QWidget(parent),
@@ -72,6 +78,17 @@ AnimalEditWidget::AnimalEditWidget(QWidget *parent)
 	connect(ui->Info_client, &QPushButton::released, this, &AnimalEditWidget::activeClientDialog);
 	connect(ui->sign_tb, &QToolButton::released, this, &AnimalEditWidget::activeSignDialog);
 	connect(ui->info_tb, &QToolButton::released, this, &AnimalEditWidget::activeInfoDialog);
+	connect(ui->chose_photo_pb, &QPushButton::released, this, [this]()
+	{
+		constexpr char msg[] = "Выберите изображение";
+		constexpr char filter[] = "*.png *.jpg *.jpeg";
+		auto file_path = QFileDialog::getOpenFileName(this, msg, QDir::home().path(), filter);
+		if (file_path.isEmpty() == false)
+		{
+			setProperty(IMG_PROPERTY, file_path);
+			ui->photo->setPixmap(QPixmap(file_path).scaled(IMG_SIZE));
+		}
+	});
 }
 
 void AnimalEditWidget::show(const QUrl& url, std::chrono::milliseconds tout, const QByteArray& pass)
@@ -103,6 +120,11 @@ void AnimalEditWidget::show(const QUrl& url, std::chrono::milliseconds tout, con
 	ui->info_le->setText(animal_record.getOtherData());
 	ui->reg_de->setDate(animal_record.getRegistrDate());
 	ui->last_visit_de->setDate(animal_record.getLastVisit());
+
+	const auto& relative_path = animal_record.getRelPathToPhoto();
+	auto img = ImageLoader::getInstance().loadPixmap(relative_path, pass);
+	ui->photo->setPixmap(img.scaled(IMG_SIZE));
+	setProperty(IMG_PROPERTY, relative_path);
 
 	const Contract& contract_object = animal_record.getContract();
 	setProperty(ID_FIELDS::contract, QVariant::fromValue(contract_object.getContrId()));
@@ -142,6 +164,8 @@ bool AnimalEditWidget::isFills() const
 		is_empty |= child->text().isEmpty();
 	}
 
+	is_empty |= property(IMG_PROPERTY).toString().isEmpty();
+
 	return is_empty == false;
 }
 
@@ -157,6 +181,7 @@ AnimalMedicalRecord AnimalEditWidget::getEditedAnimalMedicalRecord()
 	record.setName(ui->name_le->text());
 	record.setSpecies(ui->species_le->text());
 	record.setBreed(ui->breed_le->text());
+	record.setRelPathToPhoto(property(IMG_PROPERTY).toString());
 
 	Gender sex;
 	sex.setGenderType(static_cast<Gender::GenderEnum>(ui->sex_cb->currentData().toUInt()));

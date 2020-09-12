@@ -7,6 +7,7 @@
 class ImageLoader final
 {
 public:
+	ImageLoader(const QUrl&, std::chrono::milliseconds, const QString&, const QDir& = QDir::temp());
 	static void init(const QUrl&, std::chrono::milliseconds, const QString&, const QDir& = QDir::temp());
 	static ImageLoader& getInstance();
 
@@ -15,7 +16,6 @@ public:
 
 private:
 	ImageLoader() = default;
-	ImageLoader(const QUrl&, std::chrono::milliseconds, const QString&, const QDir& = QDir::temp());
 
 private:
 	QDir dir;

@@ -9,6 +9,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include "network/network_fetcher.h"
+#include "types/image_loader.h"
 #include <QVariant>
 #include "utils/singlenton.h"
 #include "popup.h"
@@ -437,15 +438,28 @@ void MainWindow::updateAnimal()
 		}
 		else
 		{
+			QByteArray pass = access_data.getPassword();
+			auto& popup = Singlenton<PopUp>::getInstance();
+
+			auto img_data = Singlenton<ImageLoader>::getInstance()
+						.saveFromFile(record.getRelPathToPhoto(), pass);
+			if (std::get<0>(img_data) == false)
+			{
+				popup.setPopupText("Отсутствует подключение к интернету или нет доступа к серверу.");
+				popup.show();
+				return false;
+			}
+
+			record.setRelPathToPhoto(std::get<1>(img_data));
+
 			NetworkFetcher fetcher;
 			QNetworkRequest request(cfg.getUrlAddAnimal());
 			request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-			request.setRawHeader("Authorization", QByteArray("Explicit: ").append(access_data.getPassword()));
+			request.setRawHeader("Authorization", QByteArray("Explicit: ").append(pass));
 			QJsonObject record_json = record.serialize();
 			removeClientInfoFromAnimalRecord(record_json);
 			auto reply = fetcher.httpPut(request, toJson(record_json), cfg.getTimeout());
 			auto code = std::get<0>(reply);
-			auto& popup = Singlenton<PopUp>::getInstance();
 			if (code == -1)
 			{
 				popup.setPopupText("Отсутствует подключение к интернету или нет доступа к серверу.");

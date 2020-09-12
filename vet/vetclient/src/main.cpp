@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 
 	Q_ASSERT(path_to_config.isEmpty() == false);
 
-	auto& config = Singlenton<Config>::getInstance();
+	auto& config = Singlenton<Config>::Init();
 	Q_ASSERT(config.loadConfig(path_to_config));
 
 
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	}
 
 	auto auth_data = a_d.getAuthData();
-	auto& notifier = Singlenton<PopUp>::getInstance();
+	auto& notifier = Singlenton<PopUp>::Init();
 	ImageLoader::init(config.getUrlPhotoData(), config.getTimeout(), "images", QDir::current());
 
 	notifier.setPopupText(QString("Вы успешно вошли как пользователь %1")
