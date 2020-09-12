@@ -16,5 +16,6 @@
         <file>ui/icons/team.png</file>
         <file>ui/icons/add-user-group.png</file>
         <file>ui/icons/name-tag.png</file>
+        <file>ui/icons/schedule.png</file>
     </qresource>
 </RCC>

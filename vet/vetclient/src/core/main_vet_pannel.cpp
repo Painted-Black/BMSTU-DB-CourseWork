@@ -63,15 +63,16 @@ void MainVetPannel::tableViewDoubleClicked(const QModelIndex &index)
 {
 	qDebug() << "Position double clicked" << " row: " << index.row();
 
-	PositionInfoDialog* dialog = new PositionInfoDialog(PositionInfoDialog::EDIT, this);
-	dialog->setPassword(password);
-	dialog->setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
-	dialog->show(model->dataAt(index.row()));
-	if (dialog->exec() == QDialog::Accepted)
+	PositionInfoDialog dialog (PositionInfoDialog::EDIT);
+	dialog.setPassword(password);
+	dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+	dialog.show(model->dataAt(index.row()));
+	if (dialog.exec() == QDialog::Accepted)
 	{
-		if (dialog->isChanged())
+		if (dialog.isChanged())
 		{
-			Position new_pos = dialog->getNewPosition();
+//			update();
+			Position new_pos = dialog.getNewPosition();
 			model->setDataAt(index.row(), new_pos);
 		}
 		qDebug() << "Updating table";
@@ -89,7 +90,8 @@ void MainVetPannel::addPosition()
 
 	if (dialog->exec() == QDialog::Accepted)
 	{
-		Position added_position = dialog->getAddedPosition();
-		model->addData(added_position);
+		update();
+//		Position added_position = dialog->getAddedPosition();
+//		model->addData(added_position);
 	}
 }

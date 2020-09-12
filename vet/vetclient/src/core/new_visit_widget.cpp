@@ -97,7 +97,7 @@ void NewVisitWidget::handle_save_button()
 		return;
     }
 	// ok
-    qDebug() << Q_FUNC_INFO << "Saved";
+	qDebug() << Q_FUNC_INFO << "Saved";
 	popup.setPopupText("Данные осмотра успешно сохранены.");
 	popup.show();
 	readOnly();

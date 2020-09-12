@@ -36,6 +36,8 @@ private:
 	void showAdminPannel(QWidget* w);
 	void showStaff();
 	void showPositions();
+	void showSchedules();
+	void showSchedulesList(QWidget *w);
 	QWidget *addTab(const QIcon&, const QString&, std::tuple<uint64_t,  uint8_t> , InitFunc<QWidget*>);
 	std::tuple<bool, QWidget*> findTag(uint64_t) const;
 	void addToolBarAction(const QIcon&, const QString&, const Callback& cb);

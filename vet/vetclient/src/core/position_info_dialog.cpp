@@ -107,7 +107,7 @@ void PositionInfoDialog::save()
 bool PositionInfoDialog::queryToServerUpdate()
 {
 	auto& cfg = Singlenton<Config>::getInstance();
-	QNetworkRequest request(cfg.getUrlAddPosition());
+	QNetworkRequest request(cfg.getUrlUpdatePosition());
 	request.setRawHeader("Authorization", QByteArray("Explicit: ").append(password));
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 	NetworkFetcher fetcher;

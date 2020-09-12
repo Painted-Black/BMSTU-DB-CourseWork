@@ -22,11 +22,15 @@ public:
 public:
 	bool deserialize(const QJsonValue&) noexcept override;
 	QJsonValue serialize() const override;
+	bool operator==(const EducationLevel& edu);
+	bool operator!=(const EducationLevel& edu);
 
 	EducationLevelEnum getEducationLevel() const;
 	void setEducationLevel(const EducationLevelEnum &value);
 
 	QString toString();
+	QString toEngString();
+	bool fromString(const QString& lvl);
 
 private:
 	EducationLevelEnum current;
@@ -45,6 +49,7 @@ public:
 	QDate getFire_date() const;
 	QDate getEmploy_date() const;
 	ScheduleList getShed_list() const;
+	QVector<Schedule> toVector() const;
 
 	void setPassport(const Passport &value);
 	void setPosition(const Position &value);

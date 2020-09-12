@@ -30,6 +30,7 @@ class DBQuery(object):
 	def commit_transaction(self):
 		if self.is_transaction:
 			self.cursor.commit()
+		self.is_transaction=False
 
 
 	def exec_query(self, query : str):

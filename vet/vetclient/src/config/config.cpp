@@ -112,6 +112,31 @@ QUrl Config::getUrlPhotoData() const noexcept
 	return getUrl("ROUTES/image_data");
 }
 
+QUrl Config::getUrlFireStaff() const noexcept
+{
+	return getUrl("ROUTES/fire_staff");
+}
+
+QUrl Config::getUrlAddStaff() const noexcept
+{
+	return getUrl("ROUTES/add_staff");
+}
+
+QUrl Config::getUrlUpdateStaff() const noexcept
+{
+	return getUrl("ROUTES/update_staff");
+}
+
+QUrl Config::getUrlScheduleStaff() const noexcept
+{
+	return getUrl("ROUTES/post_schedule");
+}
+
+QUrl Config::getUrlAllSchedules() const noexcept
+{
+	return getUrl("ROUTES/all_schedules");
+}
+
 QUrl Config::getUrl(const QString & path) const
 {
 	QUrl url;

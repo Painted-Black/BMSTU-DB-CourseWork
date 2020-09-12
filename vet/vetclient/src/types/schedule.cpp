@@ -76,6 +76,11 @@ QJsonValue DayOfWeek::serialize() const
 	return value;
 }
 
+bool DayOfWeek::operator==(const DayOfWeek &d) const
+{
+	return d.current == current;
+}
+
 DayOfWeek::DayOfWeekEnum DayOfWeek::getDayOfkWeek() const
 {
 	return current;
@@ -116,6 +121,46 @@ QString DayOfWeek::toString()
 	return value;
 }
 
+bool DayOfWeek::fromString(QString day)
+{
+	if (day == DayOfWeekType::day_of_week_sun || day == RussianDayOfWeekType::rus_day_of_week_sun)
+	{
+		current = DayOfWeekEnum::Sun;
+		return true;
+	}
+	if (day == DayOfWeekType::day_of_week_mon || day == RussianDayOfWeekType::rus_day_of_week_mon)
+	{
+		current = DayOfWeekEnum::Mon;
+		return true;
+	}
+	if (day == DayOfWeekType::day_of_week_tue || day == RussianDayOfWeekType::rus_day_of_week_tue)
+	{
+		current = DayOfWeekEnum::Tue;
+		return true;
+	}
+	if (day == DayOfWeekType::day_of_week_wed || day == RussianDayOfWeekType::rus_day_of_week_wed)
+	{
+		current = DayOfWeekEnum::Wed;
+		return true;
+	}
+	if (day == DayOfWeekType::day_of_week_thu || day == RussianDayOfWeekType::rus_day_of_week_thu)
+	{
+		current = DayOfWeekEnum::Thu;
+		return true;
+	}
+	if (day == DayOfWeekType::day_of_week_fri || day == RussianDayOfWeekType::rus_day_of_week_fri)
+	{
+		current = DayOfWeekEnum::Fri;
+		return true;
+	}
+	if (day == DayOfWeekType::day_of_week_sat || day == RussianDayOfWeekType::rus_day_of_week_sat)
+	{
+		current = DayOfWeekEnum::Sat;
+		return true;
+	}
+	return false;
+}
+
 bool Schedule::deserialize(const QJsonObject &json) noexcept
 {
 	bool cast = true;
@@ -139,6 +184,18 @@ QJsonObject Schedule::serialize() const
 	root_obj.insert(ScheduleJson::field_shed_end, QJsonValue(end.toString(Qt::ISODate)));
 	root_obj.insert(ScheduleJson::field_shed_cabinet, QJsonValue(cabinet));
 	return root_obj;
+}
+
+bool Schedule::operator==(const Schedule &s) const
+{
+	bool is_equ = true;
+	is_equ &= (day_of_week == s.day_of_week);
+	return is_equ;
+}
+
+bool Schedule::operator!=(const Schedule &s) const
+{
+	return !(*this==s);
 }
 
 uint64_t Schedule::getShed_id() const
@@ -186,6 +243,34 @@ void Schedule::setCabinet(const QString &value)
 	cabinet = value;
 }
 
+ScheduleList::ScheduleList(const QVector<Schedule> &vector)
+{
+	int vec_size = vector.size();
+	for (int i = 0; i < vec_size; ++i)
+	{
+		mSheduleList.append(vector.at(i));
+	}
+}
+
+bool ScheduleList::operator==(const ScheduleList &l) const
+{
+	if (l.size() != mSheduleList.size())
+	{
+		return false;
+	}
+	bool is_equ = true;
+	for (int i = 0; i < mSheduleList.size() && is_equ; ++i)
+	{
+		is_equ &= (mSheduleList.at(i) == l.mSheduleList.at(i));
+	}
+	return is_equ;
+}
+
+bool ScheduleList::operator!=(const ScheduleList &l) const
+{
+	return !(*this==l);
+}
+
 bool ScheduleList::deserialize(const QJsonArray &jarray) noexcept
 {
 	bool is_ok = true;
@@ -203,7 +288,7 @@ QJsonArray ScheduleList::serialize() const
 {
 	QJsonArray result;
 
-	for (const Schedule& s : shedule_list)
+	for (const Schedule& s : mSheduleList)
 	{
 		const QJsonValue& val = s.serialize();
 		result.push_back(val);
@@ -214,20 +299,49 @@ QJsonArray ScheduleList::serialize() const
 
 void ScheduleList::add_shedule_item(Schedule &shed)
 {
-	shedule_list.push_back(shed);
+	mSheduleList.push_back(shed);
 }
 
 const Schedule& ScheduleList::at(int idx) const
 {
-	return shedule_list.at(idx);
+	return mSheduleList.at(idx);
+}
+
+bool ScheduleList::removeAt(int idx)
+{
+	if (idx < 0 || idx >= mSheduleList.size())
+	{
+		return false;
+	}
+	mSheduleList.remove(idx);
+	return true;
 }
 
 int ScheduleList::size() const
 {
-	return shedule_list.size();
+	return mSheduleList.size();
 }
 
 QVector<Schedule> ScheduleList::getShedule_list() const
 {
-	return shedule_list;
+	return mSheduleList;
+}
+
+QString ScheduleList::getScheduleByDay(DayOfWeek::DayOfWeekEnum day)
+{
+	QString res = "";
+	for (int i = 0; i < mSheduleList.size(); ++i)
+	{
+		const Schedule& curr = mSheduleList.at(i);
+		if (curr.getDay_of_week().getDayOfkWeek() == day)
+		{
+			res += curr.getStart().toString();
+			res += " - ";
+			res += curr.getEnd().toString();
+			res += ", ";
+			res += curr.getCabinet();
+			break;
+		}
+	}
+	return res;
 }

@@ -72,6 +72,18 @@ class Config(object):
 
 	def get_routes_staff_full_info(self):
 		return [str(self.__parser["ROUTES"]["full_staff_info"])]
+	
+	def get_routes_fire_staff(self):
+		return [str(self.__parser["ROUTES"]["fire_staff"])]
+
+	def get_routes_add_staff(self):
+		return [str(self.__parser["ROUTES"]["add_staff"])]
+	
+	def get_routes_update_staff(self):
+		return [str(self.__parser["ROUTES"]["update_staff"])]
+
+	def get_routes_all_schedules(self):
+		return [str(self.__parser["ROUTES"]["all_schedules"])]
 
 	def get_routes_photo(self):
 		return [str(self.__parser["ROUTES"]["photo_handler"])]

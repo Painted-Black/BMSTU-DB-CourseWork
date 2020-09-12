@@ -37,7 +37,7 @@ AnimalEditWidget::AnimalEditWidget(QWidget *parent)
 	  info_dlg_ui(new Ui::TextEditor()),
 	  client_dlg_ui(new Ui::client()),
 	  address_dlg_ui(new Ui::address_widget()),
-	  passport_dlg_ui(new Ui::passport_widget()),
+	  passport_dlg_ui(new Ui::PassportWidget()),
 	  info_dlg(new QDialog(this)),
 	  client_dlg(new QDialog(this)),
 	  contract(new QWidget(this)),
