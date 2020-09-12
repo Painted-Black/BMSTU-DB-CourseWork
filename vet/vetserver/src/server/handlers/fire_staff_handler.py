@@ -51,12 +51,24 @@ class FireStaffHandler(AbstractHandler):
 		conn = access_manager.connect(conn_name)
 
 		str_query = self.__get_str_query(json)
+		sched_q = self.__get_str_query_sched(json)
 
 		query = DBQuery(conn)
+		query.begin_transaction()
+
 		if not query.exec_query(str_query):
 			print(query.get_error())
-			return False	
+			query.rollback_transaction()
+			access_manager.disconnect(conn_name)
+			return False
+		
+		if not query.exec_query(sched_q):
+			print(query.get_error())
+			query.rollback_transaction()
+			access_manager.disconnect(conn_name)
+			return False
 
+		query.commit_transaction()
 		access_manager.disconnect(conn_name)
 		return True
 	
@@ -64,6 +76,11 @@ class FireStaffHandler(AbstractHandler):
 		str_query = \
 			'''UPDATE staff SET fire_date='{f}' WHERE staff_id={s}; '''\
 				.format(f=json_data['fire_date'], s=json_data['staff_id'])
+		return str_query
+
+	def __get_str_query_sched(self, json_data):
+		str_query = \
+			'''DELETE FROM schedule WHERE employee_id={};'''.format(json_data['staff_id'])
 		return str_query
 
 	def check_json(self, json_data : dict):

@@ -73,6 +73,29 @@ void StaffTabWidget::update()
 void StaffTabWidget::tableViewDoubleClicked(const QModelIndex &index)
 {
 	qDebug() << "Position double clicked" << " row: " << index.row();
+	QVector<Position> positions_list;
+	bool is_ok = getPositionsList(&positions_list);
+	if (is_ok == false)
+	{
+		auto& popup = Singlenton<PopUp>::getInstance();
+		popup.setPopupText("Возникла ошибка, попробуйте еще раз");
+		popup.show();
+		return;
+	}
+	AddStaffDialog dialog(AddStaffDialog::EDIT);
+	dialog.setPassword(mPassword);
+	dialog.setPositionsList(positions_list);
+	Staff s = model->dataAt(index.row());
+	dialog.setEditableStaff(s);
+	if (s.getFire_date().isValid() == true)
+	{
+		dialog.readOnly();
+	}
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		qDebug() << "Updating staff table with new staff";
+		this->update();
+	}
 }
 
 void StaffTabWidget::addStaffBtn()

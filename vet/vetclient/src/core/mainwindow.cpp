@@ -25,6 +25,7 @@
 #include "core/client_list_widget.h"
 #include "core/main_vet_pannel.h"
 #include "core/staff_tab_widget.h"
+#include "core/scheduleswidget.h"
 
 
 enum TabType
@@ -137,6 +138,7 @@ void MainWindow::constructMain()
 {
 	addToolBarAction(QIcon(":/ui/icons/team.png"), "Сотрудники", &MainWindow::showStaff);
 	addToolBarAction(QIcon(":/ui/icons/name-tag.png"), "Должности", &MainWindow::showPositions);
+	addToolBarAction(QIcon(":/ui/icons/schedule.png"), "Расписания", &MainWindow::showSchedules);
 }
 
 void MainWindow::runAnimalEditor()
@@ -217,6 +219,28 @@ void MainWindow::showPositions()
 	QWidget* w = addTab(QIcon(":/ui/icons/name-tag.png"), "Должности",
 				{PositionsWidget, Single}, &MainWindow::showPositionsList);
 	w->show();
+}
+
+void MainWindow::showSchedules()
+{
+	qDebug() << Q_FUNC_INFO << "Show schedules";
+	QWidget* w = addTab(QIcon(":/ui/icons/schedule.png"), "Расписания",
+				{PositionsWidget, Single}, &MainWindow::showSchedulesList);
+	w->show();
+}
+
+void MainWindow::showSchedulesList(QWidget *w)
+{
+	qDebug() << Q_FUNC_INFO << "Show schedules list";
+
+	auto& cfg = Singlenton<Config>::getInstance();
+	QBoxLayout* layout = new QVBoxLayout();
+	SchedulesWidget* pannel = new SchedulesWidget(w);
+	pannel->init();
+	layout->addWidget(pannel);
+	w->setLayout(layout);
+	pannel->show();
+
 }
 
 QWidget* MainWindow::addTab(

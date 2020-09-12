@@ -122,6 +122,16 @@ QUrl Config::getUrlUpdateStaff() const noexcept
 	return getUrl("ROUTES/update_staff");
 }
 
+QUrl Config::getUrlScheduleStaff() const noexcept
+{
+	return getUrl("ROUTES/post_schedule");
+}
+
+QUrl Config::getUrlAllSchedules() const noexcept
+{
+	return getUrl("ROUTES/all_schedules");
+}
+
 QUrl Config::getUrl(const QString & path) const
 {
 	QUrl url;

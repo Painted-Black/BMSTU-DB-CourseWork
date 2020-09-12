@@ -59,6 +59,26 @@ QJsonObject Passport::serialize() const
 	return root_obj;
 }
 
+bool Passport::operator==(const Passport &p) const
+{
+	bool is_equ = true;
+	is_equ &= (p.getId() == id);
+	is_equ &= (p.getSurname() == surname);
+	is_equ &= (p.getName() == name);
+	is_equ &= (p.getPatronymic() == patronymic);
+	is_equ &= (p.getGender() == gender);
+	is_equ &= (p.getBirthday() == birthday);
+	is_equ &= (p.getPassportNum() == passport_num);
+	is_equ &= (p.getIssueDate() == issue_date);
+	is_equ &= (p.getNationality() == nationality);
+	return is_equ;
+}
+
+bool Passport::operator!=(const Passport &p) const
+{
+	return !(*this==p);
+}
+
 uint64_t Passport::getId() const
 {
 	return id;
@@ -156,21 +176,6 @@ QString Passport::getFio() const
 		res += ".";
 	}
 	return res;
-}
-
-bool Passport::operator==(const Passport & v) const
-{
-	bool is_equal = true;
-	is_equal &= (surname == v.surname);
-	is_equal &= (name == v.name);
-	is_equal &= (patronymic == v.patronymic);
-	is_equal &= (birthday == v.birthday);
-	is_equal &= (issue_date == v.issue_date);
-	is_equal &= (nationality == v.nationality);
-	is_equal &= (passport_num == v.passport_num);
-	is_equal &= (gender == v.gender);
-
-	return is_equal;
 }
 
 void Passport::setId(uint64_t value)

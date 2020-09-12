@@ -31,6 +31,8 @@ public:
 	QUrl getUrlFireStaff() const noexcept;
 	QUrl getUrlAddStaff() const noexcept;
 	QUrl getUrlUpdateStaff() const noexcept;
+	QUrl getUrlScheduleStaff() const noexcept;
+	QUrl getUrlAllSchedules() const noexcept;
 
 private:
 	QUrl getUrl(const QString&) const;

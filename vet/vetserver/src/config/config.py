@@ -82,6 +82,9 @@ class Config(object):
 	def get_routes_update_staff(self):
 		return [str(self.__parser["ROUTES"]["update_staff"])]
 
+	def get_routes_all_schedules(self):
+		return [str(self.__parser["ROUTES"]["all_schedules"])]
+
 	def get_conn_info(self):
 		driver=self.__parser["DATABASE"]["driver"]
 		server=self.__parser["DATABASE"]["server"]

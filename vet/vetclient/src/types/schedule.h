@@ -23,6 +23,7 @@ public:
 public:
 	bool deserialize(const QJsonValue&json) noexcept override;
 	QJsonValue serialize() const override;
+	bool operator==(const DayOfWeek& d) const;
 
 	DayOfWeekEnum getDayOfkWeek() const;
 	void setDayOfkWeek(DayOfWeekEnum value);
@@ -38,6 +39,8 @@ public:
 	bool deserialize(const QJsonObject &json) noexcept override;
 	QJsonObject serialize() const override;
 
+	bool operator==(const Schedule& s) const;
+	bool operator!=(const Schedule& s) const;
 	uint64_t getShed_id() const;
 	DayOfWeek getDay_of_week() const;
 	QTime getStart() const;
@@ -62,16 +65,19 @@ class ScheduleList final : public ISerializable<QJsonArray>
 public:
 	ScheduleList() {};
 	ScheduleList(const QVector<Schedule>& vector);
+	bool operator==(const ScheduleList& l) const;
+	bool operator!=(const ScheduleList& l) const;
 	bool deserialize(const QJsonArray &jarray) noexcept override;
 	QJsonArray serialize() const override;
 	void add_shedule_item(Schedule& shed);
-	const Schedule& at(int idx) const;
+	const Schedule &at(int idx) const;
 	bool removeAt(int idx);
 	int size() const;
 	QVector<Schedule> getShedule_list() const;
+	QString getScheduleByDay(DayOfWeek::DayOfWeekEnum day);
 
 private:
-	QVector <Schedule> shedule_list;
+	QVector <Schedule> mSheduleList;
 };
 
 

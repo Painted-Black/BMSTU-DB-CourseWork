@@ -2,15 +2,23 @@
 
 void StaffTableModel::setTableData(QVector<Staff> &data)
 {
-	beginResetModel();
 	mAllData = data;
-	mData = &mAllData;
+	mOnlyEmployedData.clear();
 	for (int i = 0; i < mAllData.size(); ++i)
 	{
 		if (mAllData.at(i).getFire_date().isValid() == false)
 		{
 			mOnlyEmployedData.push_back(mAllData.at(i));
 		}
+	}
+	beginResetModel();
+	if (mShowAll == true)
+	{
+		mData = &mAllData;
+	}
+	else
+	{
+		mData = &mOnlyEmployedData;
 	}
 	endResetModel();
 //	mData = data;

@@ -29,6 +29,7 @@ SOURCES += \
 	core/popup.cpp \
 	main.cpp \
     model/positions_table_model.cpp \
+    model/schedules_table_model.cpp \
     model/staff_schedule_tablemodel.cpp \
     model/staff_table_model.cpp \
 	model/users_table_model.cpp \
@@ -44,6 +45,7 @@ SOURCES += \
 	types/prescribings.cpp \
 	types/schedule.cpp \
 	types/sheduled_visits.cpp \
+    types/shedules_short_info.cpp \
 	types/short_animal_info.cpp \
     types/short_staff_info.cpp \
 	types/short_user_info.cpp \
@@ -69,6 +71,7 @@ SOURCES += \
     core/fire_dialog.cpp \
     core/add_staff_dialog.cpp \
     core/add_shedule_item_dialog.cpp \
+    core/scheduleswidget.cpp \
 	utils/utils.cpp \
 	model/prescribings_table_model.cpp
 
@@ -91,6 +94,7 @@ HEADERS += \
     core/password_line_edit.h \
 	core/popup.h \
     model/positions_table_model.h \
+    model/schedules_table_model.h \
     model/staff_schedule_tablemodel.h \
     model/staff_table_model.h \
 	model/users_table_model.h \
@@ -109,6 +113,7 @@ HEADERS += \
 	types/proxy_auth.h \
 	types/schedule.h \
 	types/sheduled_visits.h \
+    types/shedules_short_info.h \
 	types/short_animal_info.h \
     types/short_staff_info.h \
     types/short_user_info.h \
@@ -135,6 +140,7 @@ HEADERS += \
     core/fire_dialog.h \
     core/add_staff_dialog.h \
     core/add_shedule_item_dialog.h \
+    core/scheduleswidget.h \
 	utils/utils.h \
 	utils/singlenton.h
 
@@ -163,6 +169,7 @@ FORMS += \
 	ui/client_item_widget.ui \
 	ui/contacts.ui \
     ui/fire_dialog.ui \
+    ui/scheduleswidget.ui \
 	ui/main_tab_widget.ui \
     ui/main_vet_pannel.ui \
 	ui/mainwindow.ui \

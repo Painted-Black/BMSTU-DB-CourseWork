@@ -12,6 +12,7 @@ public:
 	QJsonObject serialize() const override;
 
 	bool operator==(const Position& p) const;
+	bool operator!=(const Position& p) const;
 
 	uint64_t getId() const;
 	QString getTitle() const;

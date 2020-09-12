@@ -39,6 +39,11 @@ bool Position::operator==(const Position &p) const
 	return (p.id == id && p.title == title && p.salary == salary);
 }
 
+bool Position::operator!=(const Position &p) const
+{
+	return !(*this==p);
+}
+
 QString Position::getTitle() const
 {
 	return title;
