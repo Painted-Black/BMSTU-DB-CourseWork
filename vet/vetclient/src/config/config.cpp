@@ -137,6 +137,11 @@ QUrl Config::getUrlAllSchedules() const noexcept
 	return getUrl("ROUTES/all_schedules");
 }
 
+QUrl Config::getUrlContract() const noexcept
+{
+	return getUrl("ROUTES/contract");
+}
+
 QUrl Config::getUrl(const QString & path) const
 {
 	QUrl url;

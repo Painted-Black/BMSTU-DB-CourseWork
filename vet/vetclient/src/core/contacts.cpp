@@ -100,7 +100,7 @@ QStringList Contacts::getPhones() const
 QStringList Contacts::getEmails() const
 {
 	QStringList out;
-	auto edits = ui->phones_frame->findChildren<QLineEdit*>();
+	auto edits = ui->email_frame->findChildren<QLineEdit*>();
 	for (const auto& edit : edits)
 	{
 		QString text = edit->text();
@@ -116,7 +116,7 @@ QStringList Contacts::getEmails() const
 QList<QUrl> Contacts::getSocialSites() const
 {
 	decltype (getSocialSites()) out;
-	auto edits = ui->phones_frame->findChildren<QLineEdit*>();
+	auto edits = ui->social_frame->findChildren<QLineEdit*>();
 	for (const auto& edit : edits)
 	{
 		QUrl text = edit->text();

@@ -20,6 +20,8 @@ AnimalListWidget::AnimalListWidget(QWidget * parent)
 bool AnimalListWidget::show(const QUrl& url,
 							std::chrono::milliseconds tout, const QByteArray &data)
 {
+	view->clear();
+
 	QNetworkRequest req;
 	req.setRawHeader("Authorization", QByteArray("Explicit: ").append(data));
 	req.setUrl(url);

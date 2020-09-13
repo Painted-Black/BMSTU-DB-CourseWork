@@ -25,6 +25,7 @@ from server.handlers.fire_staff_handler import FireStaffHandler
 from server.handlers.add_staff_handler import AddStaffHandler
 from server.handlers.update_staff_handler import UpdateStaffHandler
 from server.handlers.all_schedules_handler import AllSchedulesHandler
+from server.handlers.contract_handler import ContractHandler
 
 from database.dbaccess_manager import DBAccessManager, access_manager
 
@@ -67,13 +68,14 @@ class Daemon(object):
 		add_staff_=self.__config.get_routes_add_staff()
 		update_staff_=self.__config.get_routes_update_staff()
 		all_schedules_=self.__config.get_routes_all_schedules()
+		contract_=self.__config.get_routes_contract()
 
 		self.__server.add_endpoint(AuthHandler(auth_, ["POST"]))
 		self.__server.add_endpoint(ScheduleHandler(schedule_, ["POST"]))
 		self.__server.add_endpoint(AnimalHandler(animal_, ["GET"]))
 		self.__server.add_endpoint(ClientHandler(client_, ["GET"]))
 		self.__server.add_endpoint(AnimalInfoHandler(animal_full_, ["GET"]))
-		self.__server.add_endpoint(ClientInfoHandler(client_full_, ["GET"]))
+		self.__server.add_endpoint(ClientInfoHandler(client_full_, ["GET", "POST", "PUT"]))
 		self.__server.add_endpoint(NewVisitHandler(new_visit_, ["POST"]))
 		self.__server.add_endpoint(CurrentVisitsHandler(current_visit_, ["POST"]))
 		self.__server.add_endpoint(UserShortInfoHandler(users_short_, ["GET"]))
@@ -91,5 +93,6 @@ class Daemon(object):
 		self.__server.add_endpoint(AddStaffHandler(add_staff_, ["POST"]))
 		self.__server.add_endpoint(UpdateStaffHandler(update_staff_, ["PUT"]))
 		self.__server.add_endpoint(AllSchedulesHandler(all_schedules_, ["GET"]))
+		self.__server.add_endpoint(ContractHandler(contract_, ["GET"]))
 
 		self.__server.start(port=self.__config.get_server_port())
