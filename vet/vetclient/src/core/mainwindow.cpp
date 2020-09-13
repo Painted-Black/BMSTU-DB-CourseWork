@@ -903,6 +903,9 @@ void MainWindow::exit()
 	if (code != 200)
 	{
 		qCritical() << Q_FUNC_INFO << "Failed request. Http code:"<< code << body;
+		PopUp& notifier = Singlenton<PopUp>::getInstance();
+		notifier.setPopupText("Произошла ошибка, попробуйте еще раз");
+		notifier.show();
 		return;
 	}
 	QCoreApplication::instance()->exit(0);
