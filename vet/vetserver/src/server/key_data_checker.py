@@ -23,6 +23,10 @@ class KeyDataChecker(object):
 			return -1
 
 		return int(self.data[key][0])
+
+	def remove_key(self, key):
+		if self.data.__contains__(key):
+			self.data.pop(key)
 		
 
 valid_key_checker = KeyDataChecker()
