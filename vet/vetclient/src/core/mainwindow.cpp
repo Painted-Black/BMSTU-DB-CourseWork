@@ -27,6 +27,7 @@
 #include "core/main_vet_pannel.h"
 #include "core/staff_tab_widget.h"
 #include "core/scheduleswidget.h"
+#include "core/visits_widget.h"
 
 
 enum TabType
@@ -38,7 +39,9 @@ enum TabType
 	MainWidget			= 5,
 	AddAnimalWidget		= 6,
 	StaffWidget			= 7,
-	PositionsWidget		= 8
+	PositionsWidget		= 8,
+	VisitsWidgetTab		= 9,
+	SchedulesWidgetTab	= 10
 };
 
 enum TabFlags
@@ -76,6 +79,8 @@ MainWindow::MainWindow(const AccessData& value, QWidget *parent)
 
 	qRegisterMetaType<TabType>();
 	qRegisterMetaType<TabFlags>();
+
+	setWindowIcon(QIcon(":/ui/icons/logo_green_80.png"));
 
 	access_data = value;
 	AccessLevel level = access_data.getLevel();
@@ -116,6 +121,8 @@ void MainWindow::constructAdmin()
 	QWidget* admin_w = addTab(QIcon(":/ui/icons/system.png"), "Настройки системы",
 								{MainWidget, Unclosable}, &MainWindow::showAdminPannel);
 	admin_w->show();
+	addToolBarAction(QIcon(":/ui/icons/team.png"), "Сотрудники", &MainWindow::showStaff);
+	addToolBarAction(QIcon(":/ui/icons/name-tag.png"), "Должности", &MainWindow::showPositions);
 	ui->menu_2->menuAction()->setVisible(false);
 //	ui->menu_2->setDisabled(true);
 }
@@ -129,6 +136,7 @@ void MainWindow::constructVet()
 	connect(ui->pet_find, &QAction::triggered, this, &MainWindow::runAnimalEditor);
 	addToolBarAction(QIcon(":/ui/icons/icons8-group-of-animals-48.png"), "Животные", &MainWindow::runAnimalEditor);
 	addToolBarAction(QIcon(":/ui/icons/treatment-80.png"), "Ветеринарный осмотр", &MainWindow::newVisit);
+	addToolBarAction(QIcon(":/ui/icons/visits_list.png"), "Осмотры", &MainWindow::visits);
 }
 
 void MainWindow::constructReistry()
@@ -148,6 +156,15 @@ void MainWindow::runAnimalEditor()
 
 	QWidget* w = addTab(QIcon(":/ui/icons/icons8-group-of-animals-48.png"), "Животные",
 				{AnimalWidget, Single}, &MainWindow::createWidgetAnimals);
+	w->show();
+}
+
+void MainWindow::visits()
+{
+	qDebug() << Q_FUNC_INFO;
+
+	QWidget* w = addTab(QIcon(":/ui/icons/visits_list.png"), "Осмотры",
+				{VisitsWidgetTab, Single}, &MainWindow::createWidgetVisits);
 	w->show();
 }
 
@@ -226,7 +243,7 @@ void MainWindow::showSchedules()
 {
 	qDebug() << Q_FUNC_INFO << "Show schedules";
 	QWidget* w = addTab(QIcon(":/ui/icons/schedule.png"), "Расписания",
-				{PositionsWidget, Single}, &MainWindow::showSchedulesList);
+				{SchedulesWidgetTab, Single}, &MainWindow::showSchedulesList);
 	w->show();
 }
 
@@ -234,14 +251,13 @@ void MainWindow::showSchedulesList(QWidget *w)
 {
 	qDebug() << Q_FUNC_INFO << "Show schedules list";
 
-	auto& cfg = Singlenton<Config>::getInstance();
 	QBoxLayout* layout = new QVBoxLayout();
 	SchedulesWidget* pannel = new SchedulesWidget(w);
+	pannel->setPassword(access_data.getPassword());
 	pannel->init();
 	layout->addWidget(pannel);
 	w->setLayout(layout);
 	pannel->show();
-
 }
 
 QWidget* MainWindow::addTab(
@@ -312,6 +328,19 @@ void MainWindow::createWidgetAnimals(QWidget * w)
 	w->setLayout(layout);
 }
 
+void MainWindow::createWidgetVisits(QWidget *w)
+{
+	qDebug() << Q_FUNC_INFO;
+
+	QBoxLayout* layout = new QVBoxLayout();
+	VisitsWidget* pannel = new VisitsWidget(w);
+	pannel->setPassword(access_data.getPassword());
+//	pannel->init();
+	layout->addWidget(pannel);
+	w->setLayout(layout);
+	pannel->show();
+}
+
 void MainWindow::createWidgetAnimalInfo(uint64_t id)
 {
 	auto& cfg = Singlenton<Config>::getInstance();
@@ -351,7 +380,7 @@ void MainWindow::createWidgetAccountInfo(QWidget * w)
 void MainWindow::createWidgetNewVisit(QWidget *w)
 {
 	QHBoxLayout* layout = new QHBoxLayout();
-	NewVisitWidget* nvw = new NewVisitWidget(w);
+	NewVisitWidget* nvw = new NewVisitWidget(NewVisitWidget::ADD, w);
 	nvw->setObjectName("NewVisitWidget");
 	nvw->setAccessData(access_data);
 	nvw->show();

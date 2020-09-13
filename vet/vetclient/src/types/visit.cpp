@@ -13,14 +13,16 @@ bool Visit::deserialize(const QJsonObject &json) noexcept
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "invalid cast '" << VisitJson::field_vis_doctor << "' field";
-		return false;
+		cast = false;
+		//		return false;
 	}
 
 	cast = animal.deserialize(json.value(VisitJson::field_vis_animal).toObject());
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "invalid cast '" << VisitJson::field_vis_animal << "' field";
-		return false;
+		cast = false;
+		//		return false;
 	}
 
 //	ambulatury = json.value(VisitJson::field_vis_ambulatury).toVariant().toBool();
@@ -30,14 +32,16 @@ bool Visit::deserialize(const QJsonObject &json) noexcept
 	if (visit_date.isValid() == false)
 	{
 		qCritical() << Q_FUNC_INFO << "invalid cast '" << VisitJson::field_vis_visit_date << "' field";
-		return false;
+		cast = false;
+		//		return false;
 	}
 
 	cast = owner_dynamics.deserialize(json.value(VisitJson::field_vis_owner_dynamics));
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "invalid cast '" << VisitJson::field_vis_owner_dynamics << "' field";
-		return false;
+		cast = false;
+		//		return false;
 	}
 
 	history_disease = json.value(VisitJson::field_vis_history_disease).toString();
@@ -46,7 +50,8 @@ bool Visit::deserialize(const QJsonObject &json) noexcept
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "invalid cast '" << VisitJson::field_vis_cur_state << "' field";
-		return false;
+		cast = false;
+		//		return false;
 	}
 
 	diagnosis = json.value(VisitJson::field_vis_diagnosis).toString();
@@ -57,15 +62,17 @@ bool Visit::deserialize(const QJsonObject &json) noexcept
 	next_visit = QDate::fromString(json.value(VisitJson::field_vis_next_visit).toString(), Qt::ISODate);
 	next = next_visit.isValid();
 
-	cast = prescribings.deserialize(json.value(VisitJson::field_vis_prescribings).toArray());
+	QJsonArray doc = QJsonDocument::fromJson(json.value(VisitJson::field_vis_prescribings).toVariant().toByteArray()).array();
+	cast = prescribings.deserialize(doc);
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "invalid cast '" << VisitJson::field_vis_prescribings << "' field";
-		return false;
+		cast = false;
+		//		return false;
 	}
 
 	note = json.value(VisitJson::field_vis_note).toString();
-	return true;
+	return cast;
 }
 
 QJsonObject Visit::serialize() const

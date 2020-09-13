@@ -11,7 +11,7 @@ bool Position::deserialize(const QJsonObject &obj) noexcept
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast '" << PositionJson::field_pos_id << "' field";
-		return false;
+		cast = false;
 	}
 
 	title = obj.value(PositionJson::field_pos_title).toString();
@@ -19,7 +19,7 @@ bool Position::deserialize(const QJsonObject &obj) noexcept
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast '" << PositionJson::field_pos_salary << "' field";
-		return false;
+		cast = false;
 	}
 
 	return true;

@@ -16,6 +16,7 @@ QByteArray visitSerialize(const Visit &vis, uint32_t anim_id); // withot full an
 QByteArray accessSerialize(const AccessData& acc); // without full staff data
 
 QMap<QString, QString> fromSimpleJson(const QByteArray&) noexcept;
+QString initials(const QString& name, const QString& surname, const QString& patr);
 
 template<typename Class>
 QVector<Class> deserializeArray(const QByteArray& data)

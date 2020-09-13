@@ -1711,6 +1711,21 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>surname_lineEdit</tabstop>
+  <tabstop>name_lineEdit</tabstop>
+  <tabstop>patr_lineEdit</tabstop>
+  <tabstop>login_lineEdit</tabstop>
+  <tabstop>change_login_toolButton</tabstop>
+  <tabstop>access_level_comboBox</tabstop>
+  <tabstop>change_level_toolButton</tabstop>
+  <tabstop>pass_lineEdit</tabstop>
+  <tabstop>change_pass_toolButton</tabstop>
+  <tabstop>show_pass_checkBox</tabstop>
+  <tabstop>empl_dateEdit</tabstop>
+  <tabstop>fire_dateEdit</tabstop>
+  <tabstop>pos_titile_lineEdit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -50,6 +50,7 @@ SOURCES += \
 	types/short_animal_info.cpp \
     types/short_staff_info.cpp \
 	types/short_user_info.cpp \
+    types/short_visit_info.cpp \
 	types/staff.cpp \
 	types/user_data.cpp \
 	types/vaccination.cpp \
@@ -73,6 +74,9 @@ SOURCES += \
     core/add_staff_dialog.cpp \
     core/add_shedule_item_dialog.cpp \
     core/scheduleswidget.cpp \
+    core/visit_list_item_widget.cpp \
+    core/visits_widget.cpp \
+    core/scroll_dialog.cpp \
 	utils/utils.cpp \
 	model/prescribings_table_model.cpp
 
@@ -119,6 +123,7 @@ HEADERS += \
 	types/short_animal_info.h \
     types/short_staff_info.h \
     types/short_user_info.h \
+    types/short_visit_info.h \
 	types/staff.h \
 	types/user_data.h \
 	types/vaccination.h \
@@ -143,6 +148,9 @@ HEADERS += \
     core/add_staff_dialog.h \
     core/add_shedule_item_dialog.h \
     core/scheduleswidget.h \
+    core/visit_list_item_widget.h \
+    core/visits_widget.h \
+    core/scroll_dialog.h \
 	utils/utils.h \
 	utils/singlenton.h
 
@@ -171,6 +179,7 @@ FORMS += \
 	ui/client_item_widget.ui \
 	ui/contacts.ui \
     ui/fire_dialog.ui \
+    ui/scroll_dialog.ui \
     ui/scheduleswidget.ui \
 	ui/main_tab_widget.ui \
     ui/main_vet_pannel.ui \
@@ -185,7 +194,9 @@ FORMS += \
 	ui/user_info.ui \
     ui/user_info_dialog.ui \
     ui/user_list_item_widget.ui \
-	ui/visit.ui
+	ui/visit.ui \
+    ui/visit_list_item_widget.ui \
+    ui/visits_widget.ui
 
 LIBS += -lcurl
 

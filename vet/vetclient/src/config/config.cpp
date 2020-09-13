@@ -137,6 +137,16 @@ QUrl Config::getUrlAllSchedules() const noexcept
 	return getUrl("ROUTES/all_schedules");
 }
 
+QUrl Config::getUrlAllVisitsShort() const noexcept
+{
+	return getUrl("ROUTES/short_visits");
+}
+
+QUrl Config::getUrlVisitFull() const noexcept
+{
+	return getUrl("ROUTES/visit_full");
+}
+
 QUrl Config::getUrl(const QString & path) const
 {
 	QUrl url;

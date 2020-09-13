@@ -64,7 +64,7 @@ public:
 	bool remove(const QString &med_name);
 	int size() const;
 	Medicine at(QString key) const;
-	QStringList keys();
+	QStringList keys() const;
 private:
 	QMap<QString, Medicine> prescribings;
 };

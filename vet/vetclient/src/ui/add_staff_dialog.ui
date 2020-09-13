@@ -1965,6 +1965,16 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>positions_comboBox</tabstop>
+  <tabstop>tableView</tabstop>
+  <tabstop>empl_dateEdit</tabstop>
+  <tabstop>edu_comboBox</tabstop>
+  <tabstop>delet_schedule_toolButton</tabstop>
+  <tabstop>add_schedule_toolButton</tabstop>
+  <tabstop>save_pushButton</tabstop>
+  <tabstop>cancel_pushButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

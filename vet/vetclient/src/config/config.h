@@ -34,6 +34,8 @@ public:
 	QUrl getUrlUpdateStaff() const noexcept;
 	QUrl getUrlScheduleStaff() const noexcept;
 	QUrl getUrlAllSchedules() const noexcept;
+	QUrl getUrlAllVisitsShort() const noexcept;
+	QUrl getUrlVisitFull() const noexcept;
 
 private:
 	QUrl getUrl(const QString&) const;

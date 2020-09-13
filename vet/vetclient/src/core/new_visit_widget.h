@@ -17,10 +17,20 @@ class NewVisitWidget : public QWidget
 {
 	Q_OBJECT
 public:
-	explicit NewVisitWidget(QWidget *parent = nullptr);
+	enum Mode
+	{
+		SHOW,
+		ADD,
+		EDIT
+	};
+	explicit NewVisitWidget(Mode mode = ADD, QWidget *parent = nullptr);
 	void update();
 	void setAccessData(const AccessData &value);
 	void readOnly();
+	void setVisitShow(const Visit &visitShow);
+
+	void setPassword(const QByteArray &password);
+
 private:
 	void handle_save_button();
 	void choseAnimal();
@@ -32,5 +42,7 @@ private:
 	AccessData access_data;
 	PrescribingsTableModel* model;
 	int64_t animal_id = -1;
+	Visit mVisitShow;
+	QByteArray mPassword;
 };
 

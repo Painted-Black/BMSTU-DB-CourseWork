@@ -11,6 +11,7 @@ bool AnimalMedicalRecord::deserialize(const QJsonObject &json) noexcept
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalMedicalRecordJson::field_anim_id << "' field";
+		cast = false;
 	}
 
 	name = json.value(AnimalMedicalRecordJson::field_anim_name).toString();
@@ -33,18 +34,21 @@ bool AnimalMedicalRecord::deserialize(const QJsonObject &json) noexcept
 	if (sex.deserialize(json.value(AnimalMedicalRecordJson::field_anim_sex)) == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalMedicalRecordJson::field_anim_sex << "' field";
+		cast = false;
 	}
 
 	cast = chip.deserialize(json.value(AnimalMedicalRecordJson::field_anim_chip_id).toObject());
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "invalid cast '" << AnimalMedicalRecordJson::field_anim_chip_id << "' field";
+		cast = false;
 	}
 
 	cast = contract.deserialize(json.value(AnimalMedicalRecordJson::field_anim_contract).toObject());
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "invalid cast '" << AnimalMedicalRecordJson::field_anim_contract << "' field";
+		cast = false;
 	}
 
 	return cast;

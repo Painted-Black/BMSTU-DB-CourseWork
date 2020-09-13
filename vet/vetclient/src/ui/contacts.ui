@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>430</width>
-    <height>238</height>
+    <height>268</height>
    </rect>
   </property>
   <property name="font">
@@ -2040,6 +2040,15 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>phone_lineEdit</tabstop>
+  <tabstop>phone_toolButton</tabstop>
+  <tabstop>email_lineEdit</tabstop>
+  <tabstop>email_toolButton</tabstop>
+  <tabstop>social_lineEdit</tabstop>
+  <tabstop>social_toolButton</tabstop>
+  <tabstop>template_box</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

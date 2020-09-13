@@ -130,17 +130,18 @@ void AddStaffDialog::readOnly()
 void AddStaffDialog::save_new()
 {
 	auto& popup = Singlenton<PopUp>::getInstance();
-	QString surname = passport_w->surname_lineEdit->text();
-	if (surname.isEmpty() == true)
-	{
-		popup.setPopupText("Фамилия не может быть пустой");
-		popup.show();
-		return;
-	}
 	QString name = passport_w->name_lineEdit->text();
 	if (name.isEmpty() == true)
 	{
 		popup.setPopupText("Имя не может быть пустым");
+		popup.show();
+		return;
+	}
+	QString surname = passport_w->surname_lineEdit->text();
+	if (surname.isEmpty() == true)
+	{
+		popup.setPopupText("Фамилия не может быть пустой");
+//		popup.setParent(this);
 		popup.show();
 		return;
 	}

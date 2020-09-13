@@ -17,30 +17,39 @@
 #include "core/popup.h"
 #include "config/config.h"
 #include "utils/utils.h"
+#include "types/prescribings.h"
 
-NewVisitWidget::NewVisitWidget(QWidget *parent)
+NewVisitWidget::NewVisitWidget(Mode mode, QWidget *parent)
 	: QWidget(parent), ui(new Ui::visit_widget()), model(new PrescribingsTableModel())
 {
 	ui->setupUi(this);
 
-	QDate current_date = QDate::currentDate();
-	ui->visit_date_dateEdit->setDate(current_date);
-	ui->visit_date_dateEdit->setEnabled(false);
-	ui->next_visit_dateEdit->setDate(current_date);
-	ui->next_visit_dateEdit->setMinimumDate(current_date);
+	if (mode == ADD)
+	{
+		QDate current_date = QDate::currentDate();
+		ui->visit_date_dateEdit->setDate(current_date);
+		ui->visit_date_dateEdit->setEnabled(false);
+		ui->next_visit_dateEdit->setDate(current_date);
+		ui->next_visit_dateEdit->setMinimumDate(current_date);
 
-	connect(ui->save_pushButton, &QPushButton::released, this, &NewVisitWidget::handle_save_button);
-	connect(ui->chose_animal_pushButton, &QPushButton::released, this, &NewVisitWidget::choseAnimal);
-	connect(ui->add_prescr_toolButton, &QPushButton::released, this, &NewVisitWidget::add_prescr_btn);
-	connect(ui->delete_prescr_toolButton, &QPushButton::released, this, &NewVisitWidget::delete_prescr_btn);
+		connect(ui->save_pushButton, &QPushButton::released, this, &NewVisitWidget::handle_save_button);
+		connect(ui->chose_animal_pushButton, &QPushButton::released, this, &NewVisitWidget::choseAnimal);
+		connect(ui->add_prescr_toolButton, &QPushButton::released, this, &NewVisitWidget::add_prescr_btn);
+		connect(ui->delete_prescr_toolButton, &QPushButton::released, this, &NewVisitWidget::delete_prescr_btn);
 
-	ui->owner_dynamics_comboBox->addItem(RusOwnerDynamicsType::rus_owner_dynamics_stably);
-	ui->owner_dynamics_comboBox->addItem(RusOwnerDynamicsType::rus_owner_dynamics_better);
-	ui->owner_dynamics_comboBox->addItem(RusOwnerDynamicsType::rus_owner_dynamics_worse);
+		ui->owner_dynamics_comboBox->addItem(RusOwnerDynamicsType::rus_owner_dynamics_stably);
+		ui->owner_dynamics_comboBox->addItem(RusOwnerDynamicsType::rus_owner_dynamics_better);
+		ui->owner_dynamics_comboBox->addItem(RusOwnerDynamicsType::rus_owner_dynamics_worse);
 
-	ui->general_state_comboBox->addItem(RusGeneralStateType::rus_general_state_good);
-	ui->general_state_comboBox->addItem(RusGeneralStateType::rus_general_state_middle);
-	ui->general_state_comboBox->addItem(RusGeneralStateType::rus_general_state_bad);
+		ui->general_state_comboBox->addItem(RusGeneralStateType::rus_general_state_good);
+		ui->general_state_comboBox->addItem(RusGeneralStateType::rus_general_state_middle);
+		ui->general_state_comboBox->addItem(RusGeneralStateType::rus_general_state_bad);
+	}
+	if (mode == SHOW)
+	{
+		readOnly();
+	}
+
 }
 
 void NewVisitWidget::update()
@@ -226,6 +235,63 @@ Visit NewVisitWidget::getVisit(bool *is_ok)
 	vis.setPrescribings(pr);
 	*is_ok = true;
 	return vis;
+}
+
+void NewVisitWidget::setPassword(const QByteArray &password)
+{
+    mPassword = password;
+}
+
+void NewVisitWidget::setVisitShow(const Visit &visitShow)
+{
+    mVisitShow = visitShow;
+    ui->input_specialist_label->setText(visitShow.getDoctor().getPosition().getTitle());
+	ui->visit_date_dateEdit->setDate(visitShow.getVisit_date());
+	ui->name_lineEdit->setText(visitShow.getAnimal().getName());
+	ui->species_lineEdit->setText(visitShow.getAnimal().getSpecies());
+	ui->anamnesis_lineEdit->setText(visitShow.getHistory_disease());
+	ui->owner_dynamics_comboBox->addItem(visitShow.getOwner_dynamics().toString());
+	const AnimalState& state = visitShow.getCur_state();
+	ui->general_state_comboBox->addItem(state.getGeneral().toString());
+	ui->pulse_spinBox->setValue(state.getPulse());
+	ui->weight_doubleSpinBox->setValue(state.getWeight());
+	ui->ap_1_spinBox->setValue(state.getAP1());
+	ui->ap_2_spinBox->setValue(state.getAP2());
+	ui->temperature_doubleSpinBox->setValue(state.getTemperature());
+	ui->cfr_spinBox->setValue(state.getCfr());
+	ui->resp_rate_spinBox->setValue(state.getResp_rate());
+	ui->diagnosis_lineEdit->setText(visitShow.getDiagnosis());
+	ui->recommendations_lineEdit->setText(visitShow.getRecommendations());
+	if (visitShow.getNext_visit().isValid() == true)
+	{
+		ui->next_visit_checkBox->setChecked(true);
+		ui->next_visit_dateEdit->setDate(visitShow.getNext_visit());
+	}
+	else
+	{
+		ui->next_visit_checkBox->setChecked(false);
+	}
+	ui->note_lineEdit->setText(visitShow.getNote());
+	QString by;
+	const Passport& doc_passp = visitShow.getDoctor().getPassport();
+	by += doc_passp.getSurname() + " ";
+	by += doc_passp.getName() + " ";
+	by += doc_passp.getPatronymic();
+	ui->input_visit_by_label->setText(by);
+	const Prescribings& prescr = visitShow.getPrescribings();
+	QStringList keys = prescr.keys();
+	int size = keys.size();
+	for (int i = 0; i < size; ++i)
+	{
+		model->addMed(prescr.at(keys.at(i)));
+	}
+
+	ui->prescr_tableView->setModel(model);
+	int model_col_count = model->columnCount();
+	for (int i = 0; i < model_col_count; ++i)
+	{
+		ui->prescr_tableView->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
+	}
 }
 
 void NewVisitWidget::setAccessData(const AccessData &value)

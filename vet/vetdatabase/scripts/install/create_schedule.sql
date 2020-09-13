@@ -6,5 +6,5 @@ CREATE TABLE schedule(
     day_of_week day_of_week_type NOT NULL,
     "start" TIME NOT NULL,
     "end" TIME NOT NULL,
-    cabinet VARCHAR(10)
+    cabinet VARCHAR(128)
 );

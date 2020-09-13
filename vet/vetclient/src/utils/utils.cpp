@@ -117,3 +117,21 @@ QByteArray accessSerialize(const AccessData &acc)
 	root_obj.insert(AccessJson::field_acc_access_level, QJsonValue(acc.getLevel().toString()));
 	return QJsonDocument(root_obj).toJson();
 }
+
+QString initials(const QString &name, const QString &surname, const QString &patr)
+{
+	QString initials = surname;
+	if (name.size() >= 1)
+	{
+		initials += " ";
+		initials += name.at(0);
+		initials += ".";
+	}
+	if (patr.size() >= 1)
+	{
+		initials += " ";
+		initials += patr.at(0);
+		initials += ".";
+	}
+	return initials;
+}

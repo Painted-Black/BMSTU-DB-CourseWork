@@ -19,19 +19,19 @@ class UpdateStaffHandler(AbstractHandler):
 			res.data = json.dumps({"error" : "Empty json"})
 			return
 		
-		#key = str(req.headers.get("Authorization"))
+		key = str(req.headers.get("Authorization"))
 		# Authorization: Explicit Key
-		#explicit_key="Explicit: "
-		#idx = key.find(explicit_key) 
-		#if idx == -1:
-		#	res.status_code=401
-		#	return
+		explicit_key="Explicit: "
+		idx = key.find(explicit_key) 
+		if idx == -1:
+			res.status_code=401
+			return
 		
-		#key = key[len(explicit_key):]
-		#staff_id = valid_key_checker.get_owner(key)
-		#if staff_id == -1:
-		#	res.status_code=401
-		#	return
+		key = key[len(explicit_key):]
+		staff_id = valid_key_checker.get_owner(key)
+		if staff_id == -1:
+			res.status_code=401
+			return
 
 		_type = req.args.get("type", default=None, type=None)
 

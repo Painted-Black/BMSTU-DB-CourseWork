@@ -11,7 +11,7 @@ bool Passport::deserialize(const QJsonObject &obj) noexcept
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast '" << PassportJson::field_pass_id << "' field";
-		return false;
+		cast = false;
 	}
 
 	surname = obj.value(PassportJson::field_pass_surname).toString();
@@ -21,14 +21,14 @@ bool Passport::deserialize(const QJsonObject &obj) noexcept
 	if (gender.deserialize(obj.value(PassportJson::field_pass_sex)) == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast '" << PassportJson::field_pass_sex << "' field";
-		return false;
+		cast = false;
 	}
 	// 2020-12-20T12:40:40 (yyyy-mm-ddThh:MM:ss)
 	birthday = QDate::fromString(obj.value(PassportJson::field_pass_birth).toString(), Qt::ISODate);
 	if (birthday.isValid() == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast '" << PassportJson::field_pass_birth << "' field";
-		return false;
+		cast = false;
 	}
 
 	passport_num = obj.value(PassportJson::field_pass_num).toString();
@@ -36,7 +36,7 @@ bool Passport::deserialize(const QJsonObject &obj) noexcept
 	if (issue_date.isValid() == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast '" << PassportJson::field_pass_issue_date <<"' field";
-		return false;
+		cast = false;
 	}
 
 	nationality = obj.value(PassportJson::field_pass_nationality).toString();

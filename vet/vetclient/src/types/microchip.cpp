@@ -11,14 +11,14 @@ bool Microchip::deserialize(const QJsonObject &json) noexcept
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast '" << MicrochipJson::field_chip_id << "' field";
-		return false;
+		cast = false;
 	}
 	chip_num = json.value(MicrochipJson::field_chip_chip_num).toString();
 	impl_date = QDate::fromString(json.value(MicrochipJson::field_chip_impl_date).toString(), Qt::ISODate);
 	if (impl_date.isValid() == false)
 	{
 		qCritical() << Q_FUNC_INFO << "invalid cast '" << MicrochipJson::field_chip_impl_date << "' field";
-		return false;
+		cast = false;
 	}
 	country = json.value(MicrochipJson::field_chip_country).toString();
 	location = json.value(MicrochipJson::field_chip_location).toString();

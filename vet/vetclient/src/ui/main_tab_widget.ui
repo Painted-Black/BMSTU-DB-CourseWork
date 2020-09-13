@@ -1031,6 +1031,11 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>new_visit_pushButton</tabstop>
+  <tabstop>patients_pushButton</tabstop>
+  <tabstop>scrollArea</tabstop>
+ </tabstops>
  <resources>
   <include location="../res.qrc"/>
  </resources>

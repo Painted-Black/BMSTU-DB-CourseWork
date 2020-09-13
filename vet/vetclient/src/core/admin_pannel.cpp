@@ -24,11 +24,13 @@ AdminPannel::AdminPannel(QWidget *parent) :
 	connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &AdminPannel::tableViewDoubleClicked);
 	connect(ui->add_toolButton, &QPushButton::released, this, &AdminPannel::addUserBtnClicked);
 	connect(ui->delete_toolButton, &QPushButton::released, this, &AdminPannel::deleteUserBtnClicked);
+
+	ui->tableView->setModel(model);
 }
 
 bool AdminPannel::show(const QUrl &url, std::chrono::milliseconds tout)
 {
-	ui->tableView->setModel(model);
+//	ui->tableView->setModel(model);
 	int model_col_count = model->columnCount();
 	for (int i = 0; i < model_col_count; ++i)
 	{
@@ -94,6 +96,9 @@ void AdminPannel::addUserBtnClicked()
 	dialog->setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
 	if (dialog->exec() == QDialog::Accepted)
 	{
+		auto& cfg = Singlenton<Config>::getInstance();
+		show(cfg.getUrlSystemUsersList(), cfg.getTimeout());
+		return;
 		ShortStaffInfo new_acc = dialog->getNewStaffAccountData();
 		AccessData new_access = dialog->getNewAccessData();
 		ShortUserInfo new_user;

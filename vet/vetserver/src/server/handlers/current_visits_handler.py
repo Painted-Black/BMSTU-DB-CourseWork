@@ -25,12 +25,11 @@ class CurrentVisitsHandler(AbstractHandler):
 			res.status_code=401
 			return
 
-		#key = key[len(explicit_key):]
-		#staff_id = valid_key_checker.get_owner(key)
-		#if staff_id == -1:
-		#	res.status_code=401
-		#	return
-		# TODO check
+		key = key[len(explicit_key):]
+		staff_id = valid_key_checker.get_owner(key)
+		if staff_id == -1:
+			res.status_code=401
+			return
 
 		if not data.__contains__('date'):
 			res.status_code=403

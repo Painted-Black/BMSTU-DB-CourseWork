@@ -30,6 +30,7 @@ private:
 	void constructMain();
 
 	void runAnimalEditor();
+	void visits();
 	void showStaffList(QWidget *w);
 	void showPositionsList(QWidget *w);
 	void showMainTab(QWidget* w);
@@ -43,6 +44,7 @@ private:
 	void addToolBarAction(const QIcon&, const QString&, const Callback& cb);
 	void closeTab(int);
 	void createWidgetAnimals(QWidget*);
+	void createWidgetVisits(QWidget*);
 	void createWidgetAnimalInfo(uint64_t);
 	void createWidgetNewAnimal();
 	void updateAnimal();

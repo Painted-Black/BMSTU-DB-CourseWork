@@ -11,28 +11,30 @@ bool AnimalState::deserialize(const QJsonObject &json) noexcept
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalStateJson::field_state_id << "' field";
-		return false;
+		cast = false;
 	}
 
-	cast = general.deserialize(json.value(AnimalStateJson::field_state_general).toObject());
+	QJsonObject val;
+	val.insert(AnimalStateJson::field_state_general, json.value(AnimalStateJson::field_state_general));
+	cast = general.deserialize(val);
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "invalid cast '" << AnimalStateJson::field_state_general << "' field";
-		return false;
+		cast = false;
 	}
 
 	pulse = json.value(AnimalStateJson::field_state_pulse).toVariant().toULongLong(&cast);
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalStateJson::field_state_pulse << "' field";
-		return false;
+		cast = false;
 	}
 
 	weight = json.value(AnimalStateJson::field_state_weight).toVariant().toFloat(&cast);
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalStateJson::field_state_weight << "' field";
-		return false;
+		cast = false;
 	}
 
 	AP = json.value(AnimalStateJson::field_state_ap).toString();
@@ -41,23 +43,23 @@ bool AnimalState::deserialize(const QJsonObject &json) noexcept
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalStateJson::field_state_temperature << "' field";
-		return false;
+		cast = false;
 	}
 
 	cfr = json.value(AnimalStateJson::field_state_cfr).toVariant().toULongLong(&cast);
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalStateJson::field_state_cfr << "' field";
-		return false;
+		cast = false;
 	}
 
 	resp_rate = json.value(AnimalStateJson::field_state_resp_rate).toVariant().toULongLong(&cast);
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "Invalid cast '" << AnimalStateJson::field_state_resp_rate << "' field";
-		return false;
+		cast = false;
 	}
-	return true;
+	return cast;
 }
 
 QJsonObject AnimalState::serialize() const
@@ -144,6 +146,22 @@ uint32_t AnimalState::getResp_rate() const
 	return resp_rate;
 }
 
+float AnimalState::getAP1() const
+{
+	float res;
+	QStringList list = AP.split("/");
+	res = list.at(0).toInt();
+	return res;
+}
+
+float AnimalState::getAP2() const
+{
+	float res;
+	QStringList list = AP.split("/");
+	res = list.at(1).toInt();
+	return res;
+}
+
 void AnimalState::setResp_rate(const uint32_t &value)
 {
 	resp_rate = value;
@@ -152,7 +170,7 @@ void AnimalState::setResp_rate(const uint32_t &value)
 bool GeneralState::deserialize(const QJsonValue &json) noexcept
 {
 	bool is_ok = false;
-	QString v = json.toString();
+	QString v = json.toObject().value(AnimalStateJson::field_state_general).toString();
 	if (v == GeneralStateType::general_state_middle)
 	{
 		current = GeneralStateEnum::Middle;

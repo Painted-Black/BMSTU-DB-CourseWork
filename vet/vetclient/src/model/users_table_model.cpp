@@ -2,11 +2,9 @@
 
 void UsersTableModel::setTableData(QVector<ShortUserInfo> data)
 {
-	removeRows(0, mData.size());
-	int new_data_size = data.size();
-	beginInsertRows(QModelIndex(), 0, new_data_size-1);
+	beginResetModel();
 	mData = data;
-	endInsertRows();
+	endResetModel();
 }
 
 int UsersTableModel::rowCount(const QModelIndex &) const

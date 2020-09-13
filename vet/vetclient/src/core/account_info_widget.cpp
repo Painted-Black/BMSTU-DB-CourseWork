@@ -47,6 +47,7 @@ void AccountInfoWidget::update()
         QString time = cur.getStart().toString();
         time += " -- ";
         time += cur.getEnd().toString();
+		time_label->setAlignment(Qt::AlignRight);
         time_label->setText(time);
         QFont font = QFont();
         font.setBold(false);

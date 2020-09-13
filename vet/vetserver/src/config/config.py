@@ -88,6 +88,12 @@ class Config(object):
 	def get_routes_photo(self):
 		return [str(self.__parser["ROUTES"]["photo_handler"])]
 
+	def get_routes_all_visits_short(self):
+		return [str(self.__parser["ROUTES"]["short_visits"])]
+
+	def get_routes_visit_full(self):
+		return [str(self.__parser["ROUTES"]["visit_full"])]
+
 	def get_conn_info(self):
 		driver=self.__parser["DATABASE"]["driver"]
 		server=self.__parser["DATABASE"]["server"]

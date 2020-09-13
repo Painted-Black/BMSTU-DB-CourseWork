@@ -80,7 +80,6 @@ void AddUserDialog::accept()
 		popup.setPopupText("Произошла ошибка, попробуйте еще раз.");
 		popup.show();
 	}
-
 }
 
 void AddUserDialog::hideErrorMessages()

@@ -138,6 +138,12 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>day_comboBox</tabstop>
+  <tabstop>start_timeEdit</tabstop>
+  <tabstop>emd_timeEdit</tabstop>
+  <tabstop>cab_lineEdit</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

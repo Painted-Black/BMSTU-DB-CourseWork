@@ -82,7 +82,7 @@ void StaffTabWidget::tableViewDoubleClicked(const QModelIndex &index)
 		popup.show();
 		return;
 	}
-	AddStaffDialog dialog(AddStaffDialog::EDIT);
+	AddStaffDialog dialog(AddStaffDialog::EDIT, this);
 	dialog.setPassword(mPassword);
 	dialog.setPositionsList(positions_list);
 	Staff s = model->dataAt(index.row());
@@ -110,7 +110,7 @@ void StaffTabWidget::addStaffBtn()
 		popup.show();
 		return;
 	}
-	AddStaffDialog dialog;
+	AddStaffDialog dialog(AddStaffDialog::ADD, this);
 	dialog.setPassword(mPassword);
 	dialog.setPositionsList(positions_list);
 	if (dialog.exec() == QDialog::Accepted)

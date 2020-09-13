@@ -126,7 +126,7 @@ bool Medicine::deserialize(const QJsonObject &json) noexcept
 	if (cast == false)
 	{
 		qCritical() << Q_FUNC_INFO << "invalid cast '" << PrescribingsJson::field_prescr_type << "' field";
-		return false;
+		cast = false;
 	}
 
 	frequency_of_medication = json.value(PrescribingsJson::field_prescr_frequency_of_medication).toString();
@@ -143,7 +143,7 @@ QJsonObject Medicine::serialize() const
 	root_obj.insert(PrescribingsJson::field_prescr_type, QVariant(type.serialize()).toJsonValue());
 	root_obj.insert(PrescribingsJson::field_prescr_frequency_of_medication, QJsonValue(frequency_of_medication));
 	root_obj.insert(PrescribingsJson::field_prescr_term_of_taking, QJsonValue(term_of_taking));
-	root_obj.insert(PrescribingsJson::field_prescr_name, QJsonValue(notes));
+	root_obj.insert(PrescribingsJson::field_prescr_notes, QJsonValue(notes));
 	return root_obj;
 }
 
@@ -263,7 +263,7 @@ Medicine Prescribings::at(QString key) const
 	return prescribings[key];
 }
 
-QStringList Prescribings::keys()
+QStringList Prescribings::keys() const
 {
 	return prescribings.keys();
 }

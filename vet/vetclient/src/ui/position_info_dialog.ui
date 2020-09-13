@@ -1041,6 +1041,12 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>title_lineEdit</tabstop>
+  <tabstop>salary_spinBox</tabstop>
+  <tabstop>save_pushButton</tabstop>
+  <tabstop>cancel_pushButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

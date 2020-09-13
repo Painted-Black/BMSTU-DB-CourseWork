@@ -41,6 +41,8 @@ public:
 	float getTemperature() const;
 	uint32_t getCfr() const;
 	uint32_t getResp_rate() const;
+	float getAP1() const;
+	float getAP2() const;
 
 	void setGeneral(const GeneralState &value);
 	void setPulse(const uint32_t &value);
