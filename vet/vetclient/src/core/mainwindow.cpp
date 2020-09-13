@@ -891,5 +891,19 @@ void MainWindow::accInfo()
 
 void MainWindow::exit()
 {
+	auto& cfg = Singlenton<Config>::getInstance();
+	QNetworkRequest request;
+	request.setUrl(cfg.getUrlAuthication());
+	request.setRawHeader("Authorization", QByteArray("Explicit: ").append(access_data.getPassword()));
+
+	NetworkFetcher fetcher;
+	auto reply = fetcher.httpDelete(request, cfg.getTimeout());
+	const auto& code = std::get<0>(reply);
+	const auto& body = std::get<2>(reply);
+	if (code != 200)
+	{
+		qCritical() << Q_FUNC_INFO << "Failed request. Http code:"<< code << body;
+		return;
+	}
 	QCoreApplication::instance()->exit(0);
 }

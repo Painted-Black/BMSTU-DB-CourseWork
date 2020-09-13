@@ -22,7 +22,6 @@ int main(int argc, char *argv[])
 	auto& config = Singlenton<Config>::Init();
 	Q_ASSERT(config.loadConfig(path_to_config));
 
-
 	Auth a_d;
 	if (a_d.exec() == QDialog::Rejected)
 	{
