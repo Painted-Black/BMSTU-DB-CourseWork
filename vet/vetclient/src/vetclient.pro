@@ -173,10 +173,10 @@ FORMS += \
 	ui/animal_list_item_widget.ui \
 	ui/auth_dialog.ui \
 	ui/chip.ui \
-	ui/clent_list_item.ui \
     ui/chose_staff_dialog.ui \
 	ui/client.ui \
 	ui/client_item_widget.ui \
+	ui/client_widget_list.ui \
 	ui/contacts.ui \
     ui/fire_dialog.ui \
     ui/scroll_dialog.ui \

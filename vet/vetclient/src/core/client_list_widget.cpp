@@ -2,13 +2,14 @@
 #include <QScrollArea>
 #include <QGuiApplication>
 #include <QScreen>
-#include "ui_clent_list_item.h"
+#include "network/network_fetcher.h"
+#include "ui_client_widget_list.h"
 #include "client_list_widget.h"
 #include "ui_client_item_widget.h"
 #include "utils/utils.h"
 
 ClientListWidget::ClientListWidget(QWidget *parent) :
-	QDialog(parent), ui(new Ui::ClientListWidget())
+	QWidget(parent), ui(new Ui::ClientWidgetList())
 {
 	ui->setupUi(this);
 	QRect rect = QGuiApplication::screens().first()->geometry();
@@ -16,11 +17,35 @@ ClientListWidget::ClientListWidget(QWidget *parent) :
 
 	qRegisterMetaType<ShortInfoClient>();
 
-	connect(ui->item_list, &QListWidget::doubleClicked, this, [&](const QModelIndex& idx)
+	connect(ui->listWidget, &QListWidget::doubleClicked, this, [&](const QModelIndex& idx)
 	{
 		selected_row_buffer = idx.row();
-		accept();
+		Q_EMIT selectClient(selected_row_buffer);
 	});
+}
+
+std::tuple<bool, QString> ClientListWidget::requestData(const QUrl& url,
+								   std::chrono::milliseconds tout,
+								   const QByteArray& pass)
+{
+	NetworkFetcher fetcher;
+	QNetworkRequest request(url);
+	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+	request.setRawHeader("Authorization", QByteArray("Explicit: ").append(pass));
+
+	auto answer = fetcher.httpGet(request, tout);
+	auto code = std::get<0>(answer);
+	if (code == -1)
+	{
+		return { false, "Отсутствует подключение к интернету или нет доступа к серверу."};
+	}
+	else if (code != 200)
+	{
+		return { false, "Произошла ошибка, проверьте данные"};
+	}
+
+	clients = deserializeArray<ShortInfoClient>(std::get<2>(answer));
+	return { true, "" };
 }
 
 void ClientListWidget::setData(QVector<ShortInfoClient> &&data)
@@ -30,14 +55,14 @@ void ClientListWidget::setData(QVector<ShortInfoClient> &&data)
 
 void ClientListWidget::update()
 {
-	ui->item_list->clear();
+	ui->listWidget->clear();
 	for (const auto& v : clients)
 	{
-		QListWidgetItem* item = new QListWidgetItem(ui->item_list);
-		ui->item_list->addItem(item);
+		QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
+		ui->listWidget->addItem(item);
 		QWidget* inserted_widget = addWidget(v);
 		item->setSizeHint(inserted_widget->sizeHint());
-		ui->item_list->setItemWidget(item, inserted_widget);
+		ui->listWidget->setItemWidget(item, inserted_widget);
 	}
 }
 

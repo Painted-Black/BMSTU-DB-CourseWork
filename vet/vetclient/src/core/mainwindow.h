@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include <QByteArray>
 #include "auth.h"
+#include "core/client_list_widget.h"
 
 namespace Ui
 {
@@ -26,7 +27,7 @@ public:
 private:
 	void constructAdmin();
 	void constructVet();
-	void constructReistry();
+	void constructRegistry();
 	void constructMain();
 
 	void runAnimalEditor();
@@ -35,6 +36,9 @@ private:
 	void showPositionsList(QWidget *w);
 	void showMainTab(QWidget* w);
 	void showAdminPannel(QWidget* w);
+	void showVetTab(QWidget*);
+	void showAdminTab(QWidget*);
+	void showRegistryTab(QWidget*);
 	void showStaff();
 	void showPositions();
 	void showSchedules();
@@ -51,6 +55,8 @@ private:
 	void createAnimal();
 	void createWidgetAccountInfo(QWidget*);
 	void createWidgetNewVisit(QWidget*);
+	void createWidgetClientEditor(QWidget*);
+	void saveClient(QWidget *, bool);
 	void accInfo();
 	void exit();
 public slots:

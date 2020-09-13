@@ -94,6 +94,9 @@ class Config(object):
 	def get_routes_visit_full(self):
 		return [str(self.__parser["ROUTES"]["visit_full"])]
 
+	def get_routes_contract(self):
+		return [str(self.__parser["ROUTES"]["contract"])]
+
 	def get_conn_info(self):
 		driver=self.__parser["DATABASE"]["driver"]
 		server=self.__parser["DATABASE"]["server"]

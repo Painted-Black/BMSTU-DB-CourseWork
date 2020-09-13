@@ -31,6 +31,7 @@ public:
 	const QStringList& getEmails() const;
 	const QList<QUrl>& getSocial() const;
 
+	void setId(uint64_t value);
 	void setPhones(const QStringList &value);
 	void setEmails(const QStringList &value);
 	void setSocial(const QList<QUrl> &value);
@@ -48,6 +49,7 @@ public:
 	}
 
 	bool operator ==(const Client&) const;
+
 
 private:
 	uint64_t id;

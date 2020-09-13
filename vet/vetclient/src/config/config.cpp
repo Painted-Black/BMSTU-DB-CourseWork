@@ -147,6 +147,11 @@ QUrl Config::getUrlVisitFull() const noexcept
 	return getUrl("ROUTES/visit_full");
 }
 
+QUrl Config::getUrlContract() const noexcept
+{
+	return getUrl("ROUTES/contract");
+}
+
 QUrl Config::getUrl(const QString & path) const
 {
 	QUrl url;

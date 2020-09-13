@@ -9,7 +9,10 @@ bool Client::deserialize(const QJsonObject &json) noexcept
 	ok &= passport.deserialize(json.value(ClientJson::field_cli_passport).toObject());
 	ok &= address.deserialize(json.value(ClientJson::field_cli_address).toObject());
 
-	QJsonObject contacts = json.value(ClientJson::field_cli_contacts).toObject();
+	QJsonObject contacts =
+			QJsonDocument::fromJson(
+				json.value(ClientJson::field_cli_contacts).toVariant().toByteArray())
+					.object();
 	QJsonArray phones_json = contacts.value(ClientJson::field_cli_phone).toArray();
 	for (auto v : phones_json)
 	{
@@ -111,6 +114,11 @@ bool Client::operator ==(const Client & v) const
 	is_equal &= (social == v.social);
 
 	return is_equal;
+}
+
+void Client::setId(uint64_t value)
+{
+	id = value;
 }
 
 bool ShortInfoClient::deserialize(const QJsonObject & object) noexcept
