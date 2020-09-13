@@ -8,18 +8,18 @@ import uuid
 
 class AuthHandler(AbstractHandler):
 	def request(self, req, res):
+		if req.method == "DELETE":
+			key = str(req.headers.get("Authorization"))
+			valid_key_checker.remove_key(key)
+			res.status_code=200
+			return
+
 		res.content_type = "application/json"
 		try:
 			auth_data = json.loads(req.data)
 		except json.decoder.JSONDecodeError:
 			res.status_code=403
 			res.data = json.dumps({"error" : "Empty fields"})
-			return
-
-		if req.method == "DELETE":
-			key = str(req.headers.get("Authorization"))
-			valid_key_checker.remove_key(key)
-			res.status_code=200
 			return
 
 		if not auth_data.__contains__('login')  or \

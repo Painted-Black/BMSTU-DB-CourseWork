@@ -22,22 +22,30 @@ int main(int argc, char *argv[])
 	auto& config = Singlenton<Config>::Init();
 	Q_ASSERT(config.loadConfig(path_to_config));
 
-	Auth a_d;
-	if (a_d.exec() == QDialog::Rejected)
+	bool exit = false;
+	while (exit == false)
 	{
-		return 0;
+		Auth a_d;
+		if (a_d.exec() == QDialog::Rejected)
+		{
+			exit = true;
+		}
+		else
+		{
+			auto auth_data = a_d.getAuthData();
+			auto& notifier = Singlenton<PopUp>::Init();
+			ImageLoader::init(config.getUrlPhotoData(), config.getTimeout(), "images", QDir::current());
+
+			notifier.setPopupText(QString("Вы успешно вошли как пользователь %1")
+								  .arg(auth_data.getOwner().getPassport().getName()));
+			notifier.show();
+
+			MainWindow mw(auth_data);
+			mw.show();
+
+			a.exec();
+		}
 	}
 
-	auto auth_data = a_d.getAuthData();
-	auto& notifier = Singlenton<PopUp>::Init();
-	ImageLoader::init(config.getUrlPhotoData(), config.getTimeout(), "images", QDir::current());
-
-	notifier.setPopupText(QString("Вы успешно вошли как пользователь %1")
-						  .arg(auth_data.getOwner().getPassport().getName()));
-	notifier.show();
-
-	MainWindow mw(auth_data);
-	mw.show();
-
-	return a.exec();
+	return 0;
 }
