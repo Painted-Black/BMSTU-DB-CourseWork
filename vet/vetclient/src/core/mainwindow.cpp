@@ -153,6 +153,9 @@ void MainWindow::constructRegistry()
 	QWidget* w = addTab(QIcon(":/ui/icons/logo_green_80.png"), "Список клиентов",
 						{MainWidget, Unclosable | Single}, &MainWindow::showRegistryTab);
 	w->show();
+
+	connect(ui->pet_reg, &QAction::triggered, this, &MainWindow::createWidgetNewAnimal);
+	connect(ui->pet_find, &QAction::triggered, this, &MainWindow::runAnimalEditor);
 }
 
 void MainWindow::constructMain()

@@ -86,7 +86,7 @@ AnimalEditWidget::AnimalEditWidget(QWidget *parent)
 		if (file_path.isEmpty() == false)
 		{
 			setProperty(IMG_PROPERTY, file_path);
-			ui->photo->setPixmap(QPixmap(file_path).scaled(IMG_SIZE));
+			ui->photo->setPixmap(QPixmap(file_path).scaled(IMG_SIZE, Qt::KeepAspectRatio));
 		}
 	});
 }
@@ -123,7 +123,7 @@ void AnimalEditWidget::show(const QUrl& url, std::chrono::milliseconds tout, con
 
 	const auto& relative_path = animal_record.getRelPathToPhoto();
 	auto img = ImageLoader::getInstance().loadPixmap(relative_path, pass);
-	ui->photo->setPixmap(img.scaled(IMG_SIZE));
+	ui->photo->setPixmap(img.scaled(IMG_SIZE, Qt::KeepAspectRatio));
 	setProperty(IMG_PROPERTY, relative_path);
 
 	const Contract& contract_object = animal_record.getContract();
