@@ -74,7 +74,7 @@ class Daemon(object):
 		visit_full_=self.__config.get_routes_visit_full()
 		contract_=self.__config.get_routes_contract()
 
-		self.__server.add_endpoint(AuthHandler(auth_, ["POST"]))
+		self.__server.add_endpoint(AuthHandler(auth_, ["POST", "DELETE"]))
 		self.__server.add_endpoint(ScheduleHandler(schedule_, ["POST"]))
 		self.__server.add_endpoint(AnimalHandler(animal_, ["GET"]))
 		self.__server.add_endpoint(ClientHandler(client_, ["GET"]))

@@ -16,6 +16,12 @@ class AuthHandler(AbstractHandler):
 			res.data = json.dumps({"error" : "Empty fields"})
 			return
 
+		if req.method == "DELETE":
+			key = str(req.headers.get("Authorization"))
+			valid_key_checker.remove_key(key)
+			res.status_code=200
+			return
+
 		if not auth_data.__contains__('login')  or \
 			not auth_data.__contains__('password'):
 			res.status_code=403
