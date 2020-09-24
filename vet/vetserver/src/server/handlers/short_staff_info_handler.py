@@ -36,10 +36,11 @@ class ShortStaffInfo(AbstractHandler):
 		conn_name = str(uuid.uuid4())
 		conn = access_manager.connect(conn_name)
 		str_query = '''SELECT pas.name, pas.surname, pas.patronymic, pos.title, s.fire_date, s.employ_date, s.staff_id
-		FROM staff s JOIN passports pas ON pas.pass_id=s.passport
-   	 	JOIN position pos ON s.position=pos.pos_id
-		WHERE s.staff_id NOT IN 
-		(SELECT acc_id FROM access);
+FROM staff s JOIN passports pas ON pas.pass_id=s.passport
+    JOIN position pos ON s.position=pos.pos_id
+WHERE s.staff_id NOT IN 
+(SELECT acc_id FROM access)
+AND s.fire_date is NULL;
 		'''
 		query = DBQuery(conn)
 		if not query.exec_query(str_query):

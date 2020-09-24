@@ -30,6 +30,7 @@ private:
 	void createFieldPhone();
 	void createFieldEmail();
 	void createFieldSocial();
+	bool checkValidPhone(const QString& s) const;
 
 private:
 	Ui::contacts_widget* ui;

@@ -88,7 +88,7 @@ QStringList Contacts::getPhones() const
 	for (const auto& edit : edits)
 	{
 		QString text = edit->text();
-		if (text.isEmpty() == false)
+		if (checkValidPhone(text) == true)
 		{
 			out.push_back(text);
 		}
@@ -154,4 +154,17 @@ void Contacts::createFieldEmail()
 void Contacts::createFieldSocial()
 {
 	addNewSocialSite(QUrl());
+}
+
+bool Contacts::checkValidPhone(const QString &s) const
+{
+	int count = 0;
+	for (const QChar i : s)
+	{
+		if (i.isNumber() == true)
+		{
+			count++;
+		}
+	}
+	return count == 11;
 }
